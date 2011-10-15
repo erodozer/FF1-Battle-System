@@ -45,13 +45,13 @@ int dealDamage()
 void execute()
 </panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>180</x><y>100</y><w>170</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
 Has A</panel_attributes><additional_attributes>150;50;30;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>510</x><y>50</y><w>150</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>120;50;40;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>510</x><y>150</y><w>150</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>120;50;40;50</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>630</x><y>180</y><w>280</w><h>50</h></coordinates><panel_attributes>Commands::MagicDamageBehavior
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>40;50;120;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>510</x><y>150</y><w>150</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>40;50;120;50</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>630</x><y>180</y><w>280</w><h>50</h></coordinates><panel_attributes>Commands::MagicDamageBehavior
 --
 int dealDamage()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>130</x><y>220</y><w>150</w><h>110</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>80;90;80;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>180</x><y>370</y><w>210</w><h>50</h></coordinates><panel_attributes>Commands::Defend
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>130</x><y>220</y><w>150</w><h>100</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>80;30;80;80</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>180</x><y>370</y><w>210</w><h>50</h></coordinates><panel_attributes>Commands::Defend
 --
 void execute()
 </panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>100</x><y>220</y><w>150</w><h>170</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>80;150;80;30</additional_attributes></element></umlet_diagram>
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>80;30;80;150</additional_attributes></element></umlet_diagram>
