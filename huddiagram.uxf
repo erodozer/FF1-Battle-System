@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>8</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>0</x><y>216</y><w>232</w><h>176</h></coordinates><panel_attributes>Engine::Battle
+// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>8</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>80</x><y>200</y><w>232</w><h>176</h></coordinates><panel_attributes>engine::Battle
 --
 Party: party
 Formation: formation
@@ -35,7 +35,7 @@ void stop()
 void next()
 
 static Engine getInstance()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>320</x><y>216</y><w>208</w><h>152</h></coordinates><panel_attributes>HUD::HUD
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>400</x><y>200</y><w>208</w><h>152</h></coordinates><panel_attributes>HUD::HUD
 --
 JFrame: window
 Graphics2D: display
@@ -48,22 +48,22 @@ Font: font
 --
 void update()
 void draw()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>320</x><y>400</y><w>168</w><h>72</h></coordinates><panel_attributes>HUD:PartyStatusDisplay
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>400</x><y>384</y><w>168</w><h>72</h></coordinates><panel_attributes>HUD:PartyStatusDisplay
 --
 Actor[] party
 StatusWindow[] windows
 --
 void update()
 void draw()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>320</x><y>504</y><w>168</w><h>72</h></coordinates><panel_attributes>HUD:StatusWindow
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>400</x><y>488</y><w>168</w><h>72</h></coordinates><panel_attributes>HUD:StatusWindow
 --
 Image: background
 Actor: character
 --
 void update()
-void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>336</x><y>448</y><w>78</w><h>72</h></coordinates><panel_attributes>lt=&lt;.
-Has A</panel_attributes><additional_attributes>40;56;40;24</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>336</x><y>344</y><w>78</w><h>72</h></coordinates><panel_attributes>lt=&lt;.
-Has A</panel_attributes><additional_attributes>40;56;40;24</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>568</x><y>216</y><w>168</w><h>120</h></coordinates><panel_attributes>HUD:CommandDisplay
+void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>416</x><y>432</y><w>78</w><h>72</h></coordinates><panel_attributes>lt=&lt;.
+Has A</panel_attributes><additional_attributes>40;56;40;24</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>416</x><y>328</y><w>78</w><h>72</h></coordinates><panel_attributes>lt=&lt;.
+Has A</panel_attributes><additional_attributes>40;56;40;24</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>648</x><y>200</y><w>168</w><h>120</h></coordinates><panel_attributes>HUD:CommandDisplay
 --
 Player: character
 Command[]: commands
@@ -73,9 +73,9 @@ void setSelected(int i)
 Command getSelected()
 void update()
 void draw()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>504</x><y>216</y><w>80</w><h>56</h></coordinates><panel_attributes>lt=&lt;.
-Has A</panel_attributes><additional_attributes>64;40;24;40</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>208</x><y>216</y><w>128</w><h>56</h></coordinates><panel_attributes>lt=&lt;.
-Has A</panel_attributes><additional_attributes>112;40;24;40</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>840</x><y>216</y><w>168</w><h>120</h></coordinates><panel_attributes>HUD:SkillDisplay
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>584</x><y>200</y><w>80</w><h>56</h></coordinates><panel_attributes>lt=&lt;.
+Has A</panel_attributes><additional_attributes>64;40;24;40</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>288</x><y>200</y><w>128</w><h>56</h></coordinates><panel_attributes>lt=&lt;.
+Has A</panel_attributes><additional_attributes>112;40;24;40</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>920</x><y>200</y><w>168</w><h>120</h></coordinates><panel_attributes>HUD:SkillDisplay
 
 --
 Player: character
@@ -86,29 +86,29 @@ void setSelected(int i)
 Command getSelected()
 void update()
 void draw()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>712</x><y>216</y><w>144</w><h>56</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>24;40;128;40</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>608</x><y>368</y><w>168</w><h>32</h></coordinates><panel_attributes>HUD:SpriteDisplay
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>792</x><y>200</y><w>144</w><h>56</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>24;40;128;40</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>688</x><y>352</y><w>168</w><h>32</h></coordinates><panel_attributes>HUD:PartySpriteDisplay
 --
 void draw()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>608</x><y>472</y><w>168</w><h>32</h></coordinates><panel_attributes>HUD:EnemySpriteDisplay
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>688</x><y>456</y><w>168</w><h>32</h></coordinates><panel_attributes>HUD:EnemySpriteDisplay
 --
 void draw()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>824</x><y>400</y><w>168</w><h>72</h></coordinates><panel_attributes>HUD:SpriteDisplay
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>904</x><y>384</y><w>168</w><h>72</h></coordinates><panel_attributes>HUD:SpriteDisplay
 --
 Image[]: sprites
 Image: background
 Image: terrain
 --
 void draw()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>504</x><y>328</y><w>120</w><h>56</h></coordinates><panel_attributes>lt=&lt;.
-Has A</panel_attributes><additional_attributes>104;40;24;40</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>504</x><y>344</y><w>120</w><h>144</h></coordinates><panel_attributes>lt=&lt;.
-Has A</panel_attributes><additional_attributes>104;128;24;24</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>384</x><y>128</y><w>78</w><h>104</h></coordinates><panel_attributes>lt=&lt;.
-Has A</panel_attributes><additional_attributes>40;24;40;88</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>336</x><y>88</y><w>176</w><h>64</h></coordinates><panel_attributes>HUD:TurnDisplay
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>584</x><y>312</y><w>120</w><h>56</h></coordinates><panel_attributes>lt=&lt;.
+Has A</panel_attributes><additional_attributes>104;40;24;40</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>584</x><y>328</y><w>120</w><h>144</h></coordinates><panel_attributes>lt=&lt;.
+Has A</panel_attributes><additional_attributes>104;128;24;24</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>464</x><y>112</y><w>78</w><h>104</h></coordinates><panel_attributes>lt=&lt;.
+Has A</panel_attributes><additional_attributes>40;24;40;88</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>416</x><y>72</y><w>176</w><h>64</h></coordinates><panel_attributes>HUD:TurnDisplay
 --
 Image: background
 --
 void update(String command)
 void draw()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>736</x><y>360</y><w>126</w><h>80</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>88;64;40;24</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>736</x><y>424</y><w>126</w><h>80</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>816</x><y>344</y><w>126</w><h>80</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>88;64;40;24</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>816</x><y>408</y><w>126</w><h>80</h></coordinates><panel_attributes>lt=&lt;.
 &lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>88;24;40;64</additional_attributes></element></umlet_diagram>

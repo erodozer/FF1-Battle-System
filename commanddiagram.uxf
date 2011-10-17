@@ -30,16 +30,18 @@ DamageBehavior: db
 void execute()
 void setTarget()
 int getDamage()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>330</x><y>100</y><w>220</w><h>100</h></coordinates><panel_attributes>Commands::DamageBehavior
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>330</x><y>100</y><w>220</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Abstract&gt;&gt;
+Commands::DamageBehavior
 --
 String: name
 Actor: target
 Actor: attacker
 --
-boolean didHit()
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>630</x><y>80</y><w>280</w><h>50</h></coordinates><panel_attributes>Commands::PhysicalDamageBehavior
+abstract boolean didHit()
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>630</x><y>80</y><w>280</w><h>60</h></coordinates><panel_attributes>Commands::PhysicalDamageBehavior
 --
-int dealDamage()
+boolean didHit()
+boolean critical()
 </panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>210</x><y>310</y><w>210</w><h>50</h></coordinates><panel_attributes>Commands::Attack
 --
 void execute()
@@ -48,7 +50,7 @@ Has A</panel_attributes><additional_attributes>150;50;30;50</additional_attribut
 &lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>40;50;120;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>510</x><y>150</y><w>150</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
 &lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>40;50;120;50</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>630</x><y>180</y><w>280</w><h>50</h></coordinates><panel_attributes>Commands::MagicDamageBehavior
 --
-int dealDamage()
+boolean didHit()
 </panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>130</x><y>220</y><w>150</w><h>100</h></coordinates><panel_attributes>lt=&lt;.
 &lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>80;30;80;80</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>180</x><y>370</y><w>210</w><h>50</h></coordinates><panel_attributes>Commands::Defend
 --
