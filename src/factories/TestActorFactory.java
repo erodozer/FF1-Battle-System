@@ -23,10 +23,12 @@ public class TestActorFactory extends TestCase {
 	public void testAddActor()
 	{
 		ActorFactory factory = new ActorFactory();
-		Actor a = new Actor();
+		Actor a;
 		
-		factory.add(a);
+		factory.make(null);
+		a = factory.getActor(0);
 		assertEquals(1, factory.size());
+		assertEquals(1, factory.getAlive());
 		assertEquals(a, factory.getActors()[0]);
 		
 	}
