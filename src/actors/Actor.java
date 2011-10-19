@@ -91,9 +91,13 @@ public class Actor
 		return command;
 	}
 
+	/**
+	 * Returns if the actor is alive or not
+	 * @return
+	 */
 	public boolean getAlive()
 	{
-		return (hp <= 0);
+		return (hp > 0);
 	}
 	
 	public void setTarget(Actor t)
