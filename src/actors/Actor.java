@@ -19,7 +19,19 @@ public class Actor
 	
 	public Actor()
 	{
-		
+		this("");
+	}
+	
+	public Actor(String n)
+	{
+		name = n;
+		hp = 1;
+		str = 1;
+		def = 1;
+		spd = 1;
+		evd = 1;
+		mag = 1;
+		res = 1;	
 	}
 	
 	public void setName(String string) {
@@ -87,8 +99,21 @@ public class Actor
 		return res;
 	}
 
+	/**
+	 * Returns the actor's battle command
+	 * @return
+	 */
 	public Command getCommand() {
 		return command;
+	}
+	
+	/**
+	 * Sets the actor's battle command
+	 * @param c
+	 */
+	public void setCommand(Command c)
+	{
+		command = c;
 	}
 
 	/**
@@ -100,16 +125,27 @@ public class Actor
 		return (hp > 0);
 	}
 	
+	/**
+	 * Sets the actor's target in battle
+	 * @param t
+	 */
 	public void setTarget(Actor t)
 	{
 		target = t;
 	}
 	
+	/**
+	 * Returns the actor's target
+	 * @return
+	 */
 	public Actor getTarget()
 	{
 		return target;
 	}
 	
+	/**
+	 * Execute's the actor's command
+	 */
 	public void execute()
 	{
 		command.execute(getTarget());
