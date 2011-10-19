@@ -1,5 +1,9 @@
 package jobs;
 
-public class Fighter {
+public class Fighter extends Job {
 
+	public Fighter()
+	{
+		
+	}
 }
