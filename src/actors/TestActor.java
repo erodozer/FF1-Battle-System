@@ -19,6 +19,7 @@ public class TestActor extends TestCase {
 		assertEquals(1, a.getEvd());
 		assertEquals(1, a.getMag());
 		assertEquals(1, a.getRes());
+		assertTrue(a.getAlive());
 	}
 	
 	@Test
