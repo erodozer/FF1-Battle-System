@@ -1,21 +1,32 @@
 package actors;
 
-import commands.Command;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
-public class Actor 
+import commands.Command;
+import engine.Sprite;
+
+public abstract class Actor
 {
-	private String name;		//actor's name
-	private int hp;				//hit points
-	private int[] mp;			//magic points (d&d styled)
-	private int str;			//strength
-	private int def;			//defense
-	private int spd;			//speed
-	private int evd;			//evasion
-	private int mag;			//magic strength
-	private int res;			//magic defense/resistance
+	protected String name;		//actor's name
+	protected int hp;			//hit points
+	protected int[] mp;			//magic points (d&d styled)
+	protected int str;			//strength
+	protected int def;			//defense
+	protected int spd;			//speed
+	protected int evd;			//evasion
+	protected int mag;			//magic strength
+	protected int res;			//magic defense/resistance
 	
-	private Command command;	//battle command
-	private Actor target;		//battle target
+	protected Command command;	//battle command
+	protected Actor target;		//battle target
+	
+	protected Sprite[] sprites;
+	
+	//coordinates for drawing the sprite to screen
+	protected int x;
+	protected int y;
 	
 	public Actor()
 	{
@@ -31,8 +42,15 @@ public class Actor
 		spd = 1;
 		evd = 1;
 		mag = 1;
-		res = 1;	
+		res = 1;
+		
+		loadSprites();		
 	}
+	
+	/**
+	 * Loads the sprites for the actor
+	 */
+	abstract protected void loadSprites();
 	
 	public void setName(String string) {
 		name = string;
@@ -150,4 +168,15 @@ public class Actor
 	{
 		command.execute(getTarget());
 	}
+	
+	/**
+	 * Draws the actor to the screen
+	 * @param g
+	 */
+	public void draw(Graphics g)
+	{
+		getSprite().paint(g);
+	}
+	
+	public abstract Sprite getSprite();
 }

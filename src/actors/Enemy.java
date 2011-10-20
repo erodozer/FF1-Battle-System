@@ -8,6 +8,8 @@ import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
+import engine.Sprite;
+
 public class Enemy extends Actor {
 
 	int expReward;			//amount of exp gained for slaying the enemy
@@ -58,12 +60,14 @@ public class Enemy extends Actor {
 	}
 	
 	@Override
-	public void loadSprites() {
-		sprites = new BufferedImage[1];
-		try {
-			sprites[0] = ImageIO.read(new File("data/actors/enemies/" + name + "/normal.png"));
-		} 
-	    catch (IOException e) {}
+	protected void loadSprites() {
+		sprites = new Sprite[1];
+		sprites[0] = new Sprite("data/actors/enemies/" + name + "/normal.png");
+	}
+
+	@Override
+	public Sprite getSprite() {
+		return sprites[0];
 	}
 
 }
