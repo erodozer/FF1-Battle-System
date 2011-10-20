@@ -1,4 +1,4 @@
-package engine;
+package battleSystem;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,42 +14,47 @@ import javax.swing.JComponent;
 
 import commands.Defend;
 
+import engine.Engine;
 import factories.Formation;
 import factories.Party;
 
 import actors.Actor;
 import actors.Player;
 
-public class BattleSystem implements KeyListener {
+public class BattleSystem extends Thread{
 
-	HashMap<Integer, Actor> allActors;	//actors and their speeds
-	Queue<Actor> turnOrder;
+	Engine e;
+	HashMap<Integer, Actor> allActors;		//actors and their speeds
+	Queue<Actor> turnOrder;					//order of when the turns execute
 
-	Party party;
-	Formation formation;
+	Party party;							//player party
+	Formation formation;					//enemy formation that the party is fighting
 	
-	boolean battle;					//is the battle currently being executed
-	boolean showMessage;			//is there a message currently being displayed for the user
+	Actor activeActor;						//the currently active actor in battle
 	
-	Actor activeActor;				//the currently active actor in battle
+	int commandIndex;						//current player index for selecting commands
 	
-	int commandIndex;				//current player index for selecting commands
+	BattleState state;						//current state of the battle
 	
 	/**
 	 * Constructs a new battle system instance
 	 * @param p
 	 * @param f
 	 */
-	public BattleSystem(Party p, Formation f)
+	public BattleSystem()
 	{
-		party = p;
-		formation = f;
-			
-		battle = false;
+		e = Engine.getInstance();
+		
+		party = e.getParty();
+		formation = e.getFormation();
+		
 		commandIndex = 0;
-		activeActor = null;
+		activeActor = party.getActor(commandIndex);
 		
 		populateActorList();
+		
+		state = new IssueState(activeActor);
+		
 	}
 	
 	/**
@@ -98,21 +103,14 @@ public class BattleSystem implements KeyListener {
 	 */
 	private void start()
 	{
-		activeActor.execute();
-		
 	}
 	
 	/**
-	 * Update loop for rendering the messages in the gui while waiting for input
+	 * Update loop
 	 */
 	public void update()
 	{
-		if (showMessage)
-		{
-			//TODO Render GUI Messages
-		}
-		else
-			stop();
+		state.handle();
 	}
 	
 	/**
@@ -120,7 +118,7 @@ public class BattleSystem implements KeyListener {
 	 */
 	private void stop()
 	{
-		
+		state.finish();
 	}
 	
 	/**
@@ -129,13 +127,13 @@ public class BattleSystem implements KeyListener {
 	 */
 	private void next()
 	{
-		if (battle)
+		if (state instanceof MessageState)
 		{
 			//make active actor the next actor in the queue
 			activeActor = turnOrder.poll();
 			if (activeActor == null)
 			{
-				battle = false;
+				state = new IssueState(party.getActor(commandIndex));
 				next();
 			}
 		}
@@ -149,9 +147,10 @@ public class BattleSystem implements KeyListener {
 			//switch to battle when all characters have commands set
 			if (commandIndex > party.size())
 			{
-				battle = true;
 				getTurnOrder();
-				commandIndex = -1;
+				activeActor = turnOrder.poll();
+				state = new EngageState(activeActor);
+				commandIndex = 0;
 			}
 		}
 	}
@@ -172,17 +171,19 @@ public class BattleSystem implements KeyListener {
 	/**
 	 * Input handling
 	 */
-	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if (arg0.getKeyCode() == Input.KEY_A && showMessage)
-			showMessage = false;
+		if (state instanceof IssueState)
+			((IssueState) state).handleKeyInput(arg0);
 	}
 
-	//Not necessary but required from KeyListener
-	@Override
-	public void keyReleased(KeyEvent arg0) {}
-
-	//Not necessary but required from KeyListener
-	@Override
-	public void keyTyped(KeyEvent arg0) {}
+	/**
+	 * Advances the system to the next state
+	 */
+	public void setNextState() {
+		if (state instanceof EngageState)
+			state = new MessageState(state.toString());
+		else
+			next();
+	}
+	
 }
