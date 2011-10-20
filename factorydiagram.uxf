@@ -20,31 +20,39 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>10</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>90</x><y>240</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Factory&gt;&gt;
+// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>10</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>40</x><y>160</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Factory&gt;&gt;
 Factories:ActorFactory
 --
 ArrayList&lt;Actor&gt; actors
 --
 String toString()
-int getAlive()
 Actor[] getActors()
+Actor[] getAliveMembers()
+Actor getActor(int i)
+int getAlive()
+int size()
 
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>380</x><y>390</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Factory&gt;&gt;
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>330</x><y>310</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Factory&gt;&gt;
 Factories:Formation
 --
 ArrayList&lt;Enemy&gt; actors
 --
 String toString()
 int getAlive()
-
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>380</x><y>160</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Factory&gt;&gt;
+Enemy[] getActors()
+Enemy[] getAliveMembers()
+Enemy getActor(int i)
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>330</x><y>80</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Factory&gt;&gt;
 Factories:Party
 --
 ArrayList&lt;Player&gt; actors
 --
 String toString()
 int getAlive()
+Player[] getActors()
+Player[] getAliveMembers()
+Player getActor(int i)
 
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>260</x><y>220</y><w>150</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>40;50;120;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>260</x><y>360</y><w>150</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>210</x><y>140</y><w>150</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>40;50;120;50</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>210</x><y>280</y><w>150</w><h>70</h></coordinates><panel_attributes>lt=&lt;.
 &lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>40;50;120;50</additional_attributes></element></umlet_diagram>

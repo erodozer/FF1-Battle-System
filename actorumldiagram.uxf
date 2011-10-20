@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>7</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>0</x><y>154</y><w>210</w><h>469</h></coordinates><panel_attributes>Actors::Actor
+// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>7</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>0</x><y>203</y><w>210</w><h>469</h></coordinates><panel_attributes>Actors::Actor
 --
 String: name
 Image: sprite
@@ -62,7 +62,7 @@ int getMag()
 int getRes()
  
 boolean getKO()
-void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>287</x><y>385</y><w>147</w><h>119</h></coordinates><panel_attributes>Actors::Enemy
+void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>287</x><y>434</y><w>147</w><h>119</h></coordinates><panel_attributes>Actors::Enemy
 --
 int: expReward
 Item: itemDrop
@@ -73,7 +73,7 @@ void setDrop(Item i)
 int getExp()
 Item getDrop()
  
-void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>287</x><y>77</y><w>147</w><h>238</h></coordinates><panel_attributes>Actors:Player
+void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>287</x><y>126</y><w>147</w><h>238</h></coordinates><panel_attributes>Actors:Player
 --
 Job: job
 Items[]: equipment
@@ -95,7 +95,7 @@ void getArmor(Item i)
 void getAccessory(Item i)
 void getEquipment(Item[] i)
  
-void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>637</x><y>77</y><w>147</w><h>203</h></coordinates><panel_attributes>&lt;&lt;Abstract&gt;&gt;
+void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>637</x><y>126</y><w>147</w><h>203</h></coordinates><panel_attributes>&lt;&lt;Abstract&gt;&gt;
 Jobs::Job
 --
 -String: name
@@ -116,10 +116,10 @@ String[] getSkills(int lvl)
 
 
 
-</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>413</x><y>91</y><w>237</w><h>49</h></coordinates><panel_attributes>lt=&lt;-
-&lt;Has A&gt;</panel_attributes><additional_attributes>21;35;224;35</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>189</x><y>182</y><w>111</w><h>49</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>21;35;98;35</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>189</x><y>357</y><w>111</w><h>49</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>21;35;98;35</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>826</x><y>63</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::Fighter
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>413</x><y>140</y><w>237</w><h>49</h></coordinates><panel_attributes>lt=&lt;-
+&lt;Has A&gt;</panel_attributes><additional_attributes>21;35;224;35</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>189</x><y>231</y><w>111</w><h>49</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>21;35;98;35</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>189</x><y>406</y><w>111</w><h>49</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>21;35;98;35</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>826</x><y>112</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::Fighter
 --
 --
 int getHP(int lvl)
@@ -129,7 +129,7 @@ int getDef(int lvl)
 int getSpd(int lvl)
 int getEvd(int lvl)
 int getMag(int lvl)
-int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>826</x><y>182</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::Monk
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>826</x><y>231</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::Monk
 --
 --
 int getHP(int lvl)
@@ -139,7 +139,7 @@ int getDef(int lvl)
 int getSpd(int lvl)
 int getEvd(int lvl)
 int getMag(int lvl)
-int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>826</x><y>301</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::Thief
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>826</x><y>350</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::Thief
 --
 --
 int getHP(int lvl)
@@ -149,7 +149,7 @@ int getDef(int lvl)
 int getSpd(int lvl)
 int getEvd(int lvl)
 int getMag(int lvl)
-int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>637</x><y>301</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::Red Mage
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>637</x><y>350</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::Red Mage
 --
 --
 int getHP(int lvl)
@@ -159,7 +159,7 @@ int getDef(int lvl)
 int getSpd(int lvl)
 int getEvd(int lvl)
 int getMag(int lvl)
-int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>448</x><y>301</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::White Mage
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>448</x><y>350</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::White Mage
 --
 --
 int getHP(int lvl)
@@ -169,7 +169,7 @@ int getDef(int lvl)
 int getSpd(int lvl)
 int getEvd(int lvl)
 int getMag(int lvl)
-int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>448</x><y>182</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::Black Mage
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>448</x><y>231</y><w>147</w><h>112</h></coordinates><panel_attributes>Jobs::Black Mage
 --
 --
 int getHP(int lvl)
@@ -179,10 +179,10 @@ int getDef(int lvl)
 int getSpd(int lvl)
 int getEvd(int lvl)
 int getMag(int lvl)
-int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>749</x><y>49</y><w>106</w><h>49</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>35;35;77;35</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>749</x><y>154</y><w>106</w><h>49</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>35;35;77;35</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>749</x><y>259</y><w>106</w><h>55</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>35;21;77;42</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>651</x><y>259</y><w>106</w><h>55</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>56;21;56;42</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>560</x><y>259</y><w>106</w><h>55</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>77;21;35;42</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>560</x><y>154</y><w>106</w><h>49</h></coordinates><panel_attributes>lt=&lt;.
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>749</x><y>98</y><w>106</w><h>49</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>35;35;77;35</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>749</x><y>203</y><w>106</w><h>49</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>35;35;77;35</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>749</x><y>308</y><w>106</w><h>55</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>35;21;77;42</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>651</x><y>308</y><w>106</w><h>55</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>56;21;56;42</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>560</x><y>308</y><w>106</w><h>55</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>77;21;35;42</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>560</x><y>203</y><w>106</w><h>49</h></coordinates><panel_attributes>lt=&lt;.
 &lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>77;35;35;35</additional_attributes></element></umlet_diagram>
