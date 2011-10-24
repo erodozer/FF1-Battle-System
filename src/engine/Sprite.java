@@ -13,8 +13,10 @@ import javax.imageio.ImageIO;
 public class Sprite extends JComponent{
 
 	BufferedImage image;
-	int x;
-	int y;
+	int width  = 1;
+	int height = 1;
+	int x = 0;
+	int y = 0;
 	
 	/**
 	 * Load the sprite
@@ -24,6 +26,8 @@ public class Sprite extends JComponent{
 	{
 		try {
 			image = ImageIO.read(new File(s));
+			width = image.getWidth();
+			height = image.getHeight();
 		} 
 	    catch (IOException e) {}
 	}
@@ -67,7 +71,7 @@ public class Sprite extends JComponent{
 	 */
 	public int getWidth()
 	{
-		return image.getWidth();
+		return width;
 	}
 	
 	/**
@@ -75,7 +79,7 @@ public class Sprite extends JComponent{
 	 */
 	public int getHeight()
 	{
-		return image.getHeight();
+		return height;
 	}
 	
 	/**
@@ -85,9 +89,12 @@ public class Sprite extends JComponent{
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setClip(x, y, getWidth(), getHeight());
-		System.err.println(g2.getClipBounds());
-		g2.drawImage(image, null, x, y);
+		super.paintComponent(g);
+		if (image != null)
+		{
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setClip(x, y, getWidth(), getHeight());
+			g2.drawImage(image, null, x, y);
+		}
 	}
 }
