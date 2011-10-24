@@ -42,9 +42,7 @@ public abstract class Actor
 		spd = 1;
 		evd = 1;
 		mag = 1;
-		res = 1;
-		
-		loadSprites();		
+		res = 1;	
 	}
 	
 	/**
