@@ -20,10 +20,10 @@ public class Enemy extends Actor {
 	 */
 	public Enemy(String n)
 	{
-		super(n);
 		//load enemy data from ini
 		try
 		{
+			name = n;
 			Properties p = new Properties();
 			p.load(new FileInputStream("data/actors/enemies/" + name + "/enemy.ini"));
 			hp = Integer.valueOf(p.getProperty("hp")).intValue();
@@ -34,6 +34,7 @@ public class Enemy extends Actor {
 			spd = Integer.valueOf(p.getProperty("spd")).intValue();
 			evd = Integer.valueOf(p.getProperty("evd")).intValue();
 			expReward = Integer.valueOf(p.getProperty("exp")).intValue();
+			loadSprites();
 		}
 		catch (Exception e)
 		{
