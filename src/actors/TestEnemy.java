@@ -2,7 +2,8 @@ package actors;
 
 import org.junit.Test;
 
-import engine.GameScreen;
+import GUI.GameScreen;
+
 import engine.Sprite;
 
 import junit.framework.TestCase;

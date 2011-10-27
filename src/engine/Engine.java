@@ -3,7 +3,9 @@ package engine;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import factories.*;
+import GUI.GameScreen;
+
+import groups.*;
 
 public class Engine implements KeyListener, Runnable {
 
