@@ -1,4 +1,4 @@
-package HUD;
+package GUI;
 
 public class CommandDisplay {
 
