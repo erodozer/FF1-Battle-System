@@ -15,8 +15,8 @@ import javax.swing.JComponent;
 import commands.Defend;
 
 import engine.Engine;
-import factories.Formation;
-import factories.Party;
+import groups.Formation;
+import groups.Party;
 
 import actors.Actor;
 import actors.Player;
@@ -41,12 +41,12 @@ public class BattleSystem extends Thread{
 	 * @param p
 	 * @param f
 	 */
-	public BattleSystem()
+	public BattleSystem(Formation f)
 	{
 		e = Engine.getInstance();
 		
 		party = e.getParty();
-		formation = e.getFormation();
+		formation = f;
 		
 		commandIndex = 0;
 		activeActor = party.getActor(commandIndex);
