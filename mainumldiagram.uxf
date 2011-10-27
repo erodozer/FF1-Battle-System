@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><umlet_diagram><help_text>// Uncomment the following line to change the fontsize:
+// fontsize=14
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Welcome to UMLet!
+//
+// Double-click on UML elements to add them to the diagram, or to copy them
+// Edit elements by modifying the text in this panel
+// Hold Ctrl to select multiple elements
+// Use Ctrl+mouse to select via lasso
+//
+// Use Â± or Ctrl+mouse wheel to zoom
+// Drag a whole relation at its central square icon
+//
+// Press Ctrl+C to copy the whole diagram to the system clipboard (then just paste it to, eg, Word)
+// Edit the files in the "palettes" directory to create your own element palettes
+//
+// Select "Custom Elements &gt; New..." to create new element types
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// This text will be stored with each diagram;  use it for notes.</help_text><zoom_level>10</zoom_level><element><type>com.umlet.element.base.Class</type><coordinates><x>2110</x><y>220</y><w>300</w><h>670</h></coordinates><panel_attributes>Actors::Actor
+--
+String: name
+Image: sprite
+int: level
+int: hp
+int[]: mp
+int: strength
+int: defense
+int: speed
+int: evasion
+int: magic
+int: resistance
+boolean: alive
+Command: action
+Skill[]: abilities
+Actor: target
+--
+void setCommand(Command a)
+int execute()
+ 
+void setName(String n)
+void setHP(int i)
+void setMP(int[] i)
+void setStr(int i)
+void setDef(int i)
+void setSpd(int i)
+void setEva(int i)
+void setMag(int i)
+void setRes(int i)
+ 
+String getName()
+int getHP()
+int[] getMP()
+int getStr()
+int getDef()
+int getSpd()
+int getEva()
+int getMag()
+int getRes()
+ 
+boolean getKO()
+void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1830</x><y>260</y><w>210</w><h>170</h></coordinates><panel_attributes>Actors::Enemy
+--
+int: expReward
+Item: itemDrop
+--
+void setExp(int i)
+void setDrop(Item i)
+ 
+int getExp()
+Item getDrop()
+ 
+void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2520</x><y>110</y><w>210</w><h>350</h></coordinates><panel_attributes>Actors:Player
+--
+Job: job
+Items[]: equipment
+--
+void setJob(Job j)
+ 
+void setWeaponL(Item i)
+void setWeaponR(Item i)
+void setHelm(Item i)
+void setArmor(Item i)
+void setAccessory(Item i)
+void setEquipment(Item[] i)
+void setJob(Job j)
+ 
+void getWeaponL(Item i)
+void getWeaponR(Item i)
+void getHelm(Item i)
+void getArmor(Item i)
+void getAccessory(Item i)
+void getEquipment(Item[] i)
+ 
+void draw()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3020</x><y>110</y><w>210</w><h>290</h></coordinates><panel_attributes>&lt;&lt;Abstract&gt;&gt;
+Jobs::Job
+--
+-String: name
+-String[]: equippableTypes
+-Skills[][]: skillList
+--
+abstract int getHP(int lvl)
+abstract int[] getMP(int lvl)
+abstract int getStr(int lvl)
+abstract int getDef(int lvl)
+abstract int getSpd(int lvl)
+abstract int getEvd(int lvl)
+abstract int getMag(int lvl)
+abstract int getRes(int lvl)
+ 
+String getName()
+  
+String[] getEquippable()
+String[] getSkills(int lvl)
+
+
+
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3290</x><y>90</y><w>210</w><h>160</h></coordinates><panel_attributes>Jobs::Fighter
+--
+--
+int getHP(int lvl)
+int[] getMP(int lvl)
+int getStr(int lvl)
+int getDef(int lvl)
+int getSpd(int lvl)
+int getEvd(int lvl)
+int getMag(int lvl)
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3290</x><y>260</y><w>210</w><h>160</h></coordinates><panel_attributes>Jobs::Monk
+--
+--
+int getHP(int lvl)
+int[] getMP(int lvl)
+int getStr(int lvl)
+int getDef(int lvl)
+int getSpd(int lvl)
+int getEvd(int lvl)
+int getMag(int lvl)
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3290</x><y>430</y><w>210</w><h>160</h></coordinates><panel_attributes>Jobs::Thief
+--
+--
+int getHP(int lvl)
+int[] getMP(int lvl)
+int getStr(int lvl)
+int getDef(int lvl)
+int getSpd(int lvl)
+int getEvd(int lvl)
+int getMag(int lvl)
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3020</x><y>430</y><w>210</w><h>160</h></coordinates><panel_attributes>Jobs::Red Mage
+--
+--
+int getHP(int lvl)
+int[] getMP(int lvl)
+int getStr(int lvl)
+int getDef(int lvl)
+int getSpd(int lvl)
+int getEvd(int lvl)
+int getMag(int lvl)
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2750</x><y>430</y><w>210</w><h>160</h></coordinates><panel_attributes>Jobs::White Mage
+--
+--
+int getHP(int lvl)
+int[] getMP(int lvl)
+int getStr(int lvl)
+int getDef(int lvl)
+int getSpd(int lvl)
+int getEvd(int lvl)
+int getMag(int lvl)
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2750</x><y>260</y><w>210</w><h>160</h></coordinates><panel_attributes>Jobs::Black Mage
+--
+--
+int getHP(int lvl)
+int[] getMP(int lvl)
+int getStr(int lvl)
+int getDef(int lvl)
+int getSpd(int lvl)
+int getEvd(int lvl)
+int getMag(int lvl)
+int getRes(int lvl)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3200</x><y>90</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>30;30;90;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3200</x><y>240</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>30;30;90;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3200</x><y>370</y><w>110</w><h>80</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>30;30;90;60</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3090</x><y>370</y><w>50</w><h>80</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>30;30;30;60</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2930</x><y>370</y><w>110</w><h>80</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>90;30;30;60</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2930</x><y>240</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>90;30;30;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1700</x><y>830</y><w>290</w><h>240</h></coordinates><panel_attributes>engine::Engine
+&lt;&lt;KeyListener, Runnable&gt;&gt;
+--
+ActorGroup&lt;Player&gt;: party
+ 
+GameScreen: screen
+ 
+static Engine: _instance
+ 
+Scene: currentScene
+ 
+static void main(String[] args)
+--
+static Engine getInstance()
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1740</x><y>610</y><w>210</w><h>110</h></coordinates><panel_attributes>Grouping::Party
+extends ArrayList&lt;Player&gt;
+--
+void add(String n, String job)
+Actor[] getAliveMembers()
+int getAlive()
+
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2010</x><y>290</y><w>120</w><h>50</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>100;30;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2380</x><y>260</y><w>160</w><h>50</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>30;30;140;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2700</x><y>130</y><w>340</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>320;30;30;30</additional_attributes></element><element><type>com.umlet.element.base.Note</type><coordinates><x>2880</x><y>790</y><w>530</w><h>120</h></coordinates><panel_attributes>Note..
+bg=blue
+Command Pattern
+ 
+Actors execute their actions using "commands".  These commands
+range from attacking with weapons, to using magic spells, as well as
+protection oneself.</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>1380</x><y>0</y><w>240</w><h>130</h></coordinates><panel_attributes>Note..
+bg=blue
+The grouping system helps
+organize Actors into groups
+for battle.  They also keep track
+of helpful numbers such as how
+many of that actor type is alive
+in the battle.</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1830</x><y>690</y><w>50</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;30;140</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1090</x><y>1390</y><w>260</w><h>170</h></coordinates><panel_attributes>GUI::Hud
+&lt;&lt;Component&gt;&gt;
+--
+PartyStatusDisplay: pStatDisplay
+CommandDisplay: cDisplay
+EnemySpriteDisplay: eSpriteDisplay
+PartySpriteDisplay: pSpriteDisplay
+TurnDialog: turnDisplay
+Font: font
+--
+void paintComponent(Graphics g)
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1090</x><y>1620</y><w>210</w><h>110</h></coordinates><panel_attributes>&lt;&lt;Component&gt;&gt;
+GUI::PartyStatusDisplay
+--
+void paintComponent(Graphics g)
+
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1090</x><y>1800</y><w>210</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Component&gt;&gt;
+GUI::StatusWindow
+--
+void paintComponent(Graphics g)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1130</x><y>1700</y><w>50</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;100;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1130</x><y>1530</y><w>50</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;90;30;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1400</x><y>1390</y><w>210</w><h>70</h></coordinates><panel_attributes>GUI::CommandDisplay
+&lt;&lt;Component&gt;&gt;
+--
+void paintComponent(Graphics g)
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1320</x><y>1400</y><w>100</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>80;30;30;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1730</x><y>1390</y><w>210</w><h>70</h></coordinates><panel_attributes>GUI::SkillDisplay
+&lt;&lt;Component&gt;&gt;
+--
+void paintComponent(Graphics g)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1580</x><y>1400</y><w>170</w><h>50</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>30;30;150;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1400</x><y>1510</y><w>210</w><h>60</h></coordinates><panel_attributes>&lt;&lt;Component&gt;&gt;
+GUI::PartySpriteDisplay
+--
+void paintComponent(Graphics g)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1400</x><y>1640</y><w>210</w><h>60</h></coordinates><panel_attributes>&lt;&lt;Component&gt;&gt;
+GUI::EnemySpriteDisplay
+--
+void paintComponent(Graphics g)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1670</x><y>1570</y><w>210</w><h>60</h></coordinates><panel_attributes>&lt;&lt;Component&gt;&gt;
+GUI::SpriteDisplay
+--
+void paintComponent(Graphics g)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1320</x><y>1480</y><w>100</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>80;30;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1280</x><y>1530</y><w>140</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;110;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1190</x><y>1280</y><w>50</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;30;110</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1110</x><y>1260</y><w>250</w><h>50</h></coordinates><panel_attributes>GUI::TurnDisplay
+--
+void paintComponent(Graphics g)
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1580</x><y>1500</y><w>110</w><h>110</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>90;90;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1580</x><y>1580</y><w>110</w><h>100</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>90;30;30;80</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>970</x><y>600</y><w>190</w><h>910</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;890;30;890;40;30;170;30</additional_attributes></element><element><type>com.umlet.element.base.Note</type><coordinates><x>1400</x><y>1750</y><w>520</w><h>60</h></coordinates><panel_attributes>Note..
+bg=blue
+The gui follows no real pattern.  Things drawn to screen are determined
+by the engine's state.</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2220</x><y>1050</y><w>210</w><h>330</h></coordinates><panel_attributes>GUI::Sprite
+&lt;&lt;Component&gt;&gt;
+--
+int width
+int height
+int x
+int y
+ 
+BufferedImage image
+--
+loadImage(String s)
+ 
+getWidth()
+getHeight()
+ 
+setWidth()
+setHeight()
+ 
+getX()
+getY()
+ 
+setX()
+setY()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2270</x><y>860</y><w>50</w><h>210</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;190;30;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>500</x><y>420</y><w>220</w><h>90</h></coordinates><panel_attributes>battleSystem::EngageState
+Execute commands
+--
+void handle()
+void execute()
+void moveTo()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>800</x><y>500</y><w>210</w><h>80</h></coordinates><panel_attributes>battleSystem::BattleState
+--
+void handle()
+void execute()
+void moveTo()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>500</x><y>550</y><w>220</w><h>90</h></coordinates><panel_attributes>battleSystem::MessageState
+Display turn results
+--
+void handle()
+void execute()
+void moveTo()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>500</x><y>290</y><w>220</w><h>90</h></coordinates><panel_attributes>battleSystem::IssueState
+Issuing Commands
+--
+void handle()
+void execute()
+void moveTo()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>690</x><y>300</y><w>130</w><h>220</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>110;200;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>690</x><y>460</y><w>130</w><h>90</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>110;70;30;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>690</x><y>530</y><w>130</w><h>80</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>110;30;30;60</additional_attributes></element><element><type>com.umlet.element.base.Note</type><coordinates><x>1460</x><y>1090</y><w>470</w><h>190</h></coordinates><panel_attributes>Note..
+bg=blue
+Singleton Pattern
+ 
+The engine itself is a singleton pattern, allowing only one
+instance of itself.  This is so things such as scenes and
+the gui can reference the engine for the party and formation
+it is storing for battle.  The engine also keeps track of the actor
+turn order while they are engaged in battle.  Additionally, it
+handles key input which is necessary for switching between
+states and selecting commands to execute.</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>500</x><y>680</y><w>220</w><h>90</h></coordinates><panel_attributes>battleSystem::ResultsState
+Display Battle results
+--
+void handle()
+void execute()
+void moveTo()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>690</x><y>550</y><w>130</w><h>210</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>110;30;30;190</additional_attributes></element><element><type>com.umlet.element.base.Note</type><coordinates><x>0</x><y>290</y><w>470</w><h>410</h></coordinates><panel_attributes>Note..
+bg=blue
+State Pattern
+ 
+Battle is divided into 4 different states.
+ 
+IssueState allows the user to select a command for the party 
+member to execute.  Upon selecting a command the engine's 
+commandIndex is incremented, and when that is larger than the
+party's size, turn order is determined and EngageState starts
+ 
+EngageState executes all the actor's commands and deals the
+damage.  Upon executing and completing MessageState is active
+ 
+MessageState shows the results of the turn just executed in
+text format for the user to understand.  When this is done
+showing, EngageState will start for the next actor.  If there are
+no more actors with actions the game will go back to IssueState.
+If there are no more actors alive in either group, the game will
+enter into ResultsState
+ 
+ResultsState displays the battle's results.  Upon death of the
+whole party, Game Over is displayed in a message box and the
+game will close.  Upon the formation dying, exp, gold, and items
+will be rewarded to the party.  In this test the party will full heal
+and another battle will commence.</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>980</x><y>510</y><w>180</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;160;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1140</x><y>490</y><w>320</w><h>250</h></coordinates><panel_attributes>battleSystem::BattleSystem
+&lt;&lt;Scene, Thread, Component&gt;&gt;
+--
+Engine: e
+MP3: music
+ 
+HashMap&lt;Integer, Actor&gt;: allActors
+Queue&lt;Actor&gt;: turnOrder
+int: commandIndex
+ 
+BattleState: state
+ 
+ActorGroup&lt;Enemy&gt;: formation
+--
+void start()
+void stop()
+void next()
+void paintComponent()</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1430</x><y>840</y><w>290</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-&gt;&gt;</panel_attributes><additional_attributes>30;30;270;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1430</x><y>520</y><w>420</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>400;30;30;30</additional_attributes></element><element><type>com.umlet.element.base.Note</type><coordinates><x>1070</x><y>280</y><w>470</w><h>180</h></coordinates><panel_attributes>Note..
+bg=blue
+Strategy Pattern
+ 
+Scenes also follow the Strategy pattern in that all scenes
+follow the basic threaded structure of start() run() stop()
+but do different but similar things in those general methods.
+It simplifies the game structure to having one engine and
+different scenes instead of different engines for battle, party
+selection, and map wandering (which the threading capabilites
+would become extremely handy for dealing with npc movement).</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>1470</x><y>740</y><w>320</w><h>70</h></coordinates><panel_attributes>Note..
+bg=blue
+scenes are threaded, though this
+isn't exactly evident in a linear turn based
+battle scene.</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>2440</x><y>1190</y><w>250</w><h>100</h></coordinates><panel_attributes>Note..
+bg=blue
+Sprites are used to easily manage
+and draw images to the screen.
+This includes HUD windows and 
+player/enemy images.</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2670</x><y>950</y><w>210</w><h>150</h></coordinates><panel_attributes>Commands::Command
+--
+String: name
+Actor: target
+int damage
+DamageBehavior: db
+--
+void execute()
+void setTarget()
+int getDamage()
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3000</x><y>950</y><w>220</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Abstract&gt;&gt;
+Commands::DamageBehavior
+--
+String: name
+Actor: target
+Actor: attacker
+--
+abstract boolean didHit(int bonus)
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3300</x><y>930</y><w>280</w><h>60</h></coordinates><panel_attributes>Commands::PhysicalDamageBehavior
+--
+boolean didHit(int bonus)
+boolean critical()
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2880</x><y>1160</y><w>210</w><h>50</h></coordinates><panel_attributes>Commands::Attack
+--
+void execute()
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3190</x><y>920</y><w>130</w><h>50</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>30;30;110;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>3190</x><y>1020</y><w>130</w><h>50</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>30;30;110;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>3300</x><y>1030</y><w>280</w><h>50</h></coordinates><panel_attributes>Commands::MagicDamageBehavior
+--
+boolean didHit(int bonus)
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2850</x><y>1070</y><w>50</w><h>100</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>30;30;30;80</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>2850</x><y>1220</y><w>210</w><h>50</h></coordinates><panel_attributes>Commands::Defend
+--
+void execute()
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2820</x><y>1070</y><w>50</w><h>170</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>30;30;30;150</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2380</x><y>810</y><w>310</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>290;140;30;30</additional_attributes></element><element><type>com.umlet.element.base.Note</type><coordinates><x>2880</x><y>610</y><w>530</w><h>120</h></coordinates><panel_attributes>Note..
+bg=blue
+Strategy Pattern
+ 
+Jobs that players possess determine how much of each stat the Player
+has.  Different jobs have different algorithms for determining each stat 
+dependent on the player's level.</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Note</type><coordinates><x>3170</x><y>1100</y><w>560</w><h>290</h></coordinates><panel_attributes>Note..
+bg=blue
+Strategy Pattern
+ 
+The way commands deal damage is divided up int different calculations
+that are shared between many types of commands.  The different damage
+behaviors are Physical and Magical.
+ 
+With physical, damage is determined by the attacker's strength and the
+target's defense, which if the target used the defend command, their defense
+is 2x what it normally is.
+ 
+With magical, damage is determined by the attacker's magic power and the
+target's resistance.
+ 
+didHit() is evoked during execute before damage is calculated to make sure
+the attack even lands.  It is determined by the target's evade and the 
+attacker's speed plus a bonus determined by the command itself.</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>2850</x><y>980</y><w>170</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>150;30;30;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1140</x><y>950</y><w>350</w><h>110</h></coordinates><panel_attributes>GUI::GameScreen
+&lt;&lt;JPanel&gt;&gt;
+--
+static final int FRAME_WIDTH
+static final int FRAME_HEIGHT
+static final Color BACKGROUND;
+--
+void paintComponents(Graphics g)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1460</x><y>950</y><w>260</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;240;30</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1030</x><y>840</y><w>130</w><h>200</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>110;30;30;30;30;180;110;180</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1830</x><y>480</y><w>210</w><h>120</h></coordinates><panel_attributes>Grouping::Formation
+extends ArrayList&lt;Enemy&gt;
+--
+void add(String n)
+void add(String[] n)
+ 
+Enemy[] getAliveMembers()
+int getAlive()
+
+
+
+</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1900</x><y>400</y><w>50</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>30;30;30;80</additional_attributes></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1630</x><y>100</y><w>910</w><h>580</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>890;30;30;30;30;560;110;560</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1950</x><y>1110</y><w>210</w><h>130</h></coordinates><panel_attributes>engine::Input
+--
+final static int KEY_A
+final static int KEY_B
+final static int KEY_UP
+final static int KEY_DN
+final static int KEY_LT
+final static int KEY_RT</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1960</x><y>1040</y><w>100</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>80;70;30;30</additional_attributes></element><element><type>com.umlet.element.base.Class</type><coordinates><x>1140</x><y>800</y><w>320</w><h>120</h></coordinates><panel_attributes>engine::Scene
+extends JComponent implements Runnable
+--
+Engine: e
+--
+void start()
+void stop()
+void next()
+void render(Graphics2D g)
+ 
+final void paintComponent(Graphics g)</panel_attributes><additional_attributes/></element><element><type>com.umlet.element.base.Relation</type><coordinates><x>1250</x><y>710</y><w>50</w><h>110</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>30;90;30;30</additional_attributes></element></umlet_diagram>
