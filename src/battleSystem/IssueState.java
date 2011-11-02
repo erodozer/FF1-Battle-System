@@ -25,7 +25,7 @@ public class IssueState implements BattleState
 	
 	public void start(Actor a)
 	{
-		
+		actor.setCommand(null);
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class IssueState implements BattleState
 	public void handleKeyInput(KeyEvent e)
 	{
 		if (e.getKeyCode() == Input.KEY_A)
-			return;
+			finish();
 		else if (e.getKeyCode() == Input.KEY_DN)
 			index++;
 		else if (e.getKeyCode() == Input.KEY_UP)
