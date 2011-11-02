@@ -1,5 +1,15 @@
 package groups;
 
+/**
+ * Party.java
+ * @author Nicholas Hydock 
+ * 
+ * Description: A special form of ArrayList that keeps track of
+ * 				player objects.  It can create new players using
+ * 				just strings as well as keep track of which players
+ * 				are still alive.
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +41,10 @@ public class Party extends ArrayList<Player>{
 			this.add(new Player(n, (Job)Class.forName("jobs." + job).newInstance()));
 			System.out.println(this.toString());
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
