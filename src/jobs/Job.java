@@ -8,11 +8,14 @@ import javax.imageio.ImageIO;
 
 import engine.Sprite;
 
-public class Job {
+abstract public class Job {
 
 	private final String[] spriteNames = {"stand", "walk", "item", "cast", "victory"};
 	private Sprite[] sprites;
 	
+	/**
+	 * Loads all the sprites that the job will use in battle
+	 */
 	public void loadSprites()
 	{
 		sprites = new Sprite[spriteNames.length];
@@ -20,49 +23,41 @@ public class Job {
 			sprites[i] = new Sprite("data/actors/jobs/" + "Fighter" + "/"+ spriteNames[i] + ".png");
 	}
 	
+	/**
+	 * Retrieves the sprites that are used for the job
+	 * @return
+	 */
 	public Sprite[] getSprites()
 	{
 		return sprites;
 	}
 
+	/**
+	 * Retrieves the name by with the job is identified
+	 * @return
+	 */
 	public String getName() {
 		return Class.class.getName();
 	}
 
-	public int getHP() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getStr() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getDef() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getSpd() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getEvd() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getMag() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getRes() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	/**
+	 * Jobs do not have setter methods for retrieving stat values.
+	 * This is because stat getters should be equations dependent on
+	 * the actor's level. Jobs do not have setter methods for retrieving 
+	 * stat values.  This is because stat getters should be equations 
+	 * dependent on the actor's level.
+	 * @param lvl	
+	 * 				level of the actor
+	 * @return	
+	 * 				the value of the stat when that actor is at the passed level
+	 */
+	abstract public int getHP(int lvl);
+	abstract public int getStr(int lvl);
+	abstract public int getDef(int lvl);
+	abstract public int getSpd(int lvl);
+	abstract public int getEvd(int lvl);
+	abstract public int getMag(int lvl);
+	abstract public int getRes(int lvl);
 	
 	
 }
