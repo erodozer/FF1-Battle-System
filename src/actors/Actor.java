@@ -10,7 +10,9 @@ import engine.Sprite;
 public abstract class Actor
 {
 	protected String name;		//actor's name
+	protected int level;		//level
 	protected int hp;			//hit points
+	protected int maxhp;		//maximum amount of hp
 	protected int[] mp;			//magic points (d&d styled)
 	protected int str;			//strength
 	protected int def;			//defense
@@ -28,6 +30,8 @@ public abstract class Actor
 	protected int x;
 	protected int y;
 	
+	protected int exp;			//for players, the exp that it has, for enemies, the exp rewarded
+	
 	public Actor()
 	{
 		this("");
@@ -37,6 +41,7 @@ public abstract class Actor
 	{
 		name = n;
 		hp = 1;
+		maxhp = 1;
 		str = 1;
 		def = 1;
 		spd = 1;
@@ -59,7 +64,7 @@ public abstract class Actor
 	}
 
 	public void setHP(int i) {
-		hp = Math.max(i, 0);
+		hp = Math.min(maxhp, Math.max(i, 0));
 	}
 	
 	public int getHP() {
@@ -164,7 +169,7 @@ public abstract class Actor
 	 */
 	public void execute()
 	{
-		command.execute(getTarget());
+		command.execute();
 	}
 	
 	/**
@@ -177,4 +182,5 @@ public abstract class Actor
 	}
 	
 	public abstract Sprite getSprite();
+	
 }
