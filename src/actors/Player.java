@@ -1,5 +1,12 @@
 package actors;
 
+/**
+ * Player.java
+ * @author Nicholas Hydock 
+ * 
+ * Description: User controllable actors
+ */
+
 import java.awt.image.BufferedImage;
 
 import engine.Sprite;
@@ -15,13 +22,9 @@ public class Player extends Actor {
 		System.out.println(getAlive());
 		job = j;
 		name = n.substring(0,4);	//char limit of 4
-		hp = j.getHP();
-		str = j.getStr();
-		def = j.getDef();
-		spd = j.getSpd();
-		evd = j.getEvd();
-		mag = j.getMag();
-		res = j.getRes();
+		level = 0;
+		exp = 0;
+		levelUp();
 		loadSprites();
 	}
 	
@@ -43,5 +46,62 @@ public class Player extends Actor {
 	@Override
 	public Sprite getSprite() {
 		return sprites[0];
+	}
+	
+	public void setHP(int i) {
+		hp = Math.min(getMaxHP(), Math.max(i, 0));
+	}
+	
+	public int getHP() {
+		return hp;
+	}
+
+	public int getMaxHP()
+	{
+		return job.getHP(level);
+	}
+	
+	/*
+	 * Setters are blanked for player class because the job handles all the stats
+	 * Only exception is magic and hp, which are controlled by the battle situation
+	 */
+	@Override
+	public void setStr(int i) {}
+	@Override
+	public void setDef(int i) {}
+	@Override
+	public void setSpd(int i) {}
+	@Override
+	public void setEvd(int i) {}
+	@Override
+	public void setMag(int i) {}
+	@Override
+	public void setRes(int i) {}
+	
+	/**
+	 * When required exp is met, the player will level up
+	 * all the player's stats will be updated
+	 */
+	public void levelUp()
+	{
+		level++;
+		hp = job.getHP(level);
+		maxhp = job.getHP(level);
+		str = job.getStr(level);
+		def = job.getDef(level);
+		spd = job.getSpd(level);
+		evd = job.getEvd(level);
+		mag = job.getMag(level);
+		res = job.getRes(level);
+	}
+	
+	/**
+	 * Curve calculated to figure out the amount of total exp needed to level up
+	 * @param level
+	 * @return
+	 */
+	public int getExpCurve(int l)
+	{
+		return 0;
 	}
 }
