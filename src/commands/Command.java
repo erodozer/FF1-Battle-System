@@ -17,6 +17,13 @@ public abstract class Command {
 	 * @param target
 	 */
 	abstract public void execute();
+	
+	/**
+	 * In the event of the command having a function/condition that
+	 * is supposed to last the duration of the turn, reset is implemented
+	 * to enforce that the command revert its effects when the turn is done
+	 */
+	abstract public void reset();
 		
 	/**
 	 * Retrieves the amount of damage dealt when the command was executed
