@@ -33,11 +33,19 @@ public class MessageDisplay extends Sprite{
 		}
 	}
 	
+	/**
+	 * Changes the message that is supposed to be displayed by passing
+	 * the current message state of the battle
+	 * @param m
+	 */
 	public void update(MessageState m)
 	{
 		message = m;
 	}
 	
+	/**
+	 * Main render method
+	 */
 	public void paint(Graphics g)
 	{
 		g.setFont(f);

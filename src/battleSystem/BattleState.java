@@ -2,8 +2,6 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 
-import actors.Actor;
-
 public interface BattleState {
 
 	/**

@@ -1,7 +1,5 @@
 package commands;
 
-import java.awt.Font;
-
 import DamageBehaviors.DamageBehavior;
 import actors.Actor;
 

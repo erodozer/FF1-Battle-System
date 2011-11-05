@@ -7,8 +7,6 @@ package actors;
  * Description: User controllable actors
  */
 
-import java.awt.image.BufferedImage;
-
 import engine.Sprite;
 
 import jobs.Job;

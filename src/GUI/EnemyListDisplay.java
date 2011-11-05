@@ -39,6 +39,9 @@ public class EnemyListDisplay extends Sprite{
 				names.add(e.getName());
 	}
 	
+	/**
+	 * Main render method
+	 */
 	public void paint(Graphics g)
 	{
 		//window is first sprite

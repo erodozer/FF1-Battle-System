@@ -1,11 +1,5 @@
 package jobs;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import engine.Sprite;
 
 abstract public class Job {

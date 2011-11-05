@@ -23,6 +23,9 @@ public class PartySpriteDisplay extends Sprite{
 		background = new Sprite("terrains/grass.png");
 	}
 
+	/**
+	 * Main render method
+	 */
 	public void paint(Graphics g)
 	{
 		//window is first sprite

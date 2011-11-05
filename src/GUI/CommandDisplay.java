@@ -30,6 +30,9 @@ public class CommandDisplay extends Sprite{
 		}
 	}
 	
+	/**
+	 * Main render method
+	 */
 	public void paint(Graphics g)
 	{
 		//window is first sprite

@@ -15,7 +15,6 @@ import java.util.List;
 
 import jobs.Job;
 
-import actors.Actor;
 import actors.Player;
 
 public class Party extends ArrayList<Player>{

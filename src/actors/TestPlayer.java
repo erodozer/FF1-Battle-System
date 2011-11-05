@@ -2,10 +2,6 @@ package actors;
 
 import org.junit.Test;
 
-import GUI.GameScreen;
-
-import engine.Sprite;
-
 import jobs.Fighter;
 import junit.framework.TestCase;
 
@@ -27,18 +23,4 @@ public class TestPlayer extends TestCase {
 		assertTrue(a.getAlive());
 	}
 	
-	/**
-	 * Test drawing of the enemy sprite
-	 * @param args
-	 */
-	public static void main(String[] args)
-	{
-		Player p = new Player("Twil", new Fighter());
-		Sprite sprite = p.getSprite();
-		sprite.setX(20);
-		sprite.setY(20);
-		GameScreen screen = new GameScreen();
-		
-		screen.add(sprite);
-	}
 }

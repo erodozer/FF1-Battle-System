@@ -12,6 +12,9 @@ public class EnemySpriteDisplay extends Sprite{
 
 	Window window;
 	Sprite background;
+	
+	//enemy sprites aren't animated, so it is safe to just keep an
+	//array of their sprites instead of calling them all the time
 	ArrayList<Sprite> sprites;
 	
 	//distance away from the window boarder the background should be drawn
@@ -26,6 +29,9 @@ public class EnemySpriteDisplay extends Sprite{
 		sprites = new ArrayList<Sprite>();
 	}
 
+	/**
+	 * Main render method
+	 */
 	public void update(Formation f)
 	{
 		for (int i = 0; i < f.size(); i++)
@@ -47,8 +53,7 @@ public class EnemySpriteDisplay extends Sprite{
 		g.drawImage(background.getImage(), window.getX() + window.getWidth() - BKGHORZOFFSET - background.getImage().getWidth(), window.getY() + BKGVERTOFFSET, null);
 	
 		for (Sprite s : sprites)
-			s.paint(g);
-				
+			s.paint(g);		
 	}
 	
 }

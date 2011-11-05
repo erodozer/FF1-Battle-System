@@ -1,7 +1,6 @@
 package actors;
 
 import engine.Sprite;
-import jobs.Job;
 
 public class MockActor extends Actor{
 

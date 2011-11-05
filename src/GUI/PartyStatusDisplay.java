@@ -12,6 +12,8 @@ import engine.Sprite;
 
 public class PartyStatusDisplay extends Sprite{
 
+	//party status display consists of multiple windows, 
+	// one for each character in the party
 	ArrayList<Window> windows = new ArrayList<Window>();
 	Font f;
 	
@@ -29,6 +31,9 @@ public class PartyStatusDisplay extends Sprite{
 			windows.add(new Window(x, y + 48*i, 48, 56));
 	}
 
+	/**
+	 * Main render method
+	 */
 	public void paint(Graphics g)
 	{
 		//draws a status window for each member
