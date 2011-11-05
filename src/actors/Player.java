@@ -19,7 +19,6 @@ public class Player extends Actor {
 	
 	public Player(String n, Job j)
 	{
-		System.out.println(getAlive());
 		job = j;
 		name = n.substring(0,4);	//char limit of 4
 		level = 0;
@@ -47,37 +46,7 @@ public class Player extends Actor {
 	public Sprite getSprite() {
 		return sprites[0];
 	}
-	
-	public void setHP(int i) {
-		hp = Math.min(getMaxHP(), Math.max(i, 0));
-	}
-	
-	public int getHP() {
-		return hp;
-	}
 
-	public int getMaxHP()
-	{
-		return job.getHP(level);
-	}
-	
-	/*
-	 * Setters are blanked for player class because the job handles all the stats
-	 * Only exception is magic and hp, which are controlled by the battle situation
-	 */
-	@Override
-	public void setStr(int i) {}
-	@Override
-	public void setDef(int i) {}
-	@Override
-	public void setSpd(int i) {}
-	@Override
-	public void setEvd(int i) {}
-	@Override
-	public void setMag(int i) {}
-	@Override
-	public void setRes(int i) {}
-	
 	/**
 	 * When required exp is met, the player will level up
 	 * all the player's stats will be updated
