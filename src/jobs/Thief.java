@@ -2,6 +2,11 @@ package jobs;
 
 public class Thief extends Job {
 
+	public Thief()
+	{
+		this.name = "Thief";
+	}
+	
 	@Override
 	public int getHP(int lvl) {
 		// TODO Auto-generated method stub
