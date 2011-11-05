@@ -30,7 +30,7 @@ public class Party extends ArrayList<Player>{
 		for (Player p: this)
 			if (p.getAlive())
 				alive.add(p);
-		return (Player[]) alive.toArray();
+		return alive.toArray(new Player[0]);
 	}
 
 	/**
@@ -39,7 +39,6 @@ public class Party extends ArrayList<Player>{
 	public void add(String n, String job) {
 		try {
 			this.add(new Player(n, (Job)Class.forName("jobs." + job).newInstance()));
-			System.out.println(this.toString());
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
