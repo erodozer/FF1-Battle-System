@@ -1,19 +1,20 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import engine.Engine;
 import engine.Sprite;
 
 public class GameScreen extends JFrame{
-
 
 	//frame resolution
 	final int FRAME_WIDTH = 512;
@@ -33,17 +34,10 @@ public class GameScreen extends JFrame{
 		private Image dbImage;				//image to draw to
 		private Graphics dbg;				//graphics controller of the component
 
-		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-											//list of sprites to draw
-		
 		ContentPanel(int width, int height)
 		{
 			this.setSize(width, height);
 			this.setVisible(true);
-		}
-		
-		public void add(Sprite sprite) {
-			sprites.add(sprite);
 		}
 		
 		public void render()
@@ -63,9 +57,8 @@ public class GameScreen extends JFrame{
 			dbg.setColor(Color.black);
 			dbg.fillRect(0, 0, INTERNAL_RES_W, INTERNAL_RES_H);
 		
-			for (Sprite s : sprites)
-				s.paint(dbg);
-					
+			if (Engine.getInstance().getCurrentScene() != null)
+				Engine.getInstance().getCurrentScene().render(dbg);	
 		}
 			
 		@Override
@@ -85,21 +78,18 @@ public class GameScreen extends JFrame{
 	{
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setTitle("FF1 Battle System");
-		c = new ContentPanel(this.WIDTH, this.HEIGHT);
+		c = new ContentPanel(this.getWidth(), this.getHeight());
 		
 		Container content = this.getContentPane();
 		content.setLayout(null);
 		this.setContentPane(c);
 		this.setResizable(false);
-		this.setVisible(true);	
+		this.setVisible(true);
 	}
 	
-	/**
-	 * Adds sprites for the screen to keep track of
-	 * @param sprite
-	 */
-	public void add(Sprite sprite) {
-		c.add(sprite);
+	public void start()
+	{
+		addKeyListener(Engine.getInstance().getCurrentScene());	
 	}
-	
+
 }

@@ -9,11 +9,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import scenes.BattleSystem;
-import actors.Enemy;
-import engine.Engine;
-import engine.Sprite;
-
 public class Window {
 	
 	BufferedImage tlcorner;

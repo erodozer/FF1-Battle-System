@@ -6,26 +6,21 @@ import java.awt.Graphics;
 import java.io.File;
 import java.util.ArrayList;
 
-import scenes.BattleSystem;
-
 import actors.Enemy;
 
-import engine.Engine;
 import engine.Sprite;
 import groups.Formation;
 
 public class EnemyListDisplay extends Sprite{
 
-	Sprite window;
+	Window window;
 	ArrayList<String> names;
 	Font f;
 	
 	public EnemyListDisplay(int x, int y)
 	{
 		super(null);
-		window = new Sprite("hud/enemylistwindow.png");
-		window.setX(x);
-		window.setY(y);
+		window = new Window(x, y, 90, 82);
 		try {
 			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
 			f = new Font("serif", Font.PLAIN, 10);
@@ -36,7 +31,7 @@ public class EnemyListDisplay extends Sprite{
 		names = new ArrayList<String>();
 	}
 
-	public void updateList(Formation f)
+	public void update(Formation f)
 	{
 		names = new ArrayList<String>(); 
 		for (Enemy e : f)
@@ -53,7 +48,7 @@ public class EnemyListDisplay extends Sprite{
 		{
 			g.setColor(Color.white);
 			g.setFont(f);
-			g.drawString(names.get(i), window.getX()+8, window.getY()+8+i*10);
+			g.drawString(names.get(i), window.getX()+12, window.getY()+24+i*10);
 		}
 		
 	}

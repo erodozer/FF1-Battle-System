@@ -12,7 +12,7 @@ import engine.Sprite;
 
 public class PartyStatusDisplay extends Sprite{
 
-	ArrayList<Sprite> windows = new ArrayList<Sprite>();
+	ArrayList<Window> windows = new ArrayList<Window>();
 	Font f;
 	
 	public PartyStatusDisplay(int x, int y)
@@ -26,12 +26,7 @@ public class PartyStatusDisplay extends Sprite{
 		}
 		
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
-		{
-			Sprite w = new Sprite("hud/partystatuswindow.png");
-			w.setX(x);
-			w.setY(y + (w.getHeight()-6)*i);
-			windows.add(w);
-		}
+			windows.add(new Window(x, y + 48*i, 48, 56));
 	}
 
 	public void paint(Graphics g)
@@ -39,14 +34,14 @@ public class PartyStatusDisplay extends Sprite{
 		//draws a status window for each member
 		for (int i = Engine.getInstance().getParty().size()-1; i >= 0; i--)
 		{
-			Sprite w = windows.get(i);
+			Window w = windows.get(i);
 			Player p = Engine.getInstance().getParty().get(i);
 			w.paint(g);
 			g.setFont(f);
 			g.setColor(Color.white);
 			g.drawString(p.getName(), w.getX() + 8, w.getY() + 24);
-			g.drawString("HP", w.getX() + 8, w.getY() + 36);
-			g.drawString(""+p.getHP(), w.getX() + 32, w.getY() + 42);
+			g.drawString("HP", w.getX() + 8, w.getY() + 40);
+			g.drawString(""+p.getHP(), w.getX() + 32, w.getY() + 46);
 		}
 	}
 }

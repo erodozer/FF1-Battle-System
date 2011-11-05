@@ -5,24 +5,22 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.io.File;
 
+import scenes.BattleSystem;
+
 import battleSystem.IssueState;
 
-import scenes.BattleSystem;
-import engine.Engine;
 import engine.Sprite;
 
 public class CommandDisplay extends Sprite{
 	
-	Sprite window;
+	Window window;
 	Sprite arrow;
 	Font f;
 	
 	public CommandDisplay(int x, int y)
 	{
 		super(null);
-		window = new Sprite("hud/commandwindow.png");
-		window.setX(x);
-		window.setY(y);
+		window = new Window(x, y, 110, 82);
 		arrow = new Sprite("hud/selectarrow.png");
 		try {
 			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
@@ -37,14 +35,19 @@ public class CommandDisplay extends Sprite{
 		//window is first sprite
 		window.paint(g);
 		
-		BattleSystem s = (BattleSystem)(Engine.getInstance().getCurrentScene());
 		g.setFont(f);
 		g.setColor(Color.white);
 		
 		for (int i = 0; i < IssueState.commands.length; i++)
 		{
-			g.drawString(IssueState.commands[i], window.getX() + 10 + 60*(i/4), 
+			g.drawString(IssueState.commands[i], window.getX() + 20 + 60*(i/4), 
 							window.getY() + 28 + 16 * (i % 4));
 		}
+		
+		int i = BattleSystem.getInstance().getCommandIndex();
+		System.out.println(i);
+		arrow.setX(window.getX());
+		arrow.setY(window.getY() + 28 + 16 * (i % 4) - arrow.getHeight()/2);
+		arrow.paint(g);
 	}
 }

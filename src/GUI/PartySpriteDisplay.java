@@ -12,13 +12,15 @@ public class PartySpriteDisplay extends Sprite{
 	Window window;
 	Sprite background;
 	
+	//distance away from the window boarder the background should be drawn
+	final int BKGVERTOFFSET = 7;
+	final int BKGHORZOFFSET = 8;
+	
 	public PartySpriteDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 72, 140);
+		window = new Window(x, y, 72, 144);
 		background = new Sprite("terrains/grass.png");
-		background.setX(x+10);
-		background.setY(y+6);
 	}
 
 	public void paint(Graphics g)
@@ -27,7 +29,9 @@ public class PartySpriteDisplay extends Sprite{
 		window.paint(g);
 		
 		//background is second sprite
-		background.paint(g);
+		g.drawImage(background.getImage(), window.getX() + BKGHORZOFFSET, window.getY() + BKGVERTOFFSET, null);
+		g.drawImage(background.getImage(), window.getX() + window.getWidth() - BKGHORZOFFSET - background.getImage().getWidth(), window.getY() + BKGVERTOFFSET, null);
+	
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
 		{
 			Player p = Engine.getInstance().getParty().get(i);
