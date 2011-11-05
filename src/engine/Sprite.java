@@ -84,6 +84,16 @@ public class Sprite{
 	}
 	
 	/**
+	 * Retrieves the image in case of requiring more complex rendering
+	 * than basic drawing to screen
+	 * @return
+	 */
+	public BufferedImage getImage()
+	{
+		return image;
+	}
+	
+	/**
 	 * Paint the sprite to screen
 	 * @param g
 	 */

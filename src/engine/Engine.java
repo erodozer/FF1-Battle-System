@@ -10,11 +10,13 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
+import scenes.BattleSystem;
+
 import GUI.GameScreen;
 
 import groups.*;
 
-public class Engine extends Thread implements KeyListener {
+public class Engine extends Thread{
 
 	private static Engine _instance;	//singleton instance
 	private Scene currentScene;			//current scene showing
@@ -45,8 +47,6 @@ public class Engine extends Thread implements KeyListener {
 	public Engine()
 	{
 		screen = new GameScreen();
-		//createScene("CreationScene");
-		screen.addKeyListener(this);
 		
 		_instance = this;
 	}
@@ -89,22 +89,13 @@ public class Engine extends Thread implements KeyListener {
 	{
 		this.party = p;
 	}
-	
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		currentScene.keyPressed(arg0);
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {}
 
 	@Override
 	public void run() {
 		while (!isInterrupted())
 		{
+			if (currentScene != null)
+				currentScene.run();
 			screen.paint(screen.getGraphics());
 		}
 	}
@@ -116,13 +107,18 @@ public class Engine extends Thread implements KeyListener {
     	Party p = new Party();
     	p.add("TWIL", "RedMage");
     	p.add("APPL", "Fighter");
-    	p.add("RNBW", "BlackBelt");
+    	p.add("PNKE", "Thief");
     	p.add("RRTY", "BlackMage");
+    	
+    	Formation f = new Formation();
+    	f.add("Gel");
     	
     	Engine.getInstance().setParty(p);
     	
     	t.start();
+    	Engine.getScreen().start();
     	
     	Engine.getInstance().createScene("BattleSystem");
+    	BattleSystem.getInstance().setFormation(f);
     }
 }

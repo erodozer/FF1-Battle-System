@@ -3,10 +3,9 @@ package engine;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.JComponent;
-
-public interface Scene extends Runnable{
+public interface Scene extends Runnable, KeyListener{
 	
 	/**
 	 * Starts the scene
@@ -27,11 +26,12 @@ public interface Scene extends Runnable{
 	 * Key pressed is the only kind of input acceptable
 	 * @param arg0
 	 */
+	@Override
 	public void keyPressed(KeyEvent evt);
 	
 	/**
 	 * Main rendering method call for the scene
 	 * @param g
 	 */
-	public void render(Graphics2D g);
+	public void render(Graphics g);
 }
