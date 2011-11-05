@@ -63,7 +63,7 @@ public class Enemy extends Actor {
 	@Override
 	protected void loadSprites() {
 		sprites = new Sprite[1];
-		sprites[0] = new Sprite("data/actors/enemies/" + name + "/normal.png");
+		sprites[0] = new Sprite("actors/enemies/" + name + "/normal.png");
 	}
 
 	@Override
