@@ -13,6 +13,8 @@ abstract public class Job {
 	private final String[] spriteNames = {"stand", "walk", "item", "cast", "victory"};
 	private Sprite[] sprites;
 	
+	protected String name;
+	
 	/**
 	 * Loads all the sprites that the job will use in battle
 	 */
@@ -20,7 +22,7 @@ abstract public class Job {
 	{
 		sprites = new Sprite[spriteNames.length];
 		for (int i = 0; i < spriteNames.length; i++)
-			sprites[i] = new Sprite("data/actors/jobs/" + "Fighter" + "/"+ spriteNames[i] + ".png");
+			sprites[i] = new Sprite("actors/jobs/" + this.name + "/"+ spriteNames[i] + ".png");
 	}
 	
 	/**
