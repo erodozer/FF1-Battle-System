@@ -1,7 +1,5 @@
 package engine;
 
-import javax.swing.JComponent;
-
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -10,7 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Sprite extends JComponent{
+public class Sprite{
 
 	BufferedImage image;
 	int width  = 1;
@@ -24,12 +22,15 @@ public class Sprite extends JComponent{
 	 */
 	public Sprite(String s)
 	{
-		try {
-			image = ImageIO.read(new File(s));
-			width = image.getWidth();
-			height = image.getHeight();
-		} 
-	    catch (IOException e) {}
+		if (s != null)
+			try {
+				image = ImageIO.read(new File("data/" + s));
+				width = image.getWidth();
+				height = image.getHeight();
+			} 
+	    	catch (IOException e) {
+	    		System.err.println(e + "\ndata/" + s);
+	    	}
 	}
 	
 	/**
@@ -86,10 +87,8 @@ public class Sprite extends JComponent{
 	 * Paint the sprite to screen
 	 * @param g
 	 */
-	@Override
-	public void paintComponent(Graphics g)
+	public void paint(Graphics g)
 	{
-		super.paintComponent(g);
 		if (image != null)
 		{
 			Graphics2D g2 = (Graphics2D) g;
