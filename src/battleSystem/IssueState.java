@@ -2,25 +2,26 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 
+import engine.Engine;
 
 import commands.*;
 import engine.Input;
 
 import actors.Actor;
+import scenes.BattleSystem;
 
 public class IssueState implements BattleState 
 {
 	Actor actor;			//actor it is dealing with
-	Command command;		//command selected
 	
-	Command[] commands = {new Attack(), new Defend()};
+	public static final String[] commands = {"Attack", "Defend"};
 							//list of potential commands
+	
 	int index = 0;			//index in the list of commands (current on highlighted)
 	
 	public IssueState(Actor a)
 	{
 		actor = a;
-		command = commands[0];	
 	}
 	
 	public void start(Actor a)
@@ -47,9 +48,16 @@ public class IssueState implements BattleState
 		if (e.getKeyCode() == Input.KEY_A)
 			finish();
 		else if (e.getKeyCode() == Input.KEY_DN)
+		{
 			index++;
+			index %= commands.length;
+		}
 		else if (e.getKeyCode() == Input.KEY_UP)
+		{
 			index--;
+			if (index < 0)
+				index += commands.length;
+		}
 	}
 	
 	/**
@@ -57,7 +65,19 @@ public class IssueState implements BattleState
 	 */
 	public void finish()
 	{
-		actor.setCommand(command);
-		BattleSystem.getInstance().setNextState();
+		Command c;
+		if (index == 0)
+			c = new Attack(actor, null);
+		else
+			c = new Defend(actor, actor);
+		actor.setCommand(c);
+		
+		
+	}
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		
 	}
 }
