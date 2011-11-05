@@ -1,5 +1,7 @@
 package battleSystem;
 
+import java.awt.event.KeyEvent;
+
 import actors.Actor;
 
 public interface BattleState {
@@ -18,4 +20,6 @@ public interface BattleState {
 	 * Finishes the state's execution
 	 */
 	public void finish();
+
+	public void handleKeyInput(KeyEvent arg0);
 }

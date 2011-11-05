@@ -23,4 +23,8 @@ public class Attack extends Command {
 		}
 	}
 
+	//reseting after attack isn't really necessary
+	@Override
+	public void reset() {}
+
 }

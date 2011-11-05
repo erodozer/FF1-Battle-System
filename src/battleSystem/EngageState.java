@@ -1,5 +1,7 @@
 package battleSystem;
 
+import java.awt.event.KeyEvent;
+
 import actors.Actor;
 
 public class EngageState implements BattleState {
@@ -11,30 +13,21 @@ public class EngageState implements BattleState {
 		activeActor = a;
 	}
 	
-	/**
-	 * 
-	 */
-	@Override
-	public String toString()
-	{
-		return "";
-	}
-
-	@Override
-	public void finish() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void handle() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void start() {
+		activeActor.execute();
+	}
+
+	@Override
+	public void finish() {}
+
+	@Override
+	public void handle() {}
+
+	@Override
+	public void handleKeyInput(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

@@ -1,26 +1,32 @@
 package battleSystem;
 
+import java.awt.event.KeyEvent;
+
+import actors.Actor;
+
 public class MessageState implements BattleState {
 
-	public MessageState(String message)
+	String message;
+	public Actor activeActor;
+	
+	public MessageState(Actor a, String message)
 	{
-		
+		activeActor = a;
 	}
 
 	@Override
-	public void finish() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void finish() {}
 
 	@Override
-	public void handle() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void handle() {}
 
 	@Override
 	public void start() {
+		message = "" + activeActor.getCommand().getDamage();
+	}
+
+	@Override
+	public void handleKeyInput(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

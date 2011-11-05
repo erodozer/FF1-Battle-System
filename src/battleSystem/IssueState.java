@@ -2,8 +2,6 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 
-import engine.Engine;
-
 import commands.*;
 import engine.Input;
 
@@ -17,7 +15,7 @@ public class IssueState implements BattleState
 	public static final String[] commands = {"Attack", "Defend"};
 							//list of potential commands
 	
-	int index = 0;			//index in the list of commands (current on highlighted)
+	public int index = 0;			//index in the list of commands (current on highlighted)
 	
 	public IssueState(Actor a)
 	{
@@ -35,8 +33,12 @@ public class IssueState implements BattleState
 	 */
 	public void handle()
 	{
-		index %= commands.length - 1;
-		index = Math.abs(index);
+		if (index >= commands.length)
+			index = 0;
+		if (index < 0)
+			index = commands.length-1;
+	//	System.out.println(index);
+		BattleSystem.getInstance().setCommandIndex(index);
 	}
 	
 	/**
@@ -48,16 +50,9 @@ public class IssueState implements BattleState
 		if (e.getKeyCode() == Input.KEY_A)
 			finish();
 		else if (e.getKeyCode() == Input.KEY_DN)
-		{
 			index++;
-			index %= commands.length;
-		}
 		else if (e.getKeyCode() == Input.KEY_UP)
-		{
 			index--;
-			if (index < 0)
-				index += commands.length;
-		}
 	}
 	
 	/**
@@ -71,13 +66,10 @@ public class IssueState implements BattleState
 		else
 			c = new Defend(actor, actor);
 		actor.setCommand(c);
-		
-		
 	}
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		BattleSystem.getInstance().setCommandIndex(0);	
 	}
 }

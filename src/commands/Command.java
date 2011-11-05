@@ -1,5 +1,7 @@
 package commands;
 
+import java.awt.Font;
+
 import DamageBehaviors.DamageBehavior;
 import actors.Actor;
 
@@ -32,5 +34,9 @@ public abstract class Command {
 	public int getDamage()
 	{
 		return damage;
+	}
+
+	public Actor getTarget() {
+		return target;
 	}
 }
