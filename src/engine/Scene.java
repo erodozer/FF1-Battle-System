@@ -2,38 +2,36 @@ package engine;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JComponent;
 
-public class Scene extends JComponent implements Runnable{
+public interface Scene extends Runnable{
 	
 	/**
 	 * Starts the scene
 	 */
-	public void start(){}
+	public void start();
 	
 	/**
 	 * Stops the scene
 	 */
-	public void stop(){}
+	public void stop();
 	
 	/**
 	 * Mathmatical computation run portion
 	 */
-	public void run(){}
+	public void run();
+	
+	/**
+	 * Key pressed is the only kind of input acceptable
+	 * @param arg0
+	 */
+	public void keyPressed(KeyEvent evt);
 	
 	/**
 	 * Main rendering method call for the scene
 	 * @param g
 	 */
-	public void render(Graphics2D g){}
-	
-	/**
-	 * Compatibility method required to execute render
-	 */
-	@Override
-	public final void paintComponent(Graphics g)
-	{
-		render((Graphics2D)g);
-	}
+	public void render(Graphics2D g);
 }
