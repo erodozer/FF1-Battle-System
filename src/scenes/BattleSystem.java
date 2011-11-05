@@ -1,27 +1,32 @@
-package battleSystem;
+package scenes;
 
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
-import java.util.TreeMap;
 
-import javax.swing.JComponent;
+import battleSystem.BattleState;
+import battleSystem.EngageState;
+import battleSystem.IssueState;
+import battleSystem.MessageState;
 
 import commands.Defend;
 
 import engine.Engine;
+import engine.MP3;
+import engine.Scene;
 import groups.Formation;
 import groups.Party;
 
+import GUI.HUD;
 import actors.Actor;
+import actors.Enemy;
 import actors.Player;
 
-public class BattleSystem extends Thread{
+public class BattleSystem implements Scene{
 
 	Engine e;
 	HashMap<Integer, Actor> allActors;		//actors and their speeds
@@ -35,26 +40,34 @@ public class BattleSystem extends Thread{
 	int commandIndex;						//current player index for selecting commands
 	
 	BattleState state;						//current state of the battle
+	MP3 bgm;
+	
+	HUD display;
 	
 	/**
 	 * Constructs a new battle system instance
 	 * @param p
 	 * @param f
 	 */
-	public BattleSystem(Formation f)
+	public BattleSystem()
 	{
 		e = Engine.getInstance();
 		
 		party = e.getParty();
-		formation = f;
+		formation = new Formation();
 		
 		commandIndex = 0;
-		activeActor = party.getActor(commandIndex);
+		activeActor = party.get(commandIndex);
 		
 		populateActorList();
 		
 		state = new IssueState(activeActor);
+		display = new HUD();
 		
+		bgm = new MP3("data/audio/battle.mp3");
+		bgm.play();
+		
+		display.elistd.updateList(formation);
 	}
 	
 	/**
@@ -69,8 +82,6 @@ public class BattleSystem extends Thread{
 			allActors.put(a.getSpd(), a);
 		for (Actor a: formation.getAliveMembers())
 			allActors.put(a.getSpd(), a);
-		populateActorList();
-		
 	}
 	
 	/**
@@ -101,24 +112,18 @@ public class BattleSystem extends Thread{
 	/**
 	 * Starts the battle phase
 	 */
-	private void start()
+	public void start()
 	{
+		
 	}
 	
 	/**
 	 * Update loop
 	 */
-	public void update()
-	{
-		state.handle();
-	}
-	
-	/**
-	 * Ends the battle phase
-	 */
-	private void stop()
-	{
-		state.finish();
+	@Override
+	public void run() {
+		while (!Engine.getInstance().isInterrupted())
+			state.handle();
 	}
 	
 	/**
@@ -133,7 +138,7 @@ public class BattleSystem extends Thread{
 			activeActor = turnOrder.poll();
 			if (activeActor == null)
 			{
-				state = new IssueState(party.getActor(commandIndex));
+				state = new IssueState(party.get(commandIndex));
 				next();
 			}
 		}
@@ -141,7 +146,7 @@ public class BattleSystem extends Thread{
 		{
 			commandIndex++;
 			//if the actor isn't alive skip ahead
-			if (!party.getActors()[commandIndex].getAlive())
+			if (!party.get(commandIndex).getAlive())
 				next();
 			
 			//switch to battle when all characters have commands set
@@ -163,7 +168,7 @@ public class BattleSystem extends Thread{
 	private Actor[] getTargets(Actor actor)
 	{
 		if (actor instanceof Player)
-			return formation.getActors();
+			return formation.getAliveMembers();
 		else
 			return party.getAliveMembers();
 	}
@@ -184,6 +189,20 @@ public class BattleSystem extends Thread{
 			state = new MessageState(state.toString());
 		else
 			next();
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render(Graphics2D g) {
+	}
+
+	public Formation getFormation() {
+		return this.formation;
 	}
 	
 }
