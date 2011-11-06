@@ -63,5 +63,4 @@ abstract public class Job {
 		return commands.toArray(new String[0]);
 	}
 	
-	
 }

@@ -11,19 +11,18 @@ import java.util.Queue;
 import scenes.Scene;
 
 
-import commands.Defend;
+import commands.*;
 
 import engine.Engine;
 import engine.MP3;
-import groups.Formation;
-import groups.Party;
+import groups.*;
 
 import actors.*;
 
 public class BattleSystem{
 
 	private Engine engine;
-	private HashMap<Integer, Actor> allActors;		//actors and their speeds
+	private HashMap<Actor, Integer> allActors;		//actors and their speeds
 	private ArrayList<Actor> turnOrder;				//order of when the turns execute
 
 	private Party party;							//player party
@@ -50,7 +49,7 @@ public class BattleSystem{
 		
 		playerIndex = 0;
 		commandIndex = 0;
-		activeActor = party.get(commandIndex);
+		activeActor = party.get(playerIndex);
 		
 		populateActorList();
 		
@@ -67,16 +66,18 @@ public class BattleSystem{
 	 */
 	private void populateActorList()
 	{
-	    allActors = new HashMap<Integer, Actor>();
+	    allActors = new HashMap<Actor, Integer>();
 		
 	    //only alive actors should be in the list
 		for (Actor a: party.getAliveMembers())
-			allActors.put(a.getSpd(), a);
+			allActors.put(a, a.getSpd());
 		for (Actor a: formation.getAliveMembers())
-			allActors.put(a.getSpd(), a);
+			allActors.put(a, a.getSpd());
+		System.out.println(allActors);
 	}
 	
-	/**
+	/**System.out.println(turnOrder);
+				
 	 * Generates the turn order of all the actors
 	 * THIS NEEDS TO BE EXECUTED *AFTER* COMMANDS ARE CHOSEN
 	 * COMMANDS WILL ALTER THE ACTOR'S SPEED SO THAT CAN CHANGE
@@ -85,20 +86,30 @@ public class BattleSystem{
 	private void getTurnOrder()
 	{
 		turnOrder = new ArrayList<Actor>();
-		
-		List<Integer> order = new ArrayList<Integer>(allActors.keySet());
+		ArrayList<Actor> actors = new ArrayList<Actor>(allActors.keySet());
+		List<Integer> order = new ArrayList<Integer>(allActors.values());
 		Collections.sort(order);
+		System.out.println(order);
 		
-		for (Actor a: allActors.values())
+		for (Actor a: actors)
 			if (a.getCommand() instanceof Defend)
+			{
 				turnOrder.add(a);
+				actors.remove(a);
+			}
 		
 		for (Integer i: order)
 		{
-			Actor a = allActors.get(i);
-			if (a.getAlive() && !turnOrder.contains(a))
-				turnOrder.add(a);
+			for (Actor a : actors)
+				if (a.getAlive() && i.intValue() == a.getSpd() && !turnOrder.contains(a))
+				{
+					turnOrder.add(a);
+					actors.remove(a);
+					break;
+				}
 		}
+		//reverses order so higher spd goes first
+		Collections.reverse(turnOrder);
 	}
 	
 	/**
@@ -106,7 +117,14 @@ public class BattleSystem{
 	 */
 	public void start()
 	{
-		
+		genEnemyCommands();
+		getTurnOrder();
+		System.out.println(turnOrder);
+		activeActor = turnOrder.remove(0);
+		System.out.println(turnOrder);
+		state = new EngageState(activeActor);
+		state.setParent(this);
+		playerIndex = -1;		
 	}
 	
 	/**
@@ -128,6 +146,7 @@ public class BattleSystem{
 			try
 			{
 				activeActor = turnOrder.remove(0);
+				System.out.println(turnOrder);
 				state = new EngageState(activeActor);
 				state.setParent(this);
 			}
@@ -143,13 +162,7 @@ public class BattleSystem{
 			
 			//switch to battle when all characters have commands set
 			if (playerIndex >= party.size())
-			{
-				getTurnOrder();
-				activeActor = turnOrder.remove(0);
-				state = new EngageState(activeActor);
-				state.setParent(this);
-				playerIndex = -1;
-			}
+				start();
 			else
 			{
 				//if the actor isn't alive skip ahead
@@ -163,6 +176,25 @@ public class BattleSystem{
 		}
 	}
 	
+	/**
+	 * Enemies pick their commands
+	 */
+	private void genEnemyCommands() {
+		for (Enemy e : formation)
+		{
+			if (e.getAlive())
+			{
+				String s = e.getCommands()[(int)(Math.random()*e.getCommands().length)];
+				Actor[] targets = getTargets(e);
+				Command c;
+				c = new Attack(e, null);
+				c.setTarget(targets[(int)(Math.random()*targets.length)]);
+				System.out.println(c.getTarget().getName());
+				e.setCommand(c);
+			}
+		}
+	}
+
 	/**
 	 * Generates array of selectable targets for the battle 
 	 * @param actor
@@ -189,8 +221,9 @@ public class BattleSystem{
 	public void setNextState() {
 		if (state instanceof EngageState)
 		{
-			state = new MessageState(activeActor, state.toString());
+			state = new MessageState(activeActor);
 			state.setParent(this);
+			state.start();
 		}
 		else
 			next();
@@ -219,15 +252,6 @@ public class BattleSystem{
 	 */
 	public Formation getFormation() {
 		return this.formation;
-	}
-
-
-	public void setCommandIndex(int index) {
-		commandIndex = index;
-	}
-
-	public int getCommandIndex() {
-		return commandIndex;
 	}
 
 	public Actor getActiveActor() {

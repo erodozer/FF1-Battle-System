@@ -1,6 +1,7 @@
 package actors;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import commands.Command;
 import engine.Sprite;
@@ -20,7 +21,9 @@ public abstract class Actor
 	protected int res;			//magic defense/resistance
 	
 	protected Command command;	//battle command
-	protected String[] commands;//choice of commands
+	protected ArrayList<String> commands = new ArrayList<String>();
+								//choice of commands
+	
 	protected Actor target;		//battle target
 	
 	protected Sprite[] sprites;
@@ -183,7 +186,7 @@ public abstract class Actor
 	public abstract Sprite getSprite();
 
 	public String[] getCommands() {
-		return commands;
+		return commands.toArray(new String[0]);
 	}
 	
 }

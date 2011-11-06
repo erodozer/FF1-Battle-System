@@ -12,9 +12,7 @@ public class IssueState extends BattleState
 	Actor actor;			//actor it is dealing with
 	Actor target;
 	Actor[] targets;
-	
-	public static final String[] commands = {"Attack", "Defend"};
-							//list of potential commands
+	Command c;
 	
 	public int index = 0;	//index in the list of commands (current on highlighted)
 	public boolean targetSelecting;
@@ -47,13 +45,11 @@ public class IssueState extends BattleState
 		}
 		else
 		{	
-			if (index >= commands.length)
+			if (index >= actor.getCommands().length)
 				index = 0;
 			if (index < 0)
-				index = commands.length-1;
+				index = actor.getCommands().length-1;
 		}
-		System.out.println(index);
-		parent.setCommandIndex(index);
 	}
 	
 	/**
@@ -63,11 +59,39 @@ public class IssueState extends BattleState
 	public void handleKeyInput(KeyEvent e)
 	{
 		if (e.getKeyCode() == Input.KEY_A)
-			finish();
-		else if (e.getKeyCode() == Input.KEY_DN)
+			next();
+		if (e.getKeyCode() == Input.KEY_B)
+			start(actor);
+		if (e.getKeyCode() == Input.KEY_DN)
 			index++;
 		else if (e.getKeyCode() == Input.KEY_UP)
 			index--;
+		handle();
+	}
+	
+	public void next()
+	{
+		if (targetSelecting)
+		{
+			target = targets[index];
+			c.setTarget(target);
+			System.out.println(c.getTarget().getName());
+			finish();
+		}
+		else
+		{
+			if (index == 0)
+				c = new Attack(actor, target);
+			else
+			{
+				c = new Defend(actor, actor);
+				finish();
+			}
+			
+			targets = parent.getTargets(actor);
+			index = 0;
+			targetSelecting = true;
+		}		
 	}
 	
 	/**
@@ -75,29 +99,16 @@ public class IssueState extends BattleState
 	 */
 	public void finish()
 	{
-		if (targetSelecting)
-		{
-			target = targets[index];
-			actor.getCommand().setTarget(target);
-			parent.setNextState();
-		}
-		else
-		{
-			Command c;
-			if (index == 0)
-				c = new Attack(actor, target);
-			else
-				c = new Defend(actor, actor);
-			
-			actor.setCommand(c);
-			targets = parent.getTargets(actor);
-			index = 0;
-			targetSelecting = true;
-		}
+		actor.setCommand(c);
+		parent.setNextState();
 	}
 
 	@Override
 	public void start() {
-		parent.setCommandIndex(0);	
+		index = 0;	
+	}
+
+	public int getIndex() {
+		return index;
 	}
 }

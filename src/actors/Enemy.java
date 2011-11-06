@@ -1,6 +1,7 @@
 package actors;
 
 import java.io.FileInputStream;
+import java.util.Collections;
 import java.util.Properties;
 
 import engine.Sprite;
@@ -29,6 +30,7 @@ public class Enemy extends Actor {
 			spd = Integer.valueOf(p.getProperty("spd")).intValue();
 			evd = Integer.valueOf(p.getProperty("evd")).intValue();
 			expReward = Integer.valueOf(p.getProperty("exp")).intValue();
+			Collections.addAll(commands, "Attack", "Defend", "Spell", "Item", "Flee");
 			loadSprites();
 		}
 		catch (Exception e)

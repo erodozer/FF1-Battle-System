@@ -11,10 +11,9 @@ public class MessageState extends BattleState {
 	String message;
 	public Actor activeActor;
 	
-	public MessageState(Actor a, String m)
+	public MessageState(Actor a)
 	{
 		activeActor = a;
-		message = m;
 	}
 
 	@Override
@@ -30,6 +29,11 @@ public class MessageState extends BattleState {
 		message = "" + activeActor.getCommand().getDamage();
 	}
 
+	public String getMessage()
+	{
+		return message;
+	}
+	
 	@Override
 	public void handleKeyInput(KeyEvent arg0) {
 		if (arg0.getKeyCode() == Input.KEY_A)

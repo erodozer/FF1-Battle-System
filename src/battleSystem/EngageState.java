@@ -25,7 +25,13 @@ public class EngageState extends BattleState {
 
 	@Override
 	public void handle() {
-		finish();
+		try {
+			Thread.sleep(1000);
+			finish();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
