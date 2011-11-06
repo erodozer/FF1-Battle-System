@@ -1,10 +1,10 @@
-package engine;
+package scenes;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public interface Scene extends Runnable, KeyListener{
+public interface Scene{
 	
 	/**
 	 * Starts the scene
@@ -17,15 +17,14 @@ public interface Scene extends Runnable, KeyListener{
 	public void stop();
 	
 	/**
-	 * Mathmatical computation run portion
+	 * Mathematical computation run portion
 	 */
-	public void run();
+	public void update();
 	
 	/**
 	 * Key pressed is the only kind of input acceptable
 	 * @param arg0
 	 */
-	@Override
 	public void keyPressed(KeyEvent evt);
 	
 	/**
