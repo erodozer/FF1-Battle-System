@@ -1,10 +1,12 @@
 package jobs;
 
+import java.util.Collections;
+
 public class BlackBelt extends Job {
 
-	public BlackBelt()
-	{
-		this.name = "Black Belt";
+	public BlackBelt(){
+		 name = "Belt Belt";
+		 Collections.addAll(commands, "Attack", "Defend", "Spell", "Item", "Flee");
 	}
 	
 	@Override

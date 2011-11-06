@@ -1,10 +1,12 @@
 package jobs;
 
+import java.util.Collections;
+
 public class Fighter extends Job {
 
-	public Fighter()
-	{
-		this.name = "Fighter";
+	public Fighter(){
+		 name = "Fighter";
+		 Collections.addAll(commands, "Attack", "Defend", "Drink", "Item", "Flee");
 	}
 	
 	@Override

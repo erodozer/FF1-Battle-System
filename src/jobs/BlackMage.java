@@ -1,10 +1,13 @@
 package jobs;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class BlackMage extends Job {
 	
-	public BlackMage()
-	{
-		this.name = "Black Mage";
+	public BlackMage(){
+		 name = "Black Mage";
+		 Collections.addAll(commands, "Attack", "Defend", "Spell", "Item", "Flee");
 	}
 	
 	@Override

@@ -1,5 +1,7 @@
 package jobs;
 
+import java.util.ArrayList;
+
 import engine.Sprite;
 
 abstract public class Job {
@@ -7,7 +9,9 @@ abstract public class Job {
 	private final String[] spriteNames = {"stand", "walk", "item", "cast", "victory"};
 	private Sprite[] sprites;
 	
-	protected String name;
+	protected String name;				//actual name of the job
+	protected ArrayList<String> commands = new ArrayList<String>();
+										//commands the job can execute
 	
 	/**
 	 * Loads all the sprites that the job will use in battle
@@ -54,6 +58,10 @@ abstract public class Job {
 	abstract public int getEvd(int lvl);
 	abstract public int getMag(int lvl);
 	abstract public int getRes(int lvl);
+
+	public String[] getCommands() {
+		return commands.toArray(new String[0]);
+	}
 	
 	
 }

@@ -1,12 +1,13 @@
 package jobs;
 
+import java.util.Collections;
+
 public class Thief extends Job {
 
-	public Thief()
-	{
-		this.name = "Thief";
+	public Thief(){
+		 name = "Thief";
+		 Collections.addAll(commands, "Attack", "Defend", "Drink", "Item", "Flee");
 	}
-	
 	@Override
 	public int getHP(int lvl) {
 		// TODO Auto-generated method stub

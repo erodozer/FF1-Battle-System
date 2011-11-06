@@ -62,6 +62,12 @@ public class Player extends Actor {
 		res = job.getRes(level);
 	}
 	
+	@Override
+	public String[] getCommands()
+	{
+		return job.getCommands();
+	}
+	
 	/**
 	 * Curve calculated to figure out the amount of total exp needed to level up
 	 * Cubic-Regression equation calculated from the first 20 levels of the list of

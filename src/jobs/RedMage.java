@@ -1,10 +1,12 @@
 package jobs;
 
-public class RedMage extends Job {
+import java.util.Collections;
 
-	public RedMage()
-	{
-		this.name = "Red Mage";
+public class RedMage extends Job {
+	
+	public RedMage(){
+		 name = "Red Mage";
+		 Collections.addAll(commands, "Attack", "Defend", "Spell", "Item", "Flee");
 	}
 	
 	@Override

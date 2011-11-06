@@ -1,10 +1,12 @@
 package jobs;
 
+import java.util.Collections;
+
 public class WhiteMage extends Job {
 
-	public WhiteMage()
-	{
-		this.name = "White Mage";
+	public WhiteMage(){
+		 name = "White Mage";
+		 Collections.addAll(commands, "Attack", "Defend", "Spell", "Item", "Flee");
 	}
 	
 	@Override
