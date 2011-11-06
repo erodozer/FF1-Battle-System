@@ -1,8 +1,10 @@
-package GUI;
+package BattleGUI;
 
 import java.awt.Graphics;
 
-import actors.Player;
+import battleSystem.BattleSystem;
+
+import actors.*;
 
 import engine.Engine;
 import engine.Sprite;
@@ -11,6 +13,7 @@ public class PartySpriteDisplay extends Sprite{
 
 	Window window;
 	Sprite background;
+	BattleSystem parent;
 	
 	//distance away from the window boarder the background should be drawn
 	final int BKGVERTOFFSET = 7;
@@ -23,6 +26,11 @@ public class PartySpriteDisplay extends Sprite{
 		background = new Sprite("terrains/grass.png");
 	}
 
+	public void setParentScene(BattleSystem bs)
+	{
+		parent = bs;
+	}
+	
 	/**
 	 * Main render method
 	 */
@@ -38,7 +46,11 @@ public class PartySpriteDisplay extends Sprite{
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
 		{
 			Player p = Engine.getInstance().getParty().get(i);
-			p.getSprite().setX(window.getX()+18);
+			if ((Actor)p == parent.getActiveActor())
+				p.getSprite().setX(window.getX()+6);
+			else
+				p.getSprite().setX(window.getX()+18);
+				
 			p.getSprite().setY(window.getY()+38+(p.getSprite().getHeight()-10)*i);
 			p.getSprite().paint(g);
 		}

@@ -1,7 +1,10 @@
-package GUI;
+package BattleGUI;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+
+import battleSystem.BattleSystem;
+import battleSystem.IssueState;
 
 import actors.Enemy;
 
@@ -12,6 +15,7 @@ public class EnemySpriteDisplay extends Sprite{
 
 	Window window;
 	Sprite background;
+	Sprite arrow;
 	
 	//enemy sprites aren't animated, so it is safe to just keep an
 	//array of their sprites instead of calling them all the time
@@ -21,12 +25,15 @@ public class EnemySpriteDisplay extends Sprite{
 	final int BKGVERTOFFSET = 7;
 	final int BKGHORZOFFSET = 8;
 	
+	BattleSystem parent;
+	
 	public EnemySpriteDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 128, 174);
+		window = new Window(x, y, 128, 144);
 		background = new Sprite("terrains/grass.png");
 		sprites = new ArrayList<Sprite>();
+		arrow = new Sprite("hud/selectarrow.png");
 	}
 
 	/**
@@ -43,6 +50,11 @@ public class EnemySpriteDisplay extends Sprite{
 		}
 	}
 	
+	public void setParentScene(BattleSystem bs)
+	{
+		parent = bs;
+	}
+	
 	public void paint(Graphics g)
 	{
 		//window is first sprite
@@ -53,7 +65,15 @@ public class EnemySpriteDisplay extends Sprite{
 		g.drawImage(background.getImage(), window.getX() + window.getWidth() - BKGHORZOFFSET - background.getImage().getWidth(), window.getY() + BKGVERTOFFSET, null);
 	
 		for (Sprite s : sprites)
-			s.paint(g);		
+			s.paint(g);
+				
+		if (parent.getState() instanceof IssueState && parent.targetSelecting)
+		{
+			int i = ((IssueState)parent.getState()).index;
+			arrow.setX(sprites.get(i).getX());
+			arrow.setY(sprites.get(i).getY());
+			arrow.paint(g);
+		}
 	}
 	
 }

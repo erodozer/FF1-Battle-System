@@ -1,4 +1,4 @@
-package GUI;
+package BattleGUI;
 
 import java.awt.Color;
 import java.awt.Graphics;

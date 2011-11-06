@@ -1,11 +1,11 @@
-package GUI;
+package BattleGUI;
 
 import java.awt.Graphics;
 
+import battleSystem.BattleSystem;
 import battleSystem.IssueState;
 import battleSystem.MessageState;
 
-import scenes.BattleSystem;
 
 import engine.Sprite;
 
@@ -18,6 +18,8 @@ public class HUD extends Sprite{
 	public CommandDisplay cd;
 	public MessageDisplay ms;
 	
+	private BattleSystem parent;
+	
 	public HUD()
 	{
 		super("");
@@ -29,6 +31,14 @@ public class HUD extends Sprite{
 		ms = new MessageDisplay(4, 140);
 	}
 	
+	public void setParentScene(BattleSystem bs)
+	{
+		parent = bs;
+		psprited.setParentScene(parent);
+		esprited.setParentScene(parent);
+		cd.setParentScene(parent);
+	}
+	
 	@Override
 	public void paint(Graphics g)
 	{
@@ -36,10 +46,10 @@ public class HUD extends Sprite{
 		psprited.paint(g);
 		pstatd.paint(g);
 		esprited.paint(g);
-		elistd.paint(g);
-		if (BattleSystem.getInstance().getState() instanceof IssueState)
-			cd.paint(g);
-		else if (BattleSystem.getInstance().getState() instanceof MessageState)
+		if (parent.getState() instanceof IssueState)
+			if (!((IssueState)parent.getState()).targetSelecting)
+				cd.paint(g);
+		else if (parent.getState() instanceof MessageState)
 			ms.paint(g);
 	}
 }

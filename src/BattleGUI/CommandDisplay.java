@@ -1,12 +1,14 @@
-package GUI;
+package BattleGUI;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.io.File;
 
-import scenes.BattleSystem;
+import scenes.Scene;
 
+import battleSystem.BattleState;
+import battleSystem.BattleSystem;
 import battleSystem.IssueState;
 
 import engine.Sprite;
@@ -16,6 +18,8 @@ public class CommandDisplay extends Sprite{
 	Window window;
 	Sprite arrow;
 	Font f;
+	
+	BattleSystem parent;
 	
 	public CommandDisplay(int x, int y)
 	{
@@ -30,6 +34,11 @@ public class CommandDisplay extends Sprite{
 		}
 	}
 	
+	public void setParentScene(BattleSystem bs)
+	{
+		parent = bs;
+	}
+	
 	/**
 	 * Main render method
 	 */
@@ -42,13 +51,10 @@ public class CommandDisplay extends Sprite{
 		g.setColor(Color.white);
 		
 		for (int i = 0; i < IssueState.commands.length; i++)
-		{
 			g.drawString(IssueState.commands[i], window.getX() + 20 + 60*(i/4), 
 							window.getY() + 28 + 16 * (i % 4));
-		}
 		
-		int i = BattleSystem.getInstance().getCommandIndex();
-		System.out.println(i);
+		int i = parent.getCommandIndex();
 		arrow.setX(window.getX());
 		arrow.setY(window.getY() + 28 + 16 * (i % 4) - arrow.getHeight()/2);
 		arrow.paint(g);
