@@ -40,7 +40,7 @@ public class ContentPanel extends JPanel{
 			else
 				dbg = dbImage.getGraphics();
 		}
-		// clear the background
+		dbg = dbImage.getGraphics();
 		dbg.setColor(Color.black);
 		dbg.fillRect(0, 0, INTERNAL_RES_W, INTERNAL_RES_H);
 		
