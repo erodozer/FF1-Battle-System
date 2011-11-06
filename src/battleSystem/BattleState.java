@@ -2,22 +2,29 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 
-public interface BattleState {
+public abstract class BattleState {
 
+	protected BattleSystem parent;
+	
 	/**
 	 * Handles anything that is required to be set upon switching to the state
 	 */
-	public void start();
+	abstract public void start();
 	
 	/**
 	 * Handles updating
 	 */
-	public void handle();
+	abstract public void handle();
 	
 	/**
 	 * Finishes the state's execution
 	 */
-	public void finish();
+	abstract public void finish();
 
-	public void handleKeyInput(KeyEvent arg0);
+	abstract public void handleKeyInput(KeyEvent arg0);
+	
+	public void setParent(BattleSystem p)
+	{
+		parent = p;
+	}
 }

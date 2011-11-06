@@ -6,25 +6,30 @@ import commands.*;
 import engine.Input;
 
 import actors.Actor;
-import scenes.BattleSystem;
 
-public class IssueState implements BattleState 
+public class IssueState extends BattleState 
 {
 	Actor actor;			//actor it is dealing with
+	Actor target;
+	Actor[] targets;
 	
 	public static final String[] commands = {"Attack", "Defend"};
 							//list of potential commands
 	
-	public int index = 0;			//index in the list of commands (current on highlighted)
+	public int index = 0;	//index in the list of commands (current on highlighted)
+	public boolean targetSelecting;
 	
 	public IssueState(Actor a)
 	{
-		actor = a;
+		start(a);
 	}
 	
 	public void start(Actor a)
 	{
+		actor = a;
 		actor.setCommand(null);
+		target = null;
+		targetSelecting = false;
 	}
 	
 	/**
@@ -33,12 +38,22 @@ public class IssueState implements BattleState
 	 */
 	public void handle()
 	{
-		if (index >= commands.length)
-			index = 0;
-		if (index < 0)
-			index = commands.length-1;
-	//	System.out.println(index);
-		BattleSystem.getInstance().setCommandIndex(index);
+		if (targetSelecting)
+		{
+			if (index >= targets.length)
+				index = 0;
+			if (index < 0)
+				index = targets.length-1;
+		}
+		else
+		{	
+			if (index >= commands.length)
+				index = 0;
+			if (index < 0)
+				index = commands.length-1;
+		}
+		System.out.println(index);
+		parent.setCommandIndex(index);
 	}
 	
 	/**
@@ -60,16 +75,29 @@ public class IssueState implements BattleState
 	 */
 	public void finish()
 	{
-		Command c;
-		if (index == 0)
-			c = new Attack(actor, null);
+		if (targetSelecting)
+		{
+			target = targets[index];
+			actor.getCommand().setTarget(target);
+			parent.setNextState();
+		}
 		else
-			c = new Defend(actor, actor);
-		actor.setCommand(c);
+		{
+			Command c;
+			if (index == 0)
+				c = new Attack(actor, target);
+			else
+				c = new Defend(actor, actor);
+			
+			actor.setCommand(c);
+			targets = parent.getTargets(actor);
+			index = 0;
+			targetSelecting = true;
+		}
 	}
 
 	@Override
 	public void start() {
-		BattleSystem.getInstance().setCommandIndex(0);	
+		parent.setCommandIndex(0);	
 	}
 }

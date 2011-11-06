@@ -2,20 +2,25 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 
+import engine.Input;
+
 import actors.Actor;
 
-public class MessageState implements BattleState {
+public class MessageState extends BattleState {
 
 	String message;
 	public Actor activeActor;
 	
-	public MessageState(Actor a, String message)
+	public MessageState(Actor a, String m)
 	{
 		activeActor = a;
+		message = m;
 	}
 
 	@Override
-	public void finish() {}
+	public void finish() {
+		parent.setNextState();
+	}
 
 	@Override
 	public void handle() {}
@@ -27,8 +32,8 @@ public class MessageState implements BattleState {
 
 	@Override
 	public void handleKeyInput(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		if (arg0.getKeyCode() == Input.KEY_A)
+			finish();
 	}
 	
 }

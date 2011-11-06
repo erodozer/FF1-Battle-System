@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 
 import actors.Actor;
 
-public class EngageState implements BattleState {
+public class EngageState extends BattleState {
 
 	Actor activeActor;
 	
@@ -19,10 +19,14 @@ public class EngageState implements BattleState {
 	}
 
 	@Override
-	public void finish() {}
+	public void finish() {
+		parent.setNextState();
+	}
 
 	@Override
-	public void handle() {}
+	public void handle() {
+		finish();
+	}
 
 	@Override
 	public void handleKeyInput(KeyEvent arg0) {
