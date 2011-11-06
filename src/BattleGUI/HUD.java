@@ -46,10 +46,19 @@ public class HUD extends Sprite{
 		psprited.paint(g);
 		pstatd.paint(g);
 		esprited.paint(g);
+		
 		if (parent.getState() instanceof IssueState)
-			if (!((IssueState)parent.getState()).targetSelecting)
-				cd.paint(g);
+			elistd.paint(g);
+		
+		if (parent.getState() instanceof IssueState && !((IssueState)parent.getState()).targetSelecting)
+		{
+			cd.update((IssueState)parent.getState());
+			cd.paint(g);
+		}
 		else if (parent.getState() instanceof MessageState)
+		{
+			ms.update((MessageState)parent.getState());
 			ms.paint(g);
+		}
 	}
 }

@@ -51,7 +51,7 @@ public class EnemyListDisplay extends Sprite{
 		{
 			g.setColor(Color.white);
 			g.setFont(f);
-			g.drawString(names.get(i), window.getX()+12, window.getY()+24+i*10);
+			g.drawString(names.get(i), window.getX()+12, window.getY()+24+i*16);
 		}
 		
 	}

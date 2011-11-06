@@ -7,6 +7,7 @@ import java.io.File;
 
 import scenes.Scene;
 
+import actors.Actor;
 import battleSystem.BattleState;
 import battleSystem.BattleSystem;
 import battleSystem.IssueState;
@@ -18,6 +19,7 @@ public class CommandDisplay extends Sprite{
 	Window window;
 	Sprite arrow;
 	Font f;
+	int index;
 	
 	BattleSystem parent;
 	
@@ -39,6 +41,11 @@ public class CommandDisplay extends Sprite{
 		parent = bs;
 	}
 	
+	public void update(IssueState state)
+	{
+		this.index = state.getIndex();
+	}
+	
 	/**
 	 * Main render method
 	 */
@@ -50,13 +57,13 @@ public class CommandDisplay extends Sprite{
 		g.setFont(f);
 		g.setColor(Color.white);
 		
-		for (int i = 0; i < IssueState.commands.length; i++)
-			g.drawString(IssueState.commands[i], window.getX() + 20 + 60*(i/4), 
-							window.getY() + 28 + 16 * (i % 4));
+		Actor a = parent.getActiveActor();
+		for (int i = 0; i < a.getCommands().length; i++)
+			g.drawString(a.getCommands()[i], window.getX() + 20 + 60*(i/4), 
+							window.getY() + 24 + 16 * (i % 4));
 		
-		int i = parent.getCommandIndex();
-		arrow.setX(window.getX());
-		arrow.setY(window.getY() + 28 + 16 * (i % 4) - arrow.getHeight()/2);
+		arrow.setX(window.getX() + 60*(index/4));
+		arrow.setY(window.getY() + 24 + 16 * (index % 4) - arrow.getHeight()/2);
 		arrow.paint(g);
 	}
 }

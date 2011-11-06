@@ -59,7 +59,7 @@ public class MessageDisplay extends Sprite{
 			windows[3].paint(g);
 			windows[2].paint(g);
 			g.setColor(Color.white);
-			g.drawString(""+message.activeActor.getCommand().getDamage(), 
+			g.drawString(""+message.getMessage(), 
 				 windows[3].getX() + 10, windows[3].getY() + 20);
 			g.setColor(Color.white);
 			g.drawString(message.activeActor.getCommand().getTarget().getName(), 

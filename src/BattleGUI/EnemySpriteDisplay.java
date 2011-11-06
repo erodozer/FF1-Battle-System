@@ -67,7 +67,7 @@ public class EnemySpriteDisplay extends Sprite{
 		for (Sprite s : sprites)
 			s.paint(g);
 				
-		if (parent.getState() instanceof IssueState && parent.targetSelecting)
+		if (parent.getState() instanceof IssueState && ((IssueState)parent.getState()).targetSelecting)
 		{
 			int i = ((IssueState)parent.getState()).index;
 			arrow.setX(sprites.get(i).getX());
