@@ -64,11 +64,14 @@ public class Player extends Actor {
 	
 	/**
 	 * Curve calculated to figure out the amount of total exp needed to level up
+	 * Cubic-Regression equation calculated from the first 20 levels of the list of
+	 *   experience requirements
 	 * @param level
 	 * @return
 	 */
 	public int getExpCurve(int l)
 	{
-		return 0;
+		return (int)(4.6666666669919*Math.pow(l, 3)+-13.99999999985*Math.pow(l,2)+
+			   37.3333333321*l+-27.9999999985);
 	}
 }
