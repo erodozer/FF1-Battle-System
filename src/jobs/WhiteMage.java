@@ -2,10 +2,15 @@ package jobs;
 
 public class WhiteMage extends Job {
 
+	public WhiteMage()
+	{
+		this.name = "White Mage";
+	}
+	
 	@Override
 	public int getHP(int lvl) {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override

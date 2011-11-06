@@ -10,7 +10,7 @@ public class RedMage extends Job {
 	@Override
 	public int getHP(int lvl) {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
