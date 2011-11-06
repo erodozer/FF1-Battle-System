@@ -37,4 +37,8 @@ public abstract class Command {
 	public Actor getTarget() {
 		return target;
 	}
+
+	public void setTarget(Actor target) {
+		this.target = target;
+	}
 }
