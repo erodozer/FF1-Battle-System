@@ -24,8 +24,6 @@ public abstract class Actor
 	protected ArrayList<String> commands = new ArrayList<String>();
 								//choice of commands
 	
-	protected Actor target;		//battle target
-	
 	protected Sprite[] sprites;
 	
 	//coordinates for drawing the sprite to screen
@@ -136,7 +134,11 @@ public abstract class Actor
 	 */
 	public void setCommand(Command c)
 	{
+		if (command != null)
+			command.reset();
 		command = c;
+		if (command != null)
+			command.start();
 	}
 
 	/**
@@ -146,24 +148,6 @@ public abstract class Actor
 	public boolean getAlive()
 	{
 		return (hp > 0);
-	}
-	
-	/**
-	 * Sets the actor's target in battle
-	 * @param t
-	 */
-	public void setTarget(Actor t)
-	{
-		target = t;
-	}
-	
-	/**
-	 * Returns the actor's target
-	 * @return
-	 */
-	public Actor getTarget()
-	{
-		return target;
 	}
 	
 	/**

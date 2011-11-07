@@ -7,15 +7,13 @@ import actors.Actor;
 public class EngageState extends BattleState {
 
 	Actor activeActor;
-	
-	public EngageState(Actor a)
-	{
+
+	public EngageState(Actor a) {
 		activeActor = a;
 	}
-	
+
 	@Override
 	public void start() {
-		activeActor.execute();
 	}
 
 	@Override
@@ -27,17 +25,21 @@ public class EngageState extends BattleState {
 	public void handle() {
 		try {
 			Thread.sleep(1000);
+			if (!activeActor.getAlive()) {
+				finish();
+				return;
+			} 
+			else if (!activeActor.getCommand().getTarget().getAlive())
+				activeActor.getCommand().setTarget(parent.getRandomTarget(activeActor));
+			activeActor.execute();
 			finish();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	//Engage state handles no input
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void handleKeyInput(KeyEvent arg0) {}
 
 }

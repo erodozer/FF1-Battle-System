@@ -1,15 +1,10 @@
 package battleSystem;
 
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Queue;
-
-import scenes.Scene;
-
 
 import commands.*;
 
@@ -19,9 +14,21 @@ import groups.*;
 
 import actors.*;
 
+/**
+ * BattleSystem.java
+ * @author nhydock
+ *
+ *	Holds all the logic for running the battle system
+ *	It consists of multiple states that it will flip between
+ *	to issue commands, execute them, and display the outcome of
+ *	the execution.  It also will determine figure out turn order,
+ *  victory conditions, and game over conditions.
+ */
+
 public class BattleSystem{
 
 	private Engine engine;
+	
 	private HashMap<Actor, Integer> allActors;		//actors and their speeds
 	private ArrayList<Actor> turnOrder;				//order of when the turns execute
 
@@ -31,7 +38,6 @@ public class BattleSystem{
 	private Actor activeActor;						//the currently active actor in battle
 	
 	private int playerIndex;						//current player index for selecting commands
-	private int commandIndex;						//current command index for selecting commands
 	
 	private BattleState state;						//current state of the battle
 	private MP3 bgm;								//music that plays during battle
@@ -48,16 +54,14 @@ public class BattleSystem{
 		formation = new Formation();
 		
 		playerIndex = 0;
-		commandIndex = 0;
 		activeActor = party.get(playerIndex);
 		
 		populateActorList();
 		
-		state = new IssueState(activeActor);
-		
 		bgm = new MP3("data/audio/battle.mp3");
 		bgm.play();
 		
+		state = new IssueState(activeActor);
 		state.setParent(this);
 	}
 	
@@ -73,11 +77,9 @@ public class BattleSystem{
 			allActors.put(a, a.getSpd());
 		for (Actor a: formation.getAliveMembers())
 			allActors.put(a, a.getSpd());
-		System.out.println(allActors);
 	}
 	
-	/**System.out.println(turnOrder);
-				
+	/**		
 	 * Generates the turn order of all the actors
 	 * THIS NEEDS TO BE EXECUTED *AFTER* COMMANDS ARE CHOSEN
 	 * COMMANDS WILL ALTER THE ACTOR'S SPEED SO THAT CAN CHANGE
@@ -89,7 +91,6 @@ public class BattleSystem{
 		ArrayList<Actor> actors = new ArrayList<Actor>(allActors.keySet());
 		List<Integer> order = new ArrayList<Integer>(allActors.values());
 		Collections.sort(order);
-		System.out.println(order);
 		
 		for (Actor a: actors)
 			if (a.getCommand() instanceof Defend)
@@ -118,10 +119,9 @@ public class BattleSystem{
 	public void start()
 	{
 		genEnemyCommands();
+		populateActorList();
 		getTurnOrder();
-		System.out.println(turnOrder);
 		activeActor = turnOrder.remove(0);
-		System.out.println(turnOrder);
 		state = new EngageState(activeActor);
 		state.setParent(this);
 		playerIndex = -1;		
@@ -146,7 +146,6 @@ public class BattleSystem{
 			try
 			{
 				activeActor = turnOrder.remove(0);
-				System.out.println(turnOrder);
 				state = new EngageState(activeActor);
 				state.setParent(this);
 			}
@@ -185,11 +184,9 @@ public class BattleSystem{
 			if (e.getAlive())
 			{
 				String s = e.getCommands()[(int)(Math.random()*e.getCommands().length)];
-				Actor[] targets = getTargets(e);
 				Command c;
 				c = new Attack(e, null);
-				c.setTarget(targets[(int)(Math.random()*targets.length)]);
-				System.out.println(c.getTarget().getName());
+				c.setTarget(getRandomTarget(e));
 				e.setCommand(c);
 			}
 		}
@@ -208,6 +205,17 @@ public class BattleSystem{
 			return party.getAliveMembers();
 	}
 
+	/**
+	 * Picks a random target for the actor
+	 * @param actor
+	 * @return
+	 */
+	public Actor getRandomTarget(Actor actor)
+	{
+		Actor[] t = getTargets(actor);
+		return t[(int)(Math.random()*t.length)];
+	}
+	
 	/**
 	 * Input handling
 	 */
@@ -254,8 +262,24 @@ public class BattleSystem{
 		return this.formation;
 	}
 
+	/**
+	 * Returns the current actor that is acting
+	 * @return
+	 */
 	public Actor getActiveActor() {
 		return activeActor;
+	}
+
+	/**
+	 * Only used in IssueState
+	 * Goes back to the previous character for selecting commands
+	 */
+	public void previous() {
+		if (playerIndex > 0)
+		{
+			playerIndex -= 2;
+			next();
+		}
 	}
 	
 }

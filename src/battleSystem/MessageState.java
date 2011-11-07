@@ -22,7 +22,17 @@ public class MessageState extends BattleState {
 	}
 
 	@Override
-	public void handle() {}
+	public void handle() {
+		try {
+			Thread.sleep(500);
+			finish();
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	@Override
 	public void start() {
@@ -33,11 +43,8 @@ public class MessageState extends BattleState {
 	{
 		return message;
 	}
-	
+
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {
-		if (arg0.getKeyCode() == Input.KEY_A)
-			finish();
-	}
+	public void handleKeyInput(KeyEvent arg0) {}
 	
 }
