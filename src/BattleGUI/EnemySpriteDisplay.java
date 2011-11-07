@@ -70,8 +70,8 @@ public class EnemySpriteDisplay extends Sprite{
 		if (parent.getState() instanceof IssueState && ((IssueState)parent.getState()).targetSelecting)
 		{
 			int i = ((IssueState)parent.getState()).index;
-			arrow.setX(sprites.get(i).getX());
-			arrow.setY(sprites.get(i).getY());
+			arrow.setX(sprites.get(parent.getFormation().get(i)).getX());
+			arrow.setY(sprites.get(parent.getFormation().get(i)).getY());
 			arrow.paint(g);
 		}
 	}
