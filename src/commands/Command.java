@@ -13,6 +13,11 @@ public abstract class Command {
 	protected DamageBehavior db;
 	
 	/**
+	 * Adds effects to the actor upon assigning the command
+	 */
+	abstract public void start();
+	
+	/**
 	 * Executes the command
 	 * @param target
 	 */
@@ -40,5 +45,10 @@ public abstract class Command {
 
 	public void setTarget(Actor target) {
 		this.target = target;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 }
