@@ -9,7 +9,7 @@ public class PhysicalDamageBehavior implements DamageBehavior {
 	 * @return
 	 */
 	@Override
-	public boolean didHit(int bonus) {
+	public boolean didHit() {
 		return true;
 	}
 	
@@ -32,7 +32,7 @@ public class PhysicalDamageBehavior implements DamageBehavior {
 	 */
 	@Override
 	public int calcDamage(Actor attacker, Actor target) {
-		int damage = Math.max(0, target.getDef() - attacker.getStr());
+		int damage = Math.max(0, -(target.getDef() - attacker.getStr()));
 		damage *= critical()?2:1;
 		return damage;
 	}

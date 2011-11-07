@@ -11,13 +11,12 @@ import battleSystem.BattleSystem;
 public class BattleScene implements Scene {
 
 	BattleSystem bs;
-	private HUD display;							//displays all the information for the battle
-	
-	public BattleScene()
-	{
-		
+	private HUD display; // displays all the information for the battle
+
+	public BattleScene() {
+
 	}
-	
+
 	@Override
 	public void start() {
 		bs = new BattleSystem();
@@ -25,11 +24,9 @@ public class BattleScene implements Scene {
 		display.elistd.update(bs.getFormation());
 		display.esprited.update(bs.getFormation());
 		display.setParentScene(bs);
-		
 	}
-	
-	public void start(Formation f)
-	{
+
+	public void start(Formation f) {
 		start();
 		bs.setFormation(f);
 	}
@@ -41,8 +38,7 @@ public class BattleScene implements Scene {
 
 	@Override
 	public void update() {
-		if (bs != null)
-		{
+		if (bs != null) {
 			bs.update();
 			display.elistd.update(bs.getFormation());
 			display.esprited.update(bs.getFormation());

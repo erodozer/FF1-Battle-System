@@ -2,7 +2,13 @@ package scenes;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
+/**
+ * Scene.java
+ * @author nhydock
+ *
+ *	Main interface for which scenes are developed around
+ */
 
 public interface Scene{
 	

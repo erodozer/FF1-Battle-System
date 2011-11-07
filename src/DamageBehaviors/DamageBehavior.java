@@ -8,7 +8,7 @@ public interface DamageBehavior {
 	 * Calculates if the command will hit
 	 * @return
 	 */
-	public boolean didHit(int bonus);
+	public boolean didHit();
 	
 	/**
 	 * Calculates the command's damage output

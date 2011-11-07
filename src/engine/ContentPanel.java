@@ -9,9 +9,7 @@ import javax.swing.JPanel;
 
 public class ContentPanel extends JPanel{
 
-	final int FRAME_WIDTH = 512;
-	final int FRAME_HEIGHT = 480;
-	
+	//NES Native resolution
 	final int INTERNAL_RES_W = 256;
 	final int INTERNAL_RES_H = 240;
 	
@@ -27,6 +25,9 @@ public class ContentPanel extends JPanel{
 		engine = Engine.getInstance();
 	}
 		
+	/**
+	 * Updates the buffer
+	 */
 	public void render()
 	{
 
@@ -49,13 +50,16 @@ public class ContentPanel extends JPanel{
 			engine.getCurrentScene().render(dbg);	
 		}
 	}
-			
+		
+	/**
+	 * Paints the buffer to the panel
+	 */
 	public void paint()
 	{
 		Graphics2D g = (Graphics2D) getGraphics();
 		render();
 		
 		if (dbImage != null)
-			g.drawImage(dbImage, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
+			g.drawImage(dbImage, 0, 0, this.getWidth(), this.getHeight(), null);
 	}	
 }

@@ -11,13 +11,15 @@ public class Defend extends Command {
 	}
 	
 	@Override
-	public void execute() {
-		
-	}
+	public void execute() {}
 	
 	@Override
 	public void reset() {
 		invoker.getDef();
 	}
+
+	//defend does nothing on start
+	@Override
+	public void start() {}
 
 }
