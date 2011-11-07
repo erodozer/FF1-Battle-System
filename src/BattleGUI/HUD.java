@@ -24,11 +24,11 @@ public class HUD extends Sprite{
 	{
 		super("");
 		psprited = new PartySpriteDisplay(132, 4);	
-		pstatd = new PartyStatusDisplay(204, 22);	
+		pstatd = new PartyStatusDisplay(204, 32);	
 		esprited = new EnemySpriteDisplay(4, 4);
-		elistd = new EnemyListDisplay(4, 140);
-		cd = new CommandDisplay(94,140);
-		ms = new MessageDisplay(4, 140);
+		elistd = new EnemyListDisplay(4, 150);
+		cd = new CommandDisplay(94,150);
+		ms = new MessageDisplay(4, 150);
 	}
 	
 	public void setParentScene(BattleSystem bs)

@@ -22,7 +22,7 @@ public class PartySpriteDisplay extends Sprite{
 	public PartySpriteDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 72, 144);
+		window = new Window(x, y, 72, 156);
 		background = new Sprite("terrains/grass.png");
 	}
 
@@ -51,7 +51,7 @@ public class PartySpriteDisplay extends Sprite{
 			else
 				p.getSprite().setX(window.getX()+18);
 				
-			p.getSprite().setY(window.getY()+38+(p.getSprite().getHeight()-10)*i);
+			p.getSprite().setY(window.getY()+38+(p.getSprite().getHeight()-6)*i);
 			p.getSprite().paint(g);
 		}
 	}

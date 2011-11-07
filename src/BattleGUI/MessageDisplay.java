@@ -22,9 +22,9 @@ public class MessageDisplay extends Sprite{
 	{
 		super(null);
 		windows = new Window[4];
-		windows[0] = new Window(x, y, 90, 32);
-		windows[1] = new Window(x+84, y, 116, 32);
-		windows[2] = new Window(x, y+24, 90, 32);
+		windows[0] = new Window(x,    y,    90,  32);
+		windows[1] = new Window(x+84, y,    116, 32);
+		windows[2] = new Window(x,    y+24, 90,  32);
 		windows[3] = new Window(x+84, y+24, 116, 32);
 		
 		try {
@@ -57,20 +57,20 @@ public class MessageDisplay extends Sprite{
 		if (!(message.activeActor.getCommand() instanceof Defend))
 		{
 			windows[3].paint(g);
-			windows[2].paint(g);
 			g.setColor(Color.white);
 			g.drawString(""+message.getMessage(), 
 				 windows[3].getX() + 10, windows[3].getY() + 20);
+			windows[2].paint(g);
 			g.setColor(Color.white);
 			g.drawString(message.activeActor.getCommand().getTarget().getName(), 
 				 windows[2].getX() + 10, windows[2].getY() + 20);
 		}
 		
 		windows[1].paint(g);
-		windows[0].paint(g);
 		g.setColor(Color.white);
-		g.drawString(message.activeActor.getCommand().getClass().getName(), 
+		g.drawString(message.activeActor.getCommand().getName(), 
 				 windows[1].getX() + 10, windows[1].getY() + 20);
+		windows[0].paint(g);
 		g.setColor(Color.white);
 		g.drawString(message.activeActor.getName(), 
 					 windows[0].getX() + 10, windows[0].getY() + 20);
