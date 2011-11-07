@@ -60,6 +60,6 @@ public class ContentPanel extends JPanel{
 		render();
 		
 		if (dbImage != null)
-			g.drawImage(dbImage, 0, 0, this.getWidth(), this.getHeight(), null);
+			g.drawImage(dbImage, 0, 0, getWidth(), getHeight(), null);
 	}	
 }

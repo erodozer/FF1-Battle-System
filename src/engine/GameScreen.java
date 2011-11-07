@@ -12,7 +12,7 @@ public class GameScreen extends JFrame implements KeyListener{
 
 	//frame resolution
 	final int FRAME_WIDTH = 512;
-	final int FRAME_HEIGHT = 480;
+	final int FRAME_HEIGHT = 512;
 	
 	private ContentPanel c;
 	private Engine engine;
@@ -26,7 +26,7 @@ public class GameScreen extends JFrame implements KeyListener{
 		
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setTitle("FF1 Battle System");
-		c = new ContentPanel(this.getWidth(), this.getHeight());
+		c = new ContentPanel(getWidth(), getHeight());
 		
 		setLayout(null);
 		setContentPane(c);
