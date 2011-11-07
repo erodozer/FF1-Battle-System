@@ -44,7 +44,7 @@ public class Formation extends ArrayList<Enemy>{
 		for (Enemy e: this)
 			if (e.getAlive())
 				alive.add(e);
-		return alive.toArray(new Enemy[0]);
+		return alive.toArray(new Enemy[alive.size()]);
 	}
 	
 	/**

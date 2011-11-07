@@ -146,6 +146,12 @@ public class BattleSystem{
 			try
 			{
 				activeActor = turnOrder.remove(0);
+				//if the actor isn't alive skip ahead
+				if (!activeActor.getAlive())
+				{
+					next();
+					return;
+				}
 				state = new EngageState(activeActor);
 				state.setParent(this);
 			}
@@ -164,10 +170,13 @@ public class BattleSystem{
 				start();
 			else
 			{
-				//if the actor isn't alive skip ahead
-				if (!party.get(playerIndex).getAlive())
-					next();
 				activeActor = party.get(playerIndex);
+				//if the actor isn't alive skip ahead
+				if (!activeActor.getAlive())
+				{
+					next();
+					return;
+				}
 				state = new IssueState(activeActor);
 				state.setParent(this);
 				state.start();

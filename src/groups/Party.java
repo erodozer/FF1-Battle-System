@@ -29,7 +29,7 @@ public class Party extends ArrayList<Player>{
 		for (Player p: this)
 			if (p.getAlive())
 				alive.add(p);
-		return alive.toArray(new Player[0]);
+		return alive.toArray(new Player[alive.size()]);
 	}
 
 	/**
