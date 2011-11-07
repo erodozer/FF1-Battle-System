@@ -16,15 +16,22 @@ public class Attack extends Command {
 	
 	@Override
 	public void execute() {
-		if (db.didHit(speedBonus))
+		System.out.println(db.didHit());
+		if (db.didHit())
 		{
 			damage = db.calcDamage(invoker, target);
 			target.setHP(target.getHP()-damage);
 		}
 	}
 
-	//reseting after attack isn't really necessary
 	@Override
-	public void reset() {}
+	public void reset() {
+		invoker.setSpd(invoker.getSpd()-speedBonus);
+	}
+
+	@Override
+	public void start() {
+		invoker.setSpd(invoker.getSpd()+speedBonus);
+	}
 
 }

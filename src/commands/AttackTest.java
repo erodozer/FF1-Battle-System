@@ -16,12 +16,26 @@ public class AttackTest {
 		a2.setHP(10);
 		a1.setStr(10);
 		a2.setDef(0);
-
-		assertEquals(10, a2.getHP());
+		a1.setSpd(5);
 		Command c = new Attack(a1, a2);
-		c.execute();
 		
+		//make sure actors are in default conditions
+		assertEquals(null, a1.getCommand());
+		assertEquals(5, a1.getSpd());
+		assertEquals(10, a2.getHP());
+		
+		//test speed boost
+		a1.setCommand(c);
+		assertEquals(30, a1.getSpd());
+		
+		//test execution
+		a1.execute();
 		assertEquals(0, a2.getHP());
+		
+		//checks resetting
+		a1.setCommand(null);
+		//speed should be back to the mock actor's actual speed
+		assertEquals(5, a1.getSpd());
 	}
 
 }
