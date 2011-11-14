@@ -13,7 +13,7 @@ public class PartySpriteDisplay extends Sprite{
 
 	Window window;
 	Sprite background;
-	BattleSystem parent;
+	BattleSystem parent;	
 	
 	//distance away from the window boarder the background should be drawn
 	final int BKGVERTOFFSET = 7;
@@ -24,6 +24,12 @@ public class PartySpriteDisplay extends Sprite{
 		super(null);
 		window = new Window(x, y, 72, 156);
 		background = new Sprite("terrains/grass.png");
+		//Sets all the sprites to their initial positions
+		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
+		{
+			Player p = Engine.getInstance().getParty().get(i);
+			p.setPosition(window.getX() + 16, window.getY()+38+(p.getSprite().getHeight()-6)*i);
+		}
 	}
 
 	public void setParentScene(BattleSystem bs)
@@ -46,13 +52,37 @@ public class PartySpriteDisplay extends Sprite{
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
 		{
 			Player p = Engine.getInstance().getParty().get(i);
+			//Move the player in a walking animation
 			if ((Actor)p == parent.getActiveActor())
-				p.getSprite().setX(window.getX()+6);
+			{
+				if (p.getState() == Player.WALK)
+				{
+					p.setX(p.getX() - 2);
+					if (p.getX() < window.getX() + 6)
+					{
+						p.setX(window.getX() + 6);
+						p.setState(Player.STAND);
+					}
+				}
+				else
+					p.setX(window.getX() + 6);
+			}
+			//Move the player back to it original position
 			else
-				p.getSprite().setX(window.getX()+18);
-				
-			p.getSprite().setY(window.getY()+38+(p.getSprite().getHeight()-6)*i);
-			p.getSprite().paint(g);
+			{
+				if (p.getState() == Player.WALK)
+				{
+					p.setX(p.getX()+2);
+					if (p.getX() > window.getX() + 16)
+					{
+						p.setX(window.getX() + 16);
+						p.setState(Player.STAND);
+					}
+				}
+				else
+					p.setX(window.getX() + 16);
+			}
+			p.draw(g);
 		}
 	}
 	
