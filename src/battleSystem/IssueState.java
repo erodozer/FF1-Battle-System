@@ -6,10 +6,11 @@ import commands.*;
 import engine.Input;
 
 import actors.Actor;
+import actors.Player;
 
 public class IssueState extends BattleState 
 {
-	Actor actor;			//actor it is dealing with
+	Player actor;			//actor it is dealing with, only players deal with issue command
 	Actor target;			//target selected
 	Actor[] targets;		//targets that can be selected
 	Command c;				//command selected
@@ -18,7 +19,7 @@ public class IssueState extends BattleState
 	public boolean targetSelecting;
 							//is the actor selecting a target or command
 	
-	public IssueState(Actor a)
+	public IssueState(Player a)
 	{
 		start(a);
 	}
@@ -27,10 +28,11 @@ public class IssueState extends BattleState
 	 * Starts the issue state
 	 * @param a
 	 */
-	public void start(Actor a)
+	public void start(Player a)
 	{
 		actor = a;
 		actor.setCommand(null);
+		actor.setState(Player.WALK);
 		target = null;
 		targetSelecting = false;
 	}
@@ -41,6 +43,10 @@ public class IssueState extends BattleState
 	 */
 	public void handle()
 	{
+		//Do not update while player is animating
+		if (actor.getState() == Player.WALK)
+			return;
+		
 		if (targetSelecting)
 		{
 			if (index >= targets.length)
@@ -63,6 +69,10 @@ public class IssueState extends BattleState
 	 */
 	public void handleKeyInput(KeyEvent e)
 	{
+		//Do not update while player is animating
+		if (actor.getState() == Player.WALK)
+			return;
+				
 		if (e.getKeyCode() == Input.KEY_A)
 			next();
 		else if (e.getKeyCode() == Input.KEY_B)
@@ -70,7 +80,10 @@ public class IssueState extends BattleState
 			if (targetSelecting)
 				start(actor);
 			else
+			{
+				actor.setState(Player.WALK);
 				parent.previous();
+			}
 		}
 		else if (e.getKeyCode() == Input.KEY_DN)
 			index++;
@@ -111,6 +124,7 @@ public class IssueState extends BattleState
 	 */
 	public void finish()
 	{
+		actor.setState(Player.WALK);
 		actor.setCommand(c);
 		parent.setNextState();
 	}
