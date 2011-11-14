@@ -44,9 +44,10 @@ public class EnemySpriteDisplay extends Sprite{
 		for (int i = 0; i < f.size(); i++)
 		{
 			Enemy e = f.get(i);
-			e.getSprite().setX(window.getX()+20);
-			e.getSprite().setY(window.getY()+60+(e.getSprite().getHeight()+5)*i%3);
-			sprites.put(e, e.getSprite());
+			Sprite s = e.getSprite();
+			s.setX(window.getX()+12);
+			s.setY(window.getY()+40+(s.getHeight()+5)*(i%3));
+			sprites.put(e, s);
 		}
 	}
 	
