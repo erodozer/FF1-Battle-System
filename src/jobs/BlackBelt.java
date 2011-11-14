@@ -5,7 +5,7 @@ import java.util.Collections;
 public class BlackBelt extends Job {
 
 	public BlackBelt(){
-		 name = "Belt Belt";
+		 name = "Black Belt";
 		 Collections.addAll(commands, "Attack", "Defend", "Spell", "Item", "Flee");
 	}
 	
