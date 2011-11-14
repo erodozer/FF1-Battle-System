@@ -43,7 +43,7 @@ public class GameScreen extends JFrame implements KeyListener{
 					c.paint();
 					try
 					{
-						sleep(60);
+						sleep(30);
 					}catch (Exception e)
 					{
 						e.printStackTrace();
@@ -61,10 +61,11 @@ public class GameScreen extends JFrame implements KeyListener{
 		Party p = new Party();
     	p.add("TWIL", "RedMage");
     	p.add("APPL", "Fighter");
-    	p.add("PNKE", "Thief");
-    	p.add("RRTY", "BlackMage");
+    	p.add("RNBW", "BlackBelt");
+    	p.add("FLUT", "WhiteMage");
     	
     	Formation f = new Formation();
+    	f.add("Gel");
     	f.add("Gel");
     	
     	engine.setParty(p);
