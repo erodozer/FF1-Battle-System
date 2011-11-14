@@ -61,7 +61,7 @@ public class BattleSystem{
 		bgm = new MP3("data/audio/battle.mp3");
 		bgm.play();
 		
-		state = new IssueState(activeActor);
+		state = new IssueState((Player)activeActor);
 		state.setParent(this);
 	}
 	
@@ -177,7 +177,7 @@ public class BattleSystem{
 					next();
 					return;
 				}
-				state = new IssueState(activeActor);
+				state = new IssueState((Player)activeActor);
 				state.setParent(this);
 				state.start();
 			}
