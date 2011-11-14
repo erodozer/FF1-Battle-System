@@ -11,10 +11,10 @@ import javax.imageio.ImageIO;
 public class Sprite{
 
 	BufferedImage image;
-	int width  = 1;
-	int height = 1;
-	int x = 0;
-	int y = 0;
+	double width  = 1;
+	double height = 1;
+	double x = 0;
+	double y = 0;
 	
 	/**
 	 * Load the sprite
@@ -37,7 +37,7 @@ public class Sprite{
 	 * Set the x coordinate
 	 * @param i
 	 */
-	public void setX(int i)
+	public void setX(double i)
 	{
 		x = i;
 	}
@@ -45,7 +45,7 @@ public class Sprite{
 	/**
 	 * Retrieve the x coordinate
 	 */
-	public int getX()
+	public double getX()
 	{
 		return x;
 	}
@@ -54,7 +54,7 @@ public class Sprite{
 	 * Set the y coordinate
 	 * @param i
 	 */
-	public void setY(int i)
+	public void setY(double i)
 	{
 		y = i;
 	}
@@ -62,15 +62,26 @@ public class Sprite{
 	/**
 	 * Retrieve the y coordinate
 	 */
-	public int getY()
+	public double getY()
 	{
 		return y;
 	}
 	
 	/**
+	 * Adds x and y to current position
+	 * @param x
+	 * @param y
+	 */
+	public void slide(double x, double y)
+	{
+		this.x += x;
+		this.y += y;
+	}
+	
+	/**
 	 * Retrieve the width of the image
 	 */
-	public int getWidth()
+	public double getWidth()
 	{
 		return width;
 	}
@@ -78,7 +89,7 @@ public class Sprite{
 	/**
 	 * Retrieve the height of the image
 	 */
-	public int getHeight()
+	public double getHeight()
 	{
 		return height;
 	}
@@ -102,8 +113,8 @@ public class Sprite{
 		if (image != null)
 		{
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setClip(x, y, getWidth(), getHeight());
-			g2.drawImage(image, null, x, y);
+			g2.setClip((int)x, (int)y, (int)getWidth(), (int)getHeight());
+			g2.drawImage(image, null, (int)x, (int)y);
 		}
 	}
 }
