@@ -1,4 +1,4 @@
-package BattleGUI;
+package battleSystem.BattleGUI;
 
 import java.awt.Graphics;
 
@@ -9,6 +9,12 @@ import battleSystem.MessageState;
 
 import engine.Sprite;
 
+/**
+ * HUD.java
+ * @author nhydock
+ *
+ *	Collection of GUI components for the battle system
+ */
 public class HUD extends Sprite{
 
 	public PartySpriteDisplay psprited;
@@ -16,10 +22,14 @@ public class HUD extends Sprite{
 	public EnemySpriteDisplay esprited;
 	public EnemyListDisplay elistd;
 	public CommandDisplay cd;
+	public SpellDisplay sd;
 	public MessageDisplay ms;
 	
 	private BattleSystem parent;
 	
+	/**
+	 * Constructs the HUD
+	 */
 	public HUD()
 	{
 		super("");
@@ -28,17 +38,26 @@ public class HUD extends Sprite{
 		esprited = new EnemySpriteDisplay(4, 4);
 		elistd = new EnemyListDisplay(4, 150);
 		cd = new CommandDisplay(94,150);
+		sd = new SpellDisplay(64, 150);
 		ms = new MessageDisplay(4, 150);
 	}
 	
+	/**
+	 * Sets the parent of the hud to the battle system
+	 * @param bs
+	 */
 	public void setParentScene(BattleSystem bs)
 	{
 		parent = bs;
 		psprited.setParentScene(parent);
 		esprited.setParentScene(parent);
 		cd.setParentScene(parent);
+		sd.setParentScene(parent);
 	}
 	
+	/**
+	 * Draws the HUD
+	 */
 	@Override
 	public void paint(Graphics g)
 	{
@@ -54,6 +73,11 @@ public class HUD extends Sprite{
 		{
 			cd.update((IssueState)parent.getState());
 			cd.paint(g);
+		}
+		else if (parent.getState() instanceof IssueState && ((IssueState)parent.getState()).spellSelecting)
+		{
+			sd.update((IssueState)parent.getState());
+			sd.paint(g);
 		}
 		else if (parent.getState() instanceof MessageState)
 		{

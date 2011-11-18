@@ -1,4 +1,4 @@
-package BattleGUI;
+package battleSystem.BattleGUI;
 
 import java.awt.Color;
 import java.awt.Graphics;
