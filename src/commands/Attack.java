@@ -5,33 +5,38 @@ import actors.Actor;
 
 public class Attack extends Command {
 
-	public Attack(Actor a, Actor t)
+	/**
+	 * Constructs a basic physical attack command
+	 * @param a
+	 * @param t
+	 */
+	public Attack(Actor a)
 	{
 		name = "Attack";
 		invoker = a;
-		target = t;
 		speedBonus = 25;
 		db = new PhysicalDamageBehavior();
 	}
 	
+	/**
+	 * Executes the attack
+	 */
 	@Override
 	public void execute() {
 		System.out.println(db.didHit());
 		if (db.didHit())
 		{
-			damage = db.calcDamage(invoker, target);
-			target.setHP(target.getHP()-damage);
+			damage = db.calcDamage(invoker, invoker.getTarget());
+			invoker.getTarget().setHP(invoker.getTarget().getHP()-damage);
 		}
 	}
-
-	@Override
-	public void reset() {
-		invoker.setSpd(invoker.getSpd()-speedBonus);
-	}
-
-	@Override
-	public void start() {
-		invoker.setSpd(invoker.getSpd()+speedBonus);
+	
+	/**
+	 * Returns the name of the command
+	 */
+	public String toString()
+	{
+		return name;
 	}
 
 }

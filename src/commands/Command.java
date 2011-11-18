@@ -6,7 +6,6 @@ import actors.Actor;
 public abstract class Command {
 
 	protected String name;
-	protected Actor target;
 	protected Actor invoker;
 	protected int damage;
 	protected int speedBonus;
@@ -45,14 +44,6 @@ public abstract class Command {
 	public int getDamage()
 	{
 		return damage;
-	}
-
-	public Actor getTarget() {
-		return target;
-	}
-
-	public void setTarget(Actor target) {
-		this.target = target;
 	}
 	
 	public String getName()
