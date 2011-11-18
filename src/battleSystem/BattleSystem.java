@@ -192,10 +192,8 @@ public class BattleSystem{
 		{
 			if (e.getAlive())
 			{
-				String s = e.getCommands()[(int)(Math.random()*e.getCommands().length)];
-				Command c;
-				c = new Attack(e, null);
-				c.setTarget(getRandomTarget(e));
+				Command c = e.getCommands()[(int)(Math.random()*e.getCommands().length)];
+				e.setTarget(getRandomTarget(e));
 				e.setCommand(c);
 			}
 		}
