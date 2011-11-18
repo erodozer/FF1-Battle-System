@@ -17,6 +17,7 @@ public class IssueState extends BattleState
 	
 	public int index = 0;	//index in the list of commands (current on highlighted)
 	public boolean targetSelecting;
+	public boolean spellSelecting;
 							//is the actor selecting a target or command
 	
 	public IssueState(Player a)
@@ -35,6 +36,7 @@ public class IssueState extends BattleState
 		actor.setState(Player.WALK);
 		target = null;
 		targetSelecting = false;
+		spellSelecting = false;
 	}
 	
 	/**
@@ -53,6 +55,10 @@ public class IssueState extends BattleState
 				index = 0;
 			if (index < 0)
 				index = targets.length-1;
+		}
+		else if (spellSelecting)
+		{
+			
 		}
 		else
 		{	
@@ -75,9 +81,10 @@ public class IssueState extends BattleState
 				
 		if (e.getKeyCode() == Input.KEY_A)
 			next();
-		else if (e.getKeyCode() == Input.KEY_B)
+		
+		if (e.getKeyCode() == Input.KEY_B)
 		{
-			if (targetSelecting)
+			if (targetSelecting || spellSelecting)
 				start(actor);
 			else
 			{
@@ -85,10 +92,25 @@ public class IssueState extends BattleState
 				parent.previous();
 			}
 		}
-		else if (e.getKeyCode() == Input.KEY_DN)
-			index++;
-		else if (e.getKeyCode() == Input.KEY_UP)
-			index--;
+		
+		if (spellSelecting)
+		{
+			if (e.getKeyCode() == Input.KEY_DN)
+				index+=3;
+			else if (e.getKeyCode() == Input.KEY_UP)
+				index-=3;
+			else if (e.getKeyCode() == Input.KEY_RT)
+				index++;
+			else if (e.getKeyCode() == Input.KEY_LT)
+				index--;
+		}
+		else
+		{
+			if (e.getKeyCode() == Input.KEY_DN)
+				index++;
+			else if (e.getKeyCode() == Input.KEY_UP)
+				index--;
+		}
 		handle();
 	}
 	
@@ -100,22 +122,28 @@ public class IssueState extends BattleState
 		if (targetSelecting)
 		{
 			target = targets[index];
-			c.setTarget(target);
+			actor.setTarget(target);
 			finish();
 		}
 		else
 		{
-			if (index == 0)
-				c = new Attack(actor, target);
-			else
+			actor.setCommand(actor.getCommands()[index]);
+			if (actor.getCommand() instanceof ChooseSpell)
 			{
-				c = new Defend(actor, actor);
+				spellSelecting = true;
+			}
+			else if (actor.getCommand() instanceof Defend)
+			{
+				actor.setTarget(actor);
 				finish();
 			}
-			
-			targets = parent.getTargets(actor);
-			index = 0;
-			targetSelecting = true;
+			else
+			{
+				targets = parent.getTargets(actor);
+				index = 0;
+				spellSelecting = false;
+				targetSelecting = true;
+			}
 		}		
 	}
 	
