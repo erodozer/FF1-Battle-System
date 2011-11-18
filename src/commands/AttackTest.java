@@ -17,7 +17,7 @@ public class AttackTest {
 		a1.setStr(10);
 		a2.setDef(0);
 		a1.setSpd(5);
-		Command c = new Attack(a1, a2);
+		Command c = new Attack(a1);
 		
 		//make sure actors are in default conditions
 		assertEquals(null, a1.getCommand());
@@ -27,6 +27,9 @@ public class AttackTest {
 		//test speed boost
 		a1.setCommand(c);
 		assertEquals(30, a1.getSpd());
+		
+		//actor needs target set first
+		a1.setTarget(a2);
 		
 		//test execution
 		a1.execute();

@@ -2,11 +2,16 @@ package jobs;
 
 import java.util.Collections;
 
+import actors.Actor;
+
+import commands.*;
+
 public class RedMage extends Job {
 	
-	public RedMage(){
+	public RedMage(Actor a){
 		 name = "Red Mage";
-		 Collections.addAll(commands, "Attack", "Defend", "Spell", "Item", "Flee");
+		 Command[] c = {new Attack(a), new Defend(a), new ChooseSpell(a), new ChooseItem(a), new Flee(a)};
+		 commands = c;
 	}
 	
 	@Override

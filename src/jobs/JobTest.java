@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import actors.Player;
+
 public class JobTest {
 
 	/**
@@ -14,8 +16,10 @@ public class JobTest {
 	@Test
 	public void test() {
 		final int level = 10;
-		
-		Job j = new MockJob();
+		Player p = new Player("Twil");
+		Job j = new MockJob(p);
+		assertEquals("Twil", j.getName());
+		assertEquals("MockJob", j.getJobName());
 		assertEquals(100, j.getHP(level));
 		assertEquals(12, j.getStr(level));
 		assertEquals(14, j.getDef(level));
@@ -29,9 +33,20 @@ public class JobTest {
 }
 
 
+/**
+ * MockJob
+ * @author nhydock
+ *
+ *	Mock class for testing jobs
+ */
 class MockJob extends Job
 {
-
+	public MockJob(Player p)
+	{
+		super(p);
+		jobname = "Mockjob";
+	}
+	
 	@Override
 	public int getHP(int lvl) {
 		// TODO Auto-generated method stub

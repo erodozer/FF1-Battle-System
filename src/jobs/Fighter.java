@@ -1,12 +1,15 @@
 package jobs;
 
-import java.util.Collections;
+import commands.*;
+import actors.Player;
 
 public class Fighter extends Job {
 
-	public Fighter(){
-		 name = "Fighter";
-		 Collections.addAll(commands, "Attack", "Defend", "Drink", "Item", "Flee");
+	public Fighter(Player p){
+		super(p);
+		name = "Fighter";
+		Command[] c = {new Attack(this), new Defend(this), new Drink(this), new ChooseItem(this), new Flee(this)};
+		commands = c;
 	}
 	
 	@Override
@@ -44,7 +47,7 @@ public class Fighter extends Job {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	@Override
 	public int getRes(int lvl) {
 		// TODO Auto-generated method stub

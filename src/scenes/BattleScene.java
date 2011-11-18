@@ -5,8 +5,8 @@ import groups.Formation;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import BattleGUI.HUD;
 import battleSystem.BattleSystem;
+import battleSystem.BattleGUI.HUD;
 
 public class BattleScene implements Scene {
 
