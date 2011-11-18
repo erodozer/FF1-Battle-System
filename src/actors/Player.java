@@ -9,16 +9,16 @@ package actors;
 
 import java.awt.Graphics;
 
+import commands.Command;
+
 import engine.Sprite;
 
 import jobs.Job;
 
 public class Player extends Actor {
 
-	Job job;		//the player's job
 	int state;		//the player's current state for animation
 					// 0 = stand, 1 = walk, 2 = act, 3 = cast, 4 = victory
-	Sprite drawSprite;
 	
 	//constant values for different state animations
 	public static final int STAND = 0;
@@ -27,12 +27,12 @@ public class Player extends Actor {
 	public static final int CAST = 3;
 	public static final int VICT = 4;
 	
-	private double x;
-	private double y;
+	protected Sprite drawSprite;
+	protected double x;
+	protected double y;
 	
-	public Player(String n, Job j)
+	public Player(String n)
 	{
-		job = j;
 		name = n.substring(0,4);	//char limit of 4
 		level = 0;
 		exp = 0;
@@ -41,19 +41,29 @@ public class Player extends Actor {
 	}
 	
 	/**
-	 * Retrieves the player's job (only the name)
-	 * @return
+	 * Copies a player to this player
+	 * @param p
 	 */
-	public String getJob()
+	public Player(Player p)
 	{
-		return job.getName();
+		name = p.name;
+		hp = p.hp;
+		maxhp = p.maxhp;
+		str = p.str;
+		def = p.def;
+		spd = p.spd;
+		evd = p.evd;
+		mag = p.mag;
+		res = p.res;
+		level = p.level;
+		exp = p.exp;
+		sprites = p.sprites;	
 	}
 
 	@Override
 	protected void loadSprites() {
-		job.loadSprites();
-		sprites = job.getSprites();
-		drawSprite = sprites[0];
+		sprites = new Sprite[0];
+		drawSprite = null;
 	}
 
 	/**
@@ -73,20 +83,14 @@ public class Player extends Actor {
 	public void levelUp()
 	{
 		level++;
-		hp = job.getHP(level);
-		maxhp = job.getHP(level);
-		str = job.getStr(level);
-		def = job.getDef(level);
-		spd = job.getSpd(level);
-		evd = job.getEvd(level);
-		mag = job.getMag(level);
-		res = job.getRes(level);
-	}
-	
-	@Override
-	public String[] getCommands()
-	{
-		return job.getCommands();
+		maxhp += 5;
+		hp = maxhp;
+		str += 1;
+		def += 1;
+		spd += 1;
+		evd += 1;
+		mag += 1;
+		res += 1;
 	}
 	
 	/**
@@ -96,7 +100,7 @@ public class Player extends Actor {
 	 * @param level
 	 * @return
 	 */
-	public int getExpCurve(int l)
+	final public int getExpCurve(int l)
 	{
 		return (int)(4.6666666669919*Math.pow(l, 3)+-13.99999999985*Math.pow(l,2)+
 			   37.3333333321*l+-27.9999999985);
@@ -160,11 +164,19 @@ public class Player extends Actor {
 		}
 	}
 	
+	/**
+	 * Get's the player's sprite's x coordinate
+	 * @return
+	 */
 	public double getX()
 	{
 		return x;
 	}
 	
+	/**
+	 * Get's the player's sprite's y coordinate
+	 * @return
+	 */
 	public double getY()
 	{
 		return y;
@@ -188,9 +200,5 @@ public class Player extends Actor {
 			drawSprite = sprites[0];
 		drawSprite.paint(g);
 	}
-
-	public Sprite[] getSprites() {
-		// TODO Auto-generated method stub
-		return sprites;
-	}
+	
 }

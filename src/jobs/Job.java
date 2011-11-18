@@ -1,26 +1,36 @@
 package jobs;
 
-import java.util.ArrayList;
-
+import actors.Player;
+import commands.*;
 import engine.Sprite;
 
-abstract public class Job {
+abstract public class Job extends Player {
 
 	private final String[] spriteNames = {"stand", "walk", "item", "cast", "victory"};
 	private Sprite[] sprites;
 	
-	protected String name;				//actual name of the job
-	protected ArrayList<String> commands = new ArrayList<String>();
-										//commands the job can execute
+	protected String jobname;				//actual name of the job
+	protected Command[] commands;		//
+	protected Spell[] spells;			//commands the job can execute
+	
+	public Job(Player p)
+	{
+		super(p);
+		jobname = "job";
+		commands = null;
+		spells = null;
+	}
 	
 	/**
 	 * Loads all the sprites that the job will use in battle
 	 */
+	@Override
 	public void loadSprites()
 	{
 		sprites = new Sprite[spriteNames.length];
 		for (int i = 0; i < spriteNames.length; i++)
 			sprites[i] = new Sprite("actors/jobs/" + this.name + "/"+ spriteNames[i] + ".png");
+		drawSprite = sprites[0];
 	}
 	
 	/**
@@ -36,8 +46,8 @@ abstract public class Job {
 	 * Retrieves the name by with the job is identified
 	 * @return
 	 */
-	public String getName() {
-		return Class.class.getName();
+	public String getJobName() {
+		return jobname;
 	}
 
 	/**
@@ -59,8 +69,21 @@ abstract public class Job {
 	abstract public int getMag(int lvl);
 	abstract public int getRes(int lvl);
 
-	public String[] getCommands() {
-		return commands.toArray(new String[0]);
+	/**
+	 * When required exp is met, the player will level up
+	 * all the player's stats will be updated
+	 */
+	public void levelUp()
+	{
+		level++;
+		hp = getHP(level);
+		maxhp = getHP(level);
+		str = getStr(level);
+		def = getDef(level);
+		spd = getSpd(level);
+		evd = getEvd(level);
+		mag = getMag(level);
+		res = getRes(level);
 	}
-	
+
 }
