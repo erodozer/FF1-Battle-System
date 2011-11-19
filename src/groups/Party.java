@@ -37,14 +37,12 @@ public class Party extends ArrayList<Player>{
 	 */
 	public void add(String n, String job) {
 		try {
-			this.add(new Player(n, (Job)Class.forName("jobs." + job).newInstance()));
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}	
+			this.add((Job)Class.forName("jobs." + job).getConstructor(Player.class).newInstance(new Player(n)));
+		} 
+		catch (Exception e){
+			System.out.println(e);
+		}
+		
 	}
 	
 	/**
