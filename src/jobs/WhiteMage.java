@@ -1,12 +1,16 @@
 package jobs;
 
-import java.util.Collections;
+import actors.Player;
+import commands.*;
 
 public class WhiteMage extends Job {
 
-	public WhiteMage(){
-		 name = "White Mage";
-		 Collections.addAll(commands, "Attack", "Defend", "Spell", "Item", "Flee");
+	public WhiteMage(Player p){
+		super(p);
+		jobname = "White Mage";
+		commands = new Command[]{new Attack(this), new Defend(this), new ChooseSpell(this), new ChooseItem(this), new Flee(this)};
+
+		loadSprites();
 	}
 	
 	@Override

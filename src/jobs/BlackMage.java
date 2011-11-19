@@ -1,13 +1,16 @@
 package jobs;
 
-import java.util.Arrays;
-import java.util.Collections;
+import actors.Player;
+import commands.*;
 
 public class BlackMage extends Job {
 	
-	public BlackMage(){
-		 name = "Black Mage";
-		 Collections.addAll(commands, "Attack", "Defend", "Spell", "Item", "Flee");
+	public BlackMage(Player p){
+		super(p);
+		jobname = "Black Mage";
+		commands = new Command[]{new Attack(this), new Defend(this), new ChooseSpell(this), new ChooseItem(this), new Flee(this)};
+
+		loadSprites();
 	}
 	
 	@Override

@@ -7,15 +7,14 @@ import engine.Sprite;
 abstract public class Job extends Player {
 
 	private final String[] spriteNames = {"stand", "walk", "item", "cast", "victory"};
-	private Sprite[] sprites;
 	
-	protected String jobname;				//actual name of the job
-	protected Command[] commands;		//
-	protected Spell[] spells;			//commands the job can execute
+	protected String jobname;			//actual name of the job
 	
 	public Job(Player p)
 	{
 		super(p);
+		level = 0;
+		levelUp();
 		jobname = "job";
 		commands = null;
 		spells = null;
@@ -29,7 +28,7 @@ abstract public class Job extends Player {
 	{
 		sprites = new Sprite[spriteNames.length];
 		for (int i = 0; i < spriteNames.length; i++)
-			sprites[i] = new Sprite("actors/jobs/" + this.name + "/"+ spriteNames[i] + ".png");
+			sprites[i] = new Sprite("actors/jobs/" + jobname + "/"+ spriteNames[i] + ".png");
 		drawSprite = sprites[0];
 	}
 	
@@ -85,5 +84,11 @@ abstract public class Job extends Player {
 		mag = getMag(level);
 		res = getRes(level);
 	}
-
+	/*
+	@Override
+	public Command[] getCommands()
+	{
+		return commands;
+	}
+	*/
 }

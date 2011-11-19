@@ -7,9 +7,10 @@ public class Fighter extends Job {
 
 	public Fighter(Player p){
 		super(p);
-		name = "Fighter";
-		Command[] c = {new Attack(this), new Defend(this), new Drink(this), new ChooseItem(this), new Flee(this)};
-		commands = c;
+		jobname = "Fighter";
+		commands = new Command[]{new Attack(this), new Defend(this), new Drink(this), new ChooseItem(this), new Flee(this)};
+
+		loadSprites();
 	}
 	
 	@Override

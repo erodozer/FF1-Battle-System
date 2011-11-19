@@ -9,7 +9,6 @@ package actors;
  */
 
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import commands.*;
@@ -30,10 +29,9 @@ public abstract class Actor
 	protected int res;			//magic defense/resistance
 	
 	protected Command command;	//battle command
-	protected ArrayList<String> commandNames = new ArrayList<String>();
-	protected Command[] commands = {new Attack(this), new Defend(this)};
+	protected Command[] commands;
 	//spells are divided into lists of levels
-	protected HashMap<Integer, Spell[]> spells = new HashMap<Integer, Spell[]>();
+	protected HashMap<Integer, Spell[]> spells;
 								//choice of commands
 	
 	//Display sprites
@@ -65,6 +63,8 @@ public abstract class Actor
 		name = n;
 		hp = 1;
 		maxhp = 1;
+		int[][] m = {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}};
+		mp = m;
 		str = 1;
 		def = 1;
 		spd = 1;
@@ -78,6 +78,8 @@ public abstract class Actor
 		lght = 0;
 		dark = 0;
 		
+		commands = new Command[]{new Attack(this), new Defend(this)};
+		spells = new HashMap<Integer, Spell[]>();
 	}
 	
 	/**
@@ -89,6 +91,7 @@ public abstract class Actor
 		name = a.name;
 		hp = a.hp;
 		maxhp = a.maxhp;
+		mp = a.mp;
 		str = a.str;
 		def = a.def;
 		spd = a.spd;
@@ -96,13 +99,20 @@ public abstract class Actor
 		mag = a.mag;
 		res = a.res;
 		
+		level = a.level;
+		sprites = a.sprites;
+		
 		exp = a.exp;
 		fire = a.fire;
 		frez = a.frez;
 		elec = a.elec;
 		lght = a.lght;
 		dark = a.dark;
+		
+		commands = a.commands;
+		spells = a.spells;
 	}
+	
 	/**
 	 * Loads the sprites for the actor
 	 */

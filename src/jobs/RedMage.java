@@ -1,17 +1,20 @@
 package jobs;
 
-import java.util.Collections;
+import java.util.HashMap;
 
-import actors.Actor;
+import actors.Player;
 
 import commands.*;
 
 public class RedMage extends Job {
 	
-	public RedMage(Actor a){
-		 name = "Red Mage";
-		 Command[] c = {new Attack(a), new Defend(a), new ChooseSpell(a), new ChooseItem(a), new Flee(a)};
-		 commands = c;
+	public RedMage(Player p){
+		super(p);
+		jobname = "Red Mage";
+		commands = new Command[]{new Attack(this), new Defend(this), new ChooseSpell(this), new ChooseItem(this), new Flee(this)};
+		spells = new HashMap<Integer, Spell[]>();
+		spells.put(0, new Spell[]{new Fire(this)});
+		loadSprites();
 	}
 	
 	@Override
@@ -56,4 +59,8 @@ public class RedMage extends Job {
 		return 0;
 	}
 
+	public Spell[] getSpells(int i)
+	{
+		return spells.get(i);
+	}
 }

@@ -1,12 +1,16 @@
 package jobs;
 
-import java.util.Collections;
+import commands.*;
+import actors.Player;
 
 public class BlackBelt extends Job {
 
-	public BlackBelt(){
-		 name = "Black Belt";
-		 Collections.addAll(commands, "Attack", "Defend", "Spell", "Item", "Flee");
+	public BlackBelt(Player p){
+		super(p);
+		jobname = "Black Belt";
+		commands = new Command[]{new Attack(this), new Defend(this), new Drink(this), new ChooseItem(this), new Flee(this)};
+
+		loadSprites();
 	}
 	
 	@Override

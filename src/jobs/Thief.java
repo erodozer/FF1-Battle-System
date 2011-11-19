@@ -1,12 +1,16 @@
 package jobs;
 
-import java.util.Collections;
+import actors.Player;
+import commands.*;
 
 public class Thief extends Job {
 
-	public Thief(){
-		 name = "Thief";
-		 Collections.addAll(commands, "Attack", "Defend", "Drink", "Item", "Flee");
+	public Thief(Player p){
+		super(p);
+		jobname = "Thief";
+		commands = new Command[]{new Attack(this), new Defend(this), new Drink(this), new ChooseItem(this), new Flee(this)};
+
+		loadSprites();
 	}
 	@Override
 	public int getHP(int lvl) {
