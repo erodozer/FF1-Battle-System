@@ -11,7 +11,7 @@ public class Fire extends Spell {
 	 */
 	public Fire(Actor a)
 	{
-		name = "Attack";
+		name = "Fire";
 		invoker = a;
 		speedBonus = -5;
 		

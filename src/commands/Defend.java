@@ -13,15 +13,18 @@ public class Defend extends Command {
 
 	public Defend(Actor a)
 	{
+		name = "Defend";
 		invoker = a;
 	}
 	
 	@Override
-	public void execute() {}
+	public void execute() {
+		invoker.setDef(invoker.getDef()*2);
+	}
 	
 	@Override
 	public void reset() {
-		invoker.getDef();
+		invoker.setDef(invoker.getDef()/2);
 	}
 
 	//defend does nothing on start

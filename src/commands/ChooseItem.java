@@ -21,6 +21,11 @@ public class ChooseItem extends Command {
 		name = "Item";
 	}
 	
+	@Override
+	public void start(){}
+	@Override
+	public void reset(){}
+	
 	/**
 	 * Do Nothing
 	 */

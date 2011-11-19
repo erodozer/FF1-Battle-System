@@ -1,7 +1,5 @@
 package commands;
 
-import DamageBehaviors.MagicDamageBehavior;
-
 public class Spell extends Command {
 
 	//Amount of restistance calculated necessary to do a critical hit
@@ -26,6 +24,7 @@ public class Spell extends Command {
 	 * @return
 	 */
 	final public boolean critical() {
+		/*
 		if (invoker.getTarget().fire - fire < CRITICALRESISTANCE)
 			return true;
 		else if (invoker.getTarget().frez - frez < CRITICALRESISTANCE)
@@ -35,7 +34,8 @@ public class Spell extends Command {
 		else if (invoker.getTarget().dark - dark < CRITICALRESISTANCE)
 			return true;
 		else if (invoker.getTarget().lght - lght < CRITICALRESISTANCE)
-			return true;						
+			return true;	
+		 */					
 		return false;
 	}
 	

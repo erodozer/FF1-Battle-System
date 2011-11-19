@@ -18,6 +18,10 @@ public class ChooseSpell extends Command {
 	public ChooseSpell(Actor a){
 		name = "Magic";
 	}
+	@Override
+	public void start(){}
+	@Override
+	public void reset(){}
 	
 	/**
 	 * Do nothing

@@ -8,7 +8,7 @@ public abstract class Command {
 	protected String name;
 	protected Actor invoker;
 	protected int damage;
-	protected int speedBonus;
+	protected int speedBonus = 0;
 	protected DamageBehavior db;
 	
 	/**
@@ -47,6 +47,12 @@ public abstract class Command {
 	}
 	
 	public String getName()
+	{
+		return name;
+	}
+	
+	@Override
+	public String toString()
 	{
 		return name;
 	}
