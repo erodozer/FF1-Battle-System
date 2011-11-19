@@ -8,12 +8,7 @@ package actors;
  */
 
 import java.awt.Graphics;
-
-import commands.Command;
-
 import engine.Sprite;
-
-import jobs.Job;
 
 public class Player extends Actor {
 
@@ -37,7 +32,6 @@ public class Player extends Actor {
 		level = 0;
 		exp = 0;
 		levelUp();
-		loadSprites();
 	}
 	
 	/**
@@ -46,24 +40,14 @@ public class Player extends Actor {
 	 */
 	public Player(Player p)
 	{
-		name = p.name;
-		hp = p.hp;
-		maxhp = p.maxhp;
-		str = p.str;
-		def = p.def;
-		spd = p.spd;
-		evd = p.evd;
-		mag = p.mag;
-		res = p.res;
-		level = p.level;
-		exp = p.exp;
-		sprites = p.sprites;	
+		super(p);
+		state = p.state;
 	}
 
 	@Override
 	protected void loadSprites() {
-		sprites = new Sprite[0];
-		drawSprite = null;
+		sprites = new Sprite[1];
+		drawSprite = sprites[0];
 	}
 
 	/**
