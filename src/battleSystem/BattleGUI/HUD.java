@@ -38,7 +38,7 @@ public class HUD extends Sprite{
 		esprited = new EnemySpriteDisplay(4, 4);
 		elistd = new EnemyListDisplay(4, 150);
 		cd = new CommandDisplay(94,150);
-		sd = new SpellDisplay(64, 150);
+		sd = new SpellDisplay(4, 150);
 		ms = new MessageDisplay(4, 150);
 	}
 	
@@ -67,17 +67,21 @@ public class HUD extends Sprite{
 		esprited.paint(g);
 		
 		if (parent.getState() instanceof IssueState)
-			elistd.paint(g);
-		
-		if (parent.getState() instanceof IssueState && !((IssueState)parent.getState()).targetSelecting)
 		{
-			cd.update((IssueState)parent.getState());
-			cd.paint(g);
-		}
-		else if (parent.getState() instanceof IssueState && ((IssueState)parent.getState()).spellSelecting)
-		{
-			sd.update((IssueState)parent.getState());
-			sd.paint(g);
+			if (((IssueState)parent.getState()).spellSelecting)
+			{	
+				sd.update((IssueState)parent.getState());
+				sd.paint(g);
+			}
+			else
+			{
+				elistd.paint(g);
+				if (!((IssueState)parent.getState()).targetSelecting)
+				{
+					cd.update((IssueState)parent.getState());
+					cd.paint(g);
+				}
+			}
 		}
 		else if (parent.getState() instanceof MessageState)
 		{

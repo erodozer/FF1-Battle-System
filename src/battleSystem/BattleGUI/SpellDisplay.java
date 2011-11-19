@@ -26,7 +26,7 @@ public class SpellDisplay extends Sprite{
 	public SpellDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 180, 82);
+		window = new Window(x, y, 200, 84);
 		arrow = new Sprite("hud/selectarrow.png");
 		try {
 			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
@@ -58,18 +58,19 @@ public class SpellDisplay extends Sprite{
 		g.setColor(Color.white);
 		
 		Actor a = parent.getActiveActor();
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			g.drawString(a.getMp(i) + "/" + a.getMaxMp(i), window.getX() + 20 + 60 * (i/4),
+			g.drawString(a.getMp(i) + "/" + a.getMaxMp(i), window.getX() + 10 + 60 * (i/4),
 							window.getY() + 24 + 16 * i);
-			for (int n = 0; n < a.getSpells(i).length; n++)
-				g.drawString(a.getSpells(i)[n].toString(), window.getX() + 60 + 100*n,
+			if (a.getSpells(i) != null)
+				for (int n = 0; n < a.getSpells(i).length; n++)
+					g.drawString(a.getSpells(i)[n].toString(), window.getX() + 50 + 50*n,
 							window.getY() + 24 + 16 * i);
 							
 		}
 		
-		arrow.setX(window.getX() + 60*(index/4));
-		arrow.setY(window.getY() + 24 + 16 * (index % 4) - arrow.getHeight()/2);
+		arrow.setX(window.getX() + 30 + 50*(index%3));
+		arrow.setY(window.getY() + 24 + 16 * (index/3) - arrow.getHeight()/2);
 		arrow.paint(g);
 	}
 }
