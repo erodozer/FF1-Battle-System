@@ -20,23 +20,22 @@ public class IssueState extends BattleState
 	public boolean spellSelecting;
 							//is the actor selecting a target or command
 	
-	public IssueState(Player a)
-	{
-		start(a);
-	}
+	public IssueState(){}
 	
 	/**
 	 * Starts the issue state
 	 * @param a
 	 */
-	public void start(Player a)
+	@Override
+	public void start()
 	{
-		actor = a;
+		actor = (Player)parent.getActiveActor();
 		actor.setCommand(null);
 		actor.setState(Player.WALK);
 		target = null;
 		targetSelecting = false;
 		spellSelecting = false;
+		index = 0;	
 	}
 	
 	/**
@@ -58,6 +57,8 @@ public class IssueState extends BattleState
 		}
 		else if (spellSelecting)
 		{
+			if (index < 0)
+				index = 0;
 			
 		}
 		else
@@ -85,7 +86,7 @@ public class IssueState extends BattleState
 		if (e.getKeyCode() == Input.KEY_B)
 		{
 			if (targetSelecting || spellSelecting)
-				start(actor);
+				start();
 			else
 			{
 				actor.setState(Player.WALK);
@@ -123,7 +124,20 @@ public class IssueState extends BattleState
 		{
 			target = targets[index];
 			actor.setTarget(target);
+			System.out.println(actor.getTarget().getName());
 			finish();
+		}
+		else if (spellSelecting)
+		{
+			if (actor.getSpells(index/3)[index%3] != null)
+			{
+				System.out.println(index);
+				actor.setCommand(actor.getSpells(index/3)[index%3]);
+				targets = parent.getTargets(actor);
+				index = 0;
+				spellSelecting = false;
+				targetSelecting = true;
+			}
 		}
 		else
 		{
@@ -131,6 +145,7 @@ public class IssueState extends BattleState
 			if (actor.getCommand() instanceof ChooseSpell)
 			{
 				spellSelecting = true;
+				index = 0;
 			}
 			else if (actor.getCommand() instanceof Defend)
 			{
@@ -153,16 +168,7 @@ public class IssueState extends BattleState
 	public void finish()
 	{
 		actor.setState(Player.WALK);
-		actor.setCommand(c);
 		parent.setNextState();
-	}
-
-	/**
-	 * Starts the state
-	 */
-	@Override
-	public void start() {
-		index = 0;	
 	}
 
 	/**

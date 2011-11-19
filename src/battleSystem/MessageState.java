@@ -11,9 +11,8 @@ public class MessageState extends BattleState {
 	String message;
 	public Actor activeActor;
 	
-	public MessageState(Actor a)
+	public MessageState()
 	{
-		activeActor = a;
 	}
 
 	@Override
@@ -36,6 +35,7 @@ public class MessageState extends BattleState {
 
 	@Override
 	public void start() {
+		activeActor = parent.getActiveActor();
 		message = "" + activeActor.getCommand().getDamage();
 	}
 

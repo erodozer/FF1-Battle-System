@@ -3,27 +3,35 @@ package battleSystem;
 import java.awt.event.KeyEvent;
 
 import actors.Actor;
+import actors.Player;
 
 public class EngageState extends BattleState {
 
 	Actor activeActor;
-
-	public EngageState(Actor a) {
-		activeActor = a;
-	}
-
+	
+	public EngageState() {}
+	
 	@Override
 	public void start() {
+		activeActor = parent.getActiveActor();
+		System.out.println(activeActor instanceof Player);
+		if (activeActor instanceof Player)
+			((Player)activeActor).setState(Player.WALK);
 	}
 
 	@Override
 	public void finish() {
 		parent.setNextState();
+		if (activeActor instanceof Player)
+			((Player)activeActor).setState(Player.WALK);
 	}
 
 	@Override
 	public void handle() {
 		try {
+			if (activeActor instanceof Player && ((Player)activeActor).getState() == Player.WALK)
+				return;
+			
 			Thread.sleep(1000);
 			if (!activeActor.getAlive()) {
 				finish();

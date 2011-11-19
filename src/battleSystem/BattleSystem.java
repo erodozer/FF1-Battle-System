@@ -40,6 +40,10 @@ public class BattleSystem{
 	private int playerIndex;						//current player index for selecting commands
 	
 	private BattleState state;						//current state of the battle
+	private IssueState is;
+	private EngageState es;
+	private MessageState ms;
+	
 	private MP3 bgm;								//music that plays during battle
 	
 	/**
@@ -61,8 +65,16 @@ public class BattleSystem{
 		bgm = new MP3("data/audio/battle.mp3");
 		bgm.play();
 		
-		state = new IssueState((Player)activeActor);
-		state.setParent(this);
+		is = new IssueState();
+		es = new EngageState();
+		ms = new MessageState();
+		
+		is.setParent(this);
+		es.setParent(this);
+		ms.setParent(this);
+		
+		state = is;
+		state.start();
 	}
 	
 	/**
@@ -122,8 +134,8 @@ public class BattleSystem{
 		populateActorList();
 		getTurnOrder();
 		activeActor = turnOrder.remove(0);
-		state = new EngageState(activeActor);
-		state.setParent(this);
+		state = es;
+		state.start();
 		playerIndex = -1;		
 	}
 	
@@ -131,7 +143,12 @@ public class BattleSystem{
 	 * Update loop
 	 */
 	public void update() {
-		state.handle();
+		try
+		{
+			state.handle();
+		}
+		catch (Exception e)
+		{}
 	}
 
 	/**
@@ -152,8 +169,8 @@ public class BattleSystem{
 					next();
 					return;
 				}
-				state = new EngageState(activeActor);
-				state.setParent(this);
+				state = es;
+				state.start();
 			}
 			catch (Exception e)
 			{
@@ -177,8 +194,7 @@ public class BattleSystem{
 					next();
 					return;
 				}
-				state = new IssueState((Player)activeActor);
-				state.setParent(this);
+				state = is;
 				state.start();
 			}
 		}
@@ -236,8 +252,7 @@ public class BattleSystem{
 	public void setNextState() {
 		if (state instanceof EngageState)
 		{
-			state = new MessageState(activeActor);
-			state.setParent(this);
+			state = ms;
 			state.start();
 		}
 		else
