@@ -1,19 +1,19 @@
 package actors;
 
-/**
- * Actor.java
- * @author Nicholas Hydock 
- * 
- * Description: Base actor class, keeps track of stats and other things
- * 				for combatants
- */
-
 import java.awt.Graphics;
 import java.util.HashMap;
 
 import commands.*;
 import engine.Sprite;
 
+/**
+ * Actor.java
+ * @author Nicholas Hydock 
+ * 
+ * Description: Base actor class, keeps track of stats and other things
+ * 				for combatants.  Actors are comparable on terms of their speed
+ * 				to determine turn order.
+ */
 public abstract class Actor
 {
 	protected String name;		//actor's name
@@ -25,8 +25,9 @@ public abstract class Actor
 	protected int def;			//defense
 	protected int spd;			//speed
 	protected int evd;			//evasion
-	protected int mag;			//magic strength
 	protected int res;			//magic defense/resistance
+	protected int acc;			//attack accuracy bonus
+	protected int vit;			//vitality
 	
 	protected Command command;	//battle command
 	protected Command[] commands;
@@ -53,25 +54,33 @@ public abstract class Actor
 	//Battle target
 	protected Actor target;
 	
+	/**
+	 * Constructs a basic actor
+	 */
 	public Actor()
 	{
-		this("");
+		this("Bob");
 	}
 	
+	/**
+	 * Constructs a basic actor with a name
+	 * @param n
+	 */
 	public Actor(String n)
 	{
 		name = n;
-		hp = 1;
-		maxhp = 1;
+		hp = 5;
+		maxhp = 5;
 		int[][] m = {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}};
 		mp = m;
 		str = 1;
 		def = 1;
 		spd = 1;
 		evd = 1;
-		mag = 1;
 		res = 1;	
-	
+		res = 1;	
+		res = 1;	
+		
 		fire = 0;
 		frez = 0;
 		elec = 0;
@@ -80,37 +89,6 @@ public abstract class Actor
 		
 		commands = new Command[]{new Attack(this), new Defend(this)};
 		spells = new HashMap<Integer, Spell[]>();
-	}
-	
-	/**
-	 * Constructor that copies another actor
-	 * @param a
-	 */
-	public Actor(Actor a)
-	{
-		name = a.name;
-		hp = a.hp;
-		maxhp = a.maxhp;
-		mp = a.mp;
-		str = a.str;
-		def = a.def;
-		spd = a.spd;
-		evd = a.evd;
-		mag = a.mag;
-		res = a.res;
-		
-		level = a.level;
-		sprites = a.sprites;
-		
-		exp = a.exp;
-		fire = a.fire;
-		frez = a.frez;
-		elec = a.elec;
-		lght = a.lght;
-		dark = a.dark;
-		
-		commands = a.commands;
-		spells = a.spells;
 	}
 	
 	/**
@@ -149,7 +127,23 @@ public abstract class Actor
 	public int getHP() {
 		return hp;
 	}
-
+	
+	/**
+	 * Sets maximum amount of hp the actor can have
+	 * @return
+	 */
+	public void setMaxHP(int i) {
+		maxhp = i;
+	}
+	
+	/**
+	 * Retrieves max hp
+	 * @return
+	 */
+	public int getMaxHP() {
+		return maxhp;
+	}
+	
 	/**
 	 * Sets current str
 	 * @param i
@@ -215,22 +209,6 @@ public abstract class Actor
 	}
 
 	/**
-	 * Set current magic attack power
-	 * @param i
-	 */
-	public void setMag(int i) {
-		mag = i;
-	}
-	
-	/**
-	 * Get current magic attack power
-	 * @return
-	 */
-	public int getMag() {
-		return mag;
-	}
-
-	/**
 	 * Set magic resistance
 	 * @param i
 	 */
@@ -246,6 +224,54 @@ public abstract class Actor
 		return res;
 	}
 
+	/**
+	 * Set accuracy
+	 * @param i
+	 */
+	public void setAcc(int i) {
+		acc = i;
+	}
+	
+	/**
+	 * Get accuracy
+	 * @return
+	 */
+	public int getAcc() {
+		return acc;
+	}
+	
+	/**
+	 * Set vitality
+	 * @param i
+	 */
+	public void setVit(int i) {
+		vit = i;
+	}
+	
+	/**
+	 * Get vitality
+	 * @return
+	 */
+	public int getVit() {
+		return vit;
+	}
+	
+	/**
+	 * Set level
+	 * @param i
+	 */
+	public void setLevel(int i) {
+		level = i;
+	}
+	
+	/**
+	 * Get level
+	 * @return
+	 */
+	public int getLevel() {
+		return level;
+	}
+	
 	/**
 	 * Returns the actor's battle command
 	 * @return
