@@ -8,6 +8,8 @@ package actors;
  */
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Properties;
 
 import commands.*;
@@ -30,21 +32,26 @@ public class Enemy extends Actor {
 			name = n;
 			Properties p = new Properties();
 			p.load(new FileInputStream("data/actors/enemies/" + name + "/enemy.ini"));
-			hp = Integer.valueOf(p.getProperty("hp")).intValue();
-			str = Integer.valueOf(p.getProperty("str")).intValue();
-			def = Integer.valueOf(p.getProperty("def")).intValue();
-			mag = Integer.valueOf(p.getProperty("mag")).intValue();
-			res = Integer.valueOf(p.getProperty("res")).intValue();
-			spd = Integer.valueOf(p.getProperty("spd")).intValue();
-			evd = Integer.valueOf(p.getProperty("evd")).intValue();
-			expReward = Integer.valueOf(p.getProperty("exp")).intValue();
-			Command[] c = {new Attack(this), new Defend(this)};
+			hp = Integer.valueOf(p.getProperty("hp", "1")).intValue();
+			str = Integer.valueOf(p.getProperty("str", "1")).intValue();
+			def = Integer.valueOf(p.getProperty("def", "1")).intValue();
+			res = Integer.valueOf(p.getProperty("res", "1")).intValue();
+			spd = Integer.valueOf(p.getProperty("spd", "1")).intValue();
+			evd = Integer.valueOf(p.getProperty("evd", "1")).intValue();
+			acc = Integer.valueOf(p.getProperty("acc", "1")).intValue();
+			vit = Integer.valueOf(p.getProperty("vit", "1")).intValue();
+			expReward = Integer.valueOf(p.getProperty("exp", "1")).intValue();
+			Command[] c = {new Attack(this)};
 			commands = c;
 			loadSprites();
 		}
-		catch (Exception e)
-		{
-			System.err.println(e);
+		catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
