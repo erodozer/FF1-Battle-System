@@ -3,9 +3,7 @@ package battleSystem.BattleGUI;
 import java.awt.Graphics;
 
 import battleSystem.BattleSystem;
-import battleSystem.IssueState;
-import battleSystem.MessageState;
-
+import battleSystem.*;
 
 import engine.Sprite;
 
@@ -23,7 +21,8 @@ public class HUD extends Sprite{
 	public EnemyListDisplay elistd;
 	public CommandDisplay cd;
 	public SpellDisplay sd;
-	public MessageDisplay ms;
+	public MessageDisplay md;
+	public GameOverDisplay gd;
 	
 	private BattleSystem parent;
 	
@@ -39,7 +38,9 @@ public class HUD extends Sprite{
 		elistd = new EnemyListDisplay(4, 150);
 		cd = new CommandDisplay(94,150);
 		sd = new SpellDisplay(4, 150);
-		ms = new MessageDisplay(4, 150);
+		md = new MessageDisplay(4, 150);
+		gd = new GameOverDisplay(4, 150);
+		
 	}
 	
 	/**
@@ -66,6 +67,12 @@ public class HUD extends Sprite{
 		pstatd.paint(g);
 		esprited.paint(g);
 		
+		if (parent.getState() instanceof GameOverState)
+		{
+			gd.paint(g);
+			return;
+		}
+		
 		if (parent.getState() instanceof IssueState)
 		{
 			if (((IssueState)parent.getState()).spellSelecting)
@@ -85,8 +92,8 @@ public class HUD extends Sprite{
 		}
 		else if (parent.getState() instanceof MessageState)
 		{
-			ms.update((MessageState)parent.getState());
-			ms.paint(g);
+			md.update((MessageState)parent.getState());
+			md.paint(g);
 		}
 	}
 }
