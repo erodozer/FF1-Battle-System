@@ -66,10 +66,13 @@ public class MessageDisplay extends Sprite{
 				 windows[2].getX() + 10, windows[2].getY() + 20);
 		}
 		
-		windows[1].paint(g);
-		g.setColor(Color.white);
-		g.drawString(message.activeActor.getCommand().toString(), 
+		if (!message.activeActor.getCommand().toString().equals(""))
+		{
+			windows[1].paint(g);
+			g.setColor(Color.white);
+			g.drawString(message.activeActor.getCommand().toString(), 
 				 windows[1].getX() + 10, windows[1].getY() + 20);
+		}
 		windows[0].paint(g);
 		g.setColor(Color.white);
 		g.drawString(message.activeActor.getName(), 

@@ -2,6 +2,7 @@ package battleSystem.BattleGUI;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.io.File;
 import java.util.ArrayList;
@@ -46,7 +47,12 @@ public class PartyStatusDisplay extends Sprite{
 			g.setColor(Color.white);
 			g.drawString(p.getName(), w.getX() + 8, w.getY() + 24);
 			g.drawString("HP", w.getX() + 8, w.getY() + 40);
-			g.drawString(""+p.getHP(), w.getX() + 32, w.getY() + 46);
+			
+			//gets the width of the numbers so it can be right aligned
+			FontMetrics fm = g.getFontMetrics(g.getFont());
+			int width = fm.stringWidth(""+p.getHP());
+
+			g.drawString(""+p.getHP(), w.getX() + 40 - width, w.getY() + 46);
 		}
 	}
 }

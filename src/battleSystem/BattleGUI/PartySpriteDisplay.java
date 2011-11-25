@@ -85,5 +85,4 @@ public class PartySpriteDisplay extends Sprite{
 			p.draw(g);
 		}
 	}
-	
 }
