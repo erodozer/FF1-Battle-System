@@ -2,6 +2,7 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -29,9 +30,9 @@ public class BattleSystem{
 
 	private Engine engine;
 	
-	private HashMap<Actor, Integer> allActors;		//actors and their speeds
-	private ArrayList<Actor> turnOrder;				//order of when the turns execute
-
+	private Actor[] turnOrder;						//order of when the turns execute
+	private int turnIndex;
+	
 	private Party party;							//player party
 	private Formation formation;					//enemy formation that the party is fighting
 	
@@ -43,8 +44,9 @@ public class BattleSystem{
 	private IssueState is;
 	private EngageState es;
 	private MessageState ms;
+	private GameOverState gs;
 	
-	private MP3 bgm;								//music that plays during battle
+	public MP3 bgm;								//music that plays during battle
 	
 	/**
 	 * Constructs a new battle system instance
@@ -68,10 +70,12 @@ public class BattleSystem{
 		is = new IssueState();
 		es = new EngageState();
 		ms = new MessageState();
+		gs = new GameOverState(); 
 		
 		is.setParent(this);
 		es.setParent(this);
 		ms.setParent(this);
+		gs.setParent(this);
 		
 		state = is;
 		state.start();
@@ -82,47 +86,53 @@ public class BattleSystem{
 	 */
 	private void populateActorList()
 	{
-	    allActors = new HashMap<Actor, Integer>();
+	    ArrayList<Actor> actors = new ArrayList<Actor>();
+	    
+		turnOrder = new Actor[party.getAlive() + formation.getAlive()];
 		
 	    //only alive actors should be in the list
 		for (Actor a: party.getAliveMembers())
-			allActors.put(a, a.getSpd());
+			actors.add(a);
 		for (Actor a: formation.getAliveMembers())
-			allActors.put(a, a.getSpd());
+			actors.add(a);
+				
+		turnOrder = actors.toArray(new Actor[0]);
 	}
 	
 	/**		
-	 * Generates the turn order of all the actors
+	 * Generates the turn order of all the actors using a radix sort
 	 * THIS NEEDS TO BE EXECUTED *AFTER* COMMANDS ARE CHOSEN
 	 * COMMANDS WILL ALTER THE ACTOR'S SPEED SO THAT CAN CHANGE
 	 *   UP TURN ORDER WITH EVERY PHASE
 	 */
-	private void getTurnOrder()
+	public Actor[] getTurnOrder()
 	{
-		turnOrder = new ArrayList<Actor>();
-		ArrayList<Actor> actors = new ArrayList<Actor>(allActors.keySet());
-		List<Integer> order = new ArrayList<Integer>(allActors.values());
-		Collections.sort(order);
+		ArrayList<ArrayList<Actor>> actors = new ArrayList<ArrayList<Actor>>();
+		ArrayList<Actor> sorted = new ArrayList<Actor>();
+		for (int x = 0; x <= 9; x++)
+			actors.add(new ArrayList<Actor>());
+
+		for (int x = 0; x < turnOrder.length; x++)
+			sorted.add(turnOrder[x]);
 		
-		for (Actor a: actors)
-			if (a.getCommand() instanceof Defend)
-			{
-				turnOrder.add(a);
-				actors.remove(a);
-			}
-		
-		for (Integer i: order)
+		//digit
+		for (int i = 1; i <= 3; i++)
 		{
-			for (Actor a : actors)
-				if (a.getAlive() && i.intValue() == a.getSpd() && !turnOrder.contains(a))
-				{
-					turnOrder.add(a);
-					actors.remove(a);
-					break;
-				}
+			//number in list
+			for (Actor a : sorted)
+				actors.get(a.getSpd() % (10*i) / 10).add(a);
+					
+			//smoosh
+			sorted = new ArrayList<Actor>();
+			for (ArrayList<Actor> l : actors)
+				for (Actor a : l)
+					sorted.add(a);
+			
+			actors = new ArrayList<ArrayList<Actor>>();
+			for (int x = 0; x <= 9; x++)
+				actors.add(new ArrayList<Actor>());
 		}
-		//reverses order so higher spd goes first
-		Collections.reverse(turnOrder);
+		return sorted.toArray(new Actor[0]);
 	}
 	
 	/**
@@ -132,8 +142,9 @@ public class BattleSystem{
 	{
 		genEnemyCommands();
 		populateActorList();
-		getTurnOrder();
-		activeActor = turnOrder.remove(0);
+		turnOrder = getTurnOrder();
+		turnIndex = 0;
+		activeActor = turnOrder[turnIndex];
 		state = es;
 		state.start();
 		playerIndex = -1;		
@@ -155,14 +166,23 @@ public class BattleSystem{
 	 * Goes to the next turn or next actor for selecting 
 	 * command depending on the state of the battle system
 	 */
-	private void next()
+	public void next()
 	{
 		if (state instanceof MessageState)
 		{
-			//make active actor the next actor in the queue
-			try
+			//kill order when game over
+			if (party.getAlive() == 0)
 			{
-				activeActor = turnOrder.remove(0);
+				state = gs;
+				state.start();
+				return;
+			}
+			
+			//make active actor the next actor in the queue
+			if (turnIndex < turnOrder.length-1)
+			{
+				turnIndex++;
+				activeActor = turnOrder[turnIndex];
 				//if the actor isn't alive skip ahead
 				if (!activeActor.getAlive())
 				{
@@ -172,7 +192,7 @@ public class BattleSystem{
 				state = es;
 				state.start();
 			}
-			catch (Exception e)
+			else
 			{
 				state = null;
 				next();
