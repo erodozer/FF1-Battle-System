@@ -51,7 +51,7 @@ public class Engine{
 		//In the case of the initial test, the game starts off with a battle
 		// between 
 		Formation f = new Formation();
-    	f.add("Nightmare M");
+    	f.add("Ntmare Mn");
     	changeToBattle(f);
 	}
 	
