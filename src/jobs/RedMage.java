@@ -13,7 +13,8 @@ public class RedMage extends Job {
 		jobname = "Red Mage";
 		commands = new Command[]{new Attack(this), new Defend(this), new ChooseSpell(this), new ChooseItem(this), new Flee(this)};
 		spells = new HashMap<Integer, Spell[]>();
-		spells.put(0, new Spell[]{new Fire(this)});
+		spells.put(0, new Spell[]{new Fire(this), new Cure(this)});
+		spells.put(1, new Spell[]{new Bolt(this)});
 		loadSprites();
 	}
 

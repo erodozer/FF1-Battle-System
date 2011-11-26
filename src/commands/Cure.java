@@ -1,31 +1,21 @@
 package commands;
 
-import DamageBehaviors.PhysicalDamageBehavior;
 import actors.Actor;
 
-public class Cure extends Command {
+public class Cure extends Spell {
 
-	public Cure(Actor a, Actor t)
+	public Cure(Actor a)
 	{
 		name = "Cure";
 		invoker = a;
 		speedBonus = -10;
-		db = new PhysicalDamageBehavior();
-	}
-	
-	@Override
-	public void execute() {
+		accuracy = 24;
+		effectivity = 10;
+				
+		//element
+		lght = true;
 		
-	}
-
-	@Override
-	public void reset() {
-		invoker.setSpd(invoker.getSpd()-speedBonus);
-	}
-
-	@Override
-	public void start() {
-		invoker.setSpd(invoker.getSpd()+speedBonus);
+		lvl = 1;
 	}
 
 }

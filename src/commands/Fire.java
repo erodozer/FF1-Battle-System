@@ -2,6 +2,12 @@ package commands;
 
 import actors.Actor;
 
+/**
+ * Fire
+ * @author nhydock
+ *
+ *	Level 1 fire based magic attack
+ */
 public class Fire extends Spell {
 
 	/**
@@ -19,6 +25,8 @@ public class Fire extends Spell {
 				
 		//element
 		fire = true;
+		
+		lvl = 1;
 	}
 
 }

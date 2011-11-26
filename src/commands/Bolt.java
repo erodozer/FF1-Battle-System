@@ -1,23 +1,32 @@
 package commands;
 
-public class Bolt extends Command {
+import actors.Actor;
 
-	@Override
-	public void start() {
-		// TODO Auto-generated method stub
+/**
+ * Bolt.java
+ * @author nhydock
+ *
+ *	Level 2 lightning based magic attack
+ */
+public class Bolt extends Spell {
 
-	}
-
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-
+	/**
+	 * Constructs a fire casting command
+	 * @param a
+	 * @param t
+	 */
+	public Bolt(Actor a)
+	{
+		name = "Lit";
+		invoker = a;
+		speedBonus = -5;
+		accuracy = 24;
+		effectivity = 10;
+				
+		//element
+		elec = true;
+		
+		lvl = 2;
 	}
 
 }
