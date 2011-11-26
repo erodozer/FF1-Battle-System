@@ -45,10 +45,8 @@ public class ContentPanel extends JPanel{
 		dbg.setColor(Color.black);
 		dbg.fillRect(0, 0, INTERNAL_RES_W, INTERNAL_RES_H);
 		
-		if (engine.getCurrentScene() != null){
-			engine.getCurrentScene().update();
+		if (engine.getCurrentScene() != null)
 			engine.getCurrentScene().render(dbg);	
-		}
 	}
 		
 	/**

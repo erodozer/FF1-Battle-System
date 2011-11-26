@@ -35,12 +35,24 @@ public class GameScreen extends JFrame implements KeyListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addKeyListener(this);
 		
-		Thread t = new Thread(){
+		//main execution thread will update the scene
+		// and then paint the graphics for the scene
+		new Thread(){
 			public void run()
 			{
 				while (!isInterrupted())
 				{
+					if (engine.getCurrentScene() != null)
+						engine.getCurrentScene().update();
+					
+					try {
+						sleep(5);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					
 					c.paint();
+					
 					try
 					{
 						sleep(30);
@@ -50,9 +62,7 @@ public class GameScreen extends JFrame implements KeyListener{
 					}
 				}
 			}
-		};
-		
-		t.start();
+		}.start();
 	}
 
 	// test client
@@ -64,12 +74,8 @@ public class GameScreen extends JFrame implements KeyListener{
     	p.add("RNBW", "BlackBelt");
     	p.add("FLUT", "WhiteMage");
     	
-    	Formation f = new Formation();
-    	f.add("Gel");
-    	f.add("Gel");
-    	
     	engine.setParty(p);
-       	engine.changeToBattle(f);
+    	engine.startGame();
     }
 
 	public static void main(String[] args)
