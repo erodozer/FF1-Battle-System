@@ -63,4 +63,28 @@ public class Formation extends ArrayList<Enemy>{
 		for (String e : foes)
 			add(e);
 	}
+	
+	/**
+	 * Returns the total exp reward for beating the formation
+	 * @return
+	 */
+	public int getExp()
+	{
+		int sum = 0;
+		for (Enemy e : this)
+			sum += e.getExp();
+		return sum;
+	}
+	
+	/**
+	 * Returns the total gold reward for beating the formation
+	 * @return
+	 */
+	public int getGold()
+	{
+		int sum = 0;
+		for (Enemy e : this)
+			sum += e.getGold();
+		return sum;
+	}
 }
