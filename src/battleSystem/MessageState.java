@@ -6,9 +6,15 @@ import engine.Input;
 
 import actors.Actor;
 
+/**
+ * MessageState.java
+ * @author nhydock
+ *
+ *	Displays the results of the current turn.
+ */
 public class MessageState extends BattleState {
 
-	String message;
+	String message;				//message to display
 	public Actor activeActor;
 	
 	public MessageState()
@@ -36,14 +42,21 @@ public class MessageState extends BattleState {
 	@Override
 	public void start() {
 		activeActor = parent.getActiveActor();
-		message = "" + activeActor.getCommand().getDamage();
+		message = activeActor.getCommand().getDamage() + " DMG";
 	}
 
+	/**
+	 * Retrieves the message to be displayed
+	 * @return
+	 */
 	public String getMessage()
 	{
 		return message;
 	}
 
+	/**
+	 * Do nothing
+	 */
 	@Override
 	public void handleKeyInput(KeyEvent arg0) {}
 	
