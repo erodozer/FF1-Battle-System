@@ -1,5 +1,6 @@
 package scenes;
 
+import engine.Sprite;
 import groups.Formation;
 
 import java.awt.Graphics;
@@ -21,6 +22,7 @@ public class BattleScene implements Scene {
 	public void start() {
 		bs = new BattleSystem();
 		display = new HUD();
+		display.setBackground(new Sprite("terrains/grass.png"));
 		display.elistd.update(bs.getFormation());
 		display.esprited.update(bs.getFormation());
 		display.setParentScene(bs);
