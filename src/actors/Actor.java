@@ -23,9 +23,9 @@ public abstract class Actor
 	protected int[][] mp;		//magic points (d&d styled)
 	protected int str;			//strength
 	protected int def;			//defense
-	protected int spd;			//speed
+	protected int spd;			//agility
 	protected int evd;			//evasion
-	protected int res;			//magic defense/resistance
+	protected int itl;			//intellegence, from what I can tell is a pointless stat		
 	protected int acc;			//attack accuracy bonus
 	protected int vit;			//vitality
 	
@@ -77,9 +77,9 @@ public abstract class Actor
 		def = 1;
 		spd = 1;
 		evd = 1;
-		res = 1;	
-		res = 1;	
-		res = 1;	
+		acc = 1;	
+		vit = 1;
+		itl = 1;
 		
 		fire = 0;
 		frez = 0;
@@ -209,22 +209,6 @@ public abstract class Actor
 	}
 
 	/**
-	 * Set magic resistance
-	 * @param i
-	 */
-	public void setRes(int i) {
-		res = i;
-	}
-	
-	/**
-	 * Get magic resistance
-	 * @return
-	 */
-	public int getRes() {
-		return res;
-	}
-
-	/**
 	 * Set accuracy
 	 * @param i
 	 */
@@ -257,6 +241,22 @@ public abstract class Actor
 	}
 	
 	/**
+	 * Set intelligence
+	 * @param i
+	 */
+	public void setInt(int i) {
+		itl = i;
+	}
+	
+	/**
+	 * Get intelligence
+	 * @return
+	 */
+	public int getInt() {
+		return itl;
+	}
+	
+	/**
 	 * Set level
 	 * @param i
 	 */
@@ -272,6 +272,21 @@ public abstract class Actor
 		return level;
 	}
 	
+	/**
+	 * Set experience points
+	 * @param i
+	 */
+	public void setExp(int i) {
+		exp = i;
+	}
+	
+	/**
+	 * Get experience points
+	 * @return
+	 */
+	public int getExp() {
+		return exp;
+	}
 	/**
 	 * Returns the actor's battle command
 	 * @return
@@ -352,6 +367,15 @@ public abstract class Actor
 	}
 
 	/**
+	 * Allow setting of current mp per level
+	 * @param lvl
+	 * @param i
+	 */
+	public void setMp(int lvl, int i) {
+		mp[lvl][1] = i;
+	}
+	
+	/**
 	 * Get the list of spells for the level
 	 * @param i
 	 * @return
@@ -374,6 +398,24 @@ public abstract class Actor
 	 */
 	public Actor getTarget() {
 		return target;
+	}
+
+	/**
+	 * Retrieves the resistance of the actor to a particular element
+	 * @param i
+	 * @return
+	 */
+	public int getElementalResistance(int i) {
+		if (i == 0)
+			return fire;
+		else if (i == 1)
+			return frez;
+		else if (i == 2)
+			return elec;
+		else if (i == 3)
+			return dark;
+		else
+			return lght;
 	}
 
 }
