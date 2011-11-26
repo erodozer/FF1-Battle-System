@@ -6,6 +6,12 @@ import org.junit.Test;
 
 import actors.Player;
 
+/**
+ * JobTest
+ * @author nhydock
+ *
+ *	JUnit testing for Job decorator
+ */
 public class JobTest {
 
 	/**
@@ -15,19 +21,36 @@ public class JobTest {
 	 */
 	@Test
 	public void test() {
-		final int level = 10;
 		Player p = new Player("Twil");
 		Job j = new MockJob(p);
 		assertEquals("Twil", j.getName());
-		assertEquals("MockJob", j.getJobName());
-		assertEquals(100, j.getHP(level));
-		assertEquals(12, j.getStr(level));
-		assertEquals(14, j.getDef(level));
-		assertEquals(50, j.getSpd(level));
-		assertEquals(29, j.getEvd(level));
-		assertEquals(17, j.getMag(level));
-		assertEquals(7, j.getRes(level));
+		assertEquals("Mockjob", j.getJobName());
+		//test normal stats
+		assertEquals(1, j.getLevel());
+		assertEquals(15, j.getHP());
+		assertEquals(15, j.getMaxHP());
+		assertEquals(8, j.getStr());
+		assertEquals(34, j.getDef());
+		assertEquals(7, j.getSpd());
+		assertEquals(6, j.getEvd());
+		assertEquals(53, j.getRes());
+		assertEquals(15, j.getAcc());
+		assertEquals(12, j.getVit());
 		
+		//level up the job
+		j.levelUp();
+		
+		assertEquals(2, j.getLevel());
+		assertEquals(36, j.getHP());
+		assertEquals(36, j.getMaxHP());
+		assertEquals(11, j.getStr());
+		assertEquals(39, j.getDef());
+		assertEquals(10, j.getSpd());
+		assertEquals(8, j.getEvd());
+		assertEquals(59, j.getRes());
+		assertEquals(21, j.getVit());
+		assertEquals(16, j.getAcc());
+	
 	}
 
 }
@@ -45,48 +68,50 @@ class MockJob extends Job
 	{
 		super(p);
 		jobname = "Mockjob";
-	}
-	
-	@Override
-	public int getHP(int lvl) {
-		// TODO Auto-generated method stub
-		return (int)(lvl*10);
+		hp = 15;
+		maxhp = 15;
+		str = 8;
+		def = 34;
+		spd = 7;
+		evd = 6;
+		res = 53;
+		acc = 15;
+		vit = 12;
 	}
 
 	@Override
 	public int getStr(int lvl) {
-		// TODO Auto-generated method stub
-		return (int)(lvl*.75+5);
+		return 3;
 	}
 
 	@Override
 	public int getDef(int lvl) {
-		// TODO Auto-generated method stub
-		return (int)(lvl*.5+9);
+		return 5;
 	}
 
 	@Override
 	public int getSpd(int lvl) {
-		// TODO Auto-generated method stub
-		return (int)(lvl*5);
+		return 3;
 	}
 
 	@Override
 	public int getEvd(int lvl) {
-		// TODO Auto-generated method stub
-		return (int)(lvl*2-1);
-	}
-
-	@Override
-	public int getMag(int lvl) {
-		// TODO Auto-generated method stub
-		return (int)(lvl+7);
+		return 2;
 	}
 
 	@Override
 	public int getRes(int lvl) {
-		// TODO Auto-generated method stub
-		return (int)(lvl*.3+4);
+		return 6;
+	}
+
+	@Override
+	protected int getAcc(int lvl) {
+		return 1;
+	}
+
+	@Override
+	protected int getVit(int lvl) {
+		return (int)(lvl+7);
 	}
 
 }
