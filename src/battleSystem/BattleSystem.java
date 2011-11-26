@@ -118,9 +118,11 @@ public class BattleSystem{
 		//digit
 		for (int i = 1; i <= 3; i++)
 		{
+			//radix sort has to search in reverse so then the stack is made
+			//in proper descending order
 			//number in list
-			for (Actor a : sorted)
-				actors.get(a.getSpd() % (10*i) / 10).add(a);
+			for (int n = sorted.size()-1; n >= 0; n--)
+				actors.get(sorted.get(n).getSpd() % (10*i) / 10).add(sorted.get(n));
 					
 			//smoosh
 			sorted = new ArrayList<Actor>();
