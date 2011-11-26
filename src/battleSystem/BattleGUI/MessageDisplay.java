@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.io.File;
 
-import commands.Defend;
+import commands.*;
 
 import battleSystem.MessageState;
 
@@ -21,11 +21,12 @@ public class MessageDisplay extends Sprite{
 	public MessageDisplay(int x, int y)
 	{
 		super(null);
-		windows = new Window[4];
-		windows[0] = new Window(x,    y,    90,  32);
+		windows = new Window[5];
+		windows[0] = new Window(x,    y,    84,  32);
 		windows[1] = new Window(x+84, y,    116, 32);
-		windows[2] = new Window(x,    y+24, 90,  32);
+		windows[2] = new Window(x,    y+24, 84,  32);
 		windows[3] = new Window(x+84, y+24, 116, 32);
+		windows[4] = new Window(x, 	  y+48, 200, 32);
 		
 		try {
 			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
@@ -53,19 +54,6 @@ public class MessageDisplay extends Sprite{
 		g.setFont(f);
 		g.setColor(Color.white);
 		
-		//shows actor name
-		if (!(message.activeActor.getCommand() instanceof Defend))
-		{
-			windows[3].paint(g);
-			g.setColor(Color.white);
-			g.drawString(""+message.getMessage(), 
-				 windows[3].getX() + 10, windows[3].getY() + 20);
-			windows[2].paint(g);
-			g.setColor(Color.white);
-			g.drawString(message.activeActor.getTarget().getName(), 
-				 windows[2].getX() + 10, windows[2].getY() + 20);
-		}
-		
 		if (!message.activeActor.getCommand().toString().equals(""))
 		{
 			windows[1].paint(g);
@@ -77,6 +65,32 @@ public class MessageDisplay extends Sprite{
 		g.setColor(Color.white);
 		g.drawString(message.activeActor.getName(), 
 					 windows[0].getX() + 10, windows[0].getY() + 20);
+
+		Command c = message.activeActor.getCommand();
+		//shows actor name
+		if (!(c instanceof Defend))
+		{
+			windows[3].paint(g);
+			g.setColor(Color.white);
+			g.drawString(""+message.getMessage(), 
+				 windows[3].getX() + 10, windows[3].getY() + 20);
+			windows[2].paint(g);
+			g.setColor(Color.white);
+			g.drawString(message.activeActor.getTarget().getName(), 
+				 windows[2].getX() + 10, windows[2].getY() + 20);
+		}
 		
+		if (!message.activeActor.getTarget().getAlive())
+		{
+			windows[4].paint(g);
+			g.setColor(Color.white);
+			g.drawString("Terminated!", windows[4].getX() + 10, windows[4].getY() + 20);
+		}
+		else if (c.getDamage() == 0 || (c instanceof Spell && ((Spell)c).resist() > 0))
+		{
+			windows[4].paint(g);
+			g.setColor(Color.white);
+			g.drawString("Ineffective", windows[4].getX() + 10, windows[4].getY() + 20);
+		}	
 	}
 }

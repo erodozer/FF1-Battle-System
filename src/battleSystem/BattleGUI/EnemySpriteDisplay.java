@@ -31,9 +31,10 @@ public class EnemySpriteDisplay extends Sprite{
 	{
 		super(null);
 		window = new Window(x, y, 128, 156);
-		background = new Sprite("terrains/grass.png");
+		background = new Sprite(null);
 		sprites = new HashMap<Enemy, Sprite>();
 		arrow = new Sprite("hud/selectarrow.png");
+	
 	}
 
 	/**
@@ -44,16 +45,15 @@ public class EnemySpriteDisplay extends Sprite{
 		for (int i = 0; i < f.size(); i++)
 		{
 			Enemy e = f.get(i);
-			Sprite s = e.getSprite();
-			s.setX(window.getX()+12);
-			s.setY(window.getY()+40+(s.getHeight()+5)*(i%3));
-			sprites.put(e, s);
+			e.getSprite().setX(window.getX()+12);
+			e.getSprite().setY(window.getY()+40+(e.getSprite().getHeight()+5)*(i%3));
 		}
 	}
 	
 	public void setParentScene(BattleSystem bs)
 	{
 		parent = bs;
+		update(parent.getFormation());
 	}
 	
 	public void paint(Graphics g)
@@ -65,16 +65,21 @@ public class EnemySpriteDisplay extends Sprite{
 		g.drawImage(background.getImage(), window.getX() + BKGHORZOFFSET + background.getImage().getWidth(), window.getY() + BKGVERTOFFSET, null);
 		g.drawImage(background.getImage(), window.getX() + window.getWidth() - BKGHORZOFFSET - background.getImage().getWidth(), window.getY() + BKGVERTOFFSET, null);
 	
-		for (Sprite s : sprites.values())
-			s.paint(g);
+		for (Enemy e : parent.getFormation())
+			if (e.getAlive())
+				e.getSprite().paint(g);
 				
 		if (parent.getState() instanceof IssueState && ((IssueState)parent.getState()).targetSelecting)
 		{
 			int i = ((IssueState)parent.getState()).index;
-			arrow.setX(sprites.get(parent.getFormation().get(i)).getX());
-			arrow.setY(sprites.get(parent.getFormation().get(i)).getY());
+			arrow.setX(parent.getFormation().get(i).getSprite().getX());
+			arrow.setY(parent.getFormation().get(i).getSprite().getY());
 			arrow.paint(g);
 		}
+	}
+
+	public void setBackground(Sprite s) {
+		background = s;
 	}
 	
 }

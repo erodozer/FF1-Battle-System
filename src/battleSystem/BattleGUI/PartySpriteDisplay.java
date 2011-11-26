@@ -23,7 +23,7 @@ public class PartySpriteDisplay extends Sprite{
 	{
 		super(null);
 		window = new Window(x, y, 72, 156);
-		background = new Sprite("terrains/grass.png");
+		background = new Sprite(null);
 		//Sets all the sprites to their initial positions
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
 		{
@@ -84,5 +84,9 @@ public class PartySpriteDisplay extends Sprite{
 			}
 			p.draw(g);
 		}
+	}
+
+	public void setBackground(Sprite s) {
+		background = s;
 	}
 }

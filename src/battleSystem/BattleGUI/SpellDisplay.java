@@ -19,7 +19,8 @@ public class SpellDisplay extends Sprite{
 	Window window;
 	Sprite arrow;
 	Font f;
-	int index;
+	int index = 0;
+	int range = 0;
 	
 	BattleSystem parent;
 	
@@ -43,7 +44,11 @@ public class SpellDisplay extends Sprite{
 	
 	public void update(IssueState state)
 	{
-		this.index = state.getIndex();
+		index = state.getIndex();
+		if (index >= 12)
+			range = 4;
+		else
+			range = 0;
 	}
 	
 	/**
@@ -58,19 +63,19 @@ public class SpellDisplay extends Sprite{
 		g.setColor(Color.white);
 		
 		Actor a = parent.getActiveActor();
-		for (int i = 0; i < 4; i++)
+		for (int i = range; i < range+4; i++)
 		{
-			g.drawString(a.getMp(i) + "/" + a.getMaxMp(i), window.getX() + 10 + 60 * (i/4),
-							window.getY() + 24 + 16 * i);
+			g.drawString(a.getMp(i) + "/" + a.getMaxMp(i), window.getX() + 10,
+							window.getY() + 24 + 16 * (i-range));
 			if (a.getSpells(i) != null)
 				for (int n = 0; n < a.getSpells(i).length; n++)
 					g.drawString(a.getSpells(i)[n].toString(), window.getX() + 50 + 50*n,
-							window.getY() + 24 + 16 * i);
+							window.getY() + 24 + 16 * (i-range));
 							
 		}
 		
 		arrow.setX(window.getX() + 30 + 50*(index%3));
-		arrow.setY(window.getY() + 24 + 16 * (index/3) - arrow.getHeight()/2);
+		arrow.setY(window.getY() + 24 + 16 * (index/3 - range) - arrow.getHeight()/2);
 		arrow.paint(g);
 	}
 }
