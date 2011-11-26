@@ -23,6 +23,7 @@ public class HUD extends Sprite{
 	public SpellDisplay sd;
 	public MessageDisplay md;
 	public GameOverDisplay gd;
+	public VictoryDisplay vd;
 	
 	private BattleSystem parent;
 	
@@ -38,9 +39,16 @@ public class HUD extends Sprite{
 		elistd = new EnemyListDisplay(4, 150);
 		cd = new CommandDisplay(94,150);
 		sd = new SpellDisplay(4, 150);
-		md = new MessageDisplay(4, 150);
-		gd = new GameOverDisplay(4, 150);
+		md = new MessageDisplay(4, 160);
+		gd = new GameOverDisplay(4, 160);
+		vd = new VictoryDisplay(4, 160);
 		
+	}
+	
+	public void setBackground(Sprite s)
+	{
+		esprited.setBackground(s);
+		psprited.setBackground(s);
 	}
 	
 	/**
@@ -54,6 +62,7 @@ public class HUD extends Sprite{
 		esprited.setParentScene(parent);
 		cd.setParentScene(parent);
 		sd.setParentScene(parent);
+		vd.setParentScene(parent);
 	}
 	
 	/**
@@ -72,7 +81,11 @@ public class HUD extends Sprite{
 			gd.paint(g);
 			return;
 		}
-		
+		if (parent.getState() instanceof VictoryState)
+		{
+			vd.paint(g);
+			return;
+		}
 		if (parent.getState() instanceof IssueState)
 		{
 			if (((IssueState)parent.getState()).spellSelecting)
