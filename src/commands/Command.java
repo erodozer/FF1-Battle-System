@@ -1,6 +1,5 @@
 package commands;
 
-import DamageBehaviors.DamageBehavior;
 import actors.Actor;
 
 public abstract class Command {
@@ -9,7 +8,6 @@ public abstract class Command {
 	protected Actor invoker;
 	protected int damage;
 	protected int speedBonus = 0;
-	protected DamageBehavior db;
 	
 	/**
 	 * Adds effects to the actor upon assigning the command
@@ -45,6 +43,11 @@ public abstract class Command {
 	{
 		return damage;
 	}
+	
+	/**
+	 * Calculates the damage dealt
+	 */
+	abstract protected int calculateDamage(boolean critical);
 	
 	public String getName()
 	{

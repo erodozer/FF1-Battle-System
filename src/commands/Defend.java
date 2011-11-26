@@ -31,4 +31,11 @@ public class Defend extends Command {
 	@Override
 	public void start() {}
 
+	/**
+	 * Do Nothing
+	 */
+	@Override
+	protected int calculateDamage(boolean critical) {
+		return 0;
+	}
 }

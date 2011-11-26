@@ -32,4 +32,12 @@ public class ChooseItem extends Command {
 	@Override
 	public void execute() {}
 
+	/**
+	 * Do Nothing
+	 */
+	@Override
+	protected int calculateDamage(boolean critical) {
+		return 0;
+	}
+
 }
