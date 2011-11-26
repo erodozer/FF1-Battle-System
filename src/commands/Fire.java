@@ -14,9 +14,11 @@ public class Fire extends Spell {
 		name = "Fire";
 		invoker = a;
 		speedBonus = -5;
-		
+		accuracy = 24;
+		effectivity = 10;
+				
 		//element
-		fire = 100;
+		fire = true;
 	}
 
 }
