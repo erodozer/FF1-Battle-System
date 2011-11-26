@@ -59,7 +59,8 @@ public class IssueState extends BattleState
 		{
 			if (index < 0)
 				index = 0;
-			
+			if (index > 23)
+				index = 23;
 		}
 		else
 		{	
@@ -129,14 +130,18 @@ public class IssueState extends BattleState
 		}
 		else if (spellSelecting)
 		{
+			//allow choosing if the spell exists and the player has enough mp to cast it
 			if (actor.getSpells(index/3)[index%3] != null)
 			{
-				System.out.println(index);
-				actor.setCommand(actor.getSpells(index/3)[index%3]);
-				targets = parent.getTargets(actor);
-				index = 0;
-				spellSelecting = false;
-				targetSelecting = true;
+				if (actor.getMp(actor.getSpells(index/3)[index%3].getLevel()) > 0)
+				{
+					System.out.println(index);
+					actor.setCommand(actor.getSpells(index / 3)[index % 3]);
+					targets = parent.getTargets(actor);
+					index = 0;
+					spellSelecting = false;
+					targetSelecting = true;
+				}
 			}
 		}
 		else
