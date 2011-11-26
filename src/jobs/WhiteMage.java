@@ -9,14 +9,13 @@ public class WhiteMage extends Job {
 		super(p);
 		jobname = "White Mage";
 		commands = new Command[]{new Attack(this), new Defend(this), new ChooseSpell(this), new ChooseItem(this), new Flee(this)};
-
+		str = 4;
+		def = 0;
+		vit = 10;
+		itl = 10;
+		acc = 10;
+		spd = 5;
 		loadSprites();
-	}
-	
-	@Override
-	public int getHP(int lvl) {
-		// TODO Auto-generated method stub
-		return 1;
 	}
 
 	@Override
@@ -38,19 +37,19 @@ public class WhiteMage extends Job {
 	}
 
 	@Override
-	public int getEvd(int lvl) {
+	protected int getAcc(int lvl) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int getMag(int lvl) {
+	protected int getVit(int lvl) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int getRes(int lvl) {
+	protected int getInt(int lvl) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

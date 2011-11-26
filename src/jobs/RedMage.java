@@ -16,12 +16,6 @@ public class RedMage extends Job {
 		spells.put(0, new Spell[]{new Fire(this)});
 		loadSprites();
 	}
-	
-	@Override
-	public int getHP(int lvl) {
-		// TODO Auto-generated method stub
-		return 1;
-	}
 
 	@Override
 	public int getStr(int lvl) {
@@ -42,25 +36,21 @@ public class RedMage extends Job {
 	}
 
 	@Override
-	public int getEvd(int lvl) {
+	protected int getAcc(int lvl) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int getMag(int lvl) {
+	protected int getVit(int lvl) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int getRes(int lvl) {
+	protected int getInt(int lvl) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public Spell[] getSpells(int i)
-	{
-		return spells.get(i);
-	}
 }
