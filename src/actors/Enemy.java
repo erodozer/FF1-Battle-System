@@ -18,7 +18,7 @@ import engine.Sprite;
 
 public class Enemy extends Actor {
 
-	int expReward;			//amount of exp gained for slaying the enemy
+	int goldReward;
 	
 	/**
 	 * Creates an enemy instance
@@ -32,15 +32,17 @@ public class Enemy extends Actor {
 			name = n;
 			Properties p = new Properties();
 			p.load(new FileInputStream("data/actors/enemies/" + name + "/enemy.ini"));
-			hp = Integer.valueOf(p.getProperty("hp", "1")).intValue();
+			maxhp = Integer.valueOf(p.getProperty("hp", "1")).intValue();
+			hp = maxhp;
 			str = Integer.valueOf(p.getProperty("str", "1")).intValue();
 			def = Integer.valueOf(p.getProperty("def", "1")).intValue();
-			res = Integer.valueOf(p.getProperty("res", "1")).intValue();
+			itl = Integer.valueOf(p.getProperty("int", "1")).intValue();
 			spd = Integer.valueOf(p.getProperty("spd", "1")).intValue();
 			evd = Integer.valueOf(p.getProperty("evd", "1")).intValue();
 			acc = Integer.valueOf(p.getProperty("acc", "1")).intValue();
 			vit = Integer.valueOf(p.getProperty("vit", "1")).intValue();
-			expReward = Integer.valueOf(p.getProperty("exp", "1")).intValue();
+			exp = Integer.valueOf(p.getProperty("exp", "1")).intValue();
+			goldReward = Integer.valueOf(p.getProperty("g", "0")).intValue();
 			Command[] c = {new Attack(this)};
 			commands = c;
 			loadSprites();
@@ -55,24 +57,6 @@ public class Enemy extends Actor {
 		}
 	}
 	
-	/**
-	 * Set the exp reward gained for slaying
-	 * @param i
-	 */
-	public void setExp(int i)
-	{
-		expReward = i;
-	}
-	
-	/**
-	 * Returns the amount of exp gained for slaying
-	 * @return
-	 */
-	public int getExp()
-	{
-		return expReward;
-	}
-	
 	@Override
 	protected void loadSprites() {
 		sprites = new Sprite[1];
@@ -82,6 +66,15 @@ public class Enemy extends Actor {
 	@Override
 	public Sprite getSprite() {
 		return sprites[0];
+	}
+
+
+	public void setGold(int i) {
+		goldReward = i;
+	}
+
+	public int getGold() {
+		return goldReward;
 	}
 
 }
