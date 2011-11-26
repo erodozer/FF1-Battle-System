@@ -2,6 +2,7 @@ package battleSystem.BattleGUI;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.io.File;
 
@@ -18,7 +19,6 @@ public class SpellDisplay extends Sprite{
 	
 	Window window;
 	Sprite arrow;
-	Font f;
 	int index = 0;
 	int range = 0;
 	
@@ -27,14 +27,9 @@ public class SpellDisplay extends Sprite{
 	public SpellDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 200, 84);
+		window = new Window(x, y, 184, 80);
 		arrow = new Sprite("hud/selectarrow.png");
-		try {
-			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
-			f = new Font("serif", Font.PLAIN, 10);
-		} catch (Exception e) {
-			f = new Font("serif", Font.PLAIN, 10);
-		}
+
 	}
 	
 	public void setParentScene(BattleSystem bs)
@@ -59,22 +54,24 @@ public class SpellDisplay extends Sprite{
 		//window is first sprite
 		window.paint(g);
 		
-		g.setFont(f);
 		g.setColor(Color.white);
 		
 		Actor a = parent.getActiveActor();
 		for (int i = range; i < range+4; i++)
 		{
-			g.drawString(a.getMp(i) + "/" + a.getMaxMp(i), window.getX() + 10,
+			g.drawString("L"+(i+1), window.getX() + 10,
 							window.getY() + 24 + 16 * (i-range));
 			if (a.getSpells(i) != null)
 				for (int n = 0; n < a.getSpells(i).length; n++)
-					g.drawString(a.getSpells(i)[n].toString(), window.getX() + 50 + 50*n,
+					g.drawString(a.getSpells(i)[n].toString().toUpperCase(), window.getX() + 35 + 40*n,
 							window.getY() + 24 + 16 * (i-range));
-							
+			FontMetrics m = g.getFontMetrics();
+			g.drawString(a.getMp(i)+"", window.getX() + window.getWidth()-15-m.stringWidth(a.getMp(i)+""),
+					window.getY() + 24 + 16 * (i-range));
+					
 		}
 		
-		arrow.setX(window.getX() + 30 + 50*(index%3));
+		arrow.setX(window.getX() + 15 + 40*(index%3));
 		arrow.setY(window.getY() + 24 + 16 * (index/3 - range) - arrow.getHeight()/2);
 		arrow.paint(g);
 	}

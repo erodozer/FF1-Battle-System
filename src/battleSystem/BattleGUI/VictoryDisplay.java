@@ -16,7 +16,6 @@ public class VictoryDisplay extends Sprite{
 	
 	Window[] windows;
 	Sprite arrow;
-	Font f;
 	BattleSystem parent;	
 	
 	public VictoryDisplay(int x, int y)
@@ -24,12 +23,6 @@ public class VictoryDisplay extends Sprite{
 		super(null);
 		windows = new Window[]{new Window(x, y+80, 180, 32), new Window(x, y, 90, 32), new Window(x+82, y, 90, 32), new Window(x, y+26, 90, 32), new Window(x+82, y+26, 90, 32)};
 		
-		try {
-			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
-			f = new Font("serif", Font.PLAIN, 10);
-		} catch (Exception e) {
-			f = new Font("serif", Font.PLAIN, 10);
-		}
 	}
 
 
@@ -43,7 +36,6 @@ public class VictoryDisplay extends Sprite{
 	 */
 	public void paint(Graphics g)
 	{
-		g.setFont(f);
 		g.setColor(Color.white);
 		
 		if (((VictoryState)parent.getState()).getStep() == 0)

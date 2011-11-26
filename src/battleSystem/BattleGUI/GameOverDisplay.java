@@ -15,7 +15,6 @@ public class GameOverDisplay extends Sprite{
 	
 	Window window;
 	Sprite arrow;
-	Font f;
 	MessageState message;
 	
 	public GameOverDisplay(int x, int y)
@@ -23,13 +22,7 @@ public class GameOverDisplay extends Sprite{
 		super(null);
 		window = new Window(x, y, 90, 32);
 		window.setColor(Color.red);
-		
-		try {
-			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
-			f = new Font("serif", Font.PLAIN, 10);
-		} catch (Exception e) {
-			f = new Font("serif", Font.PLAIN, 10);
-		}
+
 	}
 	
 	/**
@@ -47,7 +40,6 @@ public class GameOverDisplay extends Sprite{
 	 */
 	public void paint(Graphics g)
 	{
-		g.setFont(f);
 		g.setColor(Color.white);
 		
 		window.paint(g);

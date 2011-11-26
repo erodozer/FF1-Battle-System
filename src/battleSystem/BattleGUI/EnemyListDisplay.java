@@ -15,18 +15,11 @@ public class EnemyListDisplay extends Sprite{
 
 	Window window;
 	ArrayList<String> names;
-	Font f;
 	
 	public EnemyListDisplay(int x, int y)
 	{
 		super(null);
 		window = new Window(x, y, 90, 82);
-		try {
-			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
-			f = new Font("serif", Font.PLAIN, 10);
-		} catch (Exception e) {
-			f = new Font("serif", Font.PLAIN, 10);
-		}
 		
 		names = new ArrayList<String>();
 	}
@@ -50,7 +43,6 @@ public class EnemyListDisplay extends Sprite{
 		for (int i = 0; i < names.size(); i++)
 		{
 			g.setColor(Color.white);
-			g.setFont(f);
 			g.drawString(names.get(i), window.getX()+12, window.getY()+24+i*16);
 		}
 		

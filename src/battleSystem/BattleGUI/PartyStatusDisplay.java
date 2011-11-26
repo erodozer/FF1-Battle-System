@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import actors.Player;
@@ -16,17 +19,10 @@ public class PartyStatusDisplay extends Sprite{
 	//party status display consists of multiple windows, 
 	// one for each character in the party
 	ArrayList<Window> windows = new ArrayList<Window>();
-	Font f;
 	
 	public PartyStatusDisplay(int x, int y)
 	{
 		super(null);
-		try {
-			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
-			f = new Font("serif", Font.PLAIN, 10);
-		} catch (Exception e) {
-			f = new Font("serif", Font.PLAIN, 10);
-		}
 		
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
 			windows.add(new Window(x, y + 48*i, 48, 56));
@@ -43,7 +39,6 @@ public class PartyStatusDisplay extends Sprite{
 			Window w = windows.get(i);
 			Player p = Engine.getInstance().getParty().get(i);
 			w.paint(g);
-			g.setFont(f);
 			g.setColor(Color.white);
 			g.drawString(p.getName(), w.getX() + 8, w.getY() + 24);
 			g.drawString("HP", w.getX() + 8, w.getY() + 40);

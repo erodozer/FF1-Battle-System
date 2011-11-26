@@ -18,7 +18,6 @@ public class CommandDisplay extends Sprite{
 	
 	Window window;
 	Sprite arrow;
-	Font f;
 	int index;
 	
 	BattleSystem parent;
@@ -28,12 +27,7 @@ public class CommandDisplay extends Sprite{
 		super(null);
 		window = new Window(x, y, 110, 82);
 		arrow = new Sprite("hud/selectarrow.png");
-		try {
-			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
-			f = new Font("serif", Font.PLAIN, 10);
-		} catch (Exception e) {
-			f = new Font("serif", Font.PLAIN, 10);
-		}
+
 	}
 	
 	public void setParentScene(BattleSystem bs)
@@ -54,7 +48,6 @@ public class CommandDisplay extends Sprite{
 		//window is first sprite
 		window.paint(g);
 		
-		g.setFont(f);
 		g.setColor(Color.white);
 		
 		Actor a = parent.getActiveActor();

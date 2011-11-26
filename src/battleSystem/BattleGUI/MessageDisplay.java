@@ -15,7 +15,6 @@ public class MessageDisplay extends Sprite{
 	
 	Window[] windows;
 	Sprite arrow;
-	Font f;
 	MessageState message;
 	
 	public MessageDisplay(int x, int y)
@@ -27,13 +26,7 @@ public class MessageDisplay extends Sprite{
 		windows[2] = new Window(x,    y+24, 84,  32);
 		windows[3] = new Window(x+84, y+24, 116, 32);
 		windows[4] = new Window(x, 	  y+48, 200, 32);
-		
-		try {
-			f = Font.createFont(Font.TRUETYPE_FONT, new File("data/font/default.ttf"));
-			f = new Font("serif", Font.PLAIN, 10);
-		} catch (Exception e) {
-			f = new Font("serif", Font.PLAIN, 10);
-		}
+
 	}
 	
 	/**
@@ -51,7 +44,6 @@ public class MessageDisplay extends Sprite{
 	 */
 	public void paint(Graphics g)
 	{
-		g.setFont(f);
 		g.setColor(Color.white);
 		
 		if (!message.activeActor.getCommand().toString().equals(""))

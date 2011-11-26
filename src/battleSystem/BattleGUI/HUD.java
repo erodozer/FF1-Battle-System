@@ -1,8 +1,13 @@
 package battleSystem.BattleGUI;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-import battleSystem.BattleSystem;
 import battleSystem.*;
 
 import engine.Sprite;
@@ -27,6 +32,8 @@ public class HUD extends Sprite{
 	
 	private BattleSystem parent;
 	
+	private Font font;
+	
 	/**
 	 * Constructs the HUD
 	 */
@@ -38,10 +45,16 @@ public class HUD extends Sprite{
 		esprited = new EnemySpriteDisplay(4, 4);
 		elistd = new EnemyListDisplay(4, 150);
 		cd = new CommandDisplay(94,150);
-		sd = new SpellDisplay(4, 150);
+		sd = new SpellDisplay(12, 158);
 		md = new MessageDisplay(4, 160);
 		gd = new GameOverDisplay(4, 160);
 		vd = new VictoryDisplay(4, 160);
+		
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);
+		} catch (Exception e){
+			font = new Font("serif", Font.PLAIN, 10);
+		}
 		
 	}
 	
@@ -72,6 +85,7 @@ public class HUD extends Sprite{
 	public void paint(Graphics g)
 	{
 		super.paint(g);
+		g.setFont(font);
 		psprited.paint(g);
 		pstatd.paint(g);
 		esprited.paint(g);
@@ -88,19 +102,17 @@ public class HUD extends Sprite{
 		}
 		if (parent.getState() instanceof IssueState)
 		{
+			elistd.paint(g);
+			if (!((IssueState)parent.getState()).targetSelecting)
+			{
+				if (!((IssueState)parent.getState()).spellSelecting)
+					cd.update((IssueState)parent.getState());
+				cd.paint(g);
+			}
 			if (((IssueState)parent.getState()).spellSelecting)
 			{	
 				sd.update((IssueState)parent.getState());
 				sd.paint(g);
-			}
-			else
-			{
-				elistd.paint(g);
-				if (!((IssueState)parent.getState()).targetSelecting)
-				{
-					cd.update((IssueState)parent.getState());
-					cd.paint(g);
-				}
 			}
 		}
 		else if (parent.getState() instanceof MessageState)
