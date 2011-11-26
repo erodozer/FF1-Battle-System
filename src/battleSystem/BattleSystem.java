@@ -45,6 +45,7 @@ public class BattleSystem{
 	private EngageState es;
 	private MessageState ms;
 	private GameOverState gs;
+	private VictoryState vs;
 	
 	public MP3 bgm;								//music that plays during battle
 	
@@ -71,11 +72,13 @@ public class BattleSystem{
 		es = new EngageState();
 		ms = new MessageState();
 		gs = new GameOverState(); 
+		vs = new VictoryState(); 
 		
 		is.setParent(this);
 		es.setParent(this);
 		ms.setParent(this);
 		gs.setParent(this);
+		vs.setParent(this);
 		
 		state = is;
 		state.start();
@@ -176,6 +179,13 @@ public class BattleSystem{
 			if (party.getAlive() == 0)
 			{
 				state = gs;
+				state.start();
+				return;
+			}
+			//kill order when victory
+			if (formation.getAlive() == 0)
+			{
+				state = vs;
 				state.start();
 				return;
 			}
