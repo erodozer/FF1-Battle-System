@@ -12,8 +12,8 @@ import engine.Sprite;
 
 public class Player extends Actor {
 
-	int state;		//the player's current state for animation
-					// 0 = stand, 1 = walk, 2 = act, 3 = cast, 4 = victory
+	protected int state;	//the player's current state for animation
+							// 0 = stand, 1 = walk, 2 = act, 3 = cast, 4 = victory
 	
 	//constant values for different state animations
 	public static final int STAND = 0;
@@ -21,32 +21,45 @@ public class Player extends Actor {
 	public static final int ACT = 2;
 	public static final int CAST = 3;
 	public static final int VICT = 4;
+	public static final int DEAD = 5;
+	public static final int WEAK = 6;
 	
-	protected Sprite drawSprite;
-	protected double x;
-	protected double y;
 	
+	protected Sprite drawSprite;	//sprite to draw to screen that represents the player
+	protected double x;				//sprite position x
+	protected double y;				//sprite position y
+	
+	/**
+	 * Constructs a basic player
+	 * @param n
+	 */
 	public Player(String n)
 	{
+		super(n);
 		name = n.substring(0,4);	//char limit of 4
-		level = 0;
+		level = 1;
 		exp = 0;
-		levelUp();
+	}
+
+	/**
+	 * Get current evasion
+	 * @return
+	 */
+	public int getEvd() {
+		return 48+spd;
 	}
 	
 	/**
-	 * Copies a player to this player
-	 * @param p
+	 * Players themselves don't have sprites, that's determined by
+	 * their job that they get decorated with.  However, in the
+	 * event that they aren't decorated, they need a sprite just
+	 * so they don't crash.
 	 */
-	public Player(Player p)
-	{
-		super(p);
-		state = p.state;
-	}
-
 	@Override
 	protected void loadSprites() {
-		sprites = new Sprite[1];
+		sprites = new Sprite[6];
+		for (int i = 0; i < sprites.length; i++)
+			sprites[i] = new Sprite("actors/base.png");
 		drawSprite = sprites[0];
 	}
 
@@ -73,8 +86,7 @@ public class Player extends Actor {
 		def += 1;
 		spd += 1;
 		evd += 1;
-		mag += 1;
-		res += 1;
+		itl += 1;
 	}
 	
 	/**
@@ -95,7 +107,7 @@ public class Player extends Actor {
 	 * @param string
 	 */
 	public void setState(int i) {
-		state = Math.max(STAND, Math.min(VICT, i));
+		state = Math.max(STAND, Math.min(DEAD, i));
 	}
 
 	/**
@@ -105,6 +117,7 @@ public class Player extends Actor {
 	public int getState() {
 		return state;
 	}
+	
 	
 	/**
 	 * Moves all the player's sprites to position
@@ -172,17 +185,22 @@ public class Player extends Actor {
 	 */
 	public void draw(Graphics g)
 	{
-		if (state == WALK && drawSprite == sprites[0])
+		if (getState() == WEAK)
+			drawSprite = sprites[5];
+		if (getState() == WALK && drawSprite == sprites[0])
 			drawSprite = sprites[1];
-		else if (state == ACT && drawSprite == sprites[0])
+		else if (getState() == ACT && drawSprite == sprites[0])
 			drawSprite = sprites[2];
-		else if (state == CAST && drawSprite == sprites[0])
+		else if (getState() == CAST && drawSprite == sprites[0])
 			drawSprite = sprites[3];
-		else if (state == VICT && drawSprite == sprites[0])
-			drawSprite = sprites[4];	
+		else if (getState() == VICT && drawSprite == sprites[0])
+			drawSprite = sprites[4];
 		else
 			drawSprite = sprites[0];
+		
+		if (getState() == DEAD)
+			drawSprite = sprites[5];
 		drawSprite.paint(g);
 	}
-	
+
 }
