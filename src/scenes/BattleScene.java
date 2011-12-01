@@ -11,13 +11,12 @@ import battleSystem.BattleGUI.HUD;
 
 public class BattleScene implements Scene {
 
-	BattleSystem bs;
-	private HUD display; // displays all the information for the battle
+	BattleSystem bs;	 	//logic/state context
+	HUD display; 			// displays all the information for the battle
 
-	public BattleScene() {
-
-	}
-
+	/**
+	 * Starts the scene
+	 */
 	@Override
 	public void start() {
 		bs = new BattleSystem();
@@ -28,16 +27,26 @@ public class BattleScene implements Scene {
 		display.setParentScene(bs);
 	}
 
+	/**
+	 * Start battle system with a set formation
+	 * @param f
+	 */
 	public void start(Formation f) {
 		start();
 		bs.setFormation(f);
 	}
 
+	/**
+	 * Ends the scene
+	 */
 	@Override
 	public void stop() {
 
 	}
 
+	/**
+	 * Main logic updater method for thread
+	 */
 	@Override
 	public void update() {
 		if (bs != null) {
@@ -47,11 +56,17 @@ public class BattleScene implements Scene {
 		}
 	}
 
+	/**
+	 * key input handling
+	 */
 	@Override
 	public void keyPressed(KeyEvent evt) {
 		bs.keyPressed(evt);
 	}
 
+	/**
+	 * Draws the scene
+	 */
 	@Override
 	public void render(Graphics g) {
 		display.paint(g);
