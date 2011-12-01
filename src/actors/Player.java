@@ -15,6 +15,12 @@ public class Player extends Actor {
 	protected int state;	//the player's current state for animation
 							// 0 = stand, 1 = walk, 2 = act, 3 = cast, 4 = victory
 	
+	protected int moving;	//moving is a declared variable that states when the 
+							//  character sprite is moving back and forth so we can
+							//  tell it when it moves
+							//setting character state is still important because
+							//  that's what controls animation
+
 	//constant values for different state animations
 	public static final int STAND = 0;
 	public static final int WALK = 1;
@@ -36,7 +42,7 @@ public class Player extends Actor {
 	public Player(String n)
 	{
 		super(n);
-		name = n.substring(0,4);	//char limit of 4
+		name = n.substring(0,Math.min(n.length(), 4));	//char limit of 4
 		level = 1;
 		exp = 0;
 	}
@@ -203,4 +209,22 @@ public class Player extends Actor {
 		drawSprite.paint(g);
 	}
 
+	/**
+	 * Set step of movement
+	 * @param i
+	 */
+	public void setMoving(int i)
+	{
+		moving = i;
+	}
+	
+	/**
+	 * Get the step of movement
+	 * @return
+	 */
+	public int getMoving()
+	{
+		return moving;
+	}
+	
 }
