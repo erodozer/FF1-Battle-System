@@ -1,0 +1,21 @@
+This project, which started as an assignment for one of my programming classes here at college, is supposed to recreate the NES experience of Final Fantasy I.  The engine itself was designed around the ability to be capable of executing a battle and in the future may expand from that to include Menu System and Map exploration.  Stats for all the creatures and jobs are aimed at being as close to the original game's documented numbers and formulas as can be.
+
+
+Recorded Damage Formulas
+http://www.gamefaqs.com/boards/522595-final-fantasy/41701255
+
+Programming and Graphics:
+Nicholas Hydock
+
+Additional Resources:
+
+Victory and Game Over fanfare
+Kil6969 - http://youtu.be/fdIk_KfKHVs
+
+Normal battle theme
+
+Normal Boss battle theme
+Kil6969 - http://youtu.be/Gl3pI-r1Ei8
+
+Legendary Boss battle theme
+
