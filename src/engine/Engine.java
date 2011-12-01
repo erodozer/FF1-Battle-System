@@ -18,6 +18,7 @@ public class Engine{
 	private BattleScene battle;			//battle scene
 	private MenuScene menu;				//menu interface
 	private WorldScene world;			//wandering the world
+	private CreationScene creation;		//create party
 	
 	private Scene currentScene;			//current scene being rendered
 	
@@ -40,7 +41,7 @@ public class Engine{
 		battle = new BattleScene();
 		menu = new MenuScene();
 		world = new WorldScene();
-		
+		creation = new CreationScene();
 	}
 	
 	/**
@@ -48,11 +49,7 @@ public class Engine{
 	 */
 	public void startGame()
 	{
-		//In the case of the initial test, the game starts off with a battle
-		// between 
-		Formation f = new Formation();
-    	f.add("Ntmare Mn");
-    	changeToBattle(f);
+		changeToCreation();
 	}
 	
 	/**
@@ -90,6 +87,17 @@ public class Engine{
 			currentScene.stop();
 		currentScene = world;
 		currentScene.start();
+	}
+	
+	/**
+	 * Switches the game's state to the creation scene
+	 */
+	public void changeToCreation()
+	{
+		if (currentScene != null)
+			currentScene.stop();
+		creation.start();
+		currentScene = creation;		
 	}
 	
 	public Party getParty()
