@@ -10,33 +10,50 @@ public class NamingState extends CreationState{
 	int x;
 	int y;
 	
-	final char[][] letters = {{'A', 'B', 'C', 'D', 'E', 'F', ' ', 'a', 'b', 'c', 'd', 'e', 'f'},
+	public static final char[][] letters = {{'A', 'B', 'C', 'D', 'E', 'F', ' ', 'a', 'b', 'c', 'd', 'e', 'f'},
 							  {'G', 'H', 'J', 'K', 'L', 'M', ' ', 'g', 'h', 'j', 'k', 'l', 'm'},
 							  {'N', 'O', 'P', 'Q', 'R', 'S', ' ', 'n', 'o', 'p', 'q', 'r', 's'},
 							  {'T', 'U', 'V', 'W', 'X', 'Y', ' ', 't', 'u', 'v', 'w', 'x', 'y'},
 							  {'Z', ' ', '!', '?', '.', ' ', ' ', 'z', ' ', '!', '?', '.', ' '}};
+
+	NamingState(CreationSystem c) {
+		super(c);
+	}
 	
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		name = "";
+		x = 0;
+		y = 0;
 	}
 
 	@Override
 	public void handle() {
-		// TODO Auto-generated method stub
-		
+		if (x >= letters[0].length)
+			x = 0;
+		if (x < 0)
+			x = letters[0].length-1;
+		if (y >= letters.length)
+			y = 0;
+		if (y < 0)
+			y = letters.length-1;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void finish() {
-		// TODO Auto-generated method stub
-		
+		parent.getActivePlayer().setName(name);
+		parent.next();
 	}
 
+	/**
+	 * Handles the key input
+	 */
 	@Override
 	public void handleKeyInput(KeyEvent arg0) {
-		int id = arg0.getID();
+		int id = arg0.getKeyCode();
 		if (id == Input.KEY_LT)
 			x--;
 		if (id == Input.KEY_RT)
@@ -46,9 +63,46 @@ public class NamingState extends CreationState{
 		if (id == Input.KEY_DN)
 			y++;
 		if (id == Input.KEY_A)
-			name += letters[x][y];
+			if (name.length() < 4)
+				name += NamingState.letters[y][x];
+			else
+				finish();
 		if (id == Input.KEY_B)
-			name = name.substring(0, name.length()-1);
+			name = name.substring(0, Math.max(0, name.length()-1));
 	}
 	
+	/**
+	 * Gets the name of the player that has been typed
+	 * @return
+	 */
+	public String getName()
+	{
+		return name;
+	}
+	
+	/**
+	 * Gets the input array for displaying
+	 * @return
+	 */
+	public char[][] getInputArray()
+	{
+		return letters;
+	}
+
+	/**
+	 * Gets the x selection
+	 * @return
+	 */
+	public int getX() {
+		return x;
+	}
+	
+	/**
+	 * Gets the y selection
+	 * @return
+	 */
+	public int getY()
+	{
+		return y;
+	}
 }

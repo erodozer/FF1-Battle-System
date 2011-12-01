@@ -3,38 +3,39 @@ package scenes;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
+import CreationSystem.CreationSystem;
+import CreationSystem.GUI.HUD;
+
 public class CreationScene implements Scene {
 
-	
+	CreationSystem system;
+	HUD display;
 	
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		system = new CreationSystem();
+		display = new HUD(system);
 	}
 
 	@Override
 	public void stop() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		system.update();
+		display.update();
 	}
 
 	@Override
 	public void keyPressed(KeyEvent evt) {
-		// TODO Auto-generated method stub
-		
+		system.keyPressed(evt);
 	}
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		display.paint(g);
 	}
 
 }

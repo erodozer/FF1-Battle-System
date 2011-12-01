@@ -6,6 +6,11 @@ public abstract class CreationState {
 
 	protected CreationSystem parent;
 	
+	CreationState(CreationSystem c)
+	{
+		parent = c;
+	}
+	
 	/**
 	 * Handles anything that is required to be set upon switching to the state
 	 */
