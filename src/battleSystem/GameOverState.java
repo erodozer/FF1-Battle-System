@@ -13,6 +13,10 @@ import engine.MP3;
  */
 public class GameOverState extends BattleState {
 
+	GameOverState(BattleSystem p) {
+		super(p);
+	}
+
 	/**
 	 * Kill the music and play the game over medley
 	 */

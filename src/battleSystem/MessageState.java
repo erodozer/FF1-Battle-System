@@ -16,11 +16,11 @@ public class MessageState extends BattleState {
 
 	String message;				//message to display
 	public Actor activeActor;
-	
-	public MessageState()
-	{
-	}
 
+	MessageState(BattleSystem p) {
+		super(p);
+	}
+	
 	@Override
 	public void finish() {
 		parent.setNextState();

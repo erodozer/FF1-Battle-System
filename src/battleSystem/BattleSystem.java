@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import commands.*;
 
@@ -30,8 +32,8 @@ public class BattleSystem{
 
 	private Engine engine;
 	
-	private Actor[] turnOrder;						//order of when the turns execute
-	private int turnIndex;
+	private Actor[] allActors;						//all the actors capable of executing commands
+	private Queue<Actor> turnOrder;					//order of when the turns execute
 	
 	private Party party;							//player party
 	private Formation formation;					//enemy formation that the party is fighting
@@ -41,13 +43,14 @@ public class BattleSystem{
 	private int playerIndex;						//current player index for selecting commands
 	
 	private BattleState state;						//current state of the battle
+	
 	private IssueState is;
 	private EngageState es;
 	private MessageState ms;
 	private GameOverState gs;
 	private VictoryState vs;
 	
-	public MP3 bgm;								//music that plays during battle
+	public MP3 bgm;									//music that plays during battle
 	
 	/**
 	 * Constructs a new battle system instance
@@ -60,28 +63,20 @@ public class BattleSystem{
 		party = engine.getParty();
 		formation = new Formation();
 		
-		playerIndex = 0;
-		activeActor = party.get(playerIndex);
+		playerIndex = -1;
 		
 		populateActorList();
 		
 		bgm = new MP3("data/audio/battle.mp3");
 		bgm.play();
 		
-		is = new IssueState();
-		es = new EngageState();
-		ms = new MessageState();
-		gs = new GameOverState(); 
-		vs = new VictoryState(); 
+		is = new IssueState(this);
+		es = new EngageState(this);
+		ms = new MessageState(this);
+		gs = new GameOverState(this); 
+		vs = new VictoryState(this); 
 		
-		is.setParent(this);
-		es.setParent(this);
-		ms.setParent(this);
-		gs.setParent(this);
-		vs.setParent(this);
-		
-		state = is;
-		state.start();
+		next();
 	}
 	
 	/**
@@ -91,7 +86,7 @@ public class BattleSystem{
 	{
 	    ArrayList<Actor> actors = new ArrayList<Actor>();
 	    
-		turnOrder = new Actor[party.getAlive() + formation.getAlive()];
+		allActors = new Actor[party.getAlive() + formation.getAlive()];
 		
 	    //only alive actors should be in the list
 		for (Actor a: party.getAliveMembers())
@@ -99,7 +94,7 @@ public class BattleSystem{
 		for (Actor a: formation.getAliveMembers())
 			actors.add(a);
 				
-		turnOrder = actors.toArray(new Actor[0]);
+		allActors = actors.toArray(new Actor[0]);
 	}
 	
 	/**		
@@ -108,15 +103,15 @@ public class BattleSystem{
 	 * COMMANDS WILL ALTER THE ACTOR'S SPEED SO THAT CAN CHANGE
 	 *   UP TURN ORDER WITH EVERY PHASE
 	 */
-	public Actor[] getTurnOrder()
+	public Queue<Actor> getTurnOrder()
 	{
 		ArrayList<ArrayList<Actor>> actors = new ArrayList<ArrayList<Actor>>();
 		ArrayList<Actor> sorted = new ArrayList<Actor>();
 		for (int x = 0; x <= 9; x++)
 			actors.add(new ArrayList<Actor>());
 
-		for (int x = 0; x < turnOrder.length; x++)
-			sorted.add(turnOrder[x]);
+		for (int x = 0; x < allActors.length; x++)
+			sorted.add(allActors[x]);
 		
 		//digit
 		for (int i = 1; i <= 3; i++)
@@ -137,7 +132,9 @@ public class BattleSystem{
 			for (int x = 0; x <= 9; x++)
 				actors.add(new ArrayList<Actor>());
 		}
-		return sorted.toArray(new Actor[0]);
+		Queue<Actor> q = new LinkedList<Actor>();
+		q.addAll(sorted);
+		return q;
 	}
 	
 	/**
@@ -148,8 +145,7 @@ public class BattleSystem{
 		genEnemyCommands();
 		populateActorList();
 		turnOrder = getTurnOrder();
-		turnIndex = 0;
-		activeActor = turnOrder[turnIndex];
+		activeActor = turnOrder.poll();
 		state = es;
 		state.start();
 		playerIndex = -1;		
@@ -191,10 +187,9 @@ public class BattleSystem{
 			}
 			
 			//make active actor the next actor in the queue
-			if (turnIndex < turnOrder.length-1)
+			if (turnOrder.size() > 0)
 			{
-				turnIndex++;
-				activeActor = turnOrder[turnIndex];
+				activeActor = turnOrder.poll();
 				//if the actor isn't alive skip ahead
 				if (!activeActor.getAlive())
 				{
@@ -334,6 +329,7 @@ public class BattleSystem{
 			playerIndex -= 2;
 			next();
 		}
+		state.start();
 	}
 	
 }

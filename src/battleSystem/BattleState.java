@@ -6,6 +6,11 @@ public abstract class BattleState {
 
 	protected BattleSystem parent;
 	
+	BattleState(BattleSystem p)
+	{
+		parent = p;
+	}
+	
 	/**
 	 * Handles anything that is required to be set upon switching to the state
 	 */
@@ -27,4 +32,5 @@ public abstract class BattleState {
 	{
 		parent = p;
 	}
+
 }

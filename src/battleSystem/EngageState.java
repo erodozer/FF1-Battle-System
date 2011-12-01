@@ -3,47 +3,52 @@ package battleSystem;
 import java.awt.event.KeyEvent;
 
 import actors.Actor;
+import actors.Enemy;
 import actors.Player;
 
 public class EngageState extends BattleState {
 
 	Actor activeActor;
 	
-	public EngageState() {}
+	EngageState(BattleSystem p) {
+		super(p);
+	}
 	
 	@Override
 	public void start() {
 		activeActor = parent.getActiveActor();
 		System.out.println(activeActor instanceof Player);
 		if (activeActor instanceof Player)
+		{
 			((Player)activeActor).setState(Player.WALK);
+			((Player)activeActor).setMoving(0);
+		}
 	}
 
 	@Override
 	public void finish() {
 		parent.setNextState();
-		if (activeActor instanceof Player)
-			((Player)activeActor).setState(Player.WALK);
 	}
 
 	@Override
 	public void handle() {
-		try {
-			if (activeActor instanceof Player && ((Player)activeActor).getState() == Player.WALK)
+		if (activeActor instanceof Player)
+			if (((Player)activeActor).getMoving() == 0 || ((Player)activeActor).getMoving() == 2)
 				return;
-			
-			Thread.sleep(1000);
-			if (!activeActor.getAlive()) {
+			else if (((Player)activeActor).getMoving() == 1)
+				((Player)activeActor).setMoving(2);
+			else if (((Player)activeActor).getMoving() == 3)
 				finish();
-				return;
-			} 
-			else if (!activeActor.getTarget().getAlive())
-				activeActor.setTarget(parent.getRandomTarget(activeActor));
-			activeActor.execute();
+		
+		if (!activeActor.getAlive()) {
 			finish();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+			return;
+		} 
+		else if (!activeActor.getTarget().getAlive())
+			activeActor.setTarget(parent.getRandomTarget(activeActor));
+		activeActor.execute();
+		if (activeActor instanceof Enemy)
+			finish();
 	}
 
 	//Engage state handles no input

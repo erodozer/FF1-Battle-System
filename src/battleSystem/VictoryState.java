@@ -15,8 +15,13 @@ import engine.MP3;
  */
 public class VictoryState extends BattleState {
 
+
 	int step = 0;		//step 0 = show "all enemies eliminated"
 						//step 1 = show exp and g gained
+
+	VictoryState(BattleSystem p) {
+		super(p);
+	}
 	
 	/**
 	 * Kill the music and play the game over medley
@@ -25,7 +30,7 @@ public class VictoryState extends BattleState {
 	public void start() {
 		parent.bgm.close();
 		new MP3("data/audio/victory.mp3").play();
-		
+		step = 0;
 	}
 
 	/**
@@ -45,7 +50,7 @@ public class VictoryState extends BattleState {
 	 */
 	@Override
 	public void handleKeyInput(KeyEvent arg0) {
-		if (arg0.getID() == Input.KEY_A)
+		if (arg0.getKeyCode() == Input.KEY_A)
 		{
 			if (step >= 1)
 				System.exit(-1);

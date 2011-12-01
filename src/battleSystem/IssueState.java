@@ -19,8 +19,12 @@ public class IssueState extends BattleState
 	public boolean targetSelecting;
 	public boolean spellSelecting;
 							//is the actor selecting a target or command
+	private boolean goBack = false;
+							//state knows to go to previous actor if possible
 	
-	public IssueState(){}
+	public IssueState(BattleSystem p){
+		super(p);
+	}
 	
 	/**
 	 * Starts the issue state
@@ -31,11 +35,12 @@ public class IssueState extends BattleState
 	{
 		actor = (Player)parent.getActiveActor();
 		actor.setCommand(null);
-		actor.setState(Player.WALK);
 		target = null;
 		targetSelecting = false;
 		spellSelecting = false;
+		goBack = false;
 		index = 0;	
+		actor.setMoving(0);
 	}
 	
 	/**
@@ -45,8 +50,14 @@ public class IssueState extends BattleState
 	public void handle()
 	{
 		//Do not update while player is animating
-		if (actor.getState() == Player.WALK)
+		if (actor.getMoving() == 0 || actor.getMoving() == 2)
 			return;
+		
+		if (actor.getMoving() == 3)
+		{
+			finish();
+			return;
+		}
 		
 		if (targetSelecting)
 		{
@@ -78,7 +89,7 @@ public class IssueState extends BattleState
 	public void handleKeyInput(KeyEvent e)
 	{
 		//Do not update while player is animating
-		if (actor.getState() == Player.WALK)
+		if (actor.getMoving() == 0 || actor.getMoving() == 2)
 			return;
 				
 		if (e.getKeyCode() == Input.KEY_A)
@@ -90,8 +101,8 @@ public class IssueState extends BattleState
 				start();
 			else
 			{
-				actor.setState(Player.WALK);
-				parent.previous();
+				actor.setMoving(2);
+				goBack = true;
 			}
 		}
 		
@@ -126,7 +137,7 @@ public class IssueState extends BattleState
 			target = targets[index];
 			actor.setTarget(target);
 			System.out.println(actor.getTarget().getName());
-			finish();
+			actor.setMoving(2);
 		}
 		else if (spellSelecting)
 		{
@@ -172,8 +183,10 @@ public class IssueState extends BattleState
 	 */
 	public void finish()
 	{
-		actor.setState(Player.WALK);
-		parent.setNextState();
+		if (goBack)
+			parent.previous();
+		else
+			parent.setNextState();
 	}
 
 	/**
