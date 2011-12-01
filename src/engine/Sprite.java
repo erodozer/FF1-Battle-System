@@ -11,10 +11,10 @@ import javax.imageio.ImageIO;
 public class Sprite{
 
 	BufferedImage image;
-	double width  = 1;
-	double height = 1;
-	double x = 0;
-	double y = 0;
+	protected double width  = 1;
+	protected double height = 1;
+	protected double x = 0;
+	protected double y = 0;
 	
 	/**
 	 * Load the sprite
@@ -113,7 +113,6 @@ public class Sprite{
 		if (image != null)
 		{
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setClip((int)x, (int)y, (int)getWidth(), (int)getHeight());
 			g2.drawImage(image, null, (int)x, (int)y);
 		}
 	}
