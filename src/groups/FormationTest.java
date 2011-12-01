@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import actors.Enemy;
+
 /**
  * FormationTest.java
  * @author Nicholas Hydock 
@@ -16,7 +18,27 @@ public class FormationTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		Formation f = new Formation();
+		
+		assertEquals(0, f.size());
 	}
+	
+	@Test
+	public void testAddEnemyByName() {
+		Formation f = new Formation();
+		
+		f.add("Gel");
+		assertEquals("Gel", f.get(0).getName());
+	}
+	
+	@Test
+	public void testAddEnemyByInstance() {
+		Formation f = new Formation();
+		Enemy e = new Enemy("Gel");
+		f.add(e);
+		
+		assertEquals(e, f.get(0));
+	}
+	
 
 }

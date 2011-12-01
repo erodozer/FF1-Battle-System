@@ -13,6 +13,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import actors.Player;
+import jobs.Job;
 
 public class PartyTest extends TestCase{
 
@@ -43,7 +44,7 @@ public class PartyTest extends TestCase{
 		assertEquals(1, p.toArray().length);	
 		
 		assertEquals("APPL", p.get(0).getName());
-		assertEquals("Fighter", p.get(0).getJob());
+		assertEquals("Fighter", ((Job)p.get(0)).getJobName());
 		
 	}
 	

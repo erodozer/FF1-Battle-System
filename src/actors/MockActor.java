@@ -13,8 +13,9 @@ public class MockActor extends Actor{
 		def = 10;
 		spd = 10;
 		evd = 10;
-		mag = 10;
-		res = 10;
+		vit = 10;
+		acc = 10;
+		itl = 10;
 		loadSprites();
 	}
 

@@ -32,8 +32,8 @@ public class JobTest {
 		assertEquals(8, j.getStr());
 		assertEquals(34, j.getDef());
 		assertEquals(7, j.getSpd());
-		assertEquals(6, j.getEvd());
-		assertEquals(53, j.getRes());
+		assertEquals(55, j.getEvd());
+		assertEquals(7, j.getInt());
 		assertEquals(15, j.getAcc());
 		assertEquals(12, j.getVit());
 		
@@ -46,8 +46,8 @@ public class JobTest {
 		assertEquals(11, j.getStr());
 		assertEquals(39, j.getDef());
 		assertEquals(10, j.getSpd());
-		assertEquals(8, j.getEvd());
-		assertEquals(59, j.getRes());
+		assertEquals(58, j.getEvd());
+		assertEquals(9, j.getInt());
 		assertEquals(21, j.getVit());
 		assertEquals(16, j.getAcc());
 	
@@ -73,10 +73,9 @@ class MockJob extends Job
 		str = 8;
 		def = 34;
 		spd = 7;
-		evd = 6;
-		res = 53;
 		acc = 15;
 		vit = 12;
+		itl = 7;
 	}
 
 	@Override
@@ -93,17 +92,7 @@ class MockJob extends Job
 	public int getSpd(int lvl) {
 		return 3;
 	}
-
-	@Override
-	public int getEvd(int lvl) {
-		return 2;
-	}
-
-	@Override
-	public int getRes(int lvl) {
-		return 6;
-	}
-
+	
 	@Override
 	protected int getAcc(int lvl) {
 		return 1;
@@ -112,6 +101,11 @@ class MockJob extends Job
 	@Override
 	protected int getVit(int lvl) {
 		return (int)(lvl+7);
+	}
+
+	@Override
+	protected int getInt(int lvl) {
+		return 2;
 	}
 
 }
