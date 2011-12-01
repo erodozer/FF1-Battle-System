@@ -13,7 +13,7 @@ public class Flee extends Command {
 
 	public Flee(Actor a)
 	{
-		name = "Flee";
+		name = "Run";
 	}
 	
 	@Override
