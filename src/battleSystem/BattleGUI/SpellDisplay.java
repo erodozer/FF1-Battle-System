@@ -14,6 +14,7 @@ import battleSystem.BattleSystem;
 import battleSystem.IssueState;
 
 import engine.Sprite;
+import engine.Window;
 
 public class SpellDisplay extends Sprite{
 	
@@ -53,8 +54,6 @@ public class SpellDisplay extends Sprite{
 	{
 		//window is first sprite
 		window.paint(g);
-		
-		g.setColor(Color.white);
 		
 		Actor a = parent.getActiveActor();
 		for (int i = range; i < range+4; i++)

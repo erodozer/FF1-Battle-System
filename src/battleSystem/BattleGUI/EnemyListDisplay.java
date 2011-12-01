@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import actors.Enemy;
 
 import engine.Sprite;
+import engine.Window;
 import groups.Formation;
 
 public class EnemyListDisplay extends Sprite{
@@ -41,10 +42,7 @@ public class EnemyListDisplay extends Sprite{
 		window.paint(g);
 		
 		for (int i = 0; i < names.size(); i++)
-		{
-			g.setColor(Color.white);
 			g.drawString(names.get(i), window.getX()+12, window.getY()+24+i*16);
-		}
 		
 	}
 	

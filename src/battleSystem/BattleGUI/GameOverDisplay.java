@@ -10,6 +10,7 @@ import commands.Defend;
 import battleSystem.MessageState;
 
 import engine.Sprite;
+import engine.Window;
 
 public class GameOverDisplay extends Sprite{
 	
@@ -43,7 +44,6 @@ public class GameOverDisplay extends Sprite{
 		g.setColor(Color.white);
 		
 		window.paint(g);
-		g.setColor(Color.white);
 		g.drawString("Game Over", window.getX() + 10, window.getY() + 20);
 		
 	}

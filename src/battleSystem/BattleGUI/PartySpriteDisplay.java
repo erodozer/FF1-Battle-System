@@ -3,11 +3,13 @@ package battleSystem.BattleGUI;
 import java.awt.Graphics;
 
 import battleSystem.BattleSystem;
+import battleSystem.IssueState;
 
 import actors.*;
 
 import engine.Engine;
 import engine.Sprite;
+import engine.Window;
 
 public class PartySpriteDisplay extends Sprite{
 
@@ -53,35 +55,37 @@ public class PartySpriteDisplay extends Sprite{
 		{
 			Player p = Engine.getInstance().getParty().get(i);
 			//Move the player in a walking animation
-			if ((Actor)p == parent.getActiveActor())
+			if ((Actor)p == parent.getActiveActor() && p.getAlive())
 			{
-				if (p.getState() == Player.WALK)
+				if (p.getMoving() == 0)
 				{
+					p.setState(Player.WALK);
 					p.setX(p.getX() - 2);
 					if (p.getX() < window.getX() + 6)
 					{
 						p.setX(window.getX() + 6);
 						p.setState(Player.STAND);
+						p.setMoving(1);
 					}
 				}
-				else
+				else if (p.getMoving() == 1)
 					p.setX(window.getX() + 6);
-			}
-			//Move the player back to it original position
-			else
-			{
-				if (p.getState() == Player.WALK)
+				else if (p.getMoving() == 2)
 				{
+					p.setState(Player.WALK);
 					p.setX(p.getX()+2);
 					if (p.getX() > window.getX() + 16)
 					{
 						p.setX(window.getX() + 16);
 						p.setState(Player.STAND);
+						p.setMoving(3);
 					}
 				}
 				else
 					p.setX(window.getX() + 16);
 			}
+			else
+				p.setX(window.getX() + 16);
 			p.draw(g);
 		}
 	}

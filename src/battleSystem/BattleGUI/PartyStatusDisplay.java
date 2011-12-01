@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import actors.Player;
 import engine.Engine;
 import engine.Sprite;
+import engine.Window;
 
 public class PartyStatusDisplay extends Sprite{
 
@@ -39,7 +40,6 @@ public class PartyStatusDisplay extends Sprite{
 			Window w = windows.get(i);
 			Player p = Engine.getInstance().getParty().get(i);
 			w.paint(g);
-			g.setColor(Color.white);
 			g.drawString(p.getName(), w.getX() + 8, w.getY() + 24);
 			g.drawString("HP", w.getX() + 8, w.getY() + 40);
 			

@@ -13,6 +13,7 @@ import battleSystem.BattleSystem;
 import battleSystem.IssueState;
 
 import engine.Sprite;
+import engine.Window;
 
 public class CommandDisplay extends Sprite{
 	
@@ -47,8 +48,6 @@ public class CommandDisplay extends Sprite{
 	{
 		//window is first sprite
 		window.paint(g);
-		
-		g.setColor(Color.white);
 		
 		Actor a = parent.getActiveActor();
 		for (int i = 0; i < a.getCommands().length; i++)

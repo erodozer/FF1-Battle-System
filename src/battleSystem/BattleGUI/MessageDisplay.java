@@ -10,6 +10,7 @@ import commands.*;
 import battleSystem.MessageState;
 
 import engine.Sprite;
+import engine.Window;
 
 public class MessageDisplay extends Sprite{
 	
@@ -54,7 +55,6 @@ public class MessageDisplay extends Sprite{
 				 windows[1].getX() + 10, windows[1].getY() + 20);
 		}
 		windows[0].paint(g);
-		g.setColor(Color.white);
 		g.drawString(message.activeActor.getName(), 
 					 windows[0].getX() + 10, windows[0].getY() + 20);
 
@@ -63,11 +63,9 @@ public class MessageDisplay extends Sprite{
 		if (!(c instanceof Defend))
 		{
 			windows[3].paint(g);
-			g.setColor(Color.white);
 			g.drawString(""+message.getMessage(), 
 				 windows[3].getX() + 10, windows[3].getY() + 20);
 			windows[2].paint(g);
-			g.setColor(Color.white);
 			g.drawString(message.activeActor.getTarget().getName(), 
 				 windows[2].getX() + 10, windows[2].getY() + 20);
 		}
@@ -75,13 +73,11 @@ public class MessageDisplay extends Sprite{
 		if (!message.activeActor.getTarget().getAlive())
 		{
 			windows[4].paint(g);
-			g.setColor(Color.white);
 			g.drawString("Terminated!", windows[4].getX() + 10, windows[4].getY() + 20);
 		}
 		else if (c.getDamage() == 0 || (c instanceof Spell && ((Spell)c).resist() > 0))
 		{
 			windows[4].paint(g);
-			g.setColor(Color.white);
 			g.drawString("Ineffective", windows[4].getX() + 10, windows[4].getY() + 20);
 		}	
 	}

@@ -1,5 +1,6 @@
 package battleSystem.BattleGUI;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
@@ -86,6 +87,7 @@ public class HUD extends Sprite{
 	{
 		super.paint(g);
 		g.setFont(font);
+		g.setColor(Color.white);
 		psprited.paint(g);
 		pstatd.paint(g);
 		esprited.paint(g);

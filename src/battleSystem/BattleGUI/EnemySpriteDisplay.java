@@ -9,6 +9,7 @@ import battleSystem.IssueState;
 import actors.Enemy;
 
 import engine.Sprite;
+import engine.Window;
 import groups.Formation;
 
 public class EnemySpriteDisplay extends Sprite{
