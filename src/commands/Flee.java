@@ -18,8 +18,15 @@ public class Flee extends Command {
 	
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * Do nothing
+	 */
+	@Override
+	protected int calculateDamage(boolean critical) {
+		return 0;
 	}
 
 }
