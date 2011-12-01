@@ -11,10 +11,10 @@ public class NamingState extends CreationState{
 	int y;
 	
 	public static final char[][] letters = {{'A', 'B', 'C', 'D', 'E', 'F', ' ', 'a', 'b', 'c', 'd', 'e', 'f'},
-							  {'G', 'H', 'J', 'K', 'L', 'M', ' ', 'g', 'h', 'j', 'k', 'l', 'm'},
-							  {'N', 'O', 'P', 'Q', 'R', 'S', ' ', 'n', 'o', 'p', 'q', 'r', 's'},
-							  {'T', 'U', 'V', 'W', 'X', 'Y', ' ', 't', 'u', 'v', 'w', 'x', 'y'},
-							  {'Z', ' ', '!', '?', '.', ' ', ' ', 'z', ' ', '!', '?', '.', ' '}};
+							  {'G', 'H', 'I', 'J', 'K', 'L', ' ', 'g', 'h', 'i', 'j', 'k', 'l'},
+							  {'M', 'N', 'O', 'P', 'Q', 'R', ' ', 'm', 'n', 'o', 'p', 'q', 'r'},
+							  {'S', 'T', 'U', 'V', 'W', 'X', ' ', 's', 't', 'u', 'v', 'w', 'x'},
+							  {'Y', 'Z', '!', '?', '.', ' ', ' ', 'y', 'z', '!', '?', '.', ' '}};
 
 	NamingState(CreationSystem c) {
 		super(c);
