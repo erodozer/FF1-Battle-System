@@ -46,12 +46,14 @@ public class Player extends Actor {
 		name = n.substring(0,Math.min(n.length(), 4));	//char limit of 4
 		level = 1;
 		exp = 0;
+		commands = new Command[]{new Attack(this), new ChooseSpell(this), new Drink(this), new ChooseItem(this), new Flee(this)};
 	}
 
 	/**
 	 * Get current evasion
 	 * @return
 	 */
+	@Override
 	public int getEvd() {
 		return 48+spd;
 	}
