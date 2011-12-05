@@ -40,6 +40,7 @@ public class NamingDisplay extends Sprite {
 		name = s.getName();
 	}
 	
+	@Override
 	public void paint(Graphics g)
 	{
 		nameWindow.paint(g);

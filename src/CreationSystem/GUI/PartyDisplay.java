@@ -27,6 +27,7 @@ public class PartyDisplay extends Sprite {
 		windows[parent.getIndex()].update(parent.getParty().get(parent.getIndex()));
 	}
 	
+	@Override
 	public void paint(Graphics g)
 	{
 		for (PlayerWindow w : windows)
