@@ -1,9 +1,15 @@
 package jobs;
 
-import java.awt.Graphics;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
+import java.util.Scanner;
 
 import actors.Player;
-import commands.*;
 import engine.Sprite;
 
 /**
@@ -13,8 +19,21 @@ import engine.Sprite;
  *	Jobs decorate players to give them added functionality like a specific
  *  set of commands as well as skills and defined growth curves
  */
-abstract public class Job extends Player{
+public class Job extends Player{
 
+	public static final List<String> AVAILABLEJOBS = Arrays.asList(new String[]{"Fighter", "Black Belt", ""});
+	/*
+	 * S = STR
+	 * A = AGILITY/SPEED
+	 * V = VITALITY
+	 * I = INTELLIGENCE
+	 * L = LUCK
+	 * + = STRONG HP BOOST
+	 * 
+	 * First two lines define linear growth value of hit% and mdef
+	 */
+	protected String[] growth;
+	
 	Player p;							//player that it decorates
 	
 	private final String[] spriteNames = {"stand", "walk", "item", "cast", "victory", "dead"};
@@ -26,16 +45,47 @@ abstract public class Job extends Player{
 	 * will now be associated with
 	 * @param p
 	 */
-	public Job(Player p)
+	public Job(Player player, String name)
 	{
-		super(p.getName());
-		level = 1;
-		jobname = "job";
-		commands = null;
-		spells = null;
-		this.p = p;
+		super(player.getName());
+		p = player;
+		commands = p.getCommands();
 		this.name = p.getName();
+		spells = null;
+		
+		level = 1;
+		jobname = name;
+		
+		Properties prop = new Properties();
+		try {
+			prop.load(new FileInputStream("data/actors/jobs/" + jobname + "/job.ini"));
+		} catch (Exception e) {
+			System.err.println("can not find file: " + "data/actors/jobs/" + jobname + "/job.ini");
+		}
+		maxhp = Integer.valueOf(prop.getProperty("hp", "1")).intValue();
+		hp = maxhp;
+		str = Integer.valueOf(prop.getProperty("str", "1")).intValue();
+		def = Integer.valueOf(prop.getProperty("def", "1")).intValue();
+		itl = Integer.valueOf(prop.getProperty("int", "1")).intValue();
+		spd = Integer.valueOf(prop.getProperty("spd", "1")).intValue();
+		evd = Integer.valueOf(prop.getProperty("evd", "1")).intValue();
+		acc = Integer.valueOf(prop.getProperty("acc", "1")).intValue();
+		vit = Integer.valueOf(prop.getProperty("vit", "1")).intValue();
+		exp = Integer.valueOf(prop.getProperty("exp", "1")).intValue();
+		
 		//When a job is initialized, in most cases level 1 stats will be set
+	
+		growth = new String[MAXLVL+1];
+		try {
+			FileInputStream f = new FileInputStream("data/actors/jobs/" + jobname + "/growth.txt");
+			Scanner s = new Scanner(f);
+			for (int i = 0; i <= MAXLVL; i++)
+				growth[i] = s.nextLine();
+		} catch (Exception e) {
+			System.err.println("can not find file: " + "data/actors/jobs/" + jobname + "/growth.txt");
+			Arrays.fill(growth, "");
+		}
+		
 	}
 	
 	/**
@@ -63,6 +113,7 @@ abstract public class Job extends Player{
 	 * Sets the player's animation state with a string
 	 * @param string
 	 */
+	@Override
 	public void setState(int i) {
 		p.setState(i);
 	}
@@ -71,6 +122,7 @@ abstract public class Job extends Player{
 	 * Returns the player's animation state
 	 * @return
 	 */
+	@Override
 	public int getState() {
 		return p.getState();
 	}
@@ -87,6 +139,7 @@ abstract public class Job extends Player{
 	 * Sets the actor's name
 	 * @param string
 	 */
+	@Override
 	public void setName(String string) {
 		p.setName(string);
 	}
@@ -95,57 +148,118 @@ abstract public class Job extends Player{
 	 * Retrieves the actor's name
 	 * @return
 	 */
+	@Override
 	public String getName() {
 		return p.getName();
 	}
 	
-	/**
+	/*
 	 * Jobs do not have setter methods for retrieving stat values.
 	 * This is because stat getters should be equations dependent on
 	 * the actor's level. Jobs do not have setter methods for retrieving 
 	 * stat values.  This is because stat getters should be equations 
 	 * dependent on the actor's level.  Additionally, these should only be
-	 * called upon level up.
+	 * called upon level up.  
 	 * @param lvl	
 	 * 				level of the actor
 	 * @return	
 	 * 				the value of the stat when that actor is at the passed level
 	 */
-	abstract protected int getStr(int lvl);
-	abstract protected int getDef(int lvl);
-	abstract protected int getSpd(int lvl);
-	abstract protected int getInt(int lvl);
-	abstract protected int getAcc(int lvl);
-	abstract protected int getVit(int lvl);
-
+	
 	/**
-	 * lucky levels!
-	 * on a lucky level, there is a random chance of scoring a
-	 * really high stat bonus on level up!
-	 * chances based on lucky 7s
-	 * @param lvl
-	 * @return
+	 * Strength growth on level up
 	 */
-	final protected boolean luckyLevel(int lvl)
+	protected int getStr(int lvl)
 	{
-		if (lvl % 7 == 0)
-			return (Math.random() > .7);
-		return false;
+		if (growth[lvl].contains("S"))
+			return 1;
+		else
+			return (Math.random() < .25)?0:1;
+	}
+	
+	/**
+	 * Speed/Agility growth on level up
+	 */
+	protected int getSpd(int lvl)
+	{
+		if (growth[lvl].contains("A"))
+			return 1;
+		else
+			return (Math.random() < .25)?0:1;
+	}
+	
+	/**
+	 * Intellegence growth on level up
+	 */
+	protected int getInt(int lvl)
+	{
+		if (growth[lvl].contains("I"))
+			return 1;
+		else
+			return (Math.random() < .25)?0:1;
+	}
+	
+	/**
+	 * Luck growth on level up
+	 */
+	protected int getLuck(int lvl)
+	{
+		if (growth[lvl].contains("L"))
+			return 1;
+		else
+			return (Math.random() < .25)?0:1;
+	}
+	
+	/**
+	 * Get vitality on level up
+	 */
+	protected int getVit(int lvl)
+	{
+		if (growth[lvl].contains("V"))
+			return 1;
+		else
+			return (Math.random() < .25)?0:1;
+	}
+	
+	/**
+	 * Growth for Hit%/Acc is linear
+	 * Growth
+	 */
+	protected int getAcc(int lvl)
+	{
+		return Integer.valueOf(growth[0]).intValue();
+	}
+	
+	/**
+	 * HP can have strong levels where hp will go
+	 * up the default vit/4 plus an additional 20-25 points
+	 */
+	protected int getHP(int lvl)
+	{
+		int i = vit/4;
+		if (growth[lvl].contains("+"))
+			i += Math.random() * 5 + 20;
+		return i;
 	}
 	
 	/**
 	 * When required exp is met, the player will level up
 	 * all the player's stats will be updated
+	 * Defense does not grow because def is determined by armor
 	 */
 	@Override
 	public void levelUp()
 	{
 		level++;
+		//stats for level 1 are force on instantiation
+		// never should it ask for less than 2, error trap just in case
+		if (level < 2)
+			return;
+		
 		vit += getVit(level);
-		maxhp += vit;
+		maxhp += getHP(level);
 		hp = maxhp;
 		str += getStr(level);
-		def += getDef(level);
 		spd += getSpd(level);
 		itl += getInt(level);
 		acc += getAcc(level);
