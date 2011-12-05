@@ -5,11 +5,23 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Sprite
+ * @author nhydock
+ *
+ *	Main class used for drawing things to screen
+ *	It's like a glorified BufferedImage mixed with Component
+ */
 public class Sprite{
 
+	//provides a cache of buffered images so then when a sprite is
+	// made, if the image has already been loaded before it adds it
+	private static HashMap<String, BufferedImage> TEXTURECACHE = new HashMap<String, BufferedImage>();
+	
 	BufferedImage image;
 	protected double width  = 1;
 	protected double height = 1;
@@ -23,14 +35,26 @@ public class Sprite{
 	public Sprite(String s)
 	{
 		if (s != null)
-			try {
-				image = ImageIO.read(new File("data/" + s));
-				width = image.getWidth();
-				height = image.getHeight();
-			} 
-	    	catch (IOException e) {
-	    		System.err.println(e + "\ndata/" + s);
-	    	}
+			if (TEXTURECACHE.containsKey(s))
+			{
+				image = TEXTURECACHE.get(s);
+			}
+			else
+			{
+				try
+				{
+					image = ImageIO.read(new File("data/" + s));
+				}
+				catch (IOException e) {
+					System.err.println("can not read or find: data/" + s);
+				}
+				TEXTURECACHE.put(s, image);
+			}
+		if (image != null)
+		{
+			width = image.getWidth();
+			height = image.getHeight();
+		} 
 	}
 	
 	/**
