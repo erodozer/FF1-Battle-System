@@ -11,6 +11,7 @@ package groups;
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jobs.Job;
@@ -36,13 +37,10 @@ public class Party extends ArrayList<Player>{
 	 * Make new players with Job a
 	 */
 	public void add(String n, String job) {
-		try {
-			this.add((Job)Class.forName("jobs." + job).getConstructor(Player.class).newInstance(new Player(n)));
-		} 
-		catch (Exception e){
-			System.out.println(e);
-		}
-		
+		if (Collections.binarySearch(Job.AVAILABLEJOBS, job) == -1)
+			System.out.println("Job " + job + " does not exist");
+		else
+			this.add(new Job(new Player(n), job));
 	}
 	
 	/**
