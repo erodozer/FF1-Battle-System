@@ -3,8 +3,6 @@ package battleSystem.BattleGUI;
 import java.awt.Graphics;
 
 import battleSystem.BattleSystem;
-import battleSystem.IssueState;
-
 import actors.*;
 
 import engine.Engine;
@@ -42,6 +40,7 @@ public class PartySpriteDisplay extends Sprite{
 	/**
 	 * Main render method
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		//window is first sprite
@@ -55,7 +54,7 @@ public class PartySpriteDisplay extends Sprite{
 		{
 			Player p = Engine.getInstance().getParty().get(i);
 			//Move the player in a walking animation
-			if ((Actor)p == parent.getActiveActor() && p.getAlive())
+			if (p == parent.getActiveActor() && p.getAlive())
 			{
 				if (p.getMoving() == 0)
 				{
@@ -86,6 +85,8 @@ public class PartySpriteDisplay extends Sprite{
 			}
 			else
 				p.setX(window.getX() + 16);
+			if (!p.getAlive())
+				p.setState(Player.DEAD);
 			p.draw(g);
 		}
 	}
