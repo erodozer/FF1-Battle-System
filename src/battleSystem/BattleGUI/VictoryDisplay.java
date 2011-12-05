@@ -1,12 +1,6 @@
 package battleSystem.BattleGUI;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
-
-import commands.Defend;
-
 import battleSystem.BattleSystem;
 import battleSystem.VictoryState;
 
@@ -35,6 +29,7 @@ public class VictoryDisplay extends Sprite{
 	/**
 	 * Main render method
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		

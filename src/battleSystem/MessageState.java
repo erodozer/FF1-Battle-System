@@ -2,8 +2,6 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 
-import engine.Input;
-
 import actors.Actor;
 
 /**

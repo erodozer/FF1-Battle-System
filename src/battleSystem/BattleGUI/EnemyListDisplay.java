@@ -1,9 +1,6 @@
 package battleSystem.BattleGUI;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
 import java.util.ArrayList;
 
 import actors.Enemy;
@@ -36,6 +33,7 @@ public class EnemyListDisplay extends Sprite{
 	/**
 	 * Main render method
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		//window is first sprite

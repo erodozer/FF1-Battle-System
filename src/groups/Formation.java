@@ -14,10 +14,7 @@ package groups;
 import java.util.ArrayList;
 import java.util.List;
 
-import jobs.Job;
-import actors.Actor;
 import actors.Enemy;
-import actors.Player;
 
 public class Formation extends ArrayList<Enemy>{
 	

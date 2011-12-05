@@ -1,8 +1,8 @@
 package battleSystem;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import actors.Player;
 
 import engine.Engine;
 import groups.Formation;
@@ -13,8 +13,12 @@ public class EngageStateTest {
 	@Test
 	public void test() {
 		Engine e = Engine.getInstance();
+		
 		Party p = new Party();
 		p.add("TWIL", "Red Mage");
+		Player a = p.get(0);
+		a.setCommand(a.getCommands()[0]);	//set command to attack
+		
 		e.setParty(p);
 		
 		Formation f = new Formation();

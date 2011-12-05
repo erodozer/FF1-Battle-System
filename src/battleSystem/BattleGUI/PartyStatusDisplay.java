@@ -1,13 +1,7 @@
 package battleSystem.BattleGUI;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import actors.Player;
@@ -32,6 +26,7 @@ public class PartyStatusDisplay extends Sprite{
 	/**
 	 * Main render method
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		//draws a status window for each member

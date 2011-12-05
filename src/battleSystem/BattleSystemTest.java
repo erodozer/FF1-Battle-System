@@ -1,9 +1,14 @@
 package battleSystem;
 
 import static org.junit.Assert.*;
+
+import java.util.Arrays;
+import java.util.Queue;
+
 import engine.Engine;
 import groups.Formation;
 import groups.Party;
+import actors.*;
 
 import org.junit.Test;
 
@@ -24,6 +29,7 @@ public class BattleSystemTest {
 		
 		BattleSystem bs = new BattleSystem();
 		bs.setFormation(f);
+		//battle systems should start in issue state
 		assertTrue(bs.getState() instanceof IssueState);
 	}
 
@@ -45,7 +51,12 @@ public class BattleSystemTest {
 		BattleSystem bs = new BattleSystem();
 		bs.setFormation(f);
 		
-		bs.getTurnOrder();
+		Queue<Actor> defaultTurns = bs.getTurnOrder();
+		assertEquals(f.get(0), defaultTurns.poll());
+		assertEquals(p.get(0), defaultTurns.poll());
+		assertEquals(p.get(1), defaultTurns.poll());
+		assertEquals(f.get(1), defaultTurns.poll());
+		
 		//setting command for actors changes their speed which should
 		//affect the order
 		

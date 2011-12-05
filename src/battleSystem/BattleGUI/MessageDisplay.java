@@ -1,10 +1,7 @@
 package battleSystem.BattleGUI;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
-
 import commands.*;
 
 import battleSystem.MessageState;
@@ -43,6 +40,7 @@ public class MessageDisplay extends Sprite{
 	/**
 	 * Main render method
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		g.setColor(Color.white);

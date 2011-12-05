@@ -1,14 +1,15 @@
 package actors;
 
+import java.awt.Graphics;
+import commands.*;
+import engine.Sprite;
+
 /**
  * Player.java
  * @author Nicholas Hydock 
  * 
- * Description: User controllable actors
+ * User controllable actors
  */
-
-import java.awt.Graphics;
-import engine.Sprite;
 
 public class Player extends Actor {
 
@@ -189,6 +190,7 @@ public class Player extends Actor {
 	 * Draws the actor to the screen and animates the graphic
 	 * @param g
 	 */
+	@Override
 	public void draw(Graphics g)
 	{
 		if (getState() == WEAK)

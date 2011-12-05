@@ -5,9 +5,14 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-import groups.Formation;
 import groups.Party;
 
+/**
+ * GameScreen
+ * @author nhydock
+ *
+ *	Main GUI frontend to the engine
+ */
 public class GameScreen extends JFrame implements KeyListener{
 
 	//frame resolution
@@ -38,6 +43,7 @@ public class GameScreen extends JFrame implements KeyListener{
 		//main execution thread will update the scene
 		// and then paint the graphics for the scene
 		new Thread(){
+			@Override
 			public void run()
 			{
 				while (!isInterrupted())

@@ -47,6 +47,7 @@ public class IssueState extends BattleState
 	 * Handles updating of the state
 	 * @param e
 	 */
+	@Override
 	public void handle()
 	{
 		//Do not update while player is animating
@@ -86,6 +87,7 @@ public class IssueState extends BattleState
 	 * Handles key input while it is being updated
 	 * @param e
 	 */
+	@Override
 	public void handleKeyInput(KeyEvent e)
 	{
 		//Do not update while player is animating
@@ -181,6 +183,7 @@ public class IssueState extends BattleState
 	/**
 	 * Ends the state and goes to the next step
 	 */
+	@Override
 	public void finish()
 	{
 		if (goBack)

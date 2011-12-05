@@ -57,6 +57,7 @@ public class EnemySpriteDisplay extends Sprite{
 		update(parent.getFormation());
 	}
 	
+	@Override
 	public void paint(Graphics g)
 	{
 		//window is first sprite

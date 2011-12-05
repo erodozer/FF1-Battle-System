@@ -1,12 +1,7 @@
 package battleSystem.BattleGUI;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
-
-import commands.Defend;
-
 import battleSystem.MessageState;
 
 import engine.Sprite;
@@ -39,6 +34,7 @@ public class GameOverDisplay extends Sprite{
 	/**
 	 * Main render method
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		g.setColor(Color.white);

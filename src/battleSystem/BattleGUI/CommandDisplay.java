@@ -1,14 +1,7 @@
 package battleSystem.BattleGUI;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
-
-import scenes.Scene;
-
 import actors.Actor;
-import battleSystem.BattleState;
 import battleSystem.BattleSystem;
 import battleSystem.IssueState;
 
@@ -44,6 +37,7 @@ public class CommandDisplay extends Sprite{
 	/**
 	 * Main render method
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		//window is first sprite

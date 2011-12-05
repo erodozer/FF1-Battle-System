@@ -2,7 +2,6 @@ package actors;
 
 import org.junit.Test;
 
-import jobs.Fighter;
 import junit.framework.TestCase;
 
 /**

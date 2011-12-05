@@ -62,6 +62,7 @@ public class Attack extends Command {
 	/**
 	 * Returns the name of the command
 	 */
+	@Override
 	public String toString()
 	{
 		return name;
@@ -71,6 +72,7 @@ public class Attack extends Command {
 	 * Reset the name after the turn has been executed so it displays
 	 * properly in the menu
 	 */
+	@Override
 	public void reset()
 	{
 		super.reset();

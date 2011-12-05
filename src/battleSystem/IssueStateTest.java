@@ -7,6 +7,12 @@ import groups.Party;
 
 import org.junit.Test;
 
+/**
+ * IssueStateTest
+ * @author nhydock
+ *
+ *	JUnit test for issue state
+ */
 public class IssueStateTest {
 
 	@Test
@@ -21,6 +27,7 @@ public class IssueStateTest {
 		
 		BattleSystem bs = new BattleSystem();
 		bs.setFormation(f);
+		//battle systems should start in issue state
 		assertTrue(bs.getState() instanceof IssueState);
 	}
 
