@@ -26,8 +26,9 @@ public class ChooseJobsState extends CreationState {
 	@Override
 	public void start() {
 		p = parent.getActivePlayer();
-		jobs = new Job[]{new Fighter(p), new BlackBelt(p), new Thief(p),
-						 new RedMage(p), new WhiteMage(p), new BlackMage(p)};
+		jobs = new Job[Job.AVAILABLEJOBS.size()];
+		for (int i = 0; i < Job.AVAILABLEJOBS.size(); i++)
+			jobs[i] = new Job(p, Job.AVAILABLEJOBS.get(i));
 		index = 0;
 	}
 

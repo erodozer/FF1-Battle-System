@@ -2,7 +2,7 @@ package CreationSystem;
 
 import java.awt.event.KeyEvent;
 
-import jobs.Fighter;
+import jobs.Job;
 import engine.Engine;
 import groups.Formation;
 import groups.Party;
@@ -24,10 +24,10 @@ public class CreationSystem {
 	{
 		e = Engine.getInstance();
 		party = new Party();
-		party.add(new Fighter(new Player("")));
-		party.add(new Fighter(new Player("")));
-		party.add(new Fighter(new Player("")));
-		party.add(new Fighter(new Player("")));
+		party.add(new Job(new Player(""), Job.AVAILABLEJOBS.get(0)));
+		party.add(new Job(new Player(""), Job.AVAILABLEJOBS.get(0)));
+		party.add(new Job(new Player(""), Job.AVAILABLEJOBS.get(0)));
+		party.add(new Job(new Player(""), Job.AVAILABLEJOBS.get(0)));
 		
 		index = 0;
 		activePlayer = party.get(0);

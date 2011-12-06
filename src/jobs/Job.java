@@ -21,7 +21,7 @@ import engine.Sprite;
  */
 public class Job extends Player{
 
-	public static final List<String> AVAILABLEJOBS = Arrays.asList(new String[]{"Fighter", "Black Belt", ""});
+	public static final List<String> AVAILABLEJOBS = Arrays.asList(new String[]{"Fighter", "Black Belt", "Thief", "Red Mage", "Black Mage", "White Mage"});
 	/*
 	 * S = STR
 	 * A = AGILITY/SPEED
@@ -65,15 +65,14 @@ public class Job extends Player{
 		maxhp = Integer.valueOf(prop.getProperty("hp", "1")).intValue();
 		hp = maxhp;
 		str = Integer.valueOf(prop.getProperty("str", "1")).intValue();
-		def = Integer.valueOf(prop.getProperty("def", "1")).intValue();
 		itl = Integer.valueOf(prop.getProperty("int", "1")).intValue();
 		spd = Integer.valueOf(prop.getProperty("spd", "1")).intValue();
 		evd = Integer.valueOf(prop.getProperty("evd", "1")).intValue();
 		acc = Integer.valueOf(prop.getProperty("acc", "1")).intValue();
 		vit = Integer.valueOf(prop.getProperty("vit", "1")).intValue();
-		exp = Integer.valueOf(prop.getProperty("exp", "1")).intValue();
+		mdef = Integer.valueOf(prop.getProperty("mdef", "1")).intValue();
 		
-		//When a job is initialized, in most cases level 1 stats will be set
+		def = 0;	//def will always be 0 because no equipment is on by default
 	
 		growth = new String[MAXLVL+1];
 		try {
@@ -86,6 +85,7 @@ public class Job extends Player{
 			Arrays.fill(growth, "");
 		}
 		
+		loadSprites();
 	}
 	
 	/**
@@ -223,11 +223,18 @@ public class Job extends Player{
 	
 	/**
 	 * Growth for Hit%/Acc is linear
-	 * Growth
 	 */
 	protected int getAcc(int lvl)
 	{
 		return Integer.valueOf(growth[0]).intValue();
+	}
+
+	/**
+	 * Growth for Hit%/Acc is linear
+	 */
+	protected int getMDef(int lvl)
+	{
+		return Integer.valueOf(growth[1]).intValue();
 	}
 	
 	/**
@@ -262,6 +269,7 @@ public class Job extends Player{
 		str += getStr(level);
 		spd += getSpd(level);
 		itl += getInt(level);
+		itl += getMDef(level);
 		acc += getAcc(level);
 	}
 
