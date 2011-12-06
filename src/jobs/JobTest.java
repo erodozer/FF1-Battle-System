@@ -1,6 +1,9 @@
 package jobs;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -15,7 +18,7 @@ import actors.Player;
 public class JobTest {
 
 	/**
-	 * Tests a mock job to make sure calculating
+	 * Tests a job to make sure calculating
 	 * stat values works as well as testing other
 	 * basics
 	 */
@@ -51,4 +54,25 @@ public class JobTest {
 		assertEquals(13, j.getAcc());
 	}
 
+	/**
+	 * Tests a job with spells to make sure it's able to
+	 * load and assign spells properly
+	 */
+	@Test
+	public void testSpellLoading() {
+		Player p = new Player("TWIL");
+		Job j = new Job(p, "Red Mage");
+		
+		assertTrue(j.getSpells(0)[0].getName().equals("CURE"));
+		assertTrue(j.getSpells(0)[1].getName().equals("FIRE"));
+		assertTrue(j.getSpells(0)[2] == null);
+			
+		System.out.println(j.getSpells(1)[0].getName());
+		System.out.println(Arrays.toString(j.magicGrowth[j.getLevel()-1]));
+		assertTrue(j.getSpells(1)[0] == null);
+		
+		j.levelUp();
+		
+		assertTrue(j.getSpells(1)[0].getName().equals("LIT"));
+	}
 }
