@@ -52,7 +52,7 @@ public class Spell extends Command {
 	@Override
 	public void execute() {
 		int hit = (int)(Math.random()*200);
-		damage = calculateDamage(hit < Math.min(255, 148+accuracy) - invoker.getTarget().getInt());
+		damage = calculateDamage(hit < Math.min(255, 148+accuracy) - invoker.getTarget().getMDef());
 		invoker.getTarget().setHP(invoker.getTarget().getHP()-damage);
 		
 		//decrease the invoker's mp after casting

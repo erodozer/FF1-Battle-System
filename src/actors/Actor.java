@@ -16,6 +16,8 @@ import engine.Sprite;
  */
 public abstract class Actor
 {
+	protected final static int MAXLVL = 50;	//maximum character level
+	
 	protected String name;		//actor's name
 	protected int level;		//level
 	protected int hp;			//hit points
@@ -25,9 +27,11 @@ public abstract class Actor
 	protected int def;			//defense
 	protected int spd;			//agility
 	protected int evd;			//evasion
-	protected int itl;			//intellegence, from what I can tell is a pointless stat		
+	protected int itl;			//intellegence, intellegence is an entirely pointless stat in ff1
+	protected int mdef;			//magic defense
 	protected int acc;			//attack accuracy bonus
 	protected int vit;			//vitality
+	protected int luk;			//luck, determines how often critical hits are made and how easy it is to flee
 	
 	protected Command command;	//battle command
 	protected Command[] commands;
@@ -80,6 +84,8 @@ public abstract class Actor
 		acc = 1;	
 		vit = 1;
 		itl = 1;
+		mdef = 1;
+		luk= 50;
 		
 		fire = 0;
 		frez = 0;
@@ -254,6 +260,22 @@ public abstract class Actor
 	 */
 	public int getInt() {
 		return itl;
+	}
+	
+	/**
+	 * Set magic def
+	 * @param i
+	 */
+	public void setMDef(int i) {
+		mdef = i;
+	}
+	
+	/**
+	 * Get magic def
+	 * @return
+	 */
+	public int getMDef() {
+		return mdef;
 	}
 	
 	/**
