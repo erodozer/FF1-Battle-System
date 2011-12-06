@@ -56,7 +56,8 @@ public class SpellDisplay extends Sprite{
 							window.getY() + 24 + 16 * (i-range));
 			if (a.getSpells(i) != null)
 				for (int n = 0; n < a.getSpells(i).length; n++)
-					g.drawString(a.getSpells(i)[n].toString().toUpperCase(), window.getX() + 35 + 40*n,
+					if (a.getSpells(i)[n] != null)
+						g.drawString(a.getSpells(i)[n].toString().toUpperCase(), window.getX() + 35 + 40*n,
 							window.getY() + 24 + 16 * (i-range));
 			FontMetrics m = g.getFontMetrics();
 			g.drawString(a.getMp(i)+"", window.getX() + window.getWidth()-15-m.stringWidth(a.getMp(i)+""),
