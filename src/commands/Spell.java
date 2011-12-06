@@ -1,5 +1,12 @@
 package commands;
 
+import java.io.FileInputStream;
+import java.util.Arrays;
+import java.util.Properties;
+import java.util.Scanner;
+
+import actors.Actor;
+
 /**
  * Spell.java
  * @author nhydock
@@ -11,20 +18,59 @@ package commands;
  */
 public class Spell extends Command {
 
-	protected int effectivity;	//base amount of damage dealt
-	protected int accuracy;			//chance the spell will hit at full power
+	private int effectivity;	//base amount of damage dealt
+	private int accuracy;			//chance the spell will hit at full power
 	
 	//Spells can deal elemental damage
 	//  shows if it's aligned to the element or not
-	protected boolean fire;			//fire
-	protected boolean frez;			//freezing
-	protected boolean elec;			//electricity
-	protected boolean lght;			//light
-	protected boolean dark;			//dark
+	private boolean fire;			//fire
+	private boolean frez;			//freezing
+	private boolean elec;			//electricity
+	private boolean lght;			//light
+	private boolean dark;			//dark
+	
+	private boolean potentialTarget;
 	
 	//level of magic that the spell is, required for determining which
 	// tier of mp to use
-	protected int lvl;
+	private int lvl;
+	
+	
+	/**
+	 * Constructs a spell
+	 * @param name		The name of the spell
+	 */
+	public Spell(Actor a, String name)
+	{
+		this.name = name;
+		invoker = a;
+		Properties prop = new Properties();
+		try {
+			prop.load(new FileInputStream("data/spells" + name + "/spell.ini"));
+		} catch (Exception e) {
+			System.err.println("can not find file: " + "data/spells" + name + "/spell.ini");
+		}
+		speedBonus = Integer.valueOf(prop.getProperty("speed", "-5")).intValue();
+		accuracy = Integer.valueOf(prop.getProperty("accuracy", "24")).intValue();
+		effectivity = Integer.valueOf(prop.getProperty("effectivity", "10")).intValue();
+		lvl = Integer.valueOf(prop.getProperty("level", "1")).intValue();
+					
+		//elements
+		fire = Boolean.valueOf(prop.getProperty("fire", "false")).booleanValue();
+		frez = Boolean.valueOf(prop.getProperty("frez", "false")).booleanValue();
+		elec = Boolean.valueOf(prop.getProperty("elec", "false")).booleanValue();
+		lght = Boolean.valueOf(prop.getProperty("lght", "false")).booleanValue();
+		dark = Boolean.valueOf(prop.getProperty("dark", "false")).booleanValue();
+			
+		/*
+		 * Possible targets
+		 * ally = allies are targets	(true)
+		 * foe = enemies are targets	(false)
+		 * ally/foe correspond to whoever is using the spell
+		 *  ie. if an enemy is using the spell, then your party is its foe(s)
+		 */
+		potentialTarget = Boolean.valueOf(prop.getProperty("castOnAlly", "False")).booleanValue();
+	}
 	
 	/**
 	 * Magic attacks do critical damage depending on how weak
