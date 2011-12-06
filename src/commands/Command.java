@@ -9,6 +9,7 @@ public abstract class Command {
 	protected int damage;
 	protected int speedBonus = 0;
 	protected int hits = 1;
+	protected boolean targetable = false;		//false = foes, true = allies
 	
 	/**
 	 * Adds effects to the actor upon assigning the command
@@ -71,5 +72,9 @@ public abstract class Command {
 	 */
 	public int getHits() {
 		return hits;
+	}
+
+	public boolean getTargetable() {
+		return targetable;
 	}
 }
