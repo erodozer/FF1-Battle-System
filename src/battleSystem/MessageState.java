@@ -41,6 +41,8 @@ public class MessageState extends BattleState {
 	public void start() {
 		activeActor = parent.getActiveActor();
 		message = activeActor.getCommand().getDamage() + " DMG";
+		if (activeActor.getCommand().getHits() == 0)
+			message = "Miss!";
 	}
 
 	/**

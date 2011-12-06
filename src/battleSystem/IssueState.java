@@ -165,7 +165,7 @@ public class IssueState extends BattleState
 				spellSelecting = true;
 				index = 0;
 			}
-			else if (actor.getCommand() instanceof Defend)
+			else if (actor.getCommand() instanceof Drink)
 			{
 				actor.setTarget(actor);
 				finish();

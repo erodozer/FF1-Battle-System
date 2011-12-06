@@ -8,6 +8,7 @@ public abstract class Command {
 	protected Actor invoker;
 	protected int damage;
 	protected int speedBonus = 0;
+	protected int hits = 1;
 	
 	/**
 	 * Adds effects to the actor upon assigning the command
@@ -36,8 +37,7 @@ public abstract class Command {
 	}
 		
 	/**
-	 * Retrieves the amount of damage dealt when the command was executed
-	 * @return
+	 * @return amount of damage dealt when the command was executed
 	 */
 	public int getDamage()
 	{
@@ -49,14 +49,27 @@ public abstract class Command {
 	 */
 	abstract protected int calculateDamage(boolean critical);
 	
+	/**
+	 * @return the name of the command
+	 */
 	public String getName()
 	{
 		return name;
 	}
 	
+	/**
+	 * @return string representation of the command
+	 */
 	@Override
 	public String toString()
 	{
 		return name;
+	}
+
+	/**
+	 * @return amount of times the command hit the target
+	 */
+	public int getHits() {
+		return hits;
 	}
 }

@@ -44,8 +44,7 @@ public class EngageState extends BattleState {
 			finish();
 			return;
 		} 
-		else if (!activeActor.getTarget().getAlive())
-			activeActor.setTarget(parent.getRandomTarget(activeActor));
+		
 		activeActor.execute();
 		if (activeActor instanceof Enemy)
 			finish();

@@ -28,6 +28,9 @@ public class Attack extends Command {
 	public void execute() {
 		//reset damage
 		damage = 0;
+		hits = 0;
+		if (!invoker.getTarget().getAlive())
+			return;
 		
 		/*
 		 * Calculate the chance of hitting
