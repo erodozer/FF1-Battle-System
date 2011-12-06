@@ -36,7 +36,7 @@ public abstract class Actor
 	protected Command command;	//battle command
 	protected Command[] commands;
 	//spells are divided into lists of levels
-	protected HashMap<Integer, Spell[]> spells;
+	protected Spell[][] spells;
 								//choice of commands
 	
 	//Display sprites
@@ -75,7 +75,7 @@ public abstract class Actor
 		name = n;
 		hp = 5;
 		maxhp = 5;
-		int[][] m = {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}};
+		int[][] m = {{0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}};
 		mp = m;
 		str = 1;
 		def = 1;
@@ -93,8 +93,8 @@ public abstract class Actor
 		lght = 0;
 		dark = 0;
 		
-		commands = new Command[]{new Attack(this), new Defend(this)};
-		spells = new HashMap<Integer, Spell[]>();
+		commands = new Command[]{new Attack(this)};
+		spells = new Spell[9][3];
 	}
 	
 	/**
@@ -403,7 +403,10 @@ public abstract class Actor
 	 * @return
 	 */
 	public Spell[] getSpells(int i) {
-		return spells.get(i);
+		if (mp[i][0] > 0)
+			return spells[i];
+		else
+			return new Spell[3];
 	}
 
 	/**
