@@ -1,9 +1,11 @@
 package actors;
 
 import java.awt.Graphics;
-import java.util.HashMap;
 
-import commands.*;
+import commands.Attack;
+import commands.Command;
+import commands.Spell;
+
 import engine.Sprite;
 
 /**
@@ -75,7 +77,7 @@ public abstract class Actor
 		name = n;
 		hp = 5;
 		maxhp = 5;
-		int[][] m = {{0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}};
+		int[][] m = {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}};
 		mp = m;
 		str = 1;
 		def = 1;
@@ -94,7 +96,7 @@ public abstract class Actor
 		dark = 0;
 		
 		commands = new Command[]{new Attack(this)};
-		spells = new Spell[9][3];
+		spells = new Spell[8][3];
 	}
 	
 	/**
@@ -443,4 +445,17 @@ public abstract class Actor
 			return lght;
 	}
 
+	/**
+	 * Adds a new spell to the actor
+	 * @param spell
+	 */
+	public void addSpell(Spell spell) {
+		int lvl = spell.getLevel()-1;
+		if (spells[lvl][0] == null)
+			spells[lvl][0] = spell;
+		else if (spells[lvl][1] == null)
+			spells[lvl][1] = spell;
+		else if (spells[lvl][2] == null)
+			spells[lvl][2] = spell;
+	}
 }
