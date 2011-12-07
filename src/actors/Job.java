@@ -1,18 +1,21 @@
-package jobs;
+package actors;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
+
+import commands.Attack;
+import commands.ChooseItem;
+import commands.ChooseSpell;
+import commands.Command;
+import commands.Drink;
+import commands.Flee;
 import commands.Spell;
 
-import actors.Player;
 import engine.Sprite;
 
 /**
@@ -63,7 +66,7 @@ public class Job extends Player{
 	{
 		super(player.getName());
 		p = player;
-		commands = p.getCommands();
+		commands = new Command[]{new Attack(this), new ChooseSpell(this), new Drink(this), new ChooseItem(this), new Flee(this)};
 		this.name = p.getName();
 		spells = null;
 		
@@ -103,16 +106,21 @@ public class Job extends Player{
 		//load mp level table
 		magicGrowth = new int[MAXLVL+1][8];
 		try {
-			FileInputStream f = new FileInputStream("data/actors/jobs/" + jobname + "/growth.txt");
+			FileInputStream f = new FileInputStream("data/actors/jobs/" + jobname + "/magicGrowth.txt");
 			Scanner s = new Scanner(f);
-			for (int i = 0; i <= MAXLVL; i++)
+			for (int i = 0; i < MAXLVL; i++)
 			{
 				String[] str = s.nextLine().split("/");
-				for (int n = 0; n < 9; n++)
+				for (int n = 0; n < magicGrowth[i].length; n++)
 					magicGrowth[i][n] = Integer.valueOf(str[n]).intValue();
 			}
 		} catch (Exception e) {
-			System.err.println("can not find file: " + "data/actors/jobs/" + jobname + "/growth.txt");
+			System.err.println("can not find file: " + "data/actors/jobs/" + jobname + "/magicGrowth.txt");
+		}
+		for (int i = 0; i < mp.length; i++)
+		{
+			mp[i][0] = magicGrowth[level-1][i];
+			mp[i][1] = magicGrowth[level-1][i];
 		}
 		
 		//load spells
@@ -124,19 +132,10 @@ public class Job extends Player{
 			{
 				String spellName = s.next();
 				if (new File("data/spells/" + spellName + "/spell.ini").exists())
-				{
-					Spell spell = new Spell(this, spellName);
-					int lvl = spell.getLevel();
-					if (spells[lvl][0] == null)
-						spells[lvl][0] = spell;
-					else if (spells[lvl][1] == null)
-						spells[lvl][1] = spell;
-					else if (spells[lvl][2] == null)
-						spells[lvl][2] = spell;
-				}
+					new Spell(this, spellName);
 			}
 		} catch (Exception e) {
-			System.err.println("can not find file: " + "data/actors/jobs/" + jobname + "/growth.txt");
+			System.err.println("can not find file: " + "data/actors/jobs/" + jobname + "/spells.txt");
 		}		
 		loadSprites();
 	}
@@ -322,13 +321,13 @@ public class Job extends Player{
 		str += getStr(level);
 		spd += getSpd(level);
 		itl += getInt(level);
-		itl += getMDef(level);
+		mdef += getMDef(level);
 		acc += getAcc(level);
 		
 		for (int i = 0; i < mp.length; i++)
 		{
-			mp[i][0] = magicGrowth[level][i];
-			mp[i][1] = magicGrowth[level][i];
+			mp[i][0] = magicGrowth[level-1][i];
+			mp[i][1] = magicGrowth[level-1][i];
 		}
 	}
 

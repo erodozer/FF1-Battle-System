@@ -1,4 +1,4 @@
-package jobs;
+package actors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import actors.Player;
 
 /**
  * JobTest
@@ -67,8 +66,6 @@ public class JobTest {
 		assertTrue(j.getSpells(0)[1].getName().equals("FIRE"));
 		assertTrue(j.getSpells(0)[2] == null);
 			
-		System.out.println(j.getSpells(1)[0].getName());
-		System.out.println(Arrays.toString(j.magicGrowth[j.getLevel()-1]));
 		assertTrue(j.getSpells(1)[0] == null);
 		
 		j.levelUp();
