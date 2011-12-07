@@ -63,4 +63,33 @@ public class SpellTest {
 		
 		assertEquals(party.get(0), bs.getTargets(p)[0]);
 	}
+	
+	/**
+	 * Tests to make sure that elemental settings actually
+	 * affect damage output.
+	 * In this case, the enemy will be strong against fire,
+	 * weak against elec, and neutral against frez
+	 */
+	@Test
+	public void testElementalDamage()
+	{
+		Engine e = Engine.getInstance();
+		Party party = new Party();
+		party.add("Jack", "Red Mage");
+		Player p = party.get(0);
+		Spell s1 = new Spell(p, "FIRE");
+		Spell s2 = new Spell(p, "BLIZ");
+		Spell s3 = new Spell(p, "ELEC");
+		
+		e.setParty(party);
+		
+		Formation formation = new Formation();
+		formation.add("Gel");
+		
+		BattleSystem bs = new BattleSystem();
+		bs.setFormation(formation);
+		
+		p.setCommand(s1);
+		
+	}
 }
