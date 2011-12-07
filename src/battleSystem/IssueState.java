@@ -3,16 +3,17 @@ package battleSystem;
 import java.awt.event.KeyEvent;
 
 import commands.*;
+import engine.GameState;
 import engine.Input;
 
 import actors.Actor;
 import actors.Player;
 
-public class IssueState extends BattleState 
+public class IssueState extends GameState 
 {
 	Player actor;			//actor it is dealing with, only players deal with issue command
 	Actor target;			//target selected
-	Actor[] targets;		//targets that can be selected
+	public Actor[] targets;	//targets that can be selected
 	Command c;				//command selected
 	
 	public int index = 0;	//index in the list of commands (current on highlighted)
@@ -33,7 +34,7 @@ public class IssueState extends BattleState
 	@Override
 	public void start()
 	{
-		actor = (Player)parent.getActiveActor();
+		actor = (Player)((BattleSystem)parent).getActiveActor();
 		actor.setCommand(null);
 		target = null;
 		targetSelecting = false;
@@ -138,19 +139,18 @@ public class IssueState extends BattleState
 		{
 			target = targets[index];
 			actor.setTarget(target);
-			System.out.println(actor.getTarget().getName());
 			actor.setMoving(2);
+			System.out.println(actor.getTarget().getName());
 		}
 		else if (spellSelecting)
 		{
 			//allow choosing if the spell exists and the player has enough mp to cast it
 			if (actor.getSpells(index/3)[index%3] != null)
 			{
-				if (actor.getMp(actor.getSpells(index/3)[index%3].getLevel()) > 0)
+				if (actor.getMp(index/3) > 0)
 				{
-					System.out.println(index);
 					actor.setCommand(actor.getSpells(index / 3)[index % 3]);
-					targets = parent.getTargets(actor);
+					targets = ((BattleSystem)parent).getTargets(actor);
 					index = 0;
 					spellSelecting = false;
 					targetSelecting = true;
@@ -172,7 +172,7 @@ public class IssueState extends BattleState
 			}
 			else
 			{
-				targets = parent.getTargets(actor);
+				targets = ((BattleSystem)parent).getTargets(actor);
 				index = 0;
 				spellSelecting = false;
 				targetSelecting = true;
@@ -187,7 +187,7 @@ public class IssueState extends BattleState
 	public void finish()
 	{
 		if (goBack)
-			parent.previous();
+			((BattleSystem)parent).previous();
 		else
 			parent.setNextState();
 	}

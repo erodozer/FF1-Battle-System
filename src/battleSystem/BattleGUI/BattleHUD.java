@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import battleSystem.*;
 
+import engine.HUD;
 import engine.Sprite;
 
 /**
@@ -15,7 +16,7 @@ import engine.Sprite;
  *
  *	Collection of GUI components for the battle system
  */
-public class HUD extends Sprite{
+public class BattleHUD extends HUD{
 
 	public PartySpriteDisplay psprited;
 	public PartyStatusDisplay pstatd;
@@ -31,12 +32,15 @@ public class HUD extends Sprite{
 	
 	private Font font;
 	
+	Sprite arrow;
+	
+	
 	/**
 	 * Constructs the HUD
 	 */
-	public HUD()
+	public BattleHUD()
 	{
-		super("");
+		super();
 		psprited = new PartySpriteDisplay(132, 4);	
 		pstatd = new PartyStatusDisplay(204, 32);	
 		esprited = new EnemySpriteDisplay(4, 4);
@@ -53,6 +57,7 @@ public class HUD extends Sprite{
 			font = new Font("serif", Font.PLAIN, 10);
 		}
 		
+		arrow = new Sprite("hud/selectarrow.png");
 	}
 	
 	public void setBackground(Sprite s)
@@ -117,6 +122,14 @@ public class HUD extends Sprite{
 		{
 			md.update((MessageState)parent.getState());
 			md.paint(g);
+		}
+		
+		if (parent.getState() instanceof IssueState && ((IssueState)parent.getState()).targetSelecting)
+		{
+			IssueState is = ((IssueState)parent.getState());
+			arrow.setX(is.targets[is.index].getSprite().getX());
+			arrow.setY(is.targets[is.index].getSprite().getY());
+			arrow.paint(g);
 		}
 	}
 }

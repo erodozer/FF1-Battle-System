@@ -4,38 +4,14 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import CreationSystem.CreationSystem;
-import CreationSystem.GUI.HUD;
+import CreationSystem.GUI.CreationHUD;
 
-public class CreationScene implements Scene {
+public class CreationScene extends Scene {
 
-	CreationSystem system;
-	HUD display;
-	
 	@Override
 	public void start() {
 		system = new CreationSystem();
-		display = new HUD(system);
-	}
-
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void update() {
-		system.update();
-		display.update();
-	}
-
-	@Override
-	public void keyPressed(KeyEvent evt) {
-		system.keyPressed(evt);
-	}
-
-	@Override
-	public void render(Graphics g) {
-		display.paint(g);
+		display = new CreationHUD((CreationSystem)system);
 	}
 
 }

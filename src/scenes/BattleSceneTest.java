@@ -5,6 +5,8 @@ import groups.Formation;
 
 import org.junit.Test;
 
+import battleSystem.BattleSystem;
+
 import actors.Enemy;
 
 public class BattleSceneTest {
@@ -13,12 +15,12 @@ public class BattleSceneTest {
 	public void testInit() {
 		BattleScene b = new BattleScene();
 		
-		assertEquals(null, b.bs);
+		assertEquals(null, b.system);
 		assertEquals(null, b.display);
 		
 		b.start();
 		
-		assertEquals(null, b.bs.getFormation());
+		assertEquals(null, ((BattleSystem)b.system).getFormation());
 	}
 	
 	@Test
@@ -27,12 +29,12 @@ public class BattleSceneTest {
 		Formation f = new Formation();
 		f.add(new Enemy("Gel"));
 		
-		assertEquals(null, b.bs);
+		assertEquals(null, b.system);
 		assertEquals(null, b.display);
 		
 		b.start(f);
 		
-		assertEquals(f, b.bs.getFormation());
+		assertEquals(f, ((BattleSystem)b.system).getFormation());
 	}
 
 }

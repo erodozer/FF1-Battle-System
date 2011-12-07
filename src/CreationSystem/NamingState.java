@@ -2,9 +2,16 @@ package CreationSystem;
 
 import java.awt.event.KeyEvent;
 
+import engine.GameState;
 import engine.Input;
 
-public class NamingState extends CreationState{
+/**
+ * NamingState
+ * @author nhydock
+ *
+ *	CreationState that handles naming the character
+ */
+public class NamingState extends GameState{
 
 	String name;
 	int x;
@@ -16,10 +23,17 @@ public class NamingState extends CreationState{
 							  {'S', 'T', 'U', 'V', 'W', 'X', ' ', 's', 't', 'u', 'v', 'w', 'x'},
 							  {'Y', 'Z', '!', '?', '.', ' ', ' ', 'y', 'z', '!', '?', '.', ' '}};
 
+	/**
+	 * Creates the naming state
+	 * @param c
+	 */
 	NamingState(CreationSystem c) {
 		super(c);
 	}
 	
+	/**
+	 * Starts/Resets the state to its initial settings
+	 */
 	@Override
 	public void start() {
 		name = "";
@@ -27,9 +41,14 @@ public class NamingState extends CreationState{
 		y = 0;
 	}
 
+	/**
+	 * Handles the system's input
+	 */
 	@Override
 	public void handle() {
-		if (x >= letters[0].length)
+	    
+	    // Make sure index of letter stays within bounds of the grid
+	   	if (x >= letters[0].length)
 			x = 0;
 		if (x < 0)
 			x = letters[0].length-1;
@@ -40,12 +59,12 @@ public class NamingState extends CreationState{
 	}
 
 	/**
-	 * 
+	 * finishes the state
 	 */
 	@Override
 	public void finish() {
-		parent.getActivePlayer().setName(name);
-		parent.next();
+		((CreationSystem)parent).getActivePlayer().setName(name);
+		((CreationSystem)parent).setNextState();
 	}
 
 	/**

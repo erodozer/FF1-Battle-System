@@ -7,24 +7,23 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import battleSystem.BattleSystem;
-import battleSystem.BattleGUI.HUD;
+import battleSystem.BattleGUI.BattleHUD;
 
-public class BattleScene implements Scene {
+public class BattleScene extends Scene {
 
-	BattleSystem bs;	 	//logic/state context
-	HUD display; 			// displays all the information for the battle
-
-	/**
+    /**
 	 * Starts the scene
 	 */
 	@Override
 	public void start() {
-		bs = new BattleSystem();
-		display = new HUD();
-		display.setBackground(new Sprite("terrains/grass.png"));
-		display.elistd.update(bs.getFormation());
-		display.esprited.update(bs.getFormation());
-		display.setParentScene(bs);
+	    BattleSystem system = new BattleSystem();
+		BattleHUD hud = new BattleHUD();
+		hud = new BattleHUD();
+		hud.setBackground(new Sprite("terrains/grass.png"));
+		hud.setParentScene(system);
+        
+		this.system = system;
+		this.display = hud;
 	}
 
 	/**
@@ -33,15 +32,7 @@ public class BattleScene implements Scene {
 	 */
 	public void start(Formation f) {
 		start();
-		bs.setFormation(f);
-	}
-
-	/**
-	 * Ends the scene
-	 */
-	@Override
-	public void stop() {
-
+		((BattleSystem) system).setFormation(f);
 	}
 
 	/**
@@ -49,27 +40,11 @@ public class BattleScene implements Scene {
 	 */
 	@Override
 	public void update() {
-		if (bs != null) {
-			bs.update();
-			display.elistd.update(bs.getFormation());
-			display.esprited.update(bs.getFormation());
+		if (system != null) {
+			system.update();
+			((BattleHUD)display).elistd.update(((BattleSystem)system).getFormation());
+			((BattleHUD)display).esprited.update(((BattleSystem)system).getFormation());
 		}
-	}
-
-	/**
-	 * key input handling
-	 */
-	@Override
-	public void keyPressed(KeyEvent evt) {
-		bs.keyPressed(evt);
-	}
-
-	/**
-	 * Draws the scene
-	 */
-	@Override
-	public void render(Graphics g) {
-		display.paint(g);
 	}
 
 }

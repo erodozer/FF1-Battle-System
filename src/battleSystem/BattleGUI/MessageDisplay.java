@@ -71,7 +71,7 @@ public class MessageDisplay extends Sprite{
 			windows[4].paint(g);
 			g.drawString("Terminated!", windows[4].getX() + 10, windows[4].getY() + 20);
 		}
-		else if (c.getDamage() == 0 || (c instanceof Spell && ((Spell)c).resist() > 0))
+		else if ((c.getDamage() == 0 && c.getHits() != 0)|| (c instanceof Spell && ((Spell)c).resist() > 0))
 		{
 			windows[4].paint(g);
 			g.drawString("Ineffective", windows[4].getX() + 10, windows[4].getY() + 20);

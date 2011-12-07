@@ -16,7 +16,6 @@ public class EnemySpriteDisplay extends Sprite{
 
 	Window window;
 	Sprite background;
-	Sprite arrow;
 	
 	//enemy sprites aren't animated, so it is safe to just keep an
 	//array of their sprites instead of calling them all the time
@@ -34,8 +33,6 @@ public class EnemySpriteDisplay extends Sprite{
 		window = new Window(x, y, 128, 156);
 		background = new Sprite(null);
 		sprites = new HashMap<Enemy, Sprite>();
-		arrow = new Sprite("hud/selectarrow.png");
-	
 	}
 
 	/**
@@ -71,13 +68,6 @@ public class EnemySpriteDisplay extends Sprite{
 			if (e.getAlive())
 				e.getSprite().paint(g);
 				
-		if (parent.getState() instanceof IssueState && ((IssueState)parent.getState()).targetSelecting)
-		{
-			int i = ((IssueState)parent.getState()).index;
-			arrow.setX(parent.getFormation().get(i).getSprite().getX());
-			arrow.setY(parent.getFormation().get(i).getSprite().getY());
-			arrow.paint(g);
-		}
 	}
 
 	public void setBackground(Sprite s) {

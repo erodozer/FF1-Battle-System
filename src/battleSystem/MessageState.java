@@ -2,6 +2,8 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 
+import engine.GameState;
+
 import actors.Actor;
 
 /**
@@ -10,7 +12,7 @@ import actors.Actor;
  *
  *	Displays the results of the current turn.
  */
-public class MessageState extends BattleState {
+public class MessageState extends GameState {
 
 	String message;				//message to display
 	public Actor activeActor;
@@ -31,7 +33,6 @@ public class MessageState extends BattleState {
 			finish();
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -39,7 +40,7 @@ public class MessageState extends BattleState {
 
 	@Override
 	public void start() {
-		activeActor = parent.getActiveActor();
+		activeActor = ((BattleSystem)parent).getActiveActor();
 		message = activeActor.getCommand().getDamage() + " DMG";
 		if (activeActor.getCommand().getHits() == 0)
 			message = "Miss!";

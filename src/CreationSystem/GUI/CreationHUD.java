@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import CreationSystem.*;
 
-import engine.Sprite;
+import engine.HUD;
 
 /**
  * HUD.java
@@ -15,24 +15,22 @@ import engine.Sprite;
  *
  *	Collection of GUI components for the creation system
  */
-public class HUD extends Sprite{
+public class CreationHUD extends HUD{
 
 	public PartyDisplay partyd;
 	public NamingDisplay namingd;
-	
-	private CreationSystem parent;
 	
 	private Font font;
 	
 	/**
 	 * Constructs the HUD
 	 */
-	public HUD(CreationSystem p)
+	public CreationHUD(CreationSystem p)
 	{
-		super("");
+		super();
 		parent = p;
-		partyd = new PartyDisplay(parent);	
-		namingd = new NamingDisplay(parent);
+		partyd = new PartyDisplay(p);	
+		namingd = new NamingDisplay(p);
 		
 		try {
 			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);

@@ -1,6 +1,8 @@
 package battleSystem;
 
 import java.awt.event.KeyEvent;
+
+import engine.GameState;
 import engine.MP3;
 
 /**
@@ -11,8 +13,12 @@ import engine.MP3;
  *	of your party are dead.  Program is killed upon striking any
  *	key.
  */
-public class GameOverState extends BattleState {
+public class GameOverState extends GameState {
 
+    /**
+     * Constructs state
+     * @param p
+     */
 	GameOverState(BattleSystem p) {
 		super(p);
 	}
@@ -22,7 +28,7 @@ public class GameOverState extends BattleState {
 	 */
 	@Override
 	public void start() {
-		parent.bgm.close();
+		((BattleSystem)parent).bgm.close();
 		new MP3("data/audio/gameover.mp3").play();
 		
 	}

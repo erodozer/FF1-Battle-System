@@ -2,11 +2,12 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 
+import engine.GameState;
+
 import actors.Actor;
-import actors.Enemy;
 import actors.Player;
 
-public class EngageState extends BattleState {
+public class EngageState extends GameState {
 
 	Actor activeActor;
 	
@@ -16,7 +17,8 @@ public class EngageState extends BattleState {
 	
 	@Override
 	public void start() {
-		activeActor = parent.getActiveActor();
+		activeActor = ((BattleSystem)parent).getActiveActor();
+		System.out.println(activeActor.getTarget());
 		System.out.println(activeActor instanceof Player);
 		if (activeActor instanceof Player)
 		{
@@ -27,27 +29,39 @@ public class EngageState extends BattleState {
 
 	@Override
 	public void finish() {
+	    System.out.println("done");
+	    System.out.println(activeActor.getTarget());
+        if (activeActor.getAlive())
+	    {
+	        System.out.println("doop doop");
+	        System.out.println(activeActor);
+	        activeActor.execute();
+	        System.out.println("woop woop");
+	    }
 		parent.setNextState();
 	}
 
 	@Override
 	public void handle() {
-		if (activeActor instanceof Player)
+	    System.out.println(activeActor.getTarget());
+        if (activeActor instanceof Player)
+		{
 			if (((Player)activeActor).getMoving() == 0 || ((Player)activeActor).getMoving() == 2)
 				return;
 			else if (((Player)activeActor).getMoving() == 1)
+			{
 				((Player)activeActor).setMoving(2);
+			    System.out.println("depr");
+			}
 			else if (((Player)activeActor).getMoving() == 3)
-				finish();
-		
-		if (!activeActor.getAlive()) {
-			finish();
-			return;
-		} 
-		
-		activeActor.execute();
-		if (activeActor instanceof Enemy)
-			finish();
+			{
+			    System.out.println("wubba");
+			    System.out.println(activeActor.getTarget());
+		  		finish();
+			}
+		}
+		else
+		    finish();
 	}
 
 	//Engage state handles no input

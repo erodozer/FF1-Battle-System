@@ -2,6 +2,7 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 
+import engine.GameState;
 import engine.Input;
 import engine.MP3;
 
@@ -13,12 +14,15 @@ import engine.MP3;
  *	of the enemy formation is dead.  Program is killed upon striking any
  *	key.
  */
-public class VictoryState extends BattleState {
-
+public class VictoryState extends GameState {
 
 	int step = 0;		//step 0 = show "all enemies eliminated"
 						//step 1 = show exp and g gained
 
+	/**
+	 * Constructs state
+	 * @param p
+	 */
 	VictoryState(BattleSystem p) {
 		super(p);
 	}
@@ -28,7 +32,7 @@ public class VictoryState extends BattleState {
 	 */
 	@Override
 	public void start() {
-		parent.bgm.close();
+		((BattleSystem)parent).bgm.close();
 		new MP3("data/audio/victory.mp3").play();
 		step = 0;
 	}
@@ -58,6 +62,12 @@ public class VictoryState extends BattleState {
 		}
 	}
 
+	/**
+	 * Gets step of victory state
+	 * step 0 = show all enemies annihilated
+	 * step 1 = show exp and gold gained
+	 * @return
+	 */
 	public int getStep()
 	{
 		return step;

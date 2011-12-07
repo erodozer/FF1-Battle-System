@@ -2,13 +2,21 @@ package CreationSystem;
 
 import java.awt.event.KeyEvent;
 
-import jobs.Job;
 import engine.Engine;
+import engine.GameState;
+import engine.GameSystem;
 import groups.Formation;
 import groups.Party;
+import actors.Job;
 import actors.Player;
 
-public class CreationSystem {
+/**
+ * CreationSystem
+ * @author nhydock
+ *
+ *  Logic system that handles how the creation scene should work
+ */
+public class CreationSystem extends GameSystem{
 
 	Engine e;
 	
@@ -16,10 +24,13 @@ public class CreationSystem {
 	int index;				//current player index
 	Party party;
 	
-	CreationState state;
 	ChooseJobsState cjs;
 	NamingState ns;
 	
+	/**
+	 * Creates the system that handles creating characters and
+	 * a party to play with
+	 */
 	public CreationSystem()
 	{
 		e = Engine.getInstance();
@@ -70,50 +81,57 @@ public class CreationSystem {
     	e.changeToBattle(f);
 	}
 	
-	public void next()
-	{
-		if (state == cjs)
-			state = ns;
-		else if (state == ns)
-		{
-			index++;
-			if (index >= party.size())
-			{
-				finish();
-				return;
-			}
-			activePlayer = party.get(index);
-			state = cjs;
-		}
-		state.start();
-	}
-	
 	/**
 	 * Update loop
 	 */
 	public void update() {
-		try
-		{
-			state.handle();
-		}
-		catch (Exception e)
-		{}
-	}
-	
-	public CreationState getState()
-	{
-		return state;
+		state.handle();
 	}
 
+	/**
+	 * Gets the current party in development
+	 * @return
+	 */
 	public Party getParty() {
 		return party;
 	}
 
-	public void keyPressed(KeyEvent evt) {
-		state.handleKeyInput(evt);
-	}
-
+	/**
+	 * Gets the current character index
+	 * @return
+	 */
 	public int getIndex() {
 		return index;
 	}
+
+	/**
+     * Advances the system into its next state
+     */
+    @Override
+    public void setNextState()
+    {
+        try
+        {
+            Thread.sleep(500);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+           
+        if (state == cjs)
+            state = ns;
+        else if (state == ns)
+        {
+            index++;
+            if (index >= party.size())
+            {
+                finish();
+                return;
+            }
+            activePlayer = party.get(index);
+            state = cjs;
+        }
+        state.start();  
+    }
 }

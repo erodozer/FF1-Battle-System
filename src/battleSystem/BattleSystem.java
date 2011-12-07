@@ -8,6 +8,7 @@ import java.util.Queue;
 import commands.*;
 
 import engine.Engine;
+import engine.GameSystem;
 import engine.MP3;
 import groups.*;
 
@@ -24,7 +25,7 @@ import actors.*;
  *  victory conditions, and game over conditions.
  */
 
-public class BattleSystem{
+public class BattleSystem extends GameSystem{
 
 	private Engine engine;
 	
@@ -37,8 +38,6 @@ public class BattleSystem{
 	private Actor activeActor;						//the currently active actor in battle
 	
 	private int playerIndex;						//current player index for selecting commands
-	
-	private BattleState state;						//current state of the battle
 	
 	private IssueState is;
 	private EngageState es;
@@ -151,12 +150,7 @@ public class BattleSystem{
 	 * Update loop
 	 */
 	public void update() {
-		try
-		{
-			state.handle();
-		}
-		catch (Exception e)
-		{}
+		state.handle();
 	}
 
 	/**
@@ -232,8 +226,8 @@ public class BattleSystem{
 			if (e.getAlive())
 			{
 				Command c = e.getCommands()[(int)(Math.random()*e.getCommands().length)];
-				e.setTarget(getRandomTarget(e));
 				e.setCommand(c);
+				e.setTarget(getRandomTarget(e));
 			}
 		}
 	}
@@ -245,10 +239,16 @@ public class BattleSystem{
 	 */
 	public Actor[] getTargets(Actor actor)
 	{
+		if (actor.getCommand().getTargetable())
+			if (actor instanceof Player)
+				return party.getAliveMembers();
+			else
+				return formation.getAliveMembers();
 		if (actor instanceof Player)
 			return formation.getAliveMembers();
 		else
 			return party.getAliveMembers();
+	
 	}
 
 	/**
@@ -280,14 +280,6 @@ public class BattleSystem{
 		}
 		else
 			next();
-	}
-
-	/**
-	 * Returns the current state that the BattleSystem is in
-	 * @return
-	 */
-	public BattleState getState() {
-		return state;
 	}
 
 	/**

@@ -3,8 +3,8 @@ package CreationSystem.GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import jobs.Job;
 
+import actors.Job;
 import actors.Player;
 
 import engine.Sprite;
@@ -31,6 +31,9 @@ public class PlayerWindow extends Sprite {
 	public void paint(Graphics g)
 	{
 		w.paint(g);
+		if (p == null)
+			return;
+		
 		g.drawString(p.getName(), w.getX() + 28, w.getY() + 28);
 		
 		if (p instanceof Job)

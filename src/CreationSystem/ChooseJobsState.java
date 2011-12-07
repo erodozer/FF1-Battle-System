@@ -2,8 +2,9 @@ package CreationSystem;
 
 import java.awt.event.KeyEvent;
 
+import engine.GameState;
 import engine.Input;
-import jobs.*;
+import actors.Job;
 import actors.Player;
 
 /**
@@ -12,7 +13,7 @@ import actors.Player;
  *
  *	Sets the job of the character
  */
-public class ChooseJobsState extends CreationState {
+public class ChooseJobsState extends GameState {
 
 	Player p;
 	Job[] jobs;
@@ -25,7 +26,7 @@ public class ChooseJobsState extends CreationState {
 	
 	@Override
 	public void start() {
-		p = parent.getActivePlayer();
+		p = ((CreationSystem)parent).getActivePlayer();
 		jobs = new Job[Job.AVAILABLEJOBS.size()];
 		for (int i = 0; i < Job.AVAILABLEJOBS.size(); i++)
 			jobs[i] = new Job(p, Job.AVAILABLEJOBS.get(i));
@@ -36,12 +37,12 @@ public class ChooseJobsState extends CreationState {
 	public void handle() {
 		if (index >= jobs.length)
 			index = 0;
-		parent.setActivePlayer(jobs[index]);
+		((CreationSystem)parent).setActivePlayer(jobs[index]);
 	}
 
 	@Override
 	public void finish() {
-		parent.next();
+		parent.setNextState();
 	}
 
 	@Override
