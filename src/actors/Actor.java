@@ -16,7 +16,7 @@ import engine.Sprite;
  * 				for combatants.  Actors are comparable on terms of their speed
  * 				to determine turn order.
  */
-public abstract class Actor
+abstract public class Actor
 {
 	protected final static int MAXLVL = 50;	//maximum character level
 	
@@ -50,7 +50,12 @@ public abstract class Actor
 	
 	protected int exp;			//for players, the exp that it has, for enemies, the exp rewarded
 	
-	//elemental alignment/resistance
+	/*
+	 * elemental alignment/resistance
+	 * 0 = weak
+	 * 1 = neutral
+	 * 2 = strong
+	 */
 	protected int fire;			//fire
 	protected int frez;			//freezing
 	protected int elec;			//electricity
@@ -89,11 +94,11 @@ public abstract class Actor
 		mdef = 1;
 		luk= 50;
 		
-		fire = 0;
-		frez = 0;
-		elec = 0;
-		lght = 0;
-		dark = 0;
+		fire = 1;
+		frez = 1;
+		elec = 1;
+		lght = 1;
+		dark = 1;
 		
 		commands = new Command[]{new Attack(this)};
 		spells = new Spell[8][3];
@@ -396,7 +401,7 @@ public abstract class Actor
 	 * @param i
 	 */
 	public void setMp(int lvl, int i) {
-		mp[lvl][1] = i;
+		mp[lvl][1] = Math.max(0, Math.min(i, mp[lvl][0]));
 	}
 	
 	/**

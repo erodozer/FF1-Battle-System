@@ -18,7 +18,7 @@ import engine.Sprite;
 
 public class Enemy extends Actor {
 
-	int goldReward;
+	int goldReward;		//amount of gold rewarded on killing the enemy
 	
 	/**
 	 * Creates an enemy instance
@@ -41,18 +41,20 @@ public class Enemy extends Actor {
 			evd = Integer.valueOf(p.getProperty("evd", "1")).intValue();
 			acc = Integer.valueOf(p.getProperty("acc", "1")).intValue();
 			vit = Integer.valueOf(p.getProperty("vit", "1")).intValue();
+			
+			fire = Integer.valueOf(p.getProperty("fire", "1")).intValue();
+			frez = Integer.valueOf(p.getProperty("frez", "1")).intValue();
+			elec = Integer.valueOf(p.getProperty("elec", "1")).intValue();
+			lght = Integer.valueOf(p.getProperty("lght", "1")).intValue();
+			dark = Integer.valueOf(p.getProperty("dark", "1")).intValue();
+			
 			exp = Integer.valueOf(p.getProperty("exp", "1")).intValue();
 			goldReward = Integer.valueOf(p.getProperty("g", "0")).intValue();
 			Command[] c = {new Attack(this)};
 			commands = c;
 			loadSprites();
 		}
-		catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -69,10 +71,18 @@ public class Enemy extends Actor {
 	}
 
 
+	/**
+	 * Gold reward setter
+	 * @param i
+	 */
 	public void setGold(int i) {
 		goldReward = i;
 	}
 
+	/**
+	 * Gold reward getter
+	 * @return
+	 */
 	public int getGold() {
 		return goldReward;
 	}
