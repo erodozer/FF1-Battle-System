@@ -13,91 +13,100 @@ import groups.Party;
  *
  *	Main GUI frontend to the engine
  */
-public class GameScreen extends JFrame implements KeyListener{
+public class GameScreen extends JFrame implements KeyListener
+{
 
-	//frame resolution
-	final int FRAME_WIDTH = 512;
-	final int FRAME_HEIGHT = 512;
-	
-	private ContentPanel c;
-	private Engine engine;
-	
-	/**
-	 * Creates the main game screen
-	 */
-	public GameScreen()
-	{
-		engine = Engine.getInstance();
-		
-		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		setTitle("FF1 Battle System");
-		c = new ContentPanel(getWidth(), getHeight());
-		
-		setLayout(null);
-		setContentPane(c);
-		setResizable(false);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		addKeyListener(this);
-		
-		//main execution thread will update the scene
-		// and then paint the graphics for the scene
-		new Thread(){
-			@Override
-			public void run()
-			{
-				while (!isInterrupted())
-				{
-					if (engine.getCurrentScene() != null)
-						engine.getCurrentScene().update();
-					
-					try {
-						sleep(5);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					
-					c.paint();
-					
-					try
-					{
-						sleep(30);
-					}catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				}
-			}
-		}.start();
-	}
+    //frame resolution
+    final int FRAME_WIDTH = 512;
 
-	// test client
-	public void testClient()
-	{
-		Party p = new Party();
-    	p.add("TWIL", "RedMage");
-    	p.add("APPL", "Fighter");
-    	p.add("RNBW", "BlackBelt");
-    	p.add("FLUT", "WhiteMage");
-    	
-    	engine.setParty(p);
-    	engine.startGame();
+    final int FRAME_HEIGHT = 512;
+
+    private ContentPanel c;
+
+    private Engine engine;
+
+    /**
+     * Creates the main game screen
+     */
+    public GameScreen()
+    {
+        engine = Engine.getInstance();
+
+        setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        setTitle("FF1 Battle System");
+        c = new ContentPanel(getWidth(), getHeight());
+
+        setLayout(null);
+        setContentPane(c);
+        setResizable(false);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        addKeyListener(this);
     }
 
-	public static void main(String[] args)
-	{
-		GameScreen gs = new GameScreen();
-		gs.testClient();
-	}
+    // test client
+    public void testClient()
+    {
+        engine.startGame();
+    }
 
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		engine.getCurrentScene().keyPressed(arg0);
-	}
+    public static void main(String[] args)
+    {
+        GameScreen gs = new GameScreen();
+        gs.testClient();
+        gs.run();
+    }
 
-	@Override
-	public void keyReleased(KeyEvent arg0) {}
+    @Override
+    public synchronized void keyPressed(KeyEvent arg0)
+    {
+        if (Thread.currentThread().isInterrupted())
+            return;
 
-	@Override
-	public void keyTyped(KeyEvent arg0) {}
+        engine.getCurrentScene().keyPressed(arg0);
+        arg0.consume();
+    }
+
+    @Override
+    public void keyReleased(KeyEvent arg0)
+    {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent arg0)
+    {
+    }
+
+    /**
+     * main execution method will update the scene
+     * and then paint the graphics for the scene
+     */
+    public void run()
+    {
+        while (!Thread.interrupted())
+        {
+            if (engine.getCurrentScene() != null)
+                engine.getCurrentScene().update();
+
+            try
+            {
+                Thread.sleep(5);
+            }
+            catch (InterruptedException e1)
+            {
+                e1.printStackTrace();
+            }
+
+            c.paint();
+
+            try
+            {
+                Thread.sleep(30);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 }
