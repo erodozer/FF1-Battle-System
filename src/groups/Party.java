@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import jobs.Job;
 
+import actors.Job;
 import actors.Player;
 
 public class Party extends ArrayList<Player>{

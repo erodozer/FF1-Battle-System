@@ -1,7 +1,15 @@
 package engine;
 
 import java.awt.event.KeyEvent;
-public class Input {
+
+/**
+ * Input
+ * @author nhydock
+ *
+ *	Helper file that contains final static variables 
+ *	to simplify looking at key input
+ */
+public abstract class Input {
 
 	//predefined input keys
 	public final static int KEY_A  = KeyEvent.VK_X;

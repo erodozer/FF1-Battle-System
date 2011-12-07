@@ -12,8 +12,8 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import actors.Job;
 import actors.Player;
-import jobs.Job;
 
 public class PartyTest extends TestCase{
 
