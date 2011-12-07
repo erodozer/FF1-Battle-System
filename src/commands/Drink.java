@@ -29,7 +29,6 @@ public class Drink extends Command {
 
 	@Override
 	protected int calculateDamage(boolean critical) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

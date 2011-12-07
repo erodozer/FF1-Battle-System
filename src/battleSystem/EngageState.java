@@ -18,8 +18,6 @@ public class EngageState extends GameState {
 	@Override
 	public void start() {
 		activeActor = ((BattleSystem)parent).getActiveActor();
-		System.out.println(activeActor.getTarget());
-		System.out.println(activeActor instanceof Player);
 		if (activeActor instanceof Player)
 		{
 			((Player)activeActor).setState(Player.WALK);
@@ -29,36 +27,21 @@ public class EngageState extends GameState {
 
 	@Override
 	public void finish() {
-	    System.out.println("done");
-	    System.out.println(activeActor.getTarget());
-        if (activeActor.getAlive())
-	    {
-	        System.out.println("doop doop");
-	        System.out.println(activeActor);
+	   if (activeActor.getAlive())
 	        activeActor.execute();
-	        System.out.println("woop woop");
-	    }
-		parent.setNextState();
+	   parent.setNextState();
 	}
 
 	@Override
 	public void handle() {
-	    System.out.println(activeActor.getTarget());
-        if (activeActor instanceof Player)
+	    if (activeActor instanceof Player)
 		{
 			if (((Player)activeActor).getMoving() == 0 || ((Player)activeActor).getMoving() == 2)
 				return;
 			else if (((Player)activeActor).getMoving() == 1)
-			{
 				((Player)activeActor).setMoving(2);
-			    System.out.println("depr");
-			}
 			else if (((Player)activeActor).getMoving() == 3)
-			{
-			    System.out.println("wubba");
-			    System.out.println(activeActor.getTarget());
-		  		finish();
-			}
+				finish();
 		}
 		else
 		    finish();

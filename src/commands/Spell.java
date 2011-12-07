@@ -100,10 +100,13 @@ public class Spell extends Command {
 	public void execute() {
 		int hit = (int)(Math.random()*200);
 		damage = calculateDamage(hit < Math.min(255, 148+accuracy) - invoker.getTarget().getMDef());
+		//invert damage if targeting an ally, this means it's a healing spell
+		if (targetable)
+			damage *= -1;
 		invoker.getTarget().setHP(invoker.getTarget().getHP()-damage);
 		
 		//decrease the invoker's mp after casting
-		invoker.setMp(lvl, invoker.getMp(lvl)-1);
+		invoker.setMp(lvl-1, invoker.getMp(lvl-1)-1);
 	}
 
 	@Override

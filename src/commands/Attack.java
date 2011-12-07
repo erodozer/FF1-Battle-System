@@ -26,9 +26,9 @@ public class Attack extends Command {
 	 */
 	@Override
 	public void execute() {
-		//reset damage
+	    //reset damage
 		damage = 0;
-		hits = 0;
+		hits = (1+(invoker.getAcc()/32))*1;
 		if (!invoker.getTarget().getAlive())
 			return;
 		
@@ -53,6 +53,8 @@ public class Attack extends Command {
 			for (int i = 0; i < hits; i++)
 				damage += amount;
 		}
+		else
+			hits = 0;
 		invoker.getTarget().setHP(invoker.getTarget().getHP()-damage);
 		
 		//change display tag
@@ -82,6 +84,9 @@ public class Attack extends Command {
 		name = "Attack";
 	}
 	
+	/**
+	 * Calculates the damage an attack will do
+	 */
 	@Override
 	protected int calculateDamage(boolean critical) {
 		int D = (int)((Math.random()+1)*(invoker.getStr()/2));
