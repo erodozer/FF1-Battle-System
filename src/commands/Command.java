@@ -74,7 +74,19 @@ public abstract class Command {
 		return hits;
 	}
 
+	/**
+	 * @return Gets whether the target should be allies or foes
+	 */
 	public boolean getTargetable() {
 		return targetable;
 	}
+
+	/**
+	 * Force number of hits
+	 * @param i
+	 */
+    public void setHits(int i)
+    {
+        hits = i;
+    }
 }
