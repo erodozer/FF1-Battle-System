@@ -463,4 +463,22 @@ abstract public class Actor
 		else if (spells[lvl][2] == null)
 			spells[lvl][2] = spell;
 	}
+
+	/**
+	 * Gets luck
+	 * @return
+	 */
+    public int getLuck()
+    {
+        return luk;
+    }
+    
+    /**
+     * Sets luck
+     * @param i
+     */
+    public void setLuck(int i)
+    {
+        luk = i;
+    }
 }
