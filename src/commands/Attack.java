@@ -1,6 +1,7 @@
 package commands;
 
 import actors.Actor;
+import actors.Job;
 
 public class Attack extends Command {
 
@@ -89,7 +90,15 @@ public class Attack extends Command {
 	 */
 	@Override
 	protected int calculateDamage(boolean critical) {
-		int D = (int)((Math.random()+1)*(invoker.getStr()/2));
+		int D;
+
+        D = (int)((Math.random()+1)*(invoker.getStr()/2))+1;
+        
+        //Black belts are special that their attack is their level*2 when unarmed
+		if (invoker instanceof Job)
+		    if (((Job)invoker).getJobName() == "Black Belt")
+		        D = invoker.getLevel()*2;
+		
 		int A = invoker.getTarget().getDef();
 		return Math.max(1, D * (critical?2:1) - A);
 	}
