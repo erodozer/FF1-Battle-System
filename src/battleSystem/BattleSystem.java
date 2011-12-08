@@ -161,6 +161,20 @@ public class BattleSystem extends GameSystem{
 	{
 		if (state instanceof MessageState)
 		{
+			//end game if successful flee
+			if (activeActor.getCommand() instanceof Flee)
+				if (activeActor.getCommand().getHits() == 1)
+				{
+					try
+					{
+						Thread.sleep(2000);
+					}
+					catch (InterruptedException e)
+					{
+					}
+					System.exit(-1);
+				}
+			
 			//kill order when game over
 			if (party.getAlive() == 0)
 			{
