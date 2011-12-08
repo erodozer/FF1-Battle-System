@@ -1,4 +1,4 @@
-package battleSystem.BattleGUI;
+package scenes.BattleScene.BattleGUI;
 
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -9,6 +9,12 @@ import engine.Engine;
 import engine.Sprite;
 import engine.Window;
 
+/**
+ * PartyStatusDisplay
+ * @author nhydock
+ *
+ *	Group window display for showing your party members' status
+ */
 public class PartyStatusDisplay extends Sprite{
 
 	//party status display consists of multiple windows, 

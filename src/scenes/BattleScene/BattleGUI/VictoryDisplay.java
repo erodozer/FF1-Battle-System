@@ -1,12 +1,17 @@
-package battleSystem.BattleGUI;
+package scenes.BattleScene.BattleGUI;
 
 import java.awt.Graphics;
-import battleSystem.BattleSystem;
-import battleSystem.VictoryState;
 
 import engine.Sprite;
 import engine.Window;
+import scenes.BattleScene.BattleSystem.*;
 
+/**
+ * VictoryDisplay
+ * @author nhydock
+ *
+ *	Displays message upon victory of the experience and gold gained
+ */
 public class VictoryDisplay extends Sprite{
 	
 	Window[] windows;

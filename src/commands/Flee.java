@@ -1,7 +1,7 @@
 package commands;
 
-import battleSystem.BattleSystem;
-import scenes.BattleScene;
+import scenes.BattleScene.BattleScene;
+import scenes.BattleScene.BattleSystem.*;
 import engine.Engine;
 import actors.Actor;
 
@@ -47,6 +47,7 @@ public class Flee extends Command {
 		return 0;
 	}
 
+	@Override
 	public void reset()
 	{
 		name = "Run";

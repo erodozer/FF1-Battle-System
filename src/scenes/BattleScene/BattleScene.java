@@ -1,4 +1,4 @@
-package scenes;
+package scenes.BattleScene;
 
 import engine.Sprite;
 import groups.Formation;
@@ -6,8 +6,11 @@ import groups.Formation;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import battleSystem.BattleSystem;
-import battleSystem.BattleGUI.BattleHUD;
+import scenes.Scene;
+import scenes.BattleScene.BattleGUI.BattleHUD;
+import scenes.BattleScene.BattleSystem.*;
+import scenes.BattleScene.BattleGUI.*;
+
 
 public class BattleScene extends Scene {
 

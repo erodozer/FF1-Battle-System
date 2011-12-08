@@ -5,8 +5,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-import groups.Party;
-
 /**
  * GameScreen
  * @author nhydock

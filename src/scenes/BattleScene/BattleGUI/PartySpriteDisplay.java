@@ -1,14 +1,20 @@
-package battleSystem.BattleGUI;
+package scenes.BattleScene.BattleGUI;
 
 import java.awt.Graphics;
 
-import battleSystem.BattleSystem;
 import actors.*;
 
 import engine.Engine;
 import engine.Sprite;
 import engine.Window;
+import scenes.BattleScene.BattleSystem.*;
 
+/**
+ * PartySpriteDisplay
+ * @author nhydock
+ *
+ *	Displays the party's sprites during battle
+ */
 public class PartySpriteDisplay extends Sprite{
 
 	Window window;

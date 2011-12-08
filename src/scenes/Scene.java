@@ -15,8 +15,8 @@ import engine.HUD;
 
 public class Scene{
 	
-    GameSystem system;      //logic system of the scene
-    HUD display;                //display system of the scene
+    protected GameSystem system;      //logic system of the scene
+    protected HUD display;            //display system of the scene
     
 	/**
 	 * Starts the scene

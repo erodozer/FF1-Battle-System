@@ -1,4 +1,4 @@
-package battleSystem;
+package scenes.BattleScene.BattleSystem;
 
 import java.awt.event.KeyEvent;
 
@@ -7,6 +7,13 @@ import engine.GameState;
 import actors.Actor;
 import actors.Player;
 
+/**
+ * EngageState
+ * @author nhydock
+ *
+ *	BattleSystem state that executes the moves of 
+ *	the current active actor in the battle
+ */
 public class EngageState extends GameState {
 
 	Actor activeActor;

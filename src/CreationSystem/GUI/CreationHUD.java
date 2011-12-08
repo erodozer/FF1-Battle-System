@@ -41,6 +41,7 @@ public class CreationHUD extends HUD{
 		
 	}
 	
+	@Override
 	public void update()
 	{
 		if (parent.getState() instanceof NamingState)

@@ -1,8 +1,7 @@
-package battleSystem;
+package scenes.BattleScene.BattleSystem;
 
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
 import java.util.Queue;
 
 import engine.Engine;

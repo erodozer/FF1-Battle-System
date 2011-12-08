@@ -1,16 +1,15 @@
-package battleSystem.BattleGUI;
+package scenes.BattleScene.BattleGUI;
 
 import java.awt.Graphics;
 import java.util.HashMap;
-
-import battleSystem.BattleSystem;
-import battleSystem.IssueState;
 
 import actors.Enemy;
 
 import engine.Sprite;
 import engine.Window;
 import groups.Formation;
+
+import scenes.BattleScene.BattleSystem.*;
 
 public class EnemySpriteDisplay extends Sprite{
 

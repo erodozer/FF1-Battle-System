@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import actors.Player;
 import scenes.*;
+import scenes.BattleScene.BattleScene;
 
 import groups.*;
 
@@ -28,7 +29,7 @@ public class Engine{
 	public static Engine getInstance()
 	{
 		if (_instance == null)
-			_instance = new Engine();
+			new Engine();
 		
 		return _instance;
 	}
@@ -39,6 +40,9 @@ public class Engine{
 		menu = new MenuScene();
 		world = new WorldScene();
 		creation = new CreationScene();
+		
+		party = new Party();
+		_instance = this;
 	}
 	
 	/**

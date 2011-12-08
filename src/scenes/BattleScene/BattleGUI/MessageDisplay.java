@@ -1,14 +1,22 @@
-package battleSystem.BattleGUI;
+package scenes.BattleScene.BattleGUI;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import scenes.BattleScene.BattleSystem.MessageState;
+
 import commands.*;
 
-import battleSystem.MessageState;
 
 import engine.Sprite;
 import engine.Window;
 
+/**
+ * MessageDisplay
+ * @author nhydock
+ *
+ *	Displays results of turn
+ */
 public class MessageDisplay extends Sprite{
 	
 	Window[] windows;

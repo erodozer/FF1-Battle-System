@@ -1,4 +1,4 @@
-package battleSystem;
+package scenes.BattleScene.BattleSystem;
 
 import java.awt.event.KeyEvent;
 

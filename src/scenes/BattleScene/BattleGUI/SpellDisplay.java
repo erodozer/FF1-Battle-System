@@ -1,14 +1,20 @@
-package battleSystem.BattleGUI;
+package scenes.BattleScene.BattleGUI;
 
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+
 import actors.Actor;
-import battleSystem.BattleSystem;
-import battleSystem.IssueState;
 
 import engine.Sprite;
 import engine.Window;
+import scenes.BattleScene.BattleSystem.*;
 
+/**
+ * SpellDisplay
+ * @author nhydock
+ *
+ *	Displays a list of the player's spells
+ */
 public class SpellDisplay extends Sprite{
 	
 	Window window;

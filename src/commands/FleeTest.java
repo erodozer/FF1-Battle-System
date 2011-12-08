@@ -8,8 +8,8 @@ import groups.Party;
 import org.junit.Test;
 
 import actors.Player;
-import battleSystem.BattleSystem;
-import scenes.BattleScene;
+import scenes.BattleScene.BattleScene;
+import scenes.BattleScene.BattleSystem.*;
 
 /**
  * FleeTest

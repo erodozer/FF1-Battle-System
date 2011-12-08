@@ -1,4 +1,4 @@
-package battleSystem;
+package scenes.BattleScene.BattleSystem;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -149,6 +149,7 @@ public class BattleSystem extends GameSystem{
 	/**
 	 * Update loop
 	 */
+	@Override
 	public void update() {
 		state.handle();
 	}
@@ -279,6 +280,7 @@ public class BattleSystem extends GameSystem{
 	/**
 	 * Input handling
 	 */
+	@Override
 	public void keyPressed(KeyEvent arg0) {
 		state.handleKeyInput(arg0);
 	}
@@ -286,6 +288,7 @@ public class BattleSystem extends GameSystem{
 	/**
 	 * Advances the system to the next state
 	 */
+	@Override
 	public void setNextState() {
 		if (state instanceof EngageState)
 		{

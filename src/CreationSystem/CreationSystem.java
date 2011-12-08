@@ -1,9 +1,6 @@
 package CreationSystem;
 
-import java.awt.event.KeyEvent;
-
 import engine.Engine;
-import engine.GameState;
 import engine.GameSystem;
 import groups.Formation;
 import groups.Party;
@@ -84,6 +81,7 @@ public class CreationSystem extends GameSystem{
 	/**
 	 * Update loop
 	 */
+	@Override
 	public void update() {
 		state.handle();
 	}

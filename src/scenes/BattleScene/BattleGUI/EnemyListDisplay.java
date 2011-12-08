@@ -1,4 +1,4 @@
-package battleSystem.BattleGUI;
+package scenes.BattleScene.BattleGUI;
 
 import java.awt.Graphics;
 import java.util.ArrayList;

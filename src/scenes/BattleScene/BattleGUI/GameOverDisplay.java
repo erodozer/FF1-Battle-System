@@ -1,12 +1,18 @@
-package battleSystem.BattleGUI;
+package scenes.BattleScene.BattleGUI;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import battleSystem.MessageState;
 
 import engine.Sprite;
 import engine.Window;
+import scenes.BattleScene.BattleSystem.*;
 
+/**
+ * GameOverDisplay
+ * @author nhydock
+ *
+ *	Displays game over message
+ */
 public class GameOverDisplay extends Sprite{
 	
 	Window window;

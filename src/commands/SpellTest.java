@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import actors.Player;
-import battleSystem.BattleSystem;
 import engine.Engine;
 import groups.Formation;
 import groups.Party;
+import scenes.BattleScene.BattleSystem.*;
 
 /**
  * SpellTest

@@ -1,13 +1,20 @@
-package battleSystem.BattleGUI;
+package scenes.BattleScene.BattleGUI;
 
 import java.awt.Graphics;
+
+import scenes.BattleScene.BattleSystem.*;
+
 import actors.Actor;
-import battleSystem.BattleSystem;
-import battleSystem.IssueState;
 
 import engine.Sprite;
 import engine.Window;
 
+/**
+ * CommandDisplay
+ * @author nhydock
+ *
+ *	Shows list of commands that the player can select and execute
+ */
 public class CommandDisplay extends Sprite{
 	
 	Window window;
