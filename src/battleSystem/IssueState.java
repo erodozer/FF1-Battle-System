@@ -9,6 +9,12 @@ import engine.Input;
 import actors.Actor;
 import actors.Player;
 
+/**
+ * IssueState
+ * @author nhydock
+ *
+ *	BattleState that controls issuing commands to party members
+ */
 public class IssueState extends GameState 
 {
 	Player actor;			//actor it is dealing with, only players deal with issue command
@@ -168,6 +174,10 @@ public class IssueState extends GameState
 			else if (actor.getCommand() instanceof Drink)
 			{
 				actor.setTarget(actor);
+				finish();
+			}
+			else if (actor.getCommand() instanceof Flee)
+			{
 				finish();
 			}
 			else
