@@ -1,7 +1,7 @@
 package commands;
 
 import scenes.BattleScene.BattleScene;
-import scenes.BattleScene.BattleSystem.*;
+import scenes.BattleScene.System.*;
 import engine.Engine;
 import actors.Actor;
 

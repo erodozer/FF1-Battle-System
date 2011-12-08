@@ -1,4 +1,4 @@
-package scenes.BattleScene.BattleGUI;
+package scenes.BattleScene.GUI;
 
 import java.awt.Graphics;
 
@@ -7,7 +7,7 @@ import actors.*;
 import engine.Engine;
 import engine.Sprite;
 import engine.Window;
-import scenes.BattleScene.BattleSystem.*;
+import scenes.BattleScene.System.*;
 
 /**
  * PartySpriteDisplay

@@ -9,7 +9,7 @@ import actors.Player;
 import engine.Engine;
 import groups.Formation;
 import groups.Party;
-import scenes.BattleScene.BattleSystem.*;
+import scenes.BattleScene.System.*;
 
 /**
  * SpellTest

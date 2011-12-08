@@ -56,6 +56,7 @@ public class Job extends Player{
 	private final String[] spriteNames = {"stand", "walk", "item", "cast", "victory", "dead"};
 	
 	protected String jobname;			//actual name of the job
+	private String pathname;			//name of the path to the job
 	
 	/**
 	 * Decorates a player with a job by which their stats and skills
@@ -69,15 +70,14 @@ public class Job extends Player{
 		commands = new Command[]{new Attack(this), new ChooseSpell(this), new Drink(this), new ChooseItem(this), new Flee(this)};
 		this.name = p.getName();
 		spells = null;
-		
+		pathname = name;
 		level = 1;
-		jobname = name;
 		
 		Properties prop = new Properties();
 		try {
-			prop.load(new FileInputStream("data/actors/jobs/" + jobname + "/job.ini"));
+			prop.load(new FileInputStream("data/actors/jobs/" + pathname + "/job.ini"));
 		} catch (Exception e) {
-			System.err.println("can not find file: " + "data/actors/jobs/" + jobname + "/job.ini");
+			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/job.ini");
 		}
 		maxhp = Integer.valueOf(prop.getProperty("hp", "1")).intValue();
 		hp = maxhp;
@@ -88,25 +88,26 @@ public class Job extends Player{
 		acc = Integer.valueOf(prop.getProperty("acc", "1")).intValue();
 		vit = Integer.valueOf(prop.getProperty("vit", "1")).intValue();
 		mdef = Integer.valueOf(prop.getProperty("mdef", "1")).intValue();
+		jobname = prop.getProperty("name", name);
 		
 		def = 0;	//def will always be 0 because no equipment is on by default
 	
 		//load growth curves
 		growth = new String[MAXLVL+1];
 		try {
-			FileInputStream f = new FileInputStream("data/actors/jobs/" + jobname + "/growth.txt");
+			FileInputStream f = new FileInputStream("data/actors/jobs/" + pathname + "/growth.txt");
 			Scanner s = new Scanner(f);
 			for (int i = 0; i <= MAXLVL; i++)
 				growth[i] = s.nextLine();
 		} catch (Exception e) {
-			System.err.println("can not find file: " + "data/actors/jobs/" + jobname + "/growth.txt");
+			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/growth.txt");
 			Arrays.fill(growth, "");
 		}
 	
 		//load mp level table
 		magicGrowth = new int[MAXLVL+1][8];
 		try {
-			FileInputStream f = new FileInputStream("data/actors/jobs/" + jobname + "/magicGrowth.txt");
+			FileInputStream f = new FileInputStream("data/actors/jobs/" + pathname + "/magicGrowth.txt");
 			Scanner s = new Scanner(f);
 			for (int i = 0; i < MAXLVL; i++)
 			{
@@ -115,7 +116,7 @@ public class Job extends Player{
 					magicGrowth[i][n] = Integer.valueOf(str[n]).intValue();
 			}
 		} catch (Exception e) {
-			System.err.println("can not find file: " + "data/actors/jobs/" + jobname + "/magicGrowth.txt");
+			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/magicGrowth.txt");
 		}
 		for (int i = 0; i < mp.length; i++)
 		{
@@ -126,7 +127,7 @@ public class Job extends Player{
 		//load spells
 		spells = new Spell[8][3];
 		try {
-			FileInputStream f = new FileInputStream("data/actors/jobs/" + jobname + "/spells.txt");
+			FileInputStream f = new FileInputStream("data/actors/jobs/" + pathname + "/spells.txt");
 			Scanner s = new Scanner(f);
 			while (s.hasNext())
 			{
@@ -135,7 +136,7 @@ public class Job extends Player{
 					new Spell(this, spellName);
 			}
 		} catch (Exception e) {
-			System.err.println("can not find file: " + "data/actors/jobs/" + jobname + "/spells.txt");
+			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/spells.txt");
 		}		
 		loadSprites();
 	}
@@ -148,7 +149,7 @@ public class Job extends Player{
 	{
 		sprites = new Sprite[spriteNames.length];
 		for (int i = 0; i < spriteNames.length; i++)
-			sprites[i] = new Sprite("actors/jobs/" + jobname + "/"+ spriteNames[i] + ".png");
+			sprites[i] = new Sprite("actors/jobs/" + pathname + "/"+ spriteNames[i] + ".png");
 		drawSprite = sprites[0];
 	}
 	

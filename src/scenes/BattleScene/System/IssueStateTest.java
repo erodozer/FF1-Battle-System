@@ -1,24 +1,25 @@
-package scenes.BattleScene.BattleSystem;
+package scenes.BattleScene.System;
 
-import org.junit.Test;
-
-import actors.Player;
-
+import static org.junit.Assert.*;
 import engine.Engine;
 import groups.Formation;
 import groups.Party;
 
-public class EngageStateTest {
+import org.junit.Test;
+
+/**
+ * IssueStateTest
+ * @author nhydock
+ *
+ *	JUnit test for issue state
+ */
+public class IssueStateTest {
 
 	@Test
 	public void test() {
 		Engine e = Engine.getInstance();
-		
 		Party p = new Party();
 		p.add("TWIL", "Red Mage");
-		Player a = p.get(0);
-		a.setCommand(a.getCommands()[0]);	//set command to attack
-		
 		e.setParty(p);
 		
 		Formation f = new Formation();
@@ -26,7 +27,8 @@ public class EngageStateTest {
 		
 		BattleSystem bs = new BattleSystem();
 		bs.setFormation(f);
-		bs.getState();
+		//battle systems should start in issue state
+		assertTrue(bs.getState() instanceof IssueState);
 	}
 
 }

@@ -1,4 +1,4 @@
-package scenes.BattleScene.BattleSystem;
+package scenes.BattleScene.System;
 
 import static org.junit.Assert.*;
 

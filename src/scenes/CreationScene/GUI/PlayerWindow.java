@@ -1,4 +1,4 @@
-package CreationSystem.GUI;
+package scenes.CreationScene.GUI;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -18,7 +18,7 @@ public class PlayerWindow extends Sprite {
 	public PlayerWindow(Player p, int x, int y)
 	{
 		super(null);
-		w = new Window(x, y, 95, 100, Color.BLUE);
+		w = new Window(x, y, 86, 84, Color.BLUE);
 		this.p = p;
 	}
 	
@@ -34,13 +34,13 @@ public class PlayerWindow extends Sprite {
 		if (p == null)
 			return;
 		
-		g.drawString(p.getName(), w.getX() + 28, w.getY() + 28);
+		g.drawString(p.getName(), w.getX() + 28, w.getY() + w.getHeight() - 10);
 		
 		if (p instanceof Job)
-			g.drawString(((Job)p).getJobName(), w.getX() + 15, w.getY() + w.getHeight() - 10);
+			g.drawString(((Job)p).getJobName(), w.getX() + 12,  w.getY() + 22);
 	
 		p.getSprite().setX(w.getX() + w.getWidth()/2 - p.getSprite().getWidth()/2-10);
-		p.getSprite().setY(w.getY() + w.getHeight()/2 - p.getSprite().getHeight()/2);
+		p.getSprite().setY(w.getY() + w.getHeight()/2 - p.getSprite().getHeight()/2+5);
 		p.draw(g);
 		
 	}

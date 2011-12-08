@@ -1,10 +1,10 @@
-package scenes.BattleScene.BattleGUI;
+package scenes.BattleScene.GUI;
 
 import java.awt.Graphics;
 
 import engine.Sprite;
 import engine.Window;
-import scenes.BattleScene.BattleSystem.*;
+import scenes.BattleScene.System.*;
 
 /**
  * VictoryDisplay

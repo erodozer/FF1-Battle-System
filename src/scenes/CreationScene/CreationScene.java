@@ -1,7 +1,8 @@
-package scenes;
+package scenes.CreationScene;
 
-import CreationSystem.CreationSystem;
-import CreationSystem.GUI.CreationHUD;
+import scenes.Scene;
+import scenes.CreationScene.GUI.CreationHUD;
+import scenes.CreationScene.System.CreationSystem;
 
 public class CreationScene extends Scene {
 

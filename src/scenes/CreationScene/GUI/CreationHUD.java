@@ -1,11 +1,12 @@
-package CreationSystem.GUI;
+package scenes.CreationScene.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.FileInputStream;
-import CreationSystem.*;
+
+import scenes.CreationScene.System.*;
 
 import engine.HUD;
 

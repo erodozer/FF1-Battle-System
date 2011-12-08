@@ -1,4 +1,4 @@
-package scenes.BattleScene.BattleGUI;
+package scenes.BattleScene.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.FileInputStream;
 
-import scenes.BattleScene.BattleSystem.*;
+import scenes.BattleScene.System.*;
 
 import engine.HUD;
 import engine.Sprite;

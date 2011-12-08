@@ -1,8 +1,8 @@
-package scenes.BattleScene.BattleGUI;
+package scenes.BattleScene.GUI;
 
 import java.awt.Graphics;
 
-import scenes.BattleScene.BattleSystem.*;
+import scenes.BattleScene.System.*;
 
 import actors.Actor;
 

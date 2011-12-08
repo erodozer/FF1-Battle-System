@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import actors.Player;
 import scenes.BattleScene.BattleScene;
-import scenes.BattleScene.BattleSystem.*;
+import scenes.BattleScene.System.*;
 
 /**
  * FleeTest

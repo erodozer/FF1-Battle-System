@@ -1,4 +1,4 @@
-package CreationSystem;
+package scenes.CreationScene.System;
 
 import java.awt.event.KeyEvent;
 

@@ -6,6 +6,7 @@ import java.util.Properties;
 import actors.Player;
 import scenes.*;
 import scenes.BattleScene.BattleScene;
+import scenes.CreationScene.CreationScene;
 
 import groups.*;
 

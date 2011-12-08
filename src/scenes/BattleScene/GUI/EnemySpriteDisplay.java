@@ -1,4 +1,4 @@
-package scenes.BattleScene.BattleGUI;
+package scenes.BattleScene.GUI;
 
 import java.awt.Graphics;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import engine.Sprite;
 import engine.Window;
 import groups.Formation;
 
-import scenes.BattleScene.BattleSystem.*;
+import scenes.BattleScene.System.*;
 
 public class EnemySpriteDisplay extends Sprite{
 

@@ -1,8 +1,9 @@
-package CreationSystem.GUI;
+package scenes.CreationScene.GUI;
 
 import java.awt.Graphics;
 
-import CreationSystem.CreationSystem;
+import scenes.CreationScene.System.CreationSystem;
+
 import engine.Sprite;
 import groups.Party;
 
@@ -19,7 +20,7 @@ public class PartyDisplay extends Sprite {
 		Party party = parent.getParty();
 		windows = new PlayerWindow[party.size()];
 		for (int i = 0; i < party.size(); i++)
-			windows[i] = new PlayerWindow(party.get(i), 20 + 120*(i%(party.size()/2)), 20 + 105*(i/(party.size()/2)));
+			windows[i] = new PlayerWindow(party.get(i), 25 + 120*(i%(party.size()/2)), 25 + 108*(i/(party.size()/2)));
 	}
 	
 	public void update()

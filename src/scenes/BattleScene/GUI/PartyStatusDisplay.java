@@ -1,4 +1,4 @@
-package scenes.BattleScene.BattleGUI;
+package scenes.BattleScene.GUI;
 
 import java.awt.FontMetrics;
 import java.awt.Graphics;

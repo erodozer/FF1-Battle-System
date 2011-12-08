@@ -1,4 +1,4 @@
-package CreationSystem;
+package scenes.CreationScene.System;
 
 import engine.Engine;
 import engine.GameSystem;

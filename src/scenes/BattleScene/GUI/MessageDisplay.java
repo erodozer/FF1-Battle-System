@@ -1,9 +1,9 @@
-package scenes.BattleScene.BattleGUI;
+package scenes.BattleScene.GUI;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import scenes.BattleScene.BattleSystem.MessageState;
+import scenes.BattleScene.System.MessageState;
 
 import commands.*;
 

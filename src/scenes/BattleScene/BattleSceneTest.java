@@ -6,7 +6,7 @@ import groups.Formation;
 import org.junit.Test;
 
 import actors.Enemy;
-import scenes.BattleScene.BattleSystem.*;
+import scenes.BattleScene.System.*;
 
 /**
  * BattleSceneTest

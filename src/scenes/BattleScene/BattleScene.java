@@ -7,9 +7,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import scenes.Scene;
-import scenes.BattleScene.BattleGUI.BattleHUD;
-import scenes.BattleScene.BattleSystem.*;
-import scenes.BattleScene.BattleGUI.*;
+import scenes.BattleScene.GUI.*;
+import scenes.BattleScene.System.*;
 
 
 public class BattleScene extends Scene {
