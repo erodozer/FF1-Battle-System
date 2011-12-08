@@ -2,6 +2,8 @@ package battleSystem;
 
 import java.awt.event.KeyEvent;
 
+import commands.Flee;
+
 import engine.GameState;
 
 import actors.Actor;
@@ -42,8 +44,8 @@ public class MessageState extends GameState {
 	public void start() {
 		activeActor = ((BattleSystem)parent).getActiveActor();
 		message = activeActor.getCommand().getDamage() + " DMG";
-		if (activeActor.getCommand().getHits() == 0)
-			message = "Miss!";
+		if (activeActor.getCommand().getHits() == 0 && !(activeActor.getCommand() instanceof Flee)) 
+		    message = "Miss!";
 	}
 
 	/**

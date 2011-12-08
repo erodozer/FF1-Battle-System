@@ -28,7 +28,7 @@ public class EngageState extends GameState {
 	@Override
 	public void finish() {
 	   if (activeActor.getAlive())
-	        activeActor.execute();
+	       activeActor.execute();
 	   parent.setNextState();
 	}
 
@@ -47,7 +47,9 @@ public class EngageState extends GameState {
 		    finish();
 	}
 
-	//Engage state handles no input
+	/**
+	 * Engage state handles no input
+	 */
 	@Override
 	public void handleKeyInput(KeyEvent arg0) {}
 

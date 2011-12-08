@@ -62,4 +62,27 @@ public class Scene{
 	{
 	    display.paint(g);
 	}
+	
+	/*
+	 * Systems and displays should not be set at any time other than
+	 * start, but they can be fetched
+	 */
+	
+	/**
+	 * Gets the logic system
+	 * @return
+	 */
+	public GameSystem getSystem()
+	{
+	    return system;
+	}
+	
+	/**
+	 * Gets the graphical display
+	 * @return
+	 */
+	public HUD getDisplay()
+	{
+	    return display;
+	}
 }

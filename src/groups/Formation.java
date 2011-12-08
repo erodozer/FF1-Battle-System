@@ -18,7 +18,9 @@ import actors.Enemy;
 
 public class Formation extends ArrayList<Enemy>{
 	
-	/**
+	private boolean escapable = true;     //can escape from the battle against this formation
+
+    /**
 	 * Returns the number of players in the party that are alive
 	 * @return
 	 */
@@ -84,4 +86,14 @@ public class Formation extends ArrayList<Enemy>{
 			sum += e.getGold();
 		return sum;
 	}
+
+    public boolean getEscapable()
+    {
+        return escapable;
+    }
+    
+    public void setEscapable(boolean e)
+    {
+        escapable = e;
+    }
 }
