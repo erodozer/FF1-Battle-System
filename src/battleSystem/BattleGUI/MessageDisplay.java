@@ -45,7 +45,9 @@ public class MessageDisplay extends Sprite{
 	{
 		g.setColor(Color.white);
 		
-		if (!message.activeActor.getCommand().toString().equals(""))
+		Command c = message.activeActor.getCommand();
+		
+		if (!message.activeActor.getCommand().toString().equals("") && !(c instanceof Flee))
 		{
 			windows[1].paint(g);
 			g.setColor(Color.white);
@@ -56,17 +58,22 @@ public class MessageDisplay extends Sprite{
 		g.drawString(message.activeActor.getName(), 
 					 windows[0].getX() + 10, windows[0].getY() + 20);
 
-		Command c = message.activeActor.getCommand();
 		
-		//shows actor name and command
-		windows[3].paint(g);
-		g.drawString(""+message.getMessage(), 
-			 windows[3].getX() + 10, windows[3].getY() + 20);
-		windows[2].paint(g);
-		g.drawString(message.activeActor.getTarget().getName(), 
-			 windows[2].getX() + 10, windows[2].getY() + 20);
+		if (!(c instanceof Flee))
+		{
+			//shows actor name and command
+			windows[3].paint(g);
+			g.drawString("" + message.getMessage(), windows[3].getX() + 10, windows[3].getY() + 20);
+			windows[2].paint(g);
+			g.drawString(message.activeActor.getTarget().getName(), windows[2].getX() + 10, windows[2].getY() + 20);
+		}
 		
-		if (!message.activeActor.getTarget().getAlive() && c.getDamage() > 0)
+		if (c instanceof Flee)
+		{
+			windows[4].paint(g);
+			g.drawString(message.activeActor.getCommand().toString(), windows[4].getX() + 10, windows[4].getY() + 20);
+		}
+		else if (!message.activeActor.getTarget().getAlive() && c.getDamage() > 0)
 		{
 			windows[4].paint(g);
 			g.drawString("Terminated!", windows[4].getX() + 10, windows[4].getY() + 20);
@@ -76,5 +83,6 @@ public class MessageDisplay extends Sprite{
 			windows[4].paint(g);
 			g.drawString("Ineffective", windows[4].getX() + 10, windows[4].getY() + 20);
 		}	
+
 	}
 }

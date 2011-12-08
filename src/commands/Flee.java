@@ -33,6 +33,10 @@ public class Flee extends Command {
 	        hits = 1;
 	    else
 	        hits = 0;
+        if (hits == 1)
+            name = "Ran away to safety";
+        else
+            name = "Could not run away!";
 	}
 
 	/**
@@ -43,15 +47,8 @@ public class Flee extends Command {
 		return 0;
 	}
 
-	/**
-     * Returns the outcome of the action
-     */
-    @Override
-    public String toString()
-    {
-        if (hits == 1)
-            return "Ran away to safety";
-        else
-            return "Could not run away!";
-    }
+	public void reset()
+	{
+		name = "Run";
+	}
 }
