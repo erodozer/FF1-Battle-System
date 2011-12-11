@@ -27,7 +27,7 @@ import engine.Sprite;
  */
 public class Job extends Player{
 
-	public static final List<String> AVAILABLEJOBS = Arrays.asList(new String[]{"Fighter", "Black Belt", "Thief", "Red Mage", "Black Mage", "White Mage"});
+	public static final List<String> AVAILABLEJOBS = Arrays.asList(new String[]{"Fighter", "Thief", "Black Belt", "Red Mage", "Black Mage", "White Mage"});
 	/*
 	 * S = STR
 	 * A = AGILITY/SPEED
