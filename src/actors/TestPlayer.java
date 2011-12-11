@@ -34,12 +34,4 @@ public class TestPlayer extends TestCase {
 		
 	}
 	
-	/**
-	 * Tests the player to make sure animations are working
-	 */
-	public void testSpriteFlipping()
-	{
-		Player a = new Player("Twil");
-		
-	}
 }
