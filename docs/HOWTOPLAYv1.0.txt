@@ -1,0 +1,82 @@
+=Introduction=
+
+Version 1.0 of the engine focuses on the development of the BattleSystem
+GUI created for it aimed to be pixel perfect to the NES version of FF1,
+to make things interested, all jobs and sprites are My Little Pony themed.
+
+In the battle system, players can encounter formations of enemies.  The
+abilities that players are capable of using are determined by their jobs
+which are exact replicas of the FF1 jobs, growth curves and damage calculation
+completely intact.  Enemies only have extremely basic AI which involves
+select a random target that is alive and attack it.  There are no spells yet,
+in the future the AI will be made a little bit smarter to reflect FF1 NES.
+
+==STARTING THE GAME==
+
+Just a heads up, input is done using the arrow keys and X (A button) and
+Z (B button).
+
+Upon starting up the game, the player will automatically be presented with
+the party creation scene.  Saving data and parties is not yet implemented
+so you must start with a new party every time you play.  The creation scene
+allows the player to select 4 members of any of the 6 job types (The 4 warriors
+of Light).  Jobs are dynamicly generated code made completely customizable
+through modding the files in the data/actors/jobs directory.  Content
+developers will be able to add more jobs in the future with ease by following
+the current model.
+
+Selecting your jobs is identical to the NES version.  Pressing an arrow button,
+not matter which one, will advance you through the list of jobs.  Pressing A
+will select the job, be careful because you can't take back the decision.
+After selecting the job for the character, you will be presented with a table
+of letters and symbols.  Select the letters to name your character, each character
+is limited to a name of only 4 letters long.
+
+==ENGAGE THE ENEMY!==
+
+After picking the jobs and naming all 4 of your characters, your party will be
+thrown into a battle to show off the system in its current state.  By default,
+you will be thrown into a battle against Nightmare Moon (Garland FF1).  Black
+Mages and Red Mages will have level 1 offensive magic, White Mages and Red Mages
+will both know CURE.  CURE will heal on average 10-20 hp, FIRE/ICE/ELEC should
+do 10-20 damage.
+
+Equipment/Items have not yet been implemented.  This means all your characters
+are fighting bare handed.  This is not a problem for Fighters which are strong
+to begin with, and Black Belts whose unarmed attack power is equal to his level*2.
+Mages with offensive magic should be very helpful in the battle.  Only one who is
+no real help is Thief since the battle is in-escapable and thiefs only really do
+good damage if they have a decent weapon equipped due to their ability to almost
+always critical hit with a weapon at higher levels.
+
+Some invigorating music plays during battle, but looping has not yet been figured
+out, and character sprites are animated, though all the sprites have not yet been
+drawn for the demo.  Attack sprites are not yet implemented nor is victory or 
+low hp sprites/animations.  All you'll see in this are standing and walking animation.
+Dead sprites are not yet drawn so the character should "disappear" on death, really
+the code is there to show the proper sprite, it just doesn't exist so it doesn't render.
+
+Battle executes as follows:
+	Step 1: Select commands for each party member, different commands affect speed of
+			execution with spells taking more time to execute than attacking.
+	Step 2: Battle advances through actor queue and executes the active actor's command
+	Step 3: Results of the command are displayed on the screen
+	Step 4: Battle queue advances
+	Step 5: Do some checks
+			If all party members are dead go to Game Over
+			else if all formation members are dead go to Victory
+			else if queue is empty go back to issuing commands to members still alive
+			else execute step 2 until queue is empty
+
+Input is just like normal, A button will select the command and then the target.  B button
+will cancel selecting the command/target, if it's in the main command window (the one
+listing Attack, Run, etc.) then it will back up to the previous actor.  
+
+**Do not pick ITEM, it is currently unimplemented and will cause the battle to crash in menu selection.**
+**Drink is not functional as well because drink depends on Items**
+
+Upon game over or victory, a message will display and then the engine will end itself.
+Once further developed, gold will be awarded to the party on victory and exp will be 
+distributed to players, leading to possible level up for them, then displaying all the 
+stat increases the player gets for advancement.
+
