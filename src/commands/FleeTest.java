@@ -21,13 +21,11 @@ public class FleeTest
 {
 
     /**
-     * Tests to make sure that elemental settings actually
-     * affect damage output.
-     * In this case, the enemy will be strong against fire,
-     * weak against elec, and neutral against frez
+     * Tests flee command both against a formation that is escapable
+     * and then one that isn't
      */
     @Test
-    public void testFleeingAgainstInEscapableFormation()
+    public void testFleeing()
     {
         Engine e = Engine.getInstance();
         Party party = new Party();

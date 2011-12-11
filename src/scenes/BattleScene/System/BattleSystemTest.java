@@ -11,10 +11,16 @@ import actors.*;
 
 import org.junit.Test;
 
+/**
+ * BattleSystemTest
+ * @author nhydock
+ *
+ *	JUnit test for the Battle System
+ */
 public class BattleSystemTest {
 
 	/**
-	 * Tests intializing a battle system
+	 * Tests initializing a battle system
 	 */
 	@Test
 	public void test() {
@@ -62,12 +68,4 @@ public class BattleSystemTest {
 		assertTrue(bs.getState() instanceof IssueState);
 	}
 	
-}
-
-class BattleSimulation
-{
-	public BattleSimulation()
-	{
-		
-	}
 }
