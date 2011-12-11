@@ -32,10 +32,8 @@ public class CreationSystem extends GameSystem{
 	{
 		e = Engine.getInstance();
 		party = new Party();
-		party.add(new Job(new Player(""), Job.AVAILABLEJOBS.get(0)));
-		party.add(new Job(new Player(""), Job.AVAILABLEJOBS.get(0)));
-		party.add(new Job(new Player(""), Job.AVAILABLEJOBS.get(0)));
-		party.add(new Job(new Player(""), Job.AVAILABLEJOBS.get(0)));
+		for (int i = 0; i < 4; i++)
+			party.add(new Job(new Player(""), Job.AVAILABLEJOBS.get(i)));
 		
 		index = 0;
 		activePlayer = party.get(0);
@@ -108,7 +106,7 @@ public class CreationSystem extends GameSystem{
     @Override
     public void setNextState()
     {
-        try
+    	try
         {
             Thread.sleep(500);
         }
@@ -128,8 +126,7 @@ public class CreationSystem extends GameSystem{
                 return;
             }
             activePlayer = party.get(index);
-            state = cjs;
         }
-        state.start();  
+        state.start();
     }
 }

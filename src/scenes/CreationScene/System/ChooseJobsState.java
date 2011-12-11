@@ -30,7 +30,7 @@ public class ChooseJobsState extends GameState {
 		jobs = new Job[Job.AVAILABLEJOBS.size()];
 		for (int i = 0; i < Job.AVAILABLEJOBS.size(); i++)
 			jobs[i] = new Job(p, Job.AVAILABLEJOBS.get(i));
-		index = 0;
+		index = ((CreationSystem)parent).getIndex();
 	}
 
 	@Override
