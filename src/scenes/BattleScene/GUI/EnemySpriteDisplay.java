@@ -7,7 +7,6 @@ import actors.Enemy;
 
 import engine.Sprite;
 import engine.Window;
-import groups.Formation;
 
 import scenes.BattleScene.System.*;
 
@@ -37,11 +36,14 @@ public class EnemySpriteDisplay extends Sprite{
 	/**
 	 * Main render method
 	 */
-	public void update(Formation f)
+	public void update()
 	{
-		for (int i = 0; i < f.size(); i++)
+		if (parent == null)
+			return;
+		
+		for (int i = 0; i < parent.getFormation().size(); i++)
 		{
-			Enemy e = f.get(i);
+			Enemy e = parent.getFormation().get(i);
 			e.getSprite().setX(window.getX()+12);
 			e.getSprite().setY(window.getY()+40+(e.getSprite().getHeight()+5)*(i%3));
 		}
@@ -50,7 +52,6 @@ public class EnemySpriteDisplay extends Sprite{
 	public void setParentScene(BattleSystem bs)
 	{
 		parent = bs;
-		update(parent.getFormation());
 	}
 	
 	@Override

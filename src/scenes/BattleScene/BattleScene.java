@@ -45,7 +45,6 @@ public class BattleScene extends Scene {
 		if (system != null) {
 			system.update();
 			((BattleHUD)display).elistd.update(((BattleSystem)system).getFormation());
-			((BattleHUD)display).esprited.update(((BattleSystem)system).getFormation());
 		}
 	}
 

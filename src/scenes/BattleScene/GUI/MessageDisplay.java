@@ -20,7 +20,6 @@ import engine.Window;
 public class MessageDisplay extends Sprite{
 	
 	Window[] windows;
-	Sprite arrow;
 	MessageState message;
 	
 	public MessageDisplay(int x, int y)
