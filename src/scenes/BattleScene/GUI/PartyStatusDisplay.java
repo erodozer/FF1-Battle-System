@@ -2,7 +2,6 @@ package scenes.BattleScene.GUI;
 
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.util.ArrayList;
 
 import actors.Player;
 import engine.Engine;
@@ -19,14 +18,14 @@ public class PartyStatusDisplay extends Sprite{
 
 	//party status display consists of multiple windows, 
 	// one for each character in the party
-	ArrayList<Window> windows = new ArrayList<Window>();
+	Window[] windows;
 	
 	public PartyStatusDisplay(int x, int y)
 	{
 		super(null);
-		
-		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
-			windows.add(new Window(x, y + 48*i, 48, 56));
+		windows = new Window[Engine.getInstance().getParty().size()];
+		for (int i = 0; i < windows.length; i++)
+			windows[i] = new Window(x, y + 48*i, 48, 56);
 	}
 
 	/**
@@ -36,9 +35,9 @@ public class PartyStatusDisplay extends Sprite{
 	public void paint(Graphics g)
 	{
 		//draws a status window for each member
-		for (int i = Engine.getInstance().getParty().size()-1; i >= 0; i--)
+		for (int i = windows.length-1; i >= 0; i--)
 		{
-			Window w = windows.get(i);
+			Window w = windows[i];
 			Player p = Engine.getInstance().getParty().get(i);
 			w.paint(g);
 			g.drawString(p.getName(), w.getX() + 8, w.getY() + 24);
