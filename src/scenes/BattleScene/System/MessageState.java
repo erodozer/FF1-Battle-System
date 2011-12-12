@@ -19,15 +19,27 @@ public class MessageState extends GameState {
 	String message;				//message to display
 	public Actor activeActor;
 
+	/**
+	 * Creates the state
+	 * @param p
+	 */
 	MessageState(BattleSystem p) {
 		super(p);
 	}
 	
+	/**
+	 * Finishes state and advances to next
+	 */
 	@Override
 	public void finish() {
 		parent.setNextState();
 	}
 
+	/**
+	 * Simple handling of the state
+	 * Pauses for half a second for the thread to display, then
+	 * advances to the next state
+	 */
 	@Override
 	public void handle() {
 		try {
@@ -40,6 +52,10 @@ public class MessageState extends GameState {
 		
 	}
 
+	/**
+	 * Starts the scene by getting the active actor and the results
+	 * of their command
+	 */
 	@Override
 	public void start() {
 		activeActor = ((BattleSystem)parent).getActiveActor();

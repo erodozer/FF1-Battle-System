@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 
 import scenes.BattleScene.System.*;
 
+import engine.GameSystem;
 import engine.HUD;
 import engine.Sprite;
 
@@ -71,9 +72,10 @@ public class BattleHUD extends HUD{
 	 * Sets the parent of the hud to the battle system
 	 * @param bs
 	 */
-	public void setParentScene(BattleSystem bs)
+	@Override
+	public void setParent(GameSystem bs)
 	{
-		parent = bs;
+		parent = (BattleSystem)bs;
 		psprited.setParentScene(parent);
 		esprited.setParentScene(parent);
 		cd.setParentScene(parent);

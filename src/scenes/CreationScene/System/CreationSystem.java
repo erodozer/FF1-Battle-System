@@ -119,13 +119,14 @@ public class CreationSystem extends GameSystem{
             state = ns;
         else if (state == ns)
         {
-            index++;
+        	index++;
             if (index >= party.size())
             {
                 finish();
                 return;
             }
             activePlayer = party.get(index);
+            state = cjs;
         }
         state.start();
     }

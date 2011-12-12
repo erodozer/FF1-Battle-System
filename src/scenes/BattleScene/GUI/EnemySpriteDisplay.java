@@ -15,10 +15,6 @@ public class EnemySpriteDisplay extends Sprite{
 	Window window;
 	Sprite background;
 	
-	//enemy sprites aren't animated, so it is safe to just keep an
-	//array of their sprites instead of calling them all the time
-	HashMap<Enemy, Sprite> sprites;
-	
 	//distance away from the window boarder the background should be drawn
 	final int BKGVERTOFFSET = 7;
 	final int BKGHORZOFFSET = 8;
@@ -30,7 +26,7 @@ public class EnemySpriteDisplay extends Sprite{
 		super(null);
 		window = new Window(x, y, 128, 156);
 		background = new Sprite(null);
-		sprites = new HashMap<Enemy, Sprite>();
+		update();
 	}
 
 	/**
@@ -41,17 +37,20 @@ public class EnemySpriteDisplay extends Sprite{
 		if (parent == null)
 			return;
 		
+		System.out.println("doop doop");
 		for (int i = 0; i < parent.getFormation().size(); i++)
 		{
 			Enemy e = parent.getFormation().get(i);
 			e.getSprite().setX(window.getX()+12);
 			e.getSprite().setY(window.getY()+40+(e.getSprite().getHeight()+5)*(i%3));
+			System.out.println("Wubba");
 		}
 	}
 	
 	public void setParentScene(BattleSystem bs)
 	{
 		parent = bs;
+		update();
 	}
 	
 	@Override

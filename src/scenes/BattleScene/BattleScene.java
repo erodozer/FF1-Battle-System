@@ -22,7 +22,7 @@ public class BattleScene extends Scene {
 		BattleHUD hud = new BattleHUD();
 		hud = new BattleHUD();
 		hud.setBackground(new Sprite("terrains/grass.png"));
-		hud.setParentScene(system);
+		hud.setParent(system);
         
 		this.system = system;
 		this.display = hud;
@@ -35,6 +35,7 @@ public class BattleScene extends Scene {
 	public void start(Formation f) {
 		start();
 		((BattleSystem) system).setFormation(f);
+		display.setParent(system);
 	}
 
 	/**

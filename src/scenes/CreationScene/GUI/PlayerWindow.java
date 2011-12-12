@@ -10,11 +10,21 @@ import actors.Player;
 import engine.Sprite;
 import engine.Window;
 
+/**
+ * PlayerWindow
+ * @author nhydock
+ *
+ *	Simple window for the creation scene that shows the players,
+ *  their names, and the sprites for their jobs.
+ */
 public class PlayerWindow extends Sprite {
 
 	Window w;
 	Player p;
 	
+	/**
+	 * Constructs the window
+	 */
 	public PlayerWindow(Player p, int x, int y)
 	{
 		super(null);
@@ -22,11 +32,18 @@ public class PlayerWindow extends Sprite {
 		this.p = p;
 	}
 	
+	/**
+	 * Updates the window with the player's data
+	 * @param p
+	 */
 	public void update(Player p)
 	{
 		this.p = p;
 	}
 	
+	/**
+	 * Renders the window
+	 */
 	@Override
 	public void paint(Graphics g)
 	{

@@ -10,6 +10,12 @@ import scenes.CreationScene.CreationScene;
 
 import groups.*;
 
+/**
+ * Engine
+ * @author nhydock
+ *
+ *	Main engine class that is home to the core logic of the game
+ */
 public class Engine{
 
 	private static Engine _instance;	//singleton instance
@@ -35,6 +41,9 @@ public class Engine{
 		return _instance;
 	}
 
+	/**
+	 * Create the engine instance
+	 */
 	private Engine()
 	{
 		battle = new BattleScene();

@@ -6,6 +6,12 @@ import org.junit.Test;
 
 import actors.*;
 
+/**
+ * AttackTest
+ * @author nhydock
+ *
+ *	JUnit test for the attack command
+ */
 public class AttackTest {
 
     /**

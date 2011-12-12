@@ -171,16 +171,21 @@ public class IssueState extends GameState
 				spellSelecting = true;
 				index = 0;
 			}
+			/*
+			 * Items not yet implemented 
+			 * 
 			else if (actor.getCommand() instanceof Drink)
-			{
+			{	
 				actor.setTarget(actor);
 				finish();
 			}
+			 */
+			
 			else if (actor.getCommand() instanceof Flee)
 			{
 				finish();
 			}
-			else
+			else if (actor.getCommand() instanceof Attack)
 			{
 				targets = ((BattleSystem)parent).getTargets(actor);
 				index = 0;
