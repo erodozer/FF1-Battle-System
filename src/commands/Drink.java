@@ -22,14 +22,16 @@ public class Drink extends Command {
 		invoker = a;
 	}
 	
+	/**
+	 * Do nothing as of now
+	 */
 	@Override
-	public void execute() {
+	public void execute() {}
 
-	}
-
+	/**
+	 * Do nothing as of now
+	 */
 	@Override
-	protected int calculateDamage(boolean critical) {
-		return 0;
-	}
+	protected int calculateDamage(boolean critical) {return 0;}
 
 }

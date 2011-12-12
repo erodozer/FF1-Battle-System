@@ -9,6 +9,12 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Window
+ * @author nhydock
+ *
+ *	Graphical frame that is designed to look like it's holding content
+ */
 public class Window {
 	
 	Color bg;					//background color of the window
@@ -32,11 +38,26 @@ public class Window {
 	int x = 0;					
 	int y = 0;
 	
+	/**
+	 * Creates a window
+	 * @param a			x position
+	 * @param b			y position
+	 * @param w			width
+	 * @param h			height
+	 */
 	public Window(int a, int b, int w, int h)
 	{
 		this(a, b, w, h, Color.black);
 	}
 	
+	/**
+	 * Creates a window
+	 * @param a			x position
+	 * @param b			y position
+	 * @param w			width
+	 * @param h			height
+	 * @param c			window's background color
+	 */
 	public Window(int a, int b, int w, int h, Color c)
 	{
 		try {
@@ -59,21 +80,33 @@ public class Window {
 		bg = c;
 	}
 
+	/**
+	 * @return	x position
+	 */
 	public int getX()
 	{
 		return x;
 	}
 	
+	/**
+	 * @return	y position
+	 */
 	public int getY()
 	{
 		return y;
 	}
 	
+	/**
+	 * @return	width
+	 */
 	public int getWidth()
 	{
 		return width;
 	}
 	
+	/**
+	 * @return	height
+	 */
 	public int getHeight()
 	{
 		return height;
@@ -88,6 +121,9 @@ public class Window {
 		bg = c;
 	}
 	
+	/**
+	 * Draws the window the the screen
+	 */
 	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D) g;

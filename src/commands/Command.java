@@ -2,6 +2,12 @@ package commands;
 
 import actors.Actor;
 
+/**
+ * Command
+ * @author nhydock
+ *
+ *	Base battle command class
+ */
 public abstract class Command {
 
 	protected String name;
