@@ -23,7 +23,7 @@ public class BattleSystemTest {
 	 * Tests initializing a battle system
 	 */
 	@Test
-	public void test() {
+	public void testInitialize() {
 		Engine e = Engine.getInstance();
 		Party p = new Party();
 		p.add("TWIL", "Red Mage");
@@ -57,10 +57,10 @@ public class BattleSystemTest {
 		bs.setFormation(f);
 		
 		Queue<Actor> defaultTurns = bs.getTurnOrder();
-		assertEquals(f.get(0), defaultTurns.poll());
-		assertEquals(p.get(0), defaultTurns.poll());
-		assertEquals(p.get(1), defaultTurns.poll());
-		assertEquals(f.get(1), defaultTurns.poll());
+		assertEquals(f.get(1), defaultTurns.poll());		//NM is fast
+		assertEquals(f.get(0), defaultTurns.poll());		//gel is fast too
+		assertEquals(p.get(1), defaultTurns.poll());		//red mage is faster than
+		assertEquals(p.get(0), defaultTurns.poll());		// the brute: Fighter
 		
 		//setting command for actors changes their speed which should
 		//affect the order
@@ -68,4 +68,42 @@ public class BattleSystemTest {
 		assertTrue(bs.getState() instanceof IssueState);
 	}
 	
+	/**
+	 * Tests switching states
+	 */
+	@Test
+	public void testStateSwitching() {
+		Engine e = Engine.getInstance();
+		Party p = new Party();
+		p.add("TWIL", "Red Mage");
+		e.setParty(p);
+		
+		Formation f = new Formation();
+		f.add("Gel");
+		
+		BattleSystem bs = new BattleSystem();
+		bs.setFormation(f);
+		//battle systems should start in issue state
+		assertTrue(bs.getState() instanceof IssueState);
+		
+		((IssueState)bs.getState()).next();	//set command
+		((IssueState)bs.getState()).next();	//then set target
+		
+		bs.getState().finish();
+		assertTrue(bs.getState() instanceof EngageState);
+		
+		bs.getState().finish();
+		assertTrue(bs.getState() instanceof MessageState);
+		
+		//previous chunk happens again because of enemy have to execute its turn as well
+		bs.getState().finish();
+		assertTrue(bs.getState() instanceof EngageState);
+		bs.getState().finish();
+		assertTrue(bs.getState() instanceof MessageState);
+		
+		//should be back to IssueState
+		bs.getState().finish();
+		assertTrue(bs.getState() instanceof IssueState);
+		
+	}
 }

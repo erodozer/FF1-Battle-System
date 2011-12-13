@@ -16,6 +16,9 @@ import scenes.BattleScene.System.*;
  */
 public class BattleSceneTest {
 
+	/**
+	 * Tests initialization
+	 */
 	@Test
 	public void testInit() {
 		BattleScene b = new BattleScene();
@@ -29,6 +32,9 @@ public class BattleSceneTest {
 		assertTrue(((BattleSystem)b.getSystem()).getFormation().size() == 0);
 	}
 	
+	/**
+	 * Tests intitializing with a formation
+	 */
 	@Test
 	public void testInitWithFormation() {
 		BattleScene b = new BattleScene();
