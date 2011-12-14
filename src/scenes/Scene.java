@@ -21,7 +21,9 @@ public class Scene{
 	/**
 	 * Starts the scene
 	 */
-	public void start(){}
+	public void start(){
+		system.start();
+	}
 	
 	/**
 	 * Stops the scene
