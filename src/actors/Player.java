@@ -1,7 +1,11 @@
 package actors;
 
 import java.awt.Graphics;
+
+import scenes.BattleScene.BattleScene;
+import scenes.WorldScene.WorldScene;
 import commands.*;
+import engine.Engine;
 import engine.Sprite;
 
 /**
@@ -31,7 +35,14 @@ public class Player extends Actor {
 	public static final int DEAD = 5;
 	public static final int WEAK = 6;
 	
+	public static final int NORTH = 0;
+	public static final int SOUTH = 1;
+	public static final int EAST = 2;
+	public static final int WEST = 3;
 	
+	protected Sprite[][] moveSprites = new Sprite[4][2];
+									//sprites drawn to screen on world scenes
+
 	protected Sprite drawSprite;	//sprite to draw to screen that represents the player
 	protected double x;				//sprite position x
 	protected double y;				//sprite position y
@@ -50,7 +61,7 @@ public class Player extends Actor {
 	}
 
 	/**
-	 * Get current evasion
+	 * Get current evasionPlayer
 	 * @return
 	 */
 	@Override
@@ -135,13 +146,8 @@ public class Player extends Actor {
 	 */
 	public void setPosition(double x, double y)
 	{
-		this.x = x;
-		this.y = y;
-		for (Sprite s : sprites)
-		{
-			s.setX(this.x);
-			s.setY(this.y);
-		}
+		setX(x);
+		setY(y);
 	}
 
 	/**
@@ -151,10 +157,13 @@ public class Player extends Actor {
 	public void setX(double x)
 	{
 		this.x = x;
-		for (Sprite s : sprites)
-		{
-			s.setX(this.x);
-		}
+		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
+			for (Sprite s : sprites)
+				s.setX(this.x);
+		else
+			for (Sprite[] sp : moveSprites)
+				for (Sprite s : sp)
+					s.setX(this.x);
 	}
 	
 	/**
@@ -164,10 +173,13 @@ public class Player extends Actor {
 	public void setY(double y)
 	{
 		this.y = y;
-		for (Sprite s : sprites)
-		{
-			s.setY(this.y);
-		}
+		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
+			for (Sprite s : sprites)
+				s.setY(this.y);
+		else
+			for (Sprite[] sp : moveSprites)
+				for (Sprite s : sp)
+					s.setY(this.y);
 	}
 	
 	/**
@@ -195,21 +207,35 @@ public class Player extends Actor {
 	@Override
 	public void draw(Graphics g)
 	{
-		if (getState() == WEAK)
-			drawSprite = sprites[5];
-		if (getState() == WALK && drawSprite == sprites[0])
-			drawSprite = sprites[1];
-		else if (getState() == ACT && drawSprite == sprites[0])
-			drawSprite = sprites[2];
-		else if (getState() == CAST && drawSprite == sprites[0])
-			drawSprite = sprites[3];
-		else if (getState() == VICT && drawSprite == sprites[0])
-			drawSprite = sprites[4];
-		else
-			drawSprite = sprites[0];
+		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
+		{
+			if (getState() == WEAK)
+				drawSprite = sprites[5];
+			if (getState() == WALK && drawSprite == sprites[0])
+				drawSprite = sprites[1];
+			else if (getState() == ACT && drawSprite == sprites[0])
+				drawSprite = sprites[2];
+			else if (getState() == CAST && drawSprite == sprites[0])
+				drawSprite = sprites[3];
+			else if (getState() == VICT && drawSprite == sprites[0])
+				drawSprite = sprites[4];
+			else
+				drawSprite = sprites[0];
 		
-		if (getState() == DEAD)
-			drawSprite = sprites[5];
+			if (getState() == DEAD)
+				drawSprite = sprites[5];
+		}
+		else if (Engine.getInstance().getCurrentScene() instanceof WorldScene)
+		{
+			if (getState() == EAST)
+				drawSprite = moveSprites[0][moving];
+			else if (getState() == WEST)
+				drawSprite = moveSprites[0][moving];
+			else if (getState() == NORTH)
+				drawSprite = moveSprites[0][moving];
+			else if (getState() == SOUTH)
+				drawSprite = moveSprites[0][moving];
+		}
 		drawSprite.paint(g);
 	}
 
@@ -229,6 +255,15 @@ public class Player extends Actor {
 	public int getMoving()
 	{
 		return moving;
+	}
+
+	/**
+	 * updates the walk animation on the map
+	 */
+	public void walk()
+	{
+		moving++;
+		moving %= 2;
 	}
 	
 }

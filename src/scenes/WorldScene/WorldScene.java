@@ -1,4 +1,6 @@
-package scenes;
+package scenes.WorldScene;
+
+import scenes.Scene;
 
 /**
  * WorldScene

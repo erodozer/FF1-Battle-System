@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 public class ContentPanel extends JPanel{
 
 	//NES Native resolution
-	final int INTERNAL_RES_W = 256;
-	final int INTERNAL_RES_H = 240;
+	public static final int INTERNAL_RES_W = 256;
+	public static final int INTERNAL_RES_H = 240;
 	
 	private Image dbImage;				//image to draw to
 	private Graphics dbg;				//graphics context of the component

@@ -7,6 +7,7 @@ import actors.Player;
 import scenes.*;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;
+import scenes.WorldScene.WorldScene;
 
 import groups.*;
 
