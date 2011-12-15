@@ -27,7 +27,6 @@ public class Sprite{
 	protected double height = 1;
 	protected double x = 0;
 	protected double y = 0;
-	protected int[] rect = new int[4];
 	
 	/**
 	 * Load the sprite
@@ -138,24 +137,7 @@ public class Sprite{
 		if (image != null)
 		{
 			Graphics2D g2 = (Graphics2D) g;
-			g2.clipRect(rect[0], rect[1], rect[2], rect[3]);
-			g2.drawImage(image, null, 0, 0);
-			g2.setClip(null);
-		}
-	}
-
-	/**
-	 * Sets the cropping rectangle
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
-	 */
-	public void setRect(double x1, double y1, double x2, double y2)
-	{
-		rect[0] = (int)(x1*getWidth());
-		rect[1] = (int)(y1*getHeight());
-		rect[2] = (int)(x2*getWidth());
-		rect[3] = (int)(y2*getHeight());
+			g2.drawImage(image, null, (int)x, (int)y);
+			}
 	}
 }
