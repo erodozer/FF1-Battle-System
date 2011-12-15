@@ -21,9 +21,7 @@ public class Scene{
 	/**
 	 * Starts the scene
 	 */
-	public void start(){
-		system.start();
-	}
+	public void start(){}
 	
 	/**
 	 * Stops the scene
@@ -62,7 +60,8 @@ public class Scene{
 	 */
 	public void render(Graphics g)
 	{
-	    display.paint(g);
+		if (display != null)
+			display.paint(g);
 	}
 	
 	/*

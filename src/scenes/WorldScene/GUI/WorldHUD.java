@@ -1,28 +1,48 @@
 package scenes.WorldScene.GUI;
 
+import java.awt.Graphics;
+
 import actors.Player;
 import scenes.WorldScene.WorldSystem.Map;
 import scenes.WorldScene.WorldSystem.WorldSystem;
+import engine.ContentPanel;
 import engine.Engine;
 import engine.HUD;
+import engine.Sprite;
 
+/**
+ * WorldHUD
+ * @author nhydock
+ *
+ *	Graphics display for the world
+ */
 public class WorldHUD extends HUD
 {
 	Engine e;
-	Map map;
+	Sprite map;
 	Player leader;		//party leader, his sprite gets drawn
 	
-	public WorldHUD(WorldSystem s, Map m)
+	public WorldHUD(WorldSystem s)
 	{
 		parent = s;
-		map = m;
 		e = Engine.getInstance();
-		leader = e.getParty().get(0);
+		map = s.getMap();
+	}
+	
+	public void setLeader(Player p)
+	{
+		leader = p;
 	}
 	
 	public void paint(Graphics g)
 	{
+		if (map == null)
+			return;
+		
+		g.translate(-((WorldSystem)parent).getX()*16 + (int)map.getWidth()/4, -((WorldSystem)parent).getY()*16  + (int)map.getHeight()/4);
 		map.paint(g);
-		leader.paint(g);
+		leader.setX(((WorldSystem)parent).getX()*16-18);
+		leader.setY(((WorldSystem)parent).getY()*16-8);;
+		leader.draw(g);
 	}
 }

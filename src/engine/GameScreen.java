@@ -47,7 +47,13 @@ public class GameScreen extends JFrame implements KeyListener{
 				while (!isInterrupted())
 				{
 					if (engine.getCurrentScene() != null)
-						engine.getCurrentScene().update();
+						try{
+							engine.getCurrentScene().update();
+						}
+						catch (Exception e)
+						{
+							System.err.println(e);
+						}
 					
 					try {
 						sleep(5);

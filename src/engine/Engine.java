@@ -92,13 +92,14 @@ public class Engine{
 
 	/**
 	 * Switches the game's state to the world scene
+	 * @param string 
 	 */
-	public void changeToWorld()
+	public void changeToWorld(String string)
 	{
 		if (currentScene != null)
 			currentScene.stop();
 		currentScene = world;
-		currentScene.start();
+		((WorldScene)currentScene).start(string);
 	}
 	
 	/**
