@@ -78,8 +78,24 @@ public class Player extends Actor {
 	@Override
 	protected void loadSprites() {
 		sprites = new Sprite[6];
+		//base battle sprites
 		for (int i = 0; i < sprites.length; i++)
 			sprites[i] = new Sprite("actors/base.png");
+		//map wandering sprites
+		String dir = "";
+		for (int i = 0; i < moveSprites.length; i++)
+			for (int n = 0; n < moveSprites[i].length; n++)
+			{
+				if (i == NORTH)
+					dir = "north";
+				else if (i == SOUTH)
+					dir = "south";
+				else if (i == EAST)
+					dir = "east";
+				else if (i == WEST)
+					dir = "west";
+				moveSprites[i][n] = new Sprite("actors/" + dir + n + ".png");
+			}
 		drawSprite = sprites[0];
 	}
 
@@ -157,10 +173,10 @@ public class Player extends Actor {
 	public void setX(double x)
 	{
 		this.x = x;
-		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
+		//if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
 			for (Sprite s : sprites)
 				s.setX(this.x);
-		else
+		//else
 			for (Sprite[] sp : moveSprites)
 				for (Sprite s : sp)
 					s.setX(this.x);
@@ -173,10 +189,10 @@ public class Player extends Actor {
 	public void setY(double y)
 	{
 		this.y = y;
-		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
+		//if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
 			for (Sprite s : sprites)
 				s.setY(this.y);
-		else
+		//else
 			for (Sprite[] sp : moveSprites)
 				for (Sprite s : sp)
 					s.setY(this.y);
@@ -225,7 +241,7 @@ public class Player extends Actor {
 			if (getState() == DEAD)
 				drawSprite = sprites[5];
 		}
-		else if (Engine.getInstance().getCurrentScene() instanceof WorldScene)
+		/*else if (Engine.getInstance().getCurrentScene() instanceof WorldScene)
 		{
 			if (getState() == EAST)
 				drawSprite = moveSprites[0][moving];
@@ -236,6 +252,9 @@ public class Player extends Actor {
 			else if (getState() == SOUTH)
 				drawSprite = moveSprites[0][moving];
 		}
+		*/
+		else
+			drawSprite = sprites[0];
 		drawSprite.paint(g);
 	}
 
