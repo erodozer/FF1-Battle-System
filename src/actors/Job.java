@@ -151,20 +151,8 @@ public class Job extends Player{
 		for (int i = 0; i < spriteNames.length; i++)
 			sprites[i] = new Sprite("actors/jobs/" + pathname + "/"+ spriteNames[i] + ".png");
 		//map wandering sprites
-		String dir = "";
-		for (int i = 0; i < moveSprites.length; i++)
-			for (int n = 0; n < moveSprites[i].length; n++)
-			{
-				if (i == NORTH)
-					dir = "north";
-				else if (i == SOUTH)
-					dir = "south";
-				else if (i == EAST)
-					dir = "east";
-				else if (i == WEST)
-					dir = "west";
-				moveSprites[i][n] = new Sprite("actors/jobs/" + dir + n + ".png");
-			}
+		moveSprite = new Sprite("actors/jobs/basewalk.png", 2, 4);
+		
 		drawSprite = sprites[0];
 	}
 	

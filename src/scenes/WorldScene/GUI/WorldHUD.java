@@ -3,7 +3,6 @@ package scenes.WorldScene.GUI;
 import java.awt.Graphics;
 
 import actors.Player;
-import scenes.WorldScene.WorldSystem.Map;
 import scenes.WorldScene.WorldSystem.WorldSystem;
 import engine.ContentPanel;
 import engine.Engine;
@@ -41,8 +40,8 @@ public class WorldHUD extends HUD
 		
 		g.translate(-((WorldSystem)parent).getX()*16 + (int)map.getWidth()/4, -((WorldSystem)parent).getY()*16  + (int)map.getHeight()/4);
 		map.paint(g);
-		leader.setX(((WorldSystem)parent).getX()*16-18);
-		leader.setY(((WorldSystem)parent).getY()*16-8);;
+		leader.setX(((WorldSystem)parent).getX()*16);
+		leader.setY(((WorldSystem)parent).getY()*16);;
 		leader.draw(g);
 	}
 }

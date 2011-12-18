@@ -35,13 +35,12 @@ public class Player extends Actor {
 	public static final int DEAD = 5;
 	public static final int WEAK = 6;
 	
-	public static final int NORTH = 0;
 	public static final int SOUTH = 1;
-	public static final int EAST = 2;
-	public static final int WEST = 3;
+	public static final int WEST = 2;
+	public static final int NORTH = 3;
+	public static final int EAST = 4;
 	
-	protected Sprite[][] moveSprites = new Sprite[4][2];
-									//sprites drawn to screen on world scenes
+	protected Sprite moveSprite;	//sprites drawn to screen on world scenes
 
 	protected Sprite drawSprite;	//sprite to draw to screen that represents the player
 	protected double x;				//sprite position x
@@ -82,20 +81,7 @@ public class Player extends Actor {
 		for (int i = 0; i < sprites.length; i++)
 			sprites[i] = new Sprite("actors/base.png");
 		//map wandering sprites
-		String dir = "";
-		for (int i = 0; i < moveSprites.length; i++)
-			for (int n = 0; n < moveSprites[i].length; n++)
-			{
-				if (i == NORTH)
-					dir = "north";
-				else if (i == SOUTH)
-					dir = "south";
-				else if (i == EAST)
-					dir = "east";
-				else if (i == WEST)
-					dir = "west";
-				moveSprites[i][n] = new Sprite("actors/" + dir + n + ".png");
-			}
+		moveSprite = new Sprite("actors/jobs/basewalk.png", 4, 2);
 		drawSprite = sprites[0];
 	}
 
@@ -177,9 +163,7 @@ public class Player extends Actor {
 			for (Sprite s : sprites)
 				s.setX(this.x);
 		//else
-			for (Sprite[] sp : moveSprites)
-				for (Sprite s : sp)
-					s.setX(this.x);
+			moveSprite.setX(this.x);
 	}
 	
 	/**
@@ -193,9 +177,7 @@ public class Player extends Actor {
 			for (Sprite s : sprites)
 				s.setY(this.y);
 		//else
-			for (Sprite[] sp : moveSprites)
-				for (Sprite s : sp)
-					s.setY(this.y);
+			moveSprite.setY(this.y);
 	}
 	
 	/**
@@ -241,18 +223,12 @@ public class Player extends Actor {
 			if (getState() == DEAD)
 				drawSprite = sprites[5];
 		}
-		/*else if (Engine.getInstance().getCurrentScene() instanceof WorldScene)
+		else if (Engine.getInstance().getCurrentScene() instanceof WorldScene)
 		{
-			if (getState() == EAST)
-				drawSprite = moveSprites[0][moving];
-			else if (getState() == WEST)
-				drawSprite = moveSprites[0][moving];
-			else if (getState() == NORTH)
-				drawSprite = moveSprites[0][moving];
-			else if (getState() == SOUTH)
-				drawSprite = moveSprites[0][moving];
+			System.err.println(getState());
+			moveSprite.setFrame(moving+1, getState());
+			drawSprite = moveSprite;
 		}
-		*/
 		else
 			drawSprite = sprites[0];
 		drawSprite.paint(g);

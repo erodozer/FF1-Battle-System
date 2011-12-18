@@ -5,6 +5,9 @@ import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import actors.Player;
+
+import engine.Engine;
 import engine.GameSystem;
 import engine.Input;
 import engine.Sprite;
@@ -18,6 +21,8 @@ public class WorldSystem extends GameSystem
 	private Integer y;
 	private Sprite passabilityMap;
 	private Sprite drawMap;
+	
+	private Player leader;
 
 	/**
 	 * Initializes the player at the map's starting position and everything begins
@@ -25,6 +30,7 @@ public class WorldSystem extends GameSystem
 	public void start()
 	{
 		encounterNum = 0;
+		leader = Engine.getInstance().getParty().get(0);
 	}
 	
 	public void start(String s)
@@ -65,14 +71,26 @@ public class WorldSystem extends GameSystem
         int y = this.y;
         
         if (evt.getKeyCode() == Input.KEY_LT)
-        	x--;
+        {
+        	leader.setState(Player.WEST);
+           	x--;
+        }
         else if (evt.getKeyCode() == Input.KEY_RT)
-        	x++;
+        {
+        	leader.setState(Player.EAST);
+           	x++;
+        }
         else if (evt.getKeyCode() == Input.KEY_DN)
-        	y++;
+        {
+        	leader.setState(Player.SOUTH);
+           	y++;
+        }
         else if (evt.getKeyCode() == Input.KEY_UP)
-        	y--;
-        
+        {
+        	leader.setState(Player.NORTH);
+           	y--;
+        }
+        leader.walk();
         moveTo(x, y);
     }
 	
