@@ -28,11 +28,24 @@ public class Sprite{
 	protected double x = 0;
 	protected double y = 0;
 	
+	private int[] rect;
+	private int xFrames;
+	private int yFrames;
+	
 	/**
-	 * Load the sprite
+	 * Load the sprite from file path
 	 * @param s
 	 */
 	public Sprite(String s)
+	{
+		this(s, 1, 1);
+	}
+	
+	/**
+	 * Load the sprite and specify how many frames of animation it has
+	 * @param s
+	 */
+	public Sprite(String s, int xFrames, int yFrames)
 	{
 		if (s != null)
 			if (TEXTURECACHE.containsKey(s))
@@ -54,6 +67,9 @@ public class Sprite{
 		{
 			width = image.getWidth();
 			height = image.getHeight();
+			rect = new int[]{0, 0, (int)width/xFrames, (int)height/yFrames};
+			this.xFrames = xFrames;
+			this.yFrames = yFrames;
 		} 
 	}
 	
@@ -129,6 +145,20 @@ public class Sprite{
 	}
 	
 	/**
+	 * Sets the frame of animation
+	 * @param x
+	 * @param y
+	 */
+	public void setFrame(int x, int y)
+	{
+		//do nothing if frame values are out of bounds
+		if (x < 1 || x > xFrames || y < 1 || y > yFrames)
+			return;
+		rect[0] = (int)(((x-1)/(double)xFrames)*width);
+		rect[1] = (int)(((y-1)/(double)yFrames)*height);
+	}
+	
+	/**
 	 * Paint the sprite to screen
 	 * @param g
 	 */
@@ -137,7 +167,14 @@ public class Sprite{
 		if (image != null)
 		{
 			Graphics2D g2 = (Graphics2D) g;
-			g2.drawImage(image, null, (int)x, (int)y);
-			}
+			//a bit messy, hopefully there's a way to make this cleaner and possibly
+			// less resource intensive, it seems like it would use a lot of calculations
+			// every frame.
+			g2.translate((int)x, (int)y);
+			g2.setClip(0, 0, rect[2], rect[3]);
+			g2.drawImage(image, null, -rect[0], -rect[1]);
+			g2.setClip(null);
+			g2.translate(-(int)x, -(int)y);	//reset position
+		}
 	}
 }
