@@ -80,12 +80,6 @@ public class WorldSystem extends GameSystem
 	@Override
 	public void update()
 	{
-		if (encounterNum > 100)
-			if (currentTerrain.formations.size() != 0)
-			{
-				Formation f = currentTerrain.formations.get((int)(Math.random()*currentTerrain.formations.size()));
-				Engine.getInstance().changeToBattle(f);
-			}
 	}
 
 	@Override
@@ -152,7 +146,6 @@ public class WorldSystem extends GameSystem
 	 */
 	public Terrain getTerrain(int x, int y)
 	{
-		System.out.println(formationMap.getImage().getRGB(x, y));
 		for (Color c : terrains.keySet())
 			if (c.getRGB() == formationMap.getImage().getRGB(x, y))
 				return terrains.get(c);
@@ -171,6 +164,7 @@ public class WorldSystem extends GameSystem
 			currentTerrain = getTerrain(x, y);
 			if (currentTerrain != null)
 				encounterNum += currentTerrain.getRate();
+			finish();
 		}
 	}
 	
@@ -193,5 +187,12 @@ public class WorldSystem extends GameSystem
 	 * Do nothing
 	 */
 	@Override
-	public void finish() {}
+	public void finish() {
+		if (encounterNum > 100)
+			if (currentTerrain.formations.size() != 0)
+			{
+				Formation f = currentTerrain.formations.get((int)(Math.random()*currentTerrain.formations.size()));
+				Engine.getInstance().changeToBattle(f, currentTerrain.getBackground());
+			}
+	}
 }
