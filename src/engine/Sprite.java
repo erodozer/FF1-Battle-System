@@ -165,16 +165,6 @@ public class Sprite{
 	public void paint(Graphics g)
 	{
 		if (image != null)
-		{
-			Graphics2D g2 = (Graphics2D) g;
-			//a bit messy, hopefully there's a way to make this cleaner and possibly
-			// less resource intensive, it seems like it would use a lot of calculations
-			// every frame.
-			g2.translate((int)x, (int)y);
-			g2.setClip(0, 0, rect[2], rect[3]);
-			g2.drawImage(image, null, -rect[0], -rect[1]);
-			g2.setClip(null);
-			g2.translate(-(int)x, -(int)y);	//reset position
-		}
+			g.drawImage(image, (int)x, (int)y, (int)x+rect[2], (int)y+rect[3], rect[0], rect[1], rect[0]+rect[2], rect[1]+rect[3], null);
 	}
 }
