@@ -55,9 +55,12 @@ public class PartySpriteDisplay extends Sprite{
 		window.paint(g);
 		
 		//background is second sprite
-		g.drawImage(background.getImage(), window.getX() + BKGHORZOFFSET, window.getY() + BKGVERTOFFSET, null);
-		g.drawImage(background.getImage(), window.getX() + window.getWidth() - BKGHORZOFFSET - background.getImage().getWidth(), window.getY() + BKGVERTOFFSET, null);
-	
+		if (background.getImage() != null)
+		{
+			g.drawImage(background.getImage(), window.getX() + BKGHORZOFFSET, window.getY() + BKGVERTOFFSET, null);
+			g.drawImage(background.getImage(), window.getX() + window.getWidth() - BKGHORZOFFSET - background.getImage().getWidth(), window.getY() + BKGVERTOFFSET, null);
+		}
+		
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
 		{
 			Player p = Engine.getInstance().getParty().get(i);
@@ -95,6 +98,7 @@ public class PartySpriteDisplay extends Sprite{
 				p.setX(window.getX() + 16);
 			if (!p.getAlive())
 				p.setState(Player.DEAD);
+			p.setY(window.getY()+38+(p.getSprite().getHeight()-6)*i);
 			p.draw(g);
 		}
 	}
