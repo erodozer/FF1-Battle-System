@@ -79,7 +79,10 @@ abstract public class Actor
 	 */
 	public Actor(String n)
 	{
-		name = n;
+		if (n != null)
+			name = n;
+		else
+			name = "";
 		hp = 5;
 		maxhp = 5;
 		int[][] m = {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}};

@@ -53,7 +53,7 @@ public class Player extends Actor {
 	public Player(String n)
 	{
 		super(n);
-		name = n.substring(0,Math.min(n.length(), 4));	//char limit of 4
+		name = name.substring(0,Math.min(name.length(), 4));	//char limit of 4
 		level = 1;
 		exp = 0;
 		commands = new Command[]{new Attack(this), new ChooseSpell(this), new Drink(this), new ChooseItem(this), new Flee(this)};
