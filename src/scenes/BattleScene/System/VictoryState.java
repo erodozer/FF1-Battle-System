@@ -2,6 +2,7 @@ package scenes.BattleScene.System;
 
 import java.awt.event.KeyEvent;
 
+import engine.Engine;
 import engine.GameState;
 import engine.Input;
 import engine.MP3;
@@ -32,7 +33,7 @@ public class VictoryState extends GameState {
 	 */
 	@Override
 	public void start() {
-		((BattleSystem)parent).bgm.close();
+		MP3.stop();
 		new MP3("data/audio/victory.mp3").play();
 		step = 0;
 	}
@@ -44,10 +45,12 @@ public class VictoryState extends GameState {
 	public void handle() {}
 
 	/**
-	 * Do nothing
+	 * Go back to the map
 	 */
 	@Override
-	public void finish() {}
+	public void finish() {
+		parent.finish();
+	}
 
 	/**
 	 * Kill program when key is striked
@@ -57,7 +60,7 @@ public class VictoryState extends GameState {
 		if (arg0.getKeyCode() == Input.KEY_A)
 		{
 			if (step >= 1)
-				System.exit(-1);
+				finish();
 			step++;
 		}
 	}

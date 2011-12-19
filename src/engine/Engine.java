@@ -8,6 +8,7 @@ import scenes.*;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;
 import scenes.WorldScene.WorldScene;
+import scenes.WorldScene.WorldSystem.WorldSystem;
 
 import groups.*;
 
@@ -27,6 +28,7 @@ public class Engine{
 	private CreationScene creation;		//create party
 	
 	private Scene currentScene;			//current scene being rendered
+	private String currentMap;			//current map the party is on
 	
 	private Party party;				//main party
 		
@@ -84,22 +86,57 @@ public class Engine{
 	 */
 	public void changeToBattle(Formation formation)
 	{
-		if (currentScene != null)
+		if (currentScene != null && currentMap == null)
 			currentScene.stop();
+		try
+		{
+			Thread.sleep(2000);
+		}
+		catch (InterruptedException e)
+		{
+		}
+		
 		battle.start(formation);
 		currentScene = battle;
 	}
 
 	/**
-	 * Switches the game's state to the world scene
+	 * Switches the game's state to the world scene of the previously used map
+	 */
+	public void changeToWorld() {
+		if (currentMap == null)
+			return;
+		
+		if (currentScene != null)
+			currentScene.stop();
+		try
+		{
+			Thread.sleep(2000);
+		}
+		catch (InterruptedException e)
+		{
+		}
+		currentScene = world;
+		((WorldScene)currentScene).start(currentMap, ((WorldSystem)world.getSystem()).getX(), ((WorldSystem)world.getSystem()).getY());
+	}
+		
+	/**
+	 * Switches the game's state to the world scene on a different map
 	 * @param string 
 	 */
-	public void changeToWorld(String string)
+	public void changeToWorld(String string, int startX, int startY)
 	{
 		if (currentScene != null)
 			currentScene.stop();
+		try
+		{
+			Thread.sleep(2000);
+		}
+		catch (InterruptedException e)
+		{
+		}
 		currentScene = world;
-		((WorldScene)currentScene).start(string);
+		((WorldScene)currentScene).start(string, startX, startY);
 	}
 	
 	/**
@@ -109,6 +146,13 @@ public class Engine{
 	{
 		if (currentScene != null)
 			currentScene.stop();
+		try
+		{
+			Thread.sleep(2000);
+		}
+		catch (InterruptedException e)
+		{
+		}
 		creation.start();
 		currentScene = creation;		
 	}
@@ -199,4 +243,13 @@ public class Engine{
 		}
 		return p;
 	}
+
+	public void setCurrentMap(String s) {
+		currentMap = s;
+	}
+
+	public String getCurrentMap() {
+		return currentMap;
+	}
+
 }
