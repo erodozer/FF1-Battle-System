@@ -39,4 +39,6 @@ public abstract class GameSystem
         state.handleKeyInput(evt);
     }
 
+	abstract public void finish();
+
 }
