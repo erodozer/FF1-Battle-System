@@ -2,8 +2,13 @@ package scenes.WorldScene.WorldSystem;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Properties;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 import actors.Player;
 
@@ -12,18 +17,24 @@ import engine.GameSystem;
 import engine.Input;
 import engine.Sprite;
 
+import org.ini4j.*;
+
 public class WorldSystem extends GameSystem
 {
 	//player's coordinates
 	int encounterNum;			//current count until next encounter
-	private Integer x;
 								//once this hits 100 or greater a battle will start
-	private Integer y;
-	private Sprite passabilityMap;
-	private Sprite drawMap;
+	int x;
+	int y;
 	
-	private Player leader;
+	Sprite passabilityMap;
+	Sprite drawMap;
+	
+	Player leader;
 
+	HashMap<Color, Terrain> terrains;
+	Sprite formationMap;
+	
 	/**
 	 * Initializes the player at the map's starting position and everything begins
 	 */
@@ -31,22 +42,35 @@ public class WorldSystem extends GameSystem
 	{
 		encounterNum = 0;
 		leader = Engine.getInstance().getParty().get(0);
+		terrains = new HashMap<Color, Terrain>();
 	}
 	
 	public void start(String s)
 	{
 		start();
 		String path = "maps/" + s + "/";
-		Properties prop = new Properties();
+		Preferences pref = null;
 		try {
-			prop.load(new FileInputStream("data/" + path+"/map.ini"));
+			pref = new IniPreferences(new Ini(new File("data/" + path+"/map.ini")));
 		} catch (Exception e) {
-			System.err.println("can not find file: " + "data/" + path + "map.ini");
+			e.printStackTrace();
 		}
-		x = Integer.valueOf(prop.getProperty("startx", "0"));
-		y = Integer.valueOf(prop.getProperty("starty", "0"));
+		
+		try {
+			for (String col : pref.childrenNames())
+				if (col.charAt(0) == '#')
+					terrains.put(Color.decode(col), new Terrain(pref.node(col)));
+			System.out.print(terrains.toString());
+		} catch (NullPointerException e) {
+			System.err.println("can not find file: " + "data/" + path + "map.ini");
+		} catch (BackingStoreException e) {
+			e.printStackTrace();
+		}
+		x = Integer.valueOf(pref.node("map").get("startx", "0")).intValue();
+		y = Integer.valueOf(pref.node("map").get("starty", "0")).intValue();
 		
 		passabilityMap = new Sprite(path+"pass.png");
+		formationMap = new Sprite(path+"formation.png");
 		drawMap = new Sprite(path+"map.png");
 	}
 	
@@ -113,6 +137,17 @@ public class WorldSystem extends GameSystem
 	}
 	
 	/**
+	 * Gets the terrain at a point
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public Terrain getTerrain(int x, int y)
+	{
+		return terrains.get(formationMap.getImage().getRGB(x, y));
+	}
+	
+	/**
 	 * Moves leader to a new location
 	 */
 	public void moveTo(int x, int y)
@@ -121,6 +156,8 @@ public class WorldSystem extends GameSystem
 		{
 			this.x = x;
 			this.y = y;
+			if (getTerrain(x, y) != null)
+				encounterNum += getTerrain(x, y).getRate();
 		}
 	}
 	
