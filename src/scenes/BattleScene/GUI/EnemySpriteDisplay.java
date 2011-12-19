@@ -37,13 +37,11 @@ public class EnemySpriteDisplay extends Sprite{
 		if (parent == null)
 			return;
 		
-		System.out.println("doop doop");
 		for (int i = 0; i < parent.getFormation().size(); i++)
 		{
 			Enemy e = parent.getFormation().get(i);
 			e.getSprite().setX(window.getX()+12);
 			e.getSprite().setY(window.getY()+40+(e.getSprite().getHeight()+5)*(i%3));
-			System.out.println("Wubba");
 		}
 	}
 	

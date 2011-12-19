@@ -225,7 +225,6 @@ public class Player extends Actor {
 		}
 		else if (Engine.getInstance().getCurrentScene() instanceof WorldScene)
 		{
-			System.err.println(getState());
 			moveSprite.setFrame(moving+1, getState());
 			drawSprite = moveSprite;
 		}

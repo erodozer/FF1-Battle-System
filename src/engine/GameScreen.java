@@ -52,7 +52,7 @@ public class GameScreen extends JFrame implements KeyListener{
 						}
 						catch (Exception e)
 						{
-							System.err.println(e);
+							e.printStackTrace();
 						}
 					
 					try {
