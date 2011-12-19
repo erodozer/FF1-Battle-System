@@ -146,7 +146,6 @@ public class IssueState extends GameState
 			target = targets[index];
 			actor.setTarget(target);
 			actor.setMoving(2);
-			System.out.println(actor.getTarget().getName());
 		}
 		else if (spellSelecting)
 		{
