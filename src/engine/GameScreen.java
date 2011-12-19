@@ -92,7 +92,8 @@ public class GameScreen extends JFrame implements KeyListener{
 		if (Thread.currentThread().isInterrupted())
 			return;
 		
-		engine.getCurrentScene().keyPressed(arg0);
+		if (engine.getCurrentScene() != null)
+			engine.getCurrentScene().keyPressed(arg0);
 		arg0.consume();
 	}
 
