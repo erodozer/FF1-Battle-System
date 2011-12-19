@@ -46,7 +46,7 @@ public class BattleScene extends Scene {
 	 */
 	public void start(Formation f, Sprite background)
 	{
-		start();
+		start(f);
 		((BattleHUD)display).setBackground(background);
 	}
 
