@@ -1,5 +1,6 @@
 package scenes.WorldScene.WorldSystem;
 
+import engine.Sprite;
 import groups.Formation;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.prefs.Preferences;
 public class Terrain {
 
 	ArrayList<Formation> formations;
-	String background;
+	Sprite background;
 	int encounterRate;
 	
 	/**
@@ -28,7 +29,7 @@ public class Terrain {
 	 * @param node
 	 */
 	public Terrain(Preferences node) {
-		background = node.get("background", "grass.png");
+		background = new Sprite("terrains/"+node.get("background", "grass.png"));
 		encounterRate = Integer.valueOf(node.get("rate", "10")).intValue();
 		formations = new ArrayList<Formation>();
 		try {
@@ -48,11 +49,16 @@ public class Terrain {
 
 	/**
 	 * Gets the encounter rate increase for stepping on 
-	 * the tile of this terrain type
+	 * the tile of this terrain type.  Rate can be anywhere
+	 * between the defined value and twice that.
 	 * @return
 	 */
 	public int getRate() {
-		return encounterRate;
+		return (int)((Math.random()+1)*encounterRate);
+	}
+
+	public Sprite getBackground() {
+		return background;
 	}
 
 }
