@@ -8,6 +8,7 @@ import scenes.*;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;
 import scenes.WorldScene.WorldScene;
+import scenes.WorldScene.WorldSystem.Terrain;
 import scenes.WorldScene.WorldSystem.WorldSystem;
 
 import groups.*;
@@ -98,6 +99,26 @@ public class Engine{
 		
 		battle.start(formation);
 		currentScene = battle;
+	}
+	
+	/**
+	 * Changes the game into the battle scene with a specified backdrop
+	 * @param f
+	 * @param t
+	 */
+	public void changeToBattle(Formation f, Sprite background) {
+		if (currentScene != null && currentMap == null)
+			currentScene.stop();
+		try
+		{
+			Thread.sleep(2000);
+		}
+		catch (InterruptedException e)
+		{
+		}
+		
+		battle.start(f, background);
+		currentScene = battle;	
 	}
 
 	/**
