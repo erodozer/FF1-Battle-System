@@ -2,7 +2,14 @@ package scenes.WorldScene.WorldSystem;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
+
 import org.junit.Test;
+
+import actors.Player;
+
+import engine.Engine;
+import groups.Party;
 
 public class WorldSystemTest
 {
@@ -10,6 +17,10 @@ public class WorldSystemTest
 	@Test
 	public void test()
 	{
+		Engine e = Engine.getInstance();
+		Party p = new Party();
+		p.add(new Player(null));
+		e.setParty(p);
 		WorldSystem w = new WorldSystem();
 		w.start("world");
 		
@@ -50,4 +61,17 @@ public class WorldSystemTest
 		assertEquals(12, w.getX());
 		assertEquals(10, w.getY());
 	}
+	
+	/**
+	 * Should not be able to move to a position that you can't normally walk to
+	 */
+	@Test
+	public void testTerrainLoading()
+	{
+		WorldSystem w = new WorldSystem();
+		w.start("world");
+		
+		assertTrue(w.terrains.containsKey(Color.decode("#FF0000")));
+	}
+	
 }
