@@ -21,8 +21,10 @@ public class WorldSystemTest
 		Party p = new Party();
 		p.add(new Player(null));
 		e.setParty(p);
+		assertEquals(null, e.getCurrentMap());
 		WorldSystem w = new WorldSystem();
-		w.start("world");
+		w.start("world", 12, 10);
+		assertEquals("world", e.getCurrentMap());
 		
 		assertEquals(12, w.getX());
 		assertEquals(10, w.getY());
@@ -35,7 +37,7 @@ public class WorldSystemTest
 	public void testMoveMap()
 	{
 		WorldSystem w = new WorldSystem();
-		w.start("world");
+		w.start("world", 12, 10);
 		
 		assertEquals(12, w.getX());
 		assertEquals(10, w.getY());
@@ -52,7 +54,7 @@ public class WorldSystemTest
 	public void testMoveToNonPassablePosition()
 	{
 		WorldSystem w = new WorldSystem();
-		w.start("world");
+		w.start("world", 12, 10);
 		
 		assertEquals(12, w.getX());
 		assertEquals(10, w.getY());
@@ -69,7 +71,7 @@ public class WorldSystemTest
 	public void testTerrainLoading()
 	{
 		WorldSystem w = new WorldSystem();
-		w.start("world");
+		w.start("world", 12, 10);
 		
 		assertTrue(w.terrains.containsKey(Color.decode("#FF0000")));
 	}

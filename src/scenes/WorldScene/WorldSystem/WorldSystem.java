@@ -48,9 +48,10 @@ public class WorldSystem extends GameSystem
 		currentTerrain = null;
 	}
 	
-	public void start(String s)
+	public void start(String s, int startX, int startY)
 	{
 		start();
+		Engine.getInstance().setCurrentMap(s);
 		String path = "maps/" + s + "/";
 		Preferences pref = null;
 		try {
@@ -68,8 +69,8 @@ public class WorldSystem extends GameSystem
 		} catch (BackingStoreException e) {
 			e.printStackTrace();
 		}
-		x = Integer.valueOf(pref.node("map").get("startx", "0")).intValue();
-		y = Integer.valueOf(pref.node("map").get("starty", "0")).intValue();
+		x = startX;
+		y = startY;
 		
 		passabilityMap = new Sprite(path+"pass.png");
 		formationMap = new Sprite(path+"formation.png");
@@ -187,4 +188,10 @@ public class WorldSystem extends GameSystem
 	{
 		return y;
 	}
+
+	/**
+	 * Do nothing
+	 */
+	@Override
+	public void finish() {}
 }

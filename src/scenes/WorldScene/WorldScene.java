@@ -13,10 +13,10 @@ import scenes.WorldScene.WorldSystem.WorldSystem;
  */
 public class WorldScene extends Scene{
 	
-	public void start(String s)
+	public void start(String s, int startX, int startY)
 	{
 		system = new WorldSystem();
-		((WorldSystem)system).start(s);
+		((WorldSystem)system).start(s, startX, startY);
 		display = new WorldHUD((WorldSystem)system);
 		((WorldHUD)display).setLeader(Engine.getInstance().getParty().get(0));
 	}
