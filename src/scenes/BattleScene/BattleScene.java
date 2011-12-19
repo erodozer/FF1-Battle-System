@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import scenes.Scene;
 import scenes.BattleScene.GUI.*;
 import scenes.BattleScene.System.*;
+import scenes.WorldScene.WorldSystem.Terrain;
 
 
 public class BattleScene extends Scene {
@@ -36,6 +37,17 @@ public class BattleScene extends Scene {
 		start();
 		((BattleSystem) system).setFormation(f);
 		display.setParent(system);
+	}
+	
+	/**
+	 * Start battle system with a set formation and backdrop
+	 * @param f
+	 * @param t
+	 */
+	public void start(Formation f, Sprite background)
+	{
+		start();
+		((BattleHUD)display).setBackground(background);
 	}
 
 	/**
