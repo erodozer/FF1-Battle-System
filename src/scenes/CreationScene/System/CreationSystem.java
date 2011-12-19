@@ -74,7 +74,7 @@ public class CreationSystem extends GameSystem{
 		//Formation f = new Formation();
     	//f.add("Ntmare Mn");
     	//e.changeToBattle(f);
-		e.changeToWorld("world");
+		e.changeToWorld("world", 12, 10);
 	}
 	
 	/**
