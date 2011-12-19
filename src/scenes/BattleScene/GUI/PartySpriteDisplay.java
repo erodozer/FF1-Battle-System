@@ -35,6 +35,8 @@ public class PartySpriteDisplay extends Sprite{
 		{
 			Player p = Engine.getInstance().getParty().get(i);
 			p.setPosition(window.getX() + 16, window.getY()+38+(p.getSprite().getHeight()-6)*i);
+			p.setMoving(0);
+			p.setState(Player.STAND);
 		}
 	}
 
