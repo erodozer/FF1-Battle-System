@@ -27,14 +27,21 @@ import javazoom.jl.player.Player;
 
 public class MP3 {
     private String filename;
-    private Player player; 
+    private static Player player; 
 
     // constructor that takes the name of an MP3 file
     public MP3(String filename) {
         this.filename = filename;
     }
 
-    public void close() { if (player != null) player.close(); }
+    public static void stop()
+    {
+    	if (player != null) 
+    		player.close();
+    }
+    
+    @Deprecated
+    public void close() {stop();}
 
     // play the MP3 file to the sound card
     public void play() {
