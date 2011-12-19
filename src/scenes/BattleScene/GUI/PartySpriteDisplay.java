@@ -34,9 +34,9 @@ public class PartySpriteDisplay extends Sprite{
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
 		{
 			Player p = Engine.getInstance().getParty().get(i);
-			p.setPosition(window.getX() + 16, window.getY()+38+(p.getSprite().getHeight()-6)*i);
 			p.setMoving(0);
 			p.setState(Player.STAND);
+			p.setPosition(window.getX() + 16, window.getY()+38+(p.getSprite().getHeight()-6)*i);
 		}
 	}
 
@@ -98,7 +98,6 @@ public class PartySpriteDisplay extends Sprite{
 				p.setX(window.getX() + 16);
 			if (!p.getAlive())
 				p.setState(Player.DEAD);
-			p.setY(window.getY()+38+(p.getSprite().getHeight()-6)*i);
 			p.draw(g);
 		}
 	}
