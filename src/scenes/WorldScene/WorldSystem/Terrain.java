@@ -32,13 +32,14 @@ public class Terrain {
 		encounterRate = Integer.valueOf(node.get("rate", "10")).intValue();
 		formations = new ArrayList<Formation>();
 		try {
-			for (String s : node.childrenNames())
+			for (String s : node.keys())
 				if (s.startsWith("formation"))
 				{
 					Formation f = new Formation();
-					for (String e : s.split(","))
+					for (String e : node.get(s, s).split(","))
 						f.add(e);
-					formations.add(f);
+					if (f.size() > 0)
+						formations.add(f);
 				}
 		} catch (BackingStoreException e) {
 			e.printStackTrace();

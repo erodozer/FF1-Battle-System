@@ -16,6 +16,7 @@ import engine.Engine;
 import engine.GameSystem;
 import engine.Input;
 import engine.Sprite;
+import groups.Formation;
 
 import org.ini4j.*;
 
@@ -31,7 +32,8 @@ public class WorldSystem extends GameSystem
 	Sprite drawMap;
 	
 	Player leader;
-
+	Terrain currentTerrain;
+	
 	HashMap<Color, Terrain> terrains;
 	Sprite formationMap;
 	
@@ -43,6 +45,7 @@ public class WorldSystem extends GameSystem
 		encounterNum = 0;
 		leader = Engine.getInstance().getParty().get(0);
 		terrains = new HashMap<Color, Terrain>();
+		currentTerrain = null;
 	}
 	
 	public void start(String s)
@@ -60,7 +63,6 @@ public class WorldSystem extends GameSystem
 			for (String col : pref.childrenNames())
 				if (col.charAt(0) == '#')
 					terrains.put(Color.decode(col), new Terrain(pref.node(col)));
-			System.out.print(terrains.toString());
 		} catch (NullPointerException e) {
 			System.err.println("can not find file: " + "data/" + path + "map.ini");
 		} catch (BackingStoreException e) {
@@ -77,7 +79,12 @@ public class WorldSystem extends GameSystem
 	@Override
 	public void update()
 	{
-		
+		if (encounterNum > 100)
+			if (currentTerrain.formations.size() != 0)
+			{
+				Formation f = currentTerrain.formations.get((int)(Math.random()*currentTerrain.formations.size()));
+				Engine.getInstance().changeToBattle(f);
+			}
 	}
 
 	@Override
@@ -144,7 +151,11 @@ public class WorldSystem extends GameSystem
 	 */
 	public Terrain getTerrain(int x, int y)
 	{
-		return terrains.get(formationMap.getImage().getRGB(x, y));
+		System.out.println(formationMap.getImage().getRGB(x, y));
+		for (Color c : terrains.keySet())
+			if (c.getRGB() == formationMap.getImage().getRGB(x, y))
+				return terrains.get(c);
+		return null;
 	}
 	
 	/**
@@ -156,8 +167,9 @@ public class WorldSystem extends GameSystem
 		{
 			this.x = x;
 			this.y = y;
-			if (getTerrain(x, y) != null)
-				encounterNum += getTerrain(x, y).getRate();
+			currentTerrain = getTerrain(x, y);
+			if (currentTerrain != null)
+				encounterNum += currentTerrain.getRate();
 		}
 	}
 	
