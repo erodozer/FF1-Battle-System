@@ -123,7 +123,7 @@ public class Sprite{
 	 */
 	public double getWidth()
 	{
-		return width;
+		return rect[2];
 	}
 	
 	/**
@@ -131,7 +131,7 @@ public class Sprite{
 	 */
 	public double getHeight()
 	{
-		return height;
+		return rect[3];
 	}
 	
 	/**
