@@ -164,7 +164,7 @@ public class Sprite{
 	 */
 	public void paint(Graphics g)
 	{
-		if (image != null)
+		if (image != null && g != null)
 			g.drawImage(image, (int)x, (int)y, (int)x+rect[2], (int)y+rect[3], rect[0], rect[1], rect[0]+rect[2], rect[1]+rect[3], null);
 	}
 }
