@@ -115,7 +115,7 @@ public class BattleHUD extends HUD{
 					cd.update((IssueState)parent.getState());
 				cd.paint(g);
 			}
-			if (((IssueState)parent.getState()).spellSelecting)
+			else if (((IssueState)parent.getState()).spellSelecting)
 			{	
 				sd.update((IssueState)parent.getState());
 				sd.paint(g);
