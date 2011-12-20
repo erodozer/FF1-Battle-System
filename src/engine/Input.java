@@ -18,5 +18,5 @@ public abstract class Input {
 	public final static int KEY_DN = KeyEvent.VK_DOWN;
 	public final static int KEY_LT = KeyEvent.VK_LEFT;
 	public final static int KEY_RT = KeyEvent.VK_RIGHT;
-	
+	public final static String DPAD = KEY_UP + " " + KEY_DN + " " + KEY_LT + " " + KEY_RT;
 }
