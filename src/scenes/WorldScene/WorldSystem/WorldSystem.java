@@ -96,29 +96,24 @@ public class WorldSystem extends GameSystem
         int x = this.x;
         int y = this.y;
         
-        if (evt.getKeyCode() == Input.KEY_LT)
-        {
-        	leader.setState(Player.WEST);
-           	x--;
-        }
-        else if (evt.getKeyCode() == Input.KEY_RT)
-        {
-        	leader.setState(Player.EAST);
-           	x++;
-        }
-        else if (evt.getKeyCode() == Input.KEY_DN)
-        {
-        	leader.setState(Player.SOUTH);
-           	y++;
-        }
-        else if (evt.getKeyCode() == Input.KEY_UP)
-        {
-        	leader.setState(Player.NORTH);
-           	y--;
-        }
-        leader.walk();
-        moveTo(x, y);
-    }
+		if (Input.DPAD.contains("" + evt.getKeyCode())) {
+			if (evt.getKeyCode() == Input.KEY_LT) {
+				leader.setState(Player.WEST);
+				x--;
+			} else if (evt.getKeyCode() == Input.KEY_RT) {
+				leader.setState(Player.EAST);
+				x++;
+			} else if (evt.getKeyCode() == Input.KEY_DN) {
+				leader.setState(Player.SOUTH);
+				y++;
+			} else if (evt.getKeyCode() == Input.KEY_UP) {
+				leader.setState(Player.NORTH);
+				y--;
+			}
+			leader.walk();
+			moveTo(x, y);
+		}
+	}
 	
 	/**
 	 * Returns if the player can walk to this location
