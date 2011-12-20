@@ -159,10 +159,10 @@ public class Player extends Actor {
 	public void setX(double x)
 	{
 		this.x = x;
-		//if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
+		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
 			for (Sprite s : sprites)
 				s.setX(this.x);
-		//else
+		else
 			moveSprite.setX(this.x);
 	}
 	
@@ -173,10 +173,10 @@ public class Player extends Actor {
 	public void setY(double y)
 	{
 		this.y = y;
-		//if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
+		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
 			for (Sprite s : sprites)
 				s.setY(this.y);
-		//else
+		else
 			moveSprite.setY(this.y);
 	}
 	
