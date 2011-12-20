@@ -19,7 +19,7 @@ public class WorldHUD extends HUD
 {
 	Engine e;
 	Sprite map;
-	Sprite leader;		//party leader, his sprite gets drawn
+	Player leader;		//party leader, his sprite gets drawn
 	
 	public WorldHUD(WorldSystem s)
 	{
@@ -30,7 +30,9 @@ public class WorldHUD extends HUD
 	
 	public void setLeader(Player p)
 	{
-		leader = p.getSprite();
+		p.setState(Player.SOUTH);
+		p.draw(null);
+		leader = p;
 	}
 	
 	public void paint(Graphics g)
@@ -40,8 +42,8 @@ public class WorldHUD extends HUD
 		
 		g.translate(-((WorldSystem)parent).getX()*16 + (int)map.getWidth()/4, -((WorldSystem)parent).getY()*16  + (int)map.getHeight()/4);
 		map.paint(g);
-		leader.setX(((WorldSystem)parent).getX()*16-leader.getHeight()+16);
-		leader.setY(((WorldSystem)parent).getY()*16-leader.getWidth()/2+8);
-		leader.paint(g);
+		leader.setX(((WorldSystem)parent).getX()*16-leader.getSprite().getHeight()+16);
+		leader.setY(((WorldSystem)parent).getY()*16-leader.getSprite().getWidth()/2+8);
+		leader.draw(g);
 	}
 }
