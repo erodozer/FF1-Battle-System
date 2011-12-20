@@ -97,8 +97,9 @@ public class Engine{
 		{
 		}
 		
-		battle.start(formation);
 		currentScene = battle;
+		battle.start(formation);
+		
 	}
 	
 	/**
@@ -117,8 +118,9 @@ public class Engine{
 		{
 		}
 		
-		battle.start(f, background);
 		currentScene = battle;	
+		battle.start(f, background);
+		
 	}
 
 	/**
@@ -174,8 +176,9 @@ public class Engine{
 		catch (InterruptedException e)
 		{
 		}
+		currentScene = creation;	
 		creation.start();
-		currentScene = creation;		
+		
 	}
 	
 	public Party getParty()
