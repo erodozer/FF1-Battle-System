@@ -76,4 +76,28 @@ public class WorldSystemTest
 		assertTrue(w.terrains.containsKey(Color.decode("#FF0000")));
 	}
 	
+	/**
+	 * Test different bounding conditions for passibility
+	 */
+	@Test
+	public void testGetPassibilty()
+	{
+		WorldSystem w = new WorldSystem();
+		w.start("world", 12, 10);
+		
+		assertFalse(w.getPassability(-1, -1));	//test out of bounds
+		assertFalse(w.getPassability(w.x, w.y));//test player's position
+		assertFalse(w.getPassability(0, 1));	//test by color
+		assertFalse(w.getPassability(6,8));		//test npc position
+		assertTrue(w.getPassability(12,11));					
+	}
+	
+	/**
+	 * Test being able to read the cell ahead
+	 */
+	@Test
+	public void testGetAhead()
+	{
+		
+	}
 }
