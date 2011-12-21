@@ -115,8 +115,8 @@ public class NPC {
 	public void draw(Graphics g)
 	{
 		walkSprite.setFrame(moving+1, direction);
-		walkSprite.setX(x*16-walkSprite.getWidth()/2+8);
-		walkSprite.setY(y*16-walkSprite.getHeight()+16);
+		walkSprite.setX(x*WorldSystem.TILESIZE-walkSprite.getWidth()/2+WorldSystem.TILESIZE/2);
+		walkSprite.setY(y*WorldSystem.TILESIZE-walkSprite.getHeight()+WorldSystem.TILESIZE);
 		walkSprite.paint(g);
 	}
 	

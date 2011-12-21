@@ -23,6 +23,9 @@ import org.ini4j.*;
 
 public class WorldSystem extends GameSystem
 {
+	//tile size
+	public static final int TILESIZE = 16;
+	
 	//passability colors
 	private static final int IMPASSABLE = Color.decode("#000000").getRGB();
 	private static final int PASSABLE = Color.decode("#FFFFFF").getRGB();

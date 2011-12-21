@@ -43,10 +43,11 @@ public class WorldHUD extends HUD
 		if (map == null)
 			return;
 		
-		g.translate(-((WorldSystem)parent).getX()*16 + (int)map.getWidth()/4, -((WorldSystem)parent).getY()*16  + (int)map.getHeight()/4);
+		g.translate(-((WorldSystem)parent).getX()*WorldSystem.TILESIZE + (int)map.getWidth()/4, 
+					-((WorldSystem)parent).getY()*WorldSystem.TILESIZE + (int)map.getHeight()/4);
 		map.paint(g);
-		leader.setX(((WorldSystem)parent).getX()*16-leader.getSprite().getHeight()+16);
-		leader.setY(((WorldSystem)parent).getY()*16-leader.getSprite().getWidth()/2+8);
+		leader.setX(((WorldSystem)parent).getX()*WorldSystem.TILESIZE-leader.getSprite().getHeight()+WorldSystem.TILESIZE);
+		leader.setY(((WorldSystem)parent).getY()*WorldSystem.TILESIZE-leader.getSprite().getWidth()/2+WorldSystem.TILESIZE/2);
 		leader.draw(g);
 		
 		for (NPC n : npcs)
