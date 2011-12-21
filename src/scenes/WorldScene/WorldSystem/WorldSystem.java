@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.prefs.BackingStoreException;
@@ -22,23 +23,36 @@ import org.ini4j.*;
 
 public class WorldSystem extends GameSystem
 {
+	//direction a sprite is facing
+	public static final int SOUTH = 1;
+	public static final int WEST = 2;
+	public static final int NORTH = 3;
+	public static final int EAST = 4;
+	
 	//player's coordinates
-	int encounterNum;			//current count until next encounter
-								//once this hits 100 or greater a battle will start
+	int encounterNum;						//current count until next encounter
+											//once this hits 100 or greater a battle will start
 	int x;
 	int y;
 	
-	Sprite passabilityMap;
-	Sprite drawMap;
+	//dimensions of the map
+	int width;
+	int height;
 	
-	Player leader;
-	Terrain currentTerrain;
+	Sprite passabilityMap;					//map that determines which tiles can be stepped on (1x1 scale)
+	Sprite drawMap;							//map that is rendered to screen (16x16 scale)
+	Sprite formationMap;					//map of the different regions on the map with different formations and encounter rates
 	
-	HashMap<Color, Terrain> terrains;
-	Sprite formationMap;
+	Player leader;							//party leader
+	Terrain currentTerrain;					//current terrain the leader is standing on
+	
+	HashMap<Color, Terrain> terrains;		//terrains of the map
+	
+	NPC[] interactables;
+	NPC[] doors;
 	
 	/**
-	 * Initializes the player at the map's starting position and everything begins
+	 * Starts/Resets the basics of a map
 	 */
 	public void start()
 	{
@@ -48,6 +62,12 @@ public class WorldSystem extends GameSystem
 		currentTerrain = null;
 	}
 	
+	/**
+	 * Initializes the map with player at starting position
+	 * @param s
+	 * @param startX
+	 * @param startY
+	 */
 	public void start(String s, int startX, int startY)
 	{
 		start();
@@ -60,15 +80,24 @@ public class WorldSystem extends GameSystem
 			e.printStackTrace();
 		}
 		
+		ArrayList<NPC> npcs = new ArrayList<NPC>();
+		ArrayList<NPC> d = new ArrayList<NPC>();
 		try {
-			for (String col : pref.childrenNames())
-				if (col.charAt(0) == '#')
-					terrains.put(Color.decode(col), new Terrain(pref.node(col)));
+			for (String section : pref.childrenNames())
+				if (section.charAt(0) == '#')
+					terrains.put(Color.decode(section), new Terrain(pref.node(section)));
+				else if (section.startsWith("NPC@"))
+					npcs.add(new NPC(this, pref.node(section)));
+				else if (section.startsWith("Door@"))
+					d.add(new NPC(this, pref.node(section)));
 		} catch (NullPointerException e) {
 			System.err.println("can not find file: " + "data/" + path + "map.ini");
 		} catch (BackingStoreException e) {
 			e.printStackTrace();
 		}
+		interactables = npcs.toArray(new NPC[npcs.size()]);
+		doors = d.toArray(new NPC[d.size()]);
+		
 		x = startX;
 		y = startY;
 		
@@ -77,9 +106,15 @@ public class WorldSystem extends GameSystem
 		drawMap = new Sprite(path+"map.png");
 	}
 	
+	/**
+	 * Update for the world system
+	 * Used mostly just to move all the npcs around and make them more lively
+	 */
 	@Override
 	public void update()
 	{
+		for (NPC n : interactables)
+			n.move();
 	}
 
 	@Override
@@ -98,16 +133,16 @@ public class WorldSystem extends GameSystem
         
 		if (Input.DPAD.contains("" + evt.getKeyCode())) {
 			if (evt.getKeyCode() == Input.KEY_LT) {
-				leader.setState(Player.WEST);
+				leader.setState(WEST);
 				x--;
 			} else if (evt.getKeyCode() == Input.KEY_RT) {
-				leader.setState(Player.EAST);
+				leader.setState(EAST);
 				x++;
 			} else if (evt.getKeyCode() == Input.KEY_DN) {
-				leader.setState(Player.SOUTH);
+				leader.setState(SOUTH);
 				y++;
 			} else if (evt.getKeyCode() == Input.KEY_UP) {
-				leader.setState(Player.NORTH);
+				leader.setState(NORTH);
 				y--;
 			}
 			leader.walk();
@@ -134,6 +169,27 @@ public class WorldSystem extends GameSystem
 	}
 	
 	/**
+	 * Get the coordinates of the map ahead a certain direction
+	 * @param a
+	 * @param b
+	 * @param direction
+	 * @return
+	 */
+	public int[] getCoordAhead(int a, int b, int direction)
+	{
+		int x = a;
+		int y = b;
+		if (direction == WEST)
+			x--;
+		else if (direction == EAST)
+			x++;
+		else if (direction == SOUTH)
+			y++;
+		else if (direction == NORTH)
+			y--;
+		return new int[]{x, y};
+	}
+	/**
 	 * Gets the terrain at a point
 	 * @param x
 	 * @param y
@@ -159,7 +215,12 @@ public class WorldSystem extends GameSystem
 			currentTerrain = getTerrain(x, y);
 			if (currentTerrain != null)
 				encounterNum += currentTerrain.getRate();
-			finish();
+			if (encounterNum > 100)
+				if (currentTerrain.formations.size() != 0)
+				{
+					Formation f = currentTerrain.formations.get((int)(Math.random()*currentTerrain.formations.size()));
+					Engine.getInstance().changeToBattle(f, currentTerrain.getBackground());
+				}
 		}
 	}
 	
@@ -183,11 +244,6 @@ public class WorldSystem extends GameSystem
 	 */
 	@Override
 	public void finish() {
-		if (encounterNum > 100)
-			if (currentTerrain.formations.size() != 0)
-			{
-				Formation f = currentTerrain.formations.get((int)(Math.random()*currentTerrain.formations.size()));
-				Engine.getInstance().changeToBattle(f, currentTerrain.getBackground());
-			}
+
 	}
 }
