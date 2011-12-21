@@ -35,11 +35,6 @@ public class Player extends Actor {
 	public static final int DEAD = 5;
 	public static final int WEAK = 6;
 	
-	public static final int SOUTH = 1;
-	public static final int WEST = 2;
-	public static final int NORTH = 3;
-	public static final int EAST = 4;
-	
 	protected Sprite moveSprite;	//sprites drawn to screen on world scenes
 
 	protected Sprite drawSprite;	//sprite to draw to screen that represents the player
@@ -129,7 +124,7 @@ public class Player extends Actor {
 	 * @param string
 	 */
 	public void setState(int i) {
-		state = Math.max(STAND, Math.min(DEAD, i));
+		state = i;
 	}
 
 	/**
