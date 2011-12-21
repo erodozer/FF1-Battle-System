@@ -47,9 +47,11 @@ public class NPC {
 		}
 		else
 			name = node.get("name", "Jim");
+		
 		String pos = node.name().substring(node.name().indexOf('@'));
 		x = Integer.parseInt(pos.substring(0, pos.indexOf(',')));
 		y = Integer.parseInt(pos.substring(pos.indexOf(',')));
+		walkSprite = new Sprite("actors/npc/" + node.get("sprite", "npc01.png"));
 	}
 	
 	public void interact()
@@ -109,8 +111,8 @@ public class NPC {
 	public void draw(Graphics g)
 	{
 		walkSprite.setFrame(moving+1, direction);
-		if (walkSprite.getX() != x*16 && walkSprite.getY() != y*16)
-			walkSprite.slide(xSlide, ySlide);
+		walkSprite.setX(walkSprite.getWidth()/2+8);
+		walkSprite.setY(-walkSprite.getHeight()+16);
 		walkSprite.paint(g);
 	}
 	
