@@ -23,6 +23,11 @@ import org.ini4j.*;
 
 public class WorldSystem extends GameSystem
 {
+	//passability colors
+	private static final int IMPASSABLE = Color.decode("#000000").getRGB();
+	private static final int PASSABLE = Color.decode("#FFFFFF").getRGB();
+	private static final int OVERLAY = Color.decode("#999999").getRGB();
+	
 	//direction a sprite is facing
 	public static final int SOUTH = 1;
 	public static final int WEST = 2;
@@ -153,36 +158,28 @@ public class WorldSystem extends GameSystem
 	 * @param y
 	 * @return
 	 */
-	public boolean getPassibility(int x, int y)
+	public boolean getPassability(int x, int y)
 	{
-		try
-		{
-			//prevent npcs from running over your character
-			if (x == this.x && y == this.y)
+		// prevent npcs from running over your character
+		if (x == this.x && y == this.y)
+			return false;
+
+		// prevent moving out of bounds
+		if (x < 0 || y < 0 || x > width || y > height)
+			return false;
+
+		// check the passibility map
+		if (passabilityMap.getImage().getRGB(x, y) == IMPASSABLE)
+			return false;
+
+		// because this can take the most time to check, check it last
+		// can't move to spaces where normal npcs are located
+		for (NPC n : interactables)
+			if (n.getX() == x && n.getY() == y)
 				return false;
-			
-			//prevent moving out of bounds
-			if (x < 0 || y < 0 || x > width || y > height)
-				return false;
-			
-			//check the passibility map
-			if (passabilityMap.getImage().getRGB(x, y) == Color.black.getRGB())
-				return false;
-			
-			//because this can take the most time to check, check it last
-			//can't move to spaces where normal npcs are located
-			for (NPC n : interactables)
-				if (n.getX() == x && n.getY() == y)
-					return false;
-			
-			//return true if none of the above
-			return true;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			return true;
-		}
+
+		// return true if none of the above
+		return true;
 	}
 	
 	/**
@@ -226,7 +223,7 @@ public class WorldSystem extends GameSystem
 	public void moveTo(int x, int y)
 	{
 		//only move there if it's a valid location
-		if (getPassibility(x, y))
+		if (getPassability(x, y))
 		{
 			this.x = x;
 			this.y = y;

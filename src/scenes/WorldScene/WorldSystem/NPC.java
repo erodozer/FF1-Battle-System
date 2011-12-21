@@ -69,17 +69,21 @@ public class NPC {
 	{
 		if (Math.random()*10 < speed && speed != -1)
 		{
-			int[] pos = {this.x, this.y};
+			int[] pos;
 			int dir = 0;
 			int counter = 0;
-			//keep checking until it can move for up to 5 times
+			
+			//keep checking until it moves for up to 5 times
 			while (counter <= 5)
 			{
-				dir = (int)(Math.random()*4) + 1;		//go random direction
+				//go random direction
+				dir = (int)(Math.random()*4) + 1;			
 				
-				pos = map.getCoordAhead(pos[0], pos[1], dir);
+				//get the coordinate ahead in that direction
+				pos = WorldSystem.getCoordAhead(x, y, dir);	
 				
-				if (map.getPassibility(pos[0], pos[1]))
+				//only move to location if one can actually walk on it
+				if (map.getPassability(pos[0], pos[1]))
 				{
 					walk();
 					direction = dir;
@@ -90,10 +94,7 @@ public class NPC {
 					break;
 				}
 				else
-				{
-					pos = new int[]{this.x, this.y};
 					counter++;
-				}
 			}
 		}
 	}
