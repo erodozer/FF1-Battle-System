@@ -246,4 +246,17 @@ public class WorldSystem extends GameSystem
 	public void finish() {
 
 	}
+
+	/**
+	 * Gets a merged list of all npcs and doors
+	 * @return
+	 */
+	public NPC[] getAllNPCs() {
+		NPC[] npcs = new NPC[interactables.length + doors.length];
+		for (int i = 0; i < interactables.length; i++)
+			npcs[i] = interactables[i];
+		for (int i = 0; i < doors.length; i++)
+			npcs[interactables.length + i] = doors[i];
+		return npcs;
+	}
 }
