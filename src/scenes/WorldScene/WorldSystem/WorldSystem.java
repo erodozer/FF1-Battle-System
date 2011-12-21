@@ -48,8 +48,8 @@ public class WorldSystem extends GameSystem
 	
 	HashMap<Color, Terrain> terrains;		//terrains of the map
 	
-	NPC[] interactables;
-	NPC[] doors;
+	NPC[] interactables = new NPC[0];
+	NPC[] doors = new NPC[0];
 	
 	/**
 	 * Starts/Resets the basics of a map
@@ -104,6 +104,9 @@ public class WorldSystem extends GameSystem
 		passabilityMap = new Sprite(path+"pass.png");
 		formationMap = new Sprite(path+"formation.png");
 		drawMap = new Sprite(path+"map.png");
+		
+		width = (int)passabilityMap.getWidth();
+		height = (int)passabilityMap.getHeight();
 	}
 	
 	/**
@@ -128,30 +131,24 @@ public class WorldSystem extends GameSystem
      * @param evt
      */
     public void keyPressed(KeyEvent evt) {
-        int x = this.x;
-        int y = this.y;
-        
-		if (Input.DPAD.contains("" + evt.getKeyCode())) {
+        if (Input.DPAD.contains("" + evt.getKeyCode())) {
 			if (evt.getKeyCode() == Input.KEY_LT) {
 				leader.setState(WEST);
-				x--;
 			} else if (evt.getKeyCode() == Input.KEY_RT) {
 				leader.setState(EAST);
-				x++;
 			} else if (evt.getKeyCode() == Input.KEY_DN) {
 				leader.setState(SOUTH);
-				y++;
 			} else if (evt.getKeyCode() == Input.KEY_UP) {
 				leader.setState(NORTH);
-				y--;
 			}
+			int[] pos = getCoordAhead(x, y, leader.getState());
 			leader.walk();
-			moveTo(x, y);
+			moveTo(pos[0], pos[1]);
 		}
 	}
 	
 	/**
-	 * Returns if the player can walk to this location
+	 * Returns if the coordinate can be walked on
 	 * @param x
 	 * @param y
 	 * @return
@@ -160,10 +157,30 @@ public class WorldSystem extends GameSystem
 	{
 		try
 		{
-			return passabilityMap.getImage().getRGB(x, y) != Color.black.getRGB();
+			//prevent npcs from running over your character
+			if (x == this.x && y == this.y)
+				return false;
+			
+			//prevent moving out of bounds
+			if (x < 0 || y < 0 || x > width || y > height)
+				return false;
+			
+			//check the passibility map
+			if (passabilityMap.getImage().getRGB(x, y) == Color.black.getRGB())
+				return false;
+			
+			//because this can take the most time to check, check it last
+			//can't move to spaces where normal npcs are located
+			for (NPC n : interactables)
+				if (n.getX() == x && n.getY() == y)
+					return false;
+			
+			//return true if none of the above
+			return true;
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			return true;
 		}
 	}
@@ -175,7 +192,7 @@ public class WorldSystem extends GameSystem
 	 * @param direction
 	 * @return
 	 */
-	public int[] getCoordAhead(int a, int b, int direction)
+	public static int[] getCoordAhead(int a, int b, int direction)
 	{
 		int x = a;
 		int y = b;
@@ -208,6 +225,7 @@ public class WorldSystem extends GameSystem
 	 */
 	public void moveTo(int x, int y)
 	{
+		//only move there if it's a valid location
 		if (getPassibility(x, y))
 		{
 			this.x = x;
