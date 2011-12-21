@@ -46,12 +46,15 @@ public class NPC {
 			speed = -1;		//doors can't move
 		}
 		else
+		{
 			name = node.get("name", "Jim");
+			speed = Integer.parseInt(node.get("speed", "-1"));
+		}
 		
-		String pos = node.name().substring(node.name().indexOf('@'));
+		String pos = node.name().substring(node.name().indexOf('@')+1);
 		x = Integer.parseInt(pos.substring(0, pos.indexOf(',')));
-		y = Integer.parseInt(pos.substring(pos.indexOf(',')));
-		walkSprite = new Sprite("actors/npc/" + node.get("sprite", "npc01.png"));
+		y = Integer.parseInt(pos.substring(pos.indexOf(',')+1));
+		walkSprite = new Sprite("actors/npcs/" + node.get("sprite", "npc01.png"), 2, 4);
 	}
 	
 	public void interact()
@@ -64,7 +67,7 @@ public class NPC {
 	 */
 	public void move()
 	{
-		if (Math.random() > (1-(1.0/(speed+1))))
+		if (Math.random()*10 < speed && speed != -1)
 		{
 			int[] pos = {this.x, this.y};
 			int dir = 0;
@@ -80,6 +83,10 @@ public class NPC {
 				{
 					walk();
 					direction = dir;
+					xSlide = (pos[0]-x)/5.0;
+					ySlide = (pos[1]-y)/5.0;
+					x = pos[0];
+					y = pos[1];
 					break;
 				}
 				else
@@ -88,10 +95,6 @@ public class NPC {
 					counter++;
 				}
 			}
-			xSlide = (pos[0]-x)/5.0;
-			ySlide = (pos[1]-y)/5.0;
-			x = pos[0];
-			y = pos[1];
 		}
 	}
 	
@@ -111,8 +114,8 @@ public class NPC {
 	public void draw(Graphics g)
 	{
 		walkSprite.setFrame(moving+1, direction);
-		walkSprite.setX(walkSprite.getWidth()/2+8);
-		walkSprite.setY(-walkSprite.getHeight()+16);
+		walkSprite.setX(x*16+(walkSprite.getWidth()/2+8));
+		walkSprite.setY(y*16+(-walkSprite.getHeight()+16));
 		walkSprite.paint(g);
 	}
 	
@@ -123,5 +126,13 @@ public class NPC {
 	{
 		moving++;
 		moving %= 2;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 }
