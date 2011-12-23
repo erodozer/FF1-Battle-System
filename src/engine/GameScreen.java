@@ -2,6 +2,7 @@ package engine;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Date;
 
 import javax.swing.JFrame;
 
@@ -20,6 +21,16 @@ public class GameScreen extends JFrame implements KeyListener{
 	private ContentPanel c;
 	private Engine engine;
 	
+	//frame limiting
+    final int FRAMES_PER_SECOND = 30;					
+    final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
+    private int sleep_time = 0;
+
+    Long next_game_tick = new Date().getTime();
+    // the current number of milliseconds
+    // that have elapsed since the system was started
+
+    
 	/**
 	 * Creates the main game screen
 	 */
@@ -55,21 +66,20 @@ public class GameScreen extends JFrame implements KeyListener{
 							e.printStackTrace();
 						}
 					
-					try {
-						sleep(5);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					
 					c.paint();
 					
-					try
-					{
-						sleep(30);
-					}catch (Exception e)
-					{
-						e.printStackTrace();
-					}
+			        next_game_tick += SKIP_TICKS;
+			        sleep_time = (int) (next_game_tick - new Date().getTime());
+			        if( sleep_time >= 0 ) {
+			            try {
+							sleep( sleep_time );
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+			        }
+			        else {
+			            // Shit, we are running behind!
+			        }
 				}
 			}
 		}.start();
