@@ -55,6 +55,7 @@ public class NPC {
 		x = Integer.parseInt(pos.substring(0, pos.indexOf(',')));
 		y = Integer.parseInt(pos.substring(pos.indexOf(',')+1));
 		walkSprite = new Sprite("actors/npcs/" + node.get("sprite", "npc01.png"), 2, 4);
+		map.npcMap.put(x + " " + y, this);
 	}
 	
 	public void interact()
@@ -89,8 +90,10 @@ public class NPC {
 					direction = dir;
 					xSlide = (pos[0]-x)/5.0;
 					ySlide = (pos[1]-y)/5.0;
+					map.npcMap.put(x + " " + y, null);
 					x = pos[0];
 					y = pos[1];
+					map.npcMap.put(x + " " + y, this);
 					break;
 				}
 				else

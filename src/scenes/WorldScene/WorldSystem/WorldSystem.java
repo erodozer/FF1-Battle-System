@@ -58,6 +58,7 @@ public class WorldSystem extends GameSystem
 	
 	NPC[] interactables = new NPC[0];
 	NPC[] doors = new NPC[0];
+	HashMap<String, NPC> npcMap;
 	
 	/**
 	 * Starts/Resets the basics of a map
@@ -67,6 +68,7 @@ public class WorldSystem extends GameSystem
 		encounterNum = 0;
 		leader = Engine.getInstance().getParty().get(0);
 		terrains = new HashMap<Color, Terrain>();
+		npcMap = new HashMap<String, NPC>();
 		currentTerrain = null;
 	}
 	
@@ -177,9 +179,8 @@ public class WorldSystem extends GameSystem
 
 		// because this can take the most time to check, check it last
 		// can't move to spaces where normal npcs are located
-		for (NPC n : interactables)
-			if (n.getX() == x && n.getY() == y)
-				return false;
+		if (npcMap.get(x + " " + y) != null)
+			return false;
 
 		// return true if none of the above
 		return true;
