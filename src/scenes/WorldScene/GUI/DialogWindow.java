@@ -1,54 +1,59 @@
 package scenes.WorldScene.GUI;
 
+import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 
-import scenes.BattleScene.System.BattleSystem;
-import scenes.WorldScene.WorldSystem.NPC;
+import org.ini4j.jdk14.edu.emory.mathcs.backport.java.util.Arrays;
+
+import engine.ContentPanel;
 import engine.Sprite;
-import engine.StringUtils;
 import engine.Window;
 
+/**
+ * DialogWindow
+ * @author nhydock
+ *
+ *	Simple window for displaying the text of an event or npc
+ */
 public class DialogWindow extends Sprite {
 	
-	Window window;
-	int index;
+	Window window;			//frame
+	int index;				//range of lines to display
+	String[] dialog;		//dialog to display
 	
-	String[] dialog;
-	FontMetrics fm;
-	
-	Font font;
-	NPC npc;
-	
-	public DialogWindow(Font f)
+	/**
+	 * Creates the window
+	 * @param f
+	 */
+	public DialogWindow()
 	{
 		super(null);
 		
-		font = f;
+		window = new Window(0, 0, ContentPanel.INTERNAL_RES_W, 96, Color.BLUE);
+		dialog = new String[0];
 	}
 	
-	public void reset()
+	/**
+	 * Updates the text to be displayed
+	 * @param s
+	 * @param i
+	 */
+	public void setDialog(String[] s, int i)
 	{
-		dialog = null;
-		npc = null;
+		dialog = s;
+		index = i;
 	}
 	
-	public void setNPC(NPC n)
+	/**
+	 * Draws the window with dialog in it
+	 * @param g
+	 */
+	public void paint(Graphics g)
 	{
-		npc = n;
-	}
-	
-	public void draw(Graphics g)
-	{
-		if (fm == null)
-			fm = g.getFontMetrics(font);
-		
-		if (npc != null)
-			if (dialog != null)
-				dialog = StringUtils.wrap(npc.getDialog(), fm, window.getWidth()- 20).toArray(new String[0]);
-		
+		window.paint(g);
+		System.out.println(Arrays.toString(dialog));
 		for (int i = index; i < Math.min(dialog.length, index+3); i++)
-			g.drawString(dialog[i], window.getX()+5, window.getY()+(fm.getHeight()+3)*i);
+			g.drawString(dialog[i], window.getX()+10, (g.getFontMetrics(g.getFont()).getHeight()+3)*(i+1));
 	}
 }

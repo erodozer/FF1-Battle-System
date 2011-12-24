@@ -1,5 +1,6 @@
 package scenes.WorldScene.GUI;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.io.File;
@@ -43,7 +44,7 @@ public class WorldHUD extends HUD
 			font = new Font("serif", Font.PLAIN, 10);
 		}
 		
-		dialog = new DialogWindow(font);
+		dialog = new DialogWindow();
 	}
 	
 	public void paint(Graphics g)
@@ -51,6 +52,8 @@ public class WorldHUD extends HUD
 		if (map == null)
 			return;
 		
+		g.setColor(Color.WHITE);
+		g.setFont(font);
 		g.translate(-((WorldSystem)parent).getLeader().getX()*Map.TILESIZE + (int)map.getWidth()/4, 
 					-((WorldSystem)parent).getLeader().getY()*Map.TILESIZE + (int)map.getHeight()/4);
 		map.paint(g);
@@ -59,7 +62,14 @@ public class WorldHUD extends HUD
 			if (n != null)
 				n.draw(g);
 		
+		//reset the translate
+		g.translate(-(-((WorldSystem)parent).getLeader().getX()*Map.TILESIZE + (int)map.getWidth()/4),
+					-(-((WorldSystem)parent).getLeader().getY()*Map.TILESIZE + (int)map.getHeight()/4));
 		if (((WorldSystem)parent).getState() instanceof DialogState)
-			dialog.draw(g);
+		{
+			DialogState s = (DialogState)((WorldSystem)parent).getState();
+			dialog.setDialog(s.getDialog(), s.getIndex());
+			dialog.paint(g);
+		}
 	}
 }

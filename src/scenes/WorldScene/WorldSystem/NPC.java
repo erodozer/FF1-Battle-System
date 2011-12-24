@@ -33,6 +33,7 @@ public class NPC {
 						// higher the number, slower the speed
 						//   between 0 and 10
 						//   -1 to not move at all
+	
 	long startTime;
 	
 	int moving = 0;
@@ -95,11 +96,6 @@ public class NPC {
 	public void setMap(Map m)
 	{
 		map = m;
-	}
-	
-	public void interact()
-	{
-		
 	}
 	
 	/**
