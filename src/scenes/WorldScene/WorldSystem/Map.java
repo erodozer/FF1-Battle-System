@@ -111,6 +111,11 @@ public class Map {
 		return true;
 	}
 	
+	public boolean getOverlay(int x, int y)
+	{
+		return passabilityMap.getImage().getRGB(x, y) == OVERLAY;
+	}
+	
 	/**
 	 * Get the coordinates of the map ahead a certain direction
 	 * @param a
