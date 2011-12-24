@@ -1,6 +1,9 @@
 package scenes.WorldScene.GUI;
 
+import java.awt.Font;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.FileInputStream;
 
 import actors.Player;
 import scenes.WorldScene.WorldSystem.NPC;
@@ -22,6 +25,9 @@ public class WorldHUD extends HUD
 	Sprite map;
 	Player leader;		//party leader, his sprite gets drawn
 	NPC[] npcs;
+	DialogWindow dialog;
+	
+	Font font;
 	
 	public WorldHUD(WorldSystem s)
 	{
@@ -29,6 +35,14 @@ public class WorldHUD extends HUD
 		e = Engine.getInstance();
 		map = s.getMap();
 		npcs = s.getAllNPCs();
+		
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);
+		} catch (Exception e){
+			font = new Font("serif", Font.PLAIN, 10);
+		}
+		
+		dialog = new DialogWindow(font);
 	}
 	
 	public void setLeader(Player p)
