@@ -2,7 +2,6 @@ package engine;
 
 import java.awt.FontMetrics;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class StringUtils {
 
     ArrayList<String> strings = new ArrayList<String>();
     for (Iterator<String> iter = lines.iterator(); iter.hasNext();)
-      wrapLineInto((String) iter.next(), strings, fm, maxWidth);
+      wrapLineInto(iter.next(), strings, fm, maxWidth);
     return strings;
   }
 

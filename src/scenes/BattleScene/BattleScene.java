@@ -3,13 +3,9 @@ package scenes.BattleScene;
 import engine.Sprite;
 import groups.Formation;
 
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-
 import scenes.Scene;
 import scenes.BattleScene.GUI.*;
 import scenes.BattleScene.System.*;
-import scenes.WorldScene.WorldSystem.Terrain;
 
 
 public class BattleScene extends Scene {

@@ -1,6 +1,5 @@
 package scenes.WorldScene;
 
-import actors.Player;
 import engine.Engine;
 import scenes.Scene;
 import scenes.WorldScene.GUI.WorldHUD;

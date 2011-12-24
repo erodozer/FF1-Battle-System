@@ -2,10 +2,7 @@ package scenes.WorldScene.WorldSystem;
 
 import java.awt.event.KeyEvent;
 
-import actors.Player;
-
 import engine.GameState;
-import engine.GameSystem;
 import engine.Input;
 
 public class ExploreState extends GameState {
@@ -17,7 +14,7 @@ public class ExploreState extends GameState {
 	
 	public ExploreState(WorldSystem c) {
 		super(c);
-		parent = (WorldSystem)c;
+		parent = c;
 	}
 
 	@Override

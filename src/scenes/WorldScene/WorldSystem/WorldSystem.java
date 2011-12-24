@@ -1,25 +1,10 @@
 package scenes.WorldScene.WorldSystem;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Properties;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
-
-import actors.Player;
 
 import engine.Engine;
 import engine.GameSystem;
-import engine.Input;
-import engine.Sprite;
 import groups.Formation;
-
-import org.ini4j.*;
 
 public class WorldSystem extends GameSystem
 {
@@ -100,7 +85,8 @@ public class WorldSystem extends GameSystem
      * Handles key input
      * @param evt
      */
-    public void keyPressed(KeyEvent evt) {
+    @Override
+	public void keyPressed(KeyEvent evt) {
     	state.handleKeyInput(evt);
     }
 	
@@ -137,5 +123,4 @@ public class WorldSystem extends GameSystem
 	public NPC getLeader() {
 		return leader;
 	}
-
 }

@@ -2,7 +2,6 @@ package scenes.CreationScene.System;
 
 import engine.Engine;
 import engine.GameSystem;
-import groups.Formation;
 import groups.Party;
 import actors.Job;
 import actors.Player;
@@ -68,6 +67,7 @@ public class CreationSystem extends GameSystem{
 	/**
 	 * Ends creation and moves to first battle
 	 */
+	@Override
 	public void finish()
 	{
 		e.setParty(party);

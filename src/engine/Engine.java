@@ -8,9 +8,6 @@ import scenes.*;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;
 import scenes.WorldScene.WorldScene;
-import scenes.WorldScene.WorldSystem.Terrain;
-import scenes.WorldScene.WorldSystem.WorldSystem;
-
 import groups.*;
 
 /**
