@@ -38,7 +38,8 @@ public class CommandDisplay extends Sprite{
 	
 	public void update(IssueState state)
 	{
-		this.index = state.getIndex();
+		if (!state.spellSelecting)
+			this.index = state.getIndex();
 	}
 	
 	/**
