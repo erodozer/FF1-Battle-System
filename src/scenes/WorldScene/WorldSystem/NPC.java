@@ -1,6 +1,7 @@
 package scenes.WorldScene.WorldSystem;
 
 import java.awt.Graphics;
+import java.util.Date;
 import java.util.prefs.Preferences;
 
 import engine.Sprite;
@@ -18,6 +19,7 @@ public class NPC {
 	WorldSystem map;	//map the npc belongs to and wanders around in
 	Sprite walkSprite;	//sprite that symbolizes the character
 	String name;		//name of the npc
+	String dialog;		//what the npc says when interacted with
 	
 	int x;				//horizontal position on the map
 	int y;				//vertical position on the map
@@ -29,6 +31,7 @@ public class NPC {
 						// higher the number, slower the speed
 						//   between 0 and 10
 						//   -1 to not move at all
+	long startTime;
 	
 	int moving = 0;
 	int direction = WorldSystem.SOUTH;
@@ -49,13 +52,16 @@ public class NPC {
 		{
 			name = node.get("name", "Jim");
 			speed = Integer.parseInt(node.get("speed", "-1"));
+			dialog = node.get("dialog", "...");
 		}
 		
 		String pos = node.name().substring(node.name().indexOf('@')+1);
 		x = Integer.parseInt(pos.substring(0, pos.indexOf(',')));
 		y = Integer.parseInt(pos.substring(pos.indexOf(',')+1));
 		walkSprite = new Sprite("actors/npcs/" + node.get("sprite", "npc01.png"), 2, 4);
+		startTime = new Date().getTime();
 		map.npcMap.put(x + " " + y, this);
+		
 	}
 	
 	public void interact()
@@ -68,8 +74,10 @@ public class NPC {
 	 */
 	public void move()
 	{
-		if (Math.random()*10 < speed && speed != -1)
+		long time = new Date().getTime();
+		if (time > startTime + (speed*1000) && speed != -1)
 		{
+			startTime = time;
 			int[] pos;
 			int dir = 0;
 			int counter = 0;
@@ -138,5 +146,9 @@ public class NPC {
 
 	public int getY() {
 		return y;
+	}
+
+	public String getDialog() {
+		return dialog;
 	}
 }
