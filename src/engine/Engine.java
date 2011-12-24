@@ -140,7 +140,7 @@ public class Engine{
 		{
 		}
 		currentScene = world;
-		world.start(currentMap, ((WorldSystem)world.getSystem()).getX(), ((WorldSystem)world.getSystem()).getY());
+		//world.start(currentMap, ((WorldSystem)world.getSystem()).getX(), ((WorldSystem)world.getSystem()).getY());
 	}
 		
 	/**
