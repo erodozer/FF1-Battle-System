@@ -13,7 +13,7 @@ public class ExploreState extends GameState {
 	WorldSystem parent;
 	int x;
 	int y;
-	Player leader;
+	NPC leader;
 	
 	public ExploreState(WorldSystem c) {
 		super(c);
@@ -27,34 +27,32 @@ public class ExploreState extends GameState {
 
 	@Override
 	public void handle() {
-		x = parent.x;
-		y = parent.y;
+		x = parent.leader.x;
+		y = parent.leader.y;
 		leader = parent.leader;
 		
-		for (NPC n : parent.interactables)
+		for (NPC n : parent.map.interactables)
 			n.move();
 	}
 
 	@Override
 	public void handleKeyInput(KeyEvent evt) {
-    	int[] pos = WorldSystem.getCoordAhead(x, y, leader.getState());
-		
-        if (Input.DPAD.contains("" + evt.getKeyCode())) {
-			if (evt.getKeyCode() == Input.KEY_LT) {
-				leader.setState(WorldSystem.WEST);
-			} else if (evt.getKeyCode() == Input.KEY_RT) {
-				leader.setState(WorldSystem.EAST);
-			} else if (evt.getKeyCode() == Input.KEY_DN) {
-				leader.setState(WorldSystem.SOUTH);
-			} else if (evt.getKeyCode() == Input.KEY_UP) {
-				leader.setState(WorldSystem.NORTH);
-			}
-			leader.walk();
-			parent.moveTo(pos[0], pos[1]);
+    	if (Input.DPAD.contains("" + evt.getKeyCode())) {
+    		if (evt.getKeyCode() == Input.KEY_UP)
+    			y--;
+    		else if (evt.getKeyCode() == Input.KEY_DN)
+    			y++;
+    		else if (evt.getKeyCode() == Input.KEY_LT)
+    			x--;
+    		else if (evt.getKeyCode() == Input.KEY_RT)
+    			x++;
+    		parent.moveTo(x, y);
 		}
         if (evt.getKeyCode() == Input.KEY_A)
         {
-        	NPC n = parent.npcMap.get(pos[0] + " " + pos[1]);
+        	int[] ahead = Map.getCoordAhead(x, y, leader.getDirection());
+      		
+        	NPC n = parent.map.npcMap.get(ahead[0] + " " + ahead[1]);
         	if (n != null)
         		if (n.getDialog() != null)
         		{

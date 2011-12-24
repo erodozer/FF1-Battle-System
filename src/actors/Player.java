@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import scenes.BattleScene.BattleScene;
 import scenes.WorldScene.WorldScene;
+import scenes.WorldScene.WorldSystem.NPC;
 import commands.*;
 import engine.Engine;
 import engine.Sprite;
@@ -34,12 +35,12 @@ public class Player extends Actor {
 	public static final int VICT = 4;
 	public static final int DEAD = 5;
 	public static final int WEAK = 6;
-	
-	protected Sprite moveSprite;	//sprites drawn to screen on world scenes
 
 	protected Sprite drawSprite;	//sprite to draw to screen that represents the player
 	protected double x;				//sprite position x
 	protected double y;				//sprite position y
+	
+	protected NPC mapSelf;			//map representation of the player
 	
 	/**
 	 * Constructs a basic player
@@ -52,6 +53,7 @@ public class Player extends Actor {
 		level = 1;
 		exp = 0;
 		commands = new Command[]{new Attack(this), new ChooseSpell(this), new Drink(this), new ChooseItem(this), new Flee(this)};
+		mapSelf = new NPC(null);
 	}
 
 	/**
@@ -76,7 +78,7 @@ public class Player extends Actor {
 		for (int i = 0; i < sprites.length; i++)
 			sprites[i] = new Sprite("actors/base.png");
 		//map wandering sprites
-		moveSprite = new Sprite("actors/jobs/basewalk.png", 4, 2);
+		mapSelf.setWalkSprite("/jobs/basewalk.png");
 		drawSprite = sprites[0];
 	}
 
@@ -143,8 +145,13 @@ public class Player extends Actor {
 	 */
 	public void setPosition(double x, double y)
 	{
-		setX(x);
-		setY(y);
+		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
+		{
+			setX(x);
+			setY(y);
+		}
+		else
+			mapSelf.move((int)this.x, (int)this.y);		
 	}
 
 	/**
@@ -158,7 +165,7 @@ public class Player extends Actor {
 			for (Sprite s : sprites)
 				s.setX(this.x);
 		else
-			moveSprite.setX(this.x);
+			mapSelf.move((int)this.x, (int)this.y);
 	}
 	
 	/**
@@ -172,7 +179,7 @@ public class Player extends Actor {
 			for (Sprite s : sprites)
 				s.setY(this.y);
 		else
-			moveSprite.setY(this.y);
+			mapSelf.move((int)this.x, (int)this.y);
 	}
 	
 	/**
@@ -218,14 +225,17 @@ public class Player extends Actor {
 			if (getState() == DEAD)
 				drawSprite = sprites[5];
 		}
-		else if (Engine.getInstance().getCurrentScene() instanceof WorldScene)
-		{
-			moveSprite.setFrame(moving+1, getState());
-			drawSprite = moveSprite;
-		}
 		else
 			drawSprite = sprites[0];
-		drawSprite.paint(g);
+		
+		if (Engine.getInstance().getCurrentScene() instanceof WorldScene)
+		{
+			mapSelf.draw(g);
+		}
+		else
+		{
+			drawSprite.paint(g);
+		}
 	}
 
 	/**
@@ -246,13 +256,8 @@ public class Player extends Actor {
 		return moving;
 	}
 
-	/**
-	 * updates the walk animation on the map
-	 */
-	public void walk()
-	{
-		moving++;
-		moving %= 2;
+	public NPC getMapSelf() {
+		return mapSelf;
 	}
 	
 }

@@ -1,8 +1,10 @@
 package scenes.WorldScene;
 
+import actors.Player;
 import engine.Engine;
 import scenes.Scene;
 import scenes.WorldScene.GUI.WorldHUD;
+import scenes.WorldScene.WorldSystem.Map;
 import scenes.WorldScene.WorldSystem.WorldSystem;
 
 /**
@@ -13,12 +15,15 @@ import scenes.WorldScene.WorldSystem.WorldSystem;
  */
 public class WorldScene extends Scene{
 	
+	Map map;
+	
 	public void start(String s, int startX, int startY)
 	{
+		map = new Map(s);
+		Engine.getInstance().setCurrentMap(s);
 		system = new WorldSystem();
-		((WorldSystem)system).start(s, startX, startY);
-		display = new WorldHUD((WorldSystem)system);
-		((WorldHUD)display).setLeader(Engine.getInstance().getParty().get(0));
+		((WorldSystem)system).start(map, startX, startY);
+		display = new WorldHUD((WorldSystem)system, map);
 	}
 	
 }

@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.util.Date;
 import java.util.prefs.Preferences;
 
+import actors.Player;
+
 import engine.Sprite;
 
 /**
@@ -16,7 +18,7 @@ import engine.Sprite;
  */
 public class NPC {
 
-	WorldSystem map;	//map the npc belongs to and wanders around in
+	Map map;			//map the npc belongs to and wanders around in
 	Sprite walkSprite;	//sprite that symbolizes the character
 	String name;		//name of the npc
 	String dialog;		//what the npc says when interacted with
@@ -34,13 +36,13 @@ public class NPC {
 	long startTime;
 	
 	int moving = 0;
-	int direction = WorldSystem.SOUTH;
+	int direction = Map.SOUTH;
 	
 	/**
-	 * Creates the npc
+	 * Creates a standard npc
 	 * @param m
 	 */
-	public NPC(WorldSystem m, Preferences node)
+	public NPC(Map m, Preferences node)
 	{
 		map = m;
 		if (node.name().startsWith("Door@"))
@@ -58,10 +60,41 @@ public class NPC {
 		String pos = node.name().substring(node.name().indexOf('@')+1);
 		x = Integer.parseInt(pos.substring(0, pos.indexOf(',')));
 		y = Integer.parseInt(pos.substring(pos.indexOf(',')+1));
-		walkSprite = new Sprite("actors/npcs/" + node.get("sprite", "npc01.png"), 2, 4);
+		setWalkSprite("npcs/" + node.get("sprite", "npc01.png"));
 		startTime = new Date().getTime();
 		map.npcMap.put(x + " " + y, this);
 		
+	}
+	
+	/**
+	 * Special map representation of a party member
+	 * @param m
+	 * @param p
+	 */
+	public NPC(Map m)
+	{
+		map = m;
+		x = 0;
+		y = 0;
+		speed = -1;
+	}
+	
+	/**
+	 * Replaces the walk sprite with a different one
+	 * @param s
+	 */
+	public void setWalkSprite(String s)
+	{
+		walkSprite = new Sprite("actors/" + s, 2, 4);
+	}
+	
+	/**
+	 * SHOULD ONLY BE USED FOR PLAYERS
+	 * Other NPCs should be locked to the map that they are created for
+	 */
+	public void setMap(Map m)
+	{
+		map = m;
 	}
 	
 	public void interact()
@@ -89,7 +122,7 @@ public class NPC {
 				dir = (int)(Math.random()*4) + 1;			
 				
 				//get the coordinate ahead in that direction
-				pos = WorldSystem.getCoordAhead(x, y, dir);	
+				pos = Map.getCoordAhead(x, y, dir);	
 				
 				//only move to location if one can actually walk on it
 				if (map.getPassability(pos[0], pos[1]))
@@ -111,6 +144,24 @@ public class NPC {
 	}
 	
 	/**
+	 * Move the npc to a designated position on the map
+	 * @param x
+	 * @param y
+	 */
+	public void move(int x, int y)
+	{
+		direction = Map.getDirectionFacing(this.x, this.y, x, y);
+		if (map.getPassability(x, y))
+		{
+			walk();
+			map.npcMap.put(this.x + " " + this.y, null);
+			this.x = x;
+			this.y = y;
+			map.npcMap.put(x + " " + y, this);
+		}		
+	}
+	
+	/**
 	 * Gets the direction the NPC is facing
 	 * @return
 	 */
@@ -120,14 +171,22 @@ public class NPC {
 	}
 	
 	/**
+	 * Force the direction the npc is facing
+	 */
+	public void setDirection(int i)
+	{
+		direction = i;
+	}
+	
+	/**
 	 * Draws the npc to screen
 	 * @param g
 	 */
 	public void draw(Graphics g)
 	{
 		walkSprite.setFrame(moving+1, direction);
-		walkSprite.setX(x*WorldSystem.TILESIZE-walkSprite.getWidth()/2+WorldSystem.TILESIZE/2);
-		walkSprite.setY(y*WorldSystem.TILESIZE-walkSprite.getHeight()+WorldSystem.TILESIZE);
+		walkSprite.setX(x*Map.TILESIZE-walkSprite.getWidth()/2+Map.TILESIZE/2);
+		walkSprite.setY(y*Map.TILESIZE-walkSprite.getHeight()+Map.TILESIZE);
 		walkSprite.paint(g);
 	}
 	

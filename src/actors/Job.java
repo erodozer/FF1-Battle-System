@@ -151,7 +151,7 @@ public class Job extends Player{
 		for (int i = 0; i < spriteNames.length; i++)
 			sprites[i] = new Sprite("actors/jobs/" + pathname + "/"+ spriteNames[i] + ".png");
 		//map wandering sprites
-		moveSprite = new Sprite("actors/jobs/" + pathname + "/mapwalk.png", 2, 4);
+		mapSelf.setWalkSprite("jobs/" + pathname + "/mapwalk.png");
 		
 		drawSprite = sprites[0];
 	}
