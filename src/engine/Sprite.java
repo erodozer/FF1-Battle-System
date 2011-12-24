@@ -1,7 +1,6 @@
 package engine;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,15 +21,16 @@ public class Sprite{
 	// made, if the image has already been loaded before it adds it
 	private static HashMap<String, BufferedImage> TEXTURECACHE = new HashMap<String, BufferedImage>();
 	
-	BufferedImage image;
-	protected double width  = 1;
-	protected double height = 1;
-	protected double x = 0;
-	protected double y = 0;
+	BufferedImage image;		//image that is drawn to screen
+	protected double width  = 1;//width of the buffered image
+	protected double height = 1;//height of the buffered image
+	protected double x = 0;		//x draw position on screen
+	protected double y = 0;		//y draw position on screen
 	
-	private int[] rect;
-	private int xFrames;
-	private int yFrames;
+	private int[] rect;			//rectangle cropping for frames
+	private double[] crop;		//further cropping for what displays on screen
+	private int xFrames;		//number of horizontal frames
+	private int yFrames;		//number of vertical frames
 	
 	/**
 	 * Load the sprite from file path
@@ -70,6 +70,7 @@ public class Sprite{
 			rect = new int[]{0, 0, (int)width/xFrames, (int)height/yFrames};
 			this.xFrames = xFrames;
 			this.yFrames = yFrames;
+			crop = new double[]{0, 0, 1, 1};
 		} 
 	}
 	
@@ -159,12 +160,35 @@ public class Sprite{
 	}
 	
 	/**
+	 * Crop the image a bit
+	 * values are percentages
+	 */
+	public void trim(double x, double y, double width, double height)
+	{
+		crop[0] = x;
+		crop[1] = y;
+		crop[2] = width;
+		crop[3] = height;
+	}
+	
+	/**
 	 * Paint the sprite to screen
 	 * @param g
 	 */
 	public void paint(Graphics g)
 	{
 		if (image != null && g != null)
-			g.drawImage(image, (int)x, (int)y, (int)x+rect[2], (int)y+rect[3], rect[0], rect[1], rect[0]+rect[2], rect[1]+rect[3], null);
+		{
+			int drawX = (int)x;
+			int drawY = (int)y;
+			int finalWidth = (int)(rect[2]*(crop[2]-crop[0]));
+			int finalHeight = (int)(rect[3]*(crop[3]-crop[1]));
+			int sourceX = (int)(rect[0]+crop[0]*rect[2]);
+			int sourceY = (int)(rect[1]+crop[1]*rect[3]);
+			int sourceWidth = (int)(sourceX + rect[2]*(crop[2]-crop[0]));
+			int sourceHeight = (int)(sourceY + rect[3]*(crop[3]-crop[1]));
+			g.drawImage(image, drawX, drawY, drawX + finalWidth, drawY + finalHeight, 
+							sourceX, sourceY, sourceWidth, sourceHeight, null);
+		}
 	}
 }
