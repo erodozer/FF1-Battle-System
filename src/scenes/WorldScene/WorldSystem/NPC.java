@@ -61,7 +61,7 @@ public class NPC {
 		x = Integer.parseInt(pos.substring(0, pos.indexOf(',')));
 		y = Integer.parseInt(pos.substring(pos.indexOf(',')+1));
 		setWalkSprite("npcs/" + node.get("sprite", "npc01.png"));
-		startTime = new Date().getTime();
+		startTime = System.currentTimeMillis();
 		map.npcMap.put(x + " " + y, this);
 		
 	}
@@ -107,7 +107,7 @@ public class NPC {
 	 */
 	public void move()
 	{
-		long time = new Date().getTime();
+		long time = System.currentTimeMillis();
 		if (time > startTime + (speed*1000) && speed != -1)
 		{
 			startTime = time;

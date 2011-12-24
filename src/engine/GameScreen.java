@@ -26,7 +26,7 @@ public class GameScreen extends JFrame implements KeyListener{
     final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
     private int sleep_time = 0;
 
-    Long next_game_tick = new Date().getTime();
+    Long next_game_tick = System.currentTimeMillis();
     // the current number of milliseconds
     // that have elapsed since the system was started
 
@@ -69,16 +69,13 @@ public class GameScreen extends JFrame implements KeyListener{
 					c.paint();
 					
 			        next_game_tick += SKIP_TICKS;
-			        sleep_time = (int) (next_game_tick - new Date().getTime());
+			        sleep_time = (int) (next_game_tick - System.currentTimeMillis());
 			        if( sleep_time >= 0 ) {
 			            try {
 							sleep( sleep_time );
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-			        }
-			        else {
-			            // Shit, we are running behind!
 			        }
 				}
 			}
@@ -100,8 +97,10 @@ public class GameScreen extends JFrame implements KeyListener{
 	@Override
 	public synchronized void keyPressed(KeyEvent arg0) {
 		if (Thread.currentThread().isInterrupted())
+		{
+			arg0.consume();
 			return;
-		
+		}
 		if (engine.getCurrentScene() != null)
 			engine.getCurrentScene().keyPressed(arg0);
 		arg0.consume();
