@@ -60,6 +60,16 @@ public class WorldSystem extends GameSystem
 	NPC[] doors = new NPC[0];
 	HashMap<String, NPC> npcMap;
 	
+	DialogState dialogState;
+	ExploreState exploreState;
+	NPC activeNPC;
+	
+	public WorldSystem()
+	{
+		dialogState = new DialogState(this);
+		exploreState = new ExploreState(this);
+	}
+	
 	/**
 	 * Starts/Resets the basics of a map
 	 */
@@ -126,14 +136,20 @@ public class WorldSystem extends GameSystem
 	@Override
 	public void update()
 	{
-		for (NPC n : interactables)
-			n.move();
+		state.handle();
 	}
 
 	@Override
 	public void setNextState()
 	{
-
+		if (state == dialogState)
+			state = exploreState;
+		else
+		{
+			state = dialogState;
+			activeNPC = null;
+		}
+		state.start();
 	}
 	
     /**
@@ -141,20 +157,7 @@ public class WorldSystem extends GameSystem
      * @param evt
      */
     public void keyPressed(KeyEvent evt) {
-        if (Input.DPAD.contains("" + evt.getKeyCode())) {
-			if (evt.getKeyCode() == Input.KEY_LT) {
-				leader.setState(WEST);
-			} else if (evt.getKeyCode() == Input.KEY_RT) {
-				leader.setState(EAST);
-			} else if (evt.getKeyCode() == Input.KEY_DN) {
-				leader.setState(SOUTH);
-			} else if (evt.getKeyCode() == Input.KEY_UP) {
-				leader.setState(NORTH);
-			}
-			int[] pos = getCoordAhead(x, y, leader.getState());
-			leader.walk();
-			moveTo(pos[0], pos[1]);
-		}
+    	state.handleKeyInput(evt);
 	}
 	
 	/**

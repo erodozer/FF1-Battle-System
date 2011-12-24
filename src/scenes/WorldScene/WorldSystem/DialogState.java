@@ -3,17 +3,20 @@ package scenes.WorldScene.WorldSystem;
 import java.awt.event.KeyEvent;
 
 import engine.GameState;
+import engine.GameSystem;
+import engine.StringUtils;
 
 public class DialogState extends GameState {
 
 	NPC n;
 	String dialog;
-	
-	StringUtils j;
-	
+
+	public DialogState(GameSystem c) {
+		super(c);
+	}
+
 	@Override
 	public void finish() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -31,8 +34,7 @@ public class DialogState extends GameState {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-
+		n = ((WorldSystem)parent).activeNPC;
 	}
 
 }
