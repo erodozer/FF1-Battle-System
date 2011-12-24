@@ -102,9 +102,7 @@ public class WorldSystem extends GameSystem
      */
     public void keyPressed(KeyEvent evt) {
     	state.handleKeyInput(evt);
-    	
-    	System.out.println(leader.getX() + " " + leader.getY());
-	}
+    }
 	
 	/**
 	 * Moves leader to a new location
@@ -113,14 +111,15 @@ public class WorldSystem extends GameSystem
 	{
 		//only move there if it's a valid location
 		leader.move(x, y);
-		if (leader.getX() == x || leader.getY() == y)
+		if (leader.getX() == x && leader.getY() == y)
 		{
 			currentTerrain = map.getTerrain(x, y);
 			if (currentTerrain != null)
 				encounterNum += currentTerrain.getRate();
 			if (encounterNum > 100)
-				if (currentTerrain.formations.size() != 0)
+				if (currentTerrain.formations.size() > 0)
 				{
+					encounterNum = 0;
 					Formation f = currentTerrain.formations.get((int)(Math.random()*currentTerrain.formations.size()));
 					Engine.getInstance().changeToBattle(f, currentTerrain.getBackground());
 				}
