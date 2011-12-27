@@ -23,7 +23,9 @@ import org.ini4j.*;
 
 public class WorldSystem extends GameSystem
 {
-
+	static int leaderIndex = 0;
+	
+	Engine e;
 	Map map;
 	
 	//player's coordinates
@@ -48,8 +50,10 @@ public class WorldSystem extends GameSystem
 	 */
 	public void start()
 	{
+		e = Engine.getInstance();
 		encounterNum = 0;
-		leader = Engine.getInstance().getParty().get(0).getMapSelf();
+		leader = new NPC(null);
+		leader.setWalkSprite(e.getParty().get(leaderIndex).getMapSelf());
 		currentTerrain = null;
 		activeNPC = null;
 		setNextState();

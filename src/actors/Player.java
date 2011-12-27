@@ -40,7 +40,7 @@ public class Player extends Actor {
 	protected double x;				//sprite position x
 	protected double y;				//sprite position y
 	
-	protected NPC mapSelf;			//map representation of the player
+	protected Sprite mapSelf;			//map representation of the player
 	
 	/**
 	 * Constructs a basic player
@@ -53,7 +53,6 @@ public class Player extends Actor {
 		level = 1;
 		exp = 0;
 		commands = new Command[]{new Attack(this), new ChooseSpell(this), new Drink(this), new ChooseItem(this), new Flee(this)};
-		mapSelf = new NPC(null);
 	}
 
 	/**
@@ -78,7 +77,7 @@ public class Player extends Actor {
 		for (int i = 0; i < sprites.length; i++)
 			sprites[i] = new Sprite("actors/base.png");
 		//map wandering sprites
-		mapSelf.setWalkSprite("/jobs/basewalk.png");
+		mapSelf = new Sprite("actors/jobs/basewalk.png", 2, 4);
 		drawSprite = sprites[0];
 	}
 
@@ -150,8 +149,6 @@ public class Player extends Actor {
 			setX(x);
 			setY(y);
 		}
-		else
-			mapSelf.move((int)this.x, (int)this.y);		
 	}
 
 	/**
@@ -164,8 +161,6 @@ public class Player extends Actor {
 		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
 			for (Sprite s : sprites)
 				s.setX(this.x);
-		else
-			mapSelf.move((int)this.x, (int)this.y);
 	}
 	
 	/**
@@ -178,8 +173,6 @@ public class Player extends Actor {
 		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
 			for (Sprite s : sprites)
 				s.setY(this.y);
-		else
-			mapSelf.move((int)this.x, (int)this.y);
 	}
 	
 	/**
@@ -228,14 +221,7 @@ public class Player extends Actor {
 		else
 			drawSprite = sprites[0];
 		
-		if (Engine.getInstance().getCurrentScene() instanceof WorldScene)
-		{
-			mapSelf.draw(g);
-		}
-		else
-		{
-			drawSprite.paint(g);
-		}
+		drawSprite.paint(g);
 	}
 
 	/**
@@ -256,7 +242,7 @@ public class Player extends Actor {
 		return moving;
 	}
 
-	public NPC getMapSelf() {
+	public Sprite getMapSelf() {
 		return mapSelf;
 	}
 	
