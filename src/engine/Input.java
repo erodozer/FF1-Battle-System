@@ -11,9 +11,15 @@ import java.awt.event.KeyEvent;
  */
 public abstract class Input {
 
-	//predefined input keys
+	//basic input keys
 	public final static int KEY_A  = KeyEvent.VK_X;
 	public final static int KEY_B  = KeyEvent.VK_Z;
+	
+	//special keys
+	public final static int KEY_SELECT = KeyEvent.VK_A;
+	public final static int KEY_START = KeyEvent.VK_S;
+	
+	//directional buttons
 	public final static int KEY_UP = KeyEvent.VK_UP;
 	public final static int KEY_DN = KeyEvent.VK_DOWN;
 	public final static int KEY_LT = KeyEvent.VK_LEFT;
