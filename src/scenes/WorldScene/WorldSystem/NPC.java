@@ -89,6 +89,10 @@ public class NPC {
 		walkSprite = new Sprite("actors/" + s, 2, 4);
 	}
 	
+	public void setWalkSprite(Sprite s) {
+		walkSprite = s;
+	}
+	
 	/**
 	 * SHOULD ONLY BE USED FOR PLAYERS
 	 * Other NPCs should be locked to the map that they are created for
@@ -206,4 +210,5 @@ public class NPC {
 	public String getDialog() {
 		return dialog;
 	}
+
 }
