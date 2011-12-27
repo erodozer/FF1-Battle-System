@@ -1,8 +1,6 @@
 package scenes.BattleScene.GUI;
 
 import java.awt.Graphics;
-import java.util.HashMap;
-
 import actors.Enemy;
 
 import engine.Sprite;

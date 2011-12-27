@@ -1,7 +1,6 @@
 package scenes.WorldScene.GUI;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 
 import org.ini4j.jdk14.edu.emory.mathcs.backport.java.util.Arrays;
@@ -49,6 +48,7 @@ public class DialogWindow extends Sprite {
 	 * Draws the window with dialog in it
 	 * @param g
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		window.paint(g);

@@ -3,8 +3,6 @@ package actors;
 import java.awt.Graphics;
 
 import scenes.BattleScene.BattleScene;
-import scenes.WorldScene.WorldScene;
-import scenes.WorldScene.WorldSystem.NPC;
 import commands.*;
 import engine.Engine;
 import engine.Sprite;

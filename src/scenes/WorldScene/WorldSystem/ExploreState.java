@@ -2,41 +2,58 @@ package scenes.WorldScene.WorldSystem;
 
 import java.awt.event.KeyEvent;
 
-import actors.Player;
-
 import engine.GameState;
-import engine.GameSystem;
 import engine.Input;
 
+/**
+ * ExploreState
+ * @author nhydock
+ *
+ *	World state for handling moving the character around a map
+ */
 public class ExploreState extends GameState {
 
 	WorldSystem parent;
-	int x;
-	int y;
-	NPC leader;
 	
+	//party's position on the map
+	int x;					
+	int y;
+	
+	/**
+	 * Creates the state
+	 */
 	public ExploreState(WorldSystem c) {
 		super(c);
-		parent = (WorldSystem)c;
+		parent = c;
 	}
 
+	/**
+	 * Do nothing
+	 */
 	@Override
 	public void finish() {
 
 	}
 
+	/**
+	 * Update things such as the position of the leader
+	 * and make the npcs move around
+	 */
 	@Override
 	public void handle() {
 		x = parent.leader.x;
 		y = parent.leader.y;
-		leader = parent.leader;
 		
 		for (NPC n : parent.map.interactables)
 			n.move();
 	}
 
+	/**
+	 * Handles key input
+	 */
 	@Override
 	public void handleKeyInput(KeyEvent evt) {
+		//move the character around
     	if (Input.DPAD.contains("" + evt.getKeyCode())) {
     		if (evt.getKeyCode() == Input.KEY_UP)
     			y--;
@@ -48,9 +65,10 @@ public class ExploreState extends GameState {
     			x++;
     		parent.moveTo(x, y);
 		}
+    	//interact with npcs
     	else if (evt.getKeyCode() == Input.KEY_A)
         {
-        	int[] ahead = Map.getCoordAhead(x, y, leader.getDirection());
+        	int[] ahead = Map.getCoordAhead(x, y, parent.leader.getDirection());
       		
         	NPC n = parent.map.npcMap.get(ahead[0] + " " + ahead[1]);
         	if (n != null)
@@ -60,6 +78,7 @@ public class ExploreState extends GameState {
         			parent.setNextState();
         		}
         }
+    	//switch character sprite
     	else if (evt.getKeyCode() == Input.KEY_SELECT)
     	{
     		WorldSystem.leaderIndex = (WorldSystem.leaderIndex + 1) % parent.e.getParty().size();
@@ -67,6 +86,9 @@ public class ExploreState extends GameState {
     	}
 	}
 
+	/**
+	 * Do nothing
+	 */
 	@Override
 	public void start() {
 

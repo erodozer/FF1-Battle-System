@@ -1,10 +1,7 @@
 package scenes.WorldScene.WorldSystem;
 
 import java.awt.Graphics;
-import java.util.Date;
 import java.util.prefs.Preferences;
-
-import actors.Player;
 
 import engine.Sprite;
 

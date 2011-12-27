@@ -28,7 +28,7 @@ public class GameOverState extends GameState {
 	 */
 	@Override
 	public void start() {
-		((BattleSystem)parent).bgm.close();
+		MP3.stop();
 		new MP3("data/audio/gameover.mp3").play();
 		
 	}
