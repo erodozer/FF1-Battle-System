@@ -48,7 +48,7 @@ public class ExploreState extends GameState {
     			x++;
     		parent.moveTo(x, y);
 		}
-        if (evt.getKeyCode() == Input.KEY_A)
+    	else if (evt.getKeyCode() == Input.KEY_A)
         {
         	int[] ahead = Map.getCoordAhead(x, y, leader.getDirection());
       		
@@ -60,6 +60,11 @@ public class ExploreState extends GameState {
         			parent.setNextState();
         		}
         }
+    	else if (evt.getKeyCode() == Input.KEY_SELECT)
+    	{
+    		WorldSystem.leaderIndex = (WorldSystem.leaderIndex + 1) % parent.e.getParty().size();
+    		parent.leader.setWalkSprite(parent.e.getParty().get(WorldSystem.leaderIndex).getMapSelf());
+    	}
 	}
 
 	@Override
