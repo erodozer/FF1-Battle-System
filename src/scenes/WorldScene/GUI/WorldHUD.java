@@ -54,8 +54,10 @@ public class WorldHUD extends HUD
 		
 		g.setColor(Color.WHITE);
 		g.setFont(font);
-		g.translate(-((WorldSystem)parent).getLeader().getX()*Map.TILESIZE + (int)map.getWidth()/4, 
-					-((WorldSystem)parent).getLeader().getY()*Map.TILESIZE + (int)map.getHeight()/4);
+		
+		int xOffset = -((WorldSystem)parent).getLeader().getX()*Map.TILESIZE + (int)map.getWidth()/4;
+		int yOffset = -((WorldSystem)parent).getLeader().getY()*Map.TILESIZE + (int)map.getHeight()/4;
+		g.translate(xOffset, yOffset);
 		map.paint(g);
 		
 		for (NPC n : npcs)
@@ -63,8 +65,7 @@ public class WorldHUD extends HUD
 				n.draw(g);
 		
 		//reset the translate
-		g.translate(-(-((WorldSystem)parent).getLeader().getX()*Map.TILESIZE + (int)map.getWidth()/4),
-					-(-((WorldSystem)parent).getLeader().getY()*Map.TILESIZE + (int)map.getHeight()/4));
+		g.translate(-xOffset, -yOffset);
 		if (((WorldSystem)parent).getState() instanceof DialogState)
 		{
 			DialogState s = (DialogState)((WorldSystem)parent).getState();
