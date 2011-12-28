@@ -38,9 +38,8 @@ public class Map {
 	
 	HashMap<Color, Terrain> terrains;		//terrains of the map
 	
-	NPC[] interactables = new NPC[0];		//interactable npcs on the map
-	NPC[] doors = new NPC[0];				//doors on the map
 	HashMap<String, NPC> npcMap;			//hashmap of all the npc locations
+	HashMap<String, Event> eventMap;		//hashmap of all the event locations
 	
 	/**
 	 * Loads up a new map
@@ -59,23 +58,19 @@ public class Map {
 			e.printStackTrace();
 		}
 		
-		ArrayList<NPC> npcs = new ArrayList<NPC>();
-		ArrayList<NPC> d = new ArrayList<NPC>();
 		try {
 			for (String section : pref.childrenNames())
 				if (section.charAt(0) == '#')
 					terrains.put(Color.decode(section), new Terrain(pref.node(section)));
 				else if (section.startsWith("NPC@"))
-					npcs.add(new NPC(this, pref.node(section)));
-				else if (section.startsWith("Door@"))
-					d.add(new NPC(this, pref.node(section)));
+					new NPC(this, pref.node(section));
+				else if (section.startsWith("Event@"))
+					new Event(this, pref.node(section));
 		} catch (NullPointerException e) {
 			System.err.println("can not find file: " + "data/" + path + "map.ini");
 		} catch (BackingStoreException e) {
 			e.printStackTrace();
 		}
-		interactables = npcs.toArray(new NPC[npcs.size()]);
-		doors = d.toArray(new NPC[d.size()]);		
 		
 		passabilityMap = new Sprite(path+"pass.png");
 		formationMap = new Sprite(path+"formation.png");
@@ -102,8 +97,7 @@ public class Map {
 		if (passabilityMap.getImage().getRGB(x, y) == IMPASSABLE)
 			return false;
 
-		// because this can take the most time to check, check it last
-		// can't move to spaces where normal npcs are located
+		// check for an npc at the position
 		if (npcMap.get(x + " " + y) != null)
 			return false;
 
@@ -169,13 +163,18 @@ public class Map {
 	
 
 	/**
-	 * Gets a merged list of all npcs and doors
+	 * Gets all the npcs
 	 * @return
 	 */
 	public NPC[] getAllNPCs() {
 		return npcMap.values().toArray(new NPC[]{});
 	}
 
+	public Event[] getAllEvents()
+	{
+		return eventMap.values().toArray(new Event[]{});
+	}
+	
 	public Sprite getDrawable() {
 		return drawMap;
 	}

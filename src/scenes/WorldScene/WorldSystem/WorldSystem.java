@@ -112,6 +112,9 @@ public class WorldSystem extends GameSystem
 					Formation f = currentTerrain.formations.get((int)(Math.random()*currentTerrain.formations.size()));
 					Engine.getInstance().changeToBattle(f, currentTerrain.getBackground());
 				}
+			//interact with event if stepped on
+			if (map.eventMap.get(x + " " + y) != null)
+				map.eventMap.get(x + " " + y).interact();
 		}
 	}
 
