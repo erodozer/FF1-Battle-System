@@ -36,7 +36,7 @@ public class WorldSystem extends GameSystem
 	{
 		e = Engine.getInstance();
 		encounterNum = 0;
-		leader = new NPC(null);
+		leader = new NPC();
 		leader.setWalkSprite(e.getParty().get(leaderIndex).getMapSelf());
 		currentTerrain = null;
 		activeNPC = null;

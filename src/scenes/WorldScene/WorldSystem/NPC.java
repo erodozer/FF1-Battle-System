@@ -43,17 +43,9 @@ public class NPC {
 	public NPC(Map m, Preferences node)
 	{
 		map = m;
-		if (node.name().startsWith("Door@"))
-		{
-			name = "door";	
-			speed = -1;		//doors can't move
-		}
-		else
-		{
-			name = node.get("name", "Jim");
-			speed = Integer.parseInt(node.get("speed", "-1"));
-			dialog = node.get("dialog", "...");
-		}
+		name = node.get("name", "Jim");
+		speed = Integer.parseInt(node.get("speed", "-1"));
+		dialog = node.get("dialog", "...");
 		
 		String pos = node.name().substring(node.name().indexOf('@')+1);
 		x = Integer.parseInt(pos.substring(0, pos.indexOf(',')));
@@ -69,9 +61,9 @@ public class NPC {
 	 * @param m
 	 * @param p
 	 */
-	public NPC(Map m)
+	public NPC()
 	{
-		map = m;
+		map = null;
 		x = 0;
 		y = 0;
 		speed = -1;

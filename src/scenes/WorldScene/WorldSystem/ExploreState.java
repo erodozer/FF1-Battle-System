@@ -44,7 +44,7 @@ public class ExploreState extends GameState {
 		x = parent.leader.x;
 		y = parent.leader.y;
 		
-		for (NPC n : parent.map.interactables)
+		for (NPC n : parent.map.getAllNPCs())
 			n.move();
 	}
 

@@ -16,7 +16,8 @@ public class Event extends NPC{
 	
 	public Event(Map m, Preferences node)
 	{
-		super(m);
+		super();
+		map = m;
 		String pos = node.name().substring(node.name().indexOf('@')+1);
 		int x = Integer.parseInt(pos.substring(0, pos.indexOf(',')));
 		int y = Integer.parseInt(pos.substring(pos.indexOf(',')+1));

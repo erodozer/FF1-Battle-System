@@ -49,11 +49,12 @@ public class Map {
 	{
 		terrains = new HashMap<Color, Terrain>();
 		npcMap = new HashMap<String, NPC>();
+		eventMap = new HashMap<String, Event>();
 		
 		String path = "maps/" + location + "/";
 		Preferences pref = null;
 		try {
-			pref = new IniPreferences(new Ini(new File("data/" + path+"/map.ini")));
+			pref = new IniPreferences(new Ini(new File("data/" + path+"map.ini")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,6 +68,7 @@ public class Map {
 				else if (section.startsWith("Event@"))
 					new Event(this, pref.node(section));
 		} catch (NullPointerException e) {
+			e.printStackTrace();
 			System.err.println("can not find file: " + "data/" + path + "map.ini");
 		} catch (BackingStoreException e) {
 			e.printStackTrace();
@@ -78,6 +80,9 @@ public class Map {
 		
 		width = (int)passabilityMap.getWidth();
 		height = (int)passabilityMap.getHeight();
+		
+		System.out.println(npcMap);
+		System.out.println(eventMap);
 	}
 	
 	/**
