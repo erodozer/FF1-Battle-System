@@ -120,7 +120,7 @@ public class NPC {
 					direction = dir;
 					xSlide = (pos[0]-x)/5.0;
 					ySlide = (pos[1]-y)/5.0;
-					map.npcMap.put(x + " " + y, null);
+					map.npcMap.remove(this.x + " " + this.y);
 					x = pos[0];
 					y = pos[1];
 					map.npcMap.put(x + " " + y, this);
@@ -143,7 +143,7 @@ public class NPC {
 		if (map.getPassability(x, y))
 		{
 			walk();
-			map.npcMap.put(this.x + " " + this.y, null);
+			map.npcMap.remove(this.x + " " + this.y);
 			this.x = x;
 			this.y = y;
 			map.npcMap.put(x + " " + y, this);
