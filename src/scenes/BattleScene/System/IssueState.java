@@ -106,8 +106,10 @@ public class IssueState extends GameState
 		
 		if (e.getKeyCode() == Input.KEY_B)
 		{
-			if (targetSelecting || spellSelecting)
-				start();
+			if (targetSelecting)
+				targetSelecting = false;
+			else if (spellSelecting)
+				spellSelecting = false;
 			else
 			{
 				actor.setMoving(2);
@@ -115,7 +117,7 @@ public class IssueState extends GameState
 			}
 		}
 		
-		if (spellSelecting)
+		if (spellSelecting && !targetSelecting)
 		{
 			if (e.getKeyCode() == Input.KEY_DN)
 				index+=3;
@@ -157,7 +159,6 @@ public class IssueState extends GameState
 					actor.setCommand(actor.getSpells(index / 3)[index % 3]);
 					targets = ((BattleSystem)parent).getTargets(actor);
 					index = 0;
-					spellSelecting = false;
 					targetSelecting = true;
 				}
 			}

@@ -182,6 +182,10 @@ public class NPC {
 	public void draw(Graphics g)
 	{
 		walkSprite.setFrame(moving+1, direction);
+		if (map.getOverlay(x, y))
+			walkSprite.trim(0,0,1,.6);
+		else
+			walkSprite.trim(0,0,1,1);
 		walkSprite.setX(x*Map.TILESIZE-walkSprite.getWidth()/2+Map.TILESIZE/2);
 		walkSprite.setY(y*Map.TILESIZE-walkSprite.getHeight()+Map.TILESIZE);
 		walkSprite.paint(g);

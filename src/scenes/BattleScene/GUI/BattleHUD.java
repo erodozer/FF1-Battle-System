@@ -111,14 +111,14 @@ public class BattleHUD extends HUD{
 			elistd.paint(g);
 			if (!((IssueState)parent.getState()).targetSelecting)
 			{
-				if (!((IssueState)parent.getState()).spellSelecting)
-					cd.update((IssueState)parent.getState());
+				cd.update((IssueState)parent.getState());
 				cd.paint(g);
-			}
-			else if (((IssueState)parent.getState()).spellSelecting)
-			{	
-				sd.update((IssueState)parent.getState());
-				sd.paint(g);
+
+				if (((IssueState)parent.getState()).spellSelecting)
+				{	
+					sd.update((IssueState)parent.getState());
+					sd.paint(g);
+				}
 			}
 		}
 		else if (parent.getState() instanceof MessageState)
