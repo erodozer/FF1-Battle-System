@@ -24,7 +24,7 @@ public class SpellTest {
 	 */
 	@Test
 	public void test() {
-		Player p = new Player("Jack");
+		Player p = new Player("Jack", "Red Mage");
 		Spell s = new Spell(p, "FIRE");
 
 		assertTrue(s.fire);
@@ -33,7 +33,7 @@ public class SpellTest {
 		assertEquals(10, s.effectivity);
 		
 		//make sure spell was added to the player's list of spells
-		assertEquals(s, p.getSpells(0)[0]);
+		assertEquals(s, p.getSpells(0)[1]);		//needs to be 1 because Red Mages already have 1 spell for now
 	}
 
 	/**
