@@ -16,6 +16,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 import org.ini4j.jdk14.edu.emory.mathcs.backport.java.util.Arrays;
 
@@ -80,8 +82,22 @@ public class Party extends ArrayList<Player>{
 	 * Load's all the party's data from a file
 	 * @param p 	Ini save file
 	 */
-	public void loadFromFile(Properties p)
+	public void loadFromFile(Preferences p)
 	{
+		String[] sections;
+		try {
+			sections = p.childrenNames();
+			for (String s : sections)
+				if (s.startsWith("player"))
+					this.add(Integer.parseInt(s.substring(6)), new Player(p.node(s)));
+			
+			Preferences inv = p.node("inventory");
+			for (String s : inv.keys())
+				if (inventory.containsKey(s))
+					inventory.put(s, inv.getInt(s, 0));
+		} catch (BackingStoreException e) {
+			System.err.println("Could not load party from save data");
+		}
 		
 	}
 	
