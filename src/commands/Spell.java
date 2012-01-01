@@ -1,7 +1,12 @@
 package commands;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
+import java.util.prefs.Preferences;
+
+import org.ini4j.Ini;
+import org.ini4j.IniPreferences;
 
 import actors.Actor;
 
@@ -16,20 +21,20 @@ import actors.Actor;
  */
 public class Spell extends Command {
 
-	protected int effectivity;	//base amount of damage dealt
-	protected int accuracy;			//chance the spell will hit at full power
+	protected int effectivity = 0;			//base amount of damage dealt
+	protected int accuracy = 0;				//chance the spell will hit at full power
 	
 	//Spells can deal elemental damage
 	//  shows if it's aligned to the element or not
-	protected boolean fire;			//fire
-	protected boolean frez;			//freezing
-	protected boolean elec;			//electricity
-	protected boolean lght;			//light
-	protected boolean dark;			//dark
+	protected boolean fire = false;			//fire
+	protected boolean frez = false;			//freezing
+	protected boolean elec = false;			//electricity
+	protected boolean lght = false;			//light
+	protected boolean dark = false;			//dark
 	
 	//level of magic that the spell is, required for determining which
 	// tier of mp to use
-	protected int lvl;
+	protected int lvl = 1;
 	
 	
 	/**
@@ -41,33 +46,33 @@ public class Spell extends Command {
 		invoker = a;
 		
 		this.name = name;
-		Properties prop = new Properties();
+		Preferences p = null;
 		try {
-			prop.load(new FileInputStream("data/spells/" + name + "/spell.ini"));
+			p = new IniPreferences(new Ini(new File("data/spells/" + name + "/spell.ini")));
+			speedBonus = p.getInt("speed", 0);
+			accuracy = p.getInt("accuracy", 1);
+			effectivity = p.getInt("effectivity", 1);
+			lvl = p.getInt("level", 1);
+						
+			//elements
+			fire = p.getBoolean("fire", false);
+			frez = p.getBoolean("frez", false);
+			elec = p.getBoolean("elec", false);
+			lght = p.getBoolean("lght", false);
+			dark = p.getBoolean("dark", false);
+
+			/*
+			 * Possible targets
+			 * ally = allies are targets	(true)
+			 * foe = enemies are targets	(false)
+			 * ally/foe correspond to whoever is using the spell
+			 *  ie. if an enemy is using the spell, then your party is its foe(s)
+			 */
+			targetable = p.getBoolean("castOnAlly", false);
 		} catch (Exception e) {
 			System.err.println("can not find file: " + "data/spells/" + name + "/spell.ini");
 		}
-		speedBonus = Integer.valueOf(prop.getProperty("speed", "0")).intValue();
-		accuracy = Integer.valueOf(prop.getProperty("accuracy", "1")).intValue();
-		effectivity = Integer.valueOf(prop.getProperty("effectivity", "1")).intValue();
-		lvl = Integer.valueOf(prop.getProperty("level", "1")).intValue();
-					
-		//elements
-		fire = Boolean.valueOf(prop.getProperty("fire", "false")).booleanValue();
-		frez = Boolean.valueOf(prop.getProperty("frez", "false")).booleanValue();
-		elec = Boolean.valueOf(prop.getProperty("elec", "false")).booleanValue();
-		lght = Boolean.valueOf(prop.getProperty("lght", "false")).booleanValue();
-		dark = Boolean.valueOf(prop.getProperty("dark", "false")).booleanValue();
 			
-		/*
-		 * Possible targets
-		 * ally = allies are targets	(true)
-		 * foe = enemies are targets	(false)
-		 * ally/foe correspond to whoever is using the spell
-		 *  ie. if an enemy is using the spell, then your party is its foe(s)
-		 */
-		targetable = Boolean.valueOf(prop.getProperty("castOnAlly", "false")).booleanValue();
-
 		//add the spell to the player's arsenal of spells
 		a.addSpell(this);
 
