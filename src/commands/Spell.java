@@ -48,7 +48,7 @@ public class Spell extends Command {
 		this.name = name;
 		Preferences p = null;
 		try {
-			p = new IniPreferences(new Ini(new File("data/spells/" + name + "/spell.ini")));
+			p = new IniPreferences(new Ini(new File("data/spells/" + name + "/spell.ini"))).node("spell");
 			speedBonus = p.getInt("speed", 0);
 			accuracy = p.getInt("accuracy", 1);
 			effectivity = p.getInt("effectivity", 1);
@@ -70,7 +70,7 @@ public class Spell extends Command {
 			 */
 			targetable = p.getBoolean("castOnAlly", false);
 		} catch (Exception e) {
-			System.err.println("can not find file: " + "data/spells/" + name + "/spell.ini");
+			System.err.println("can not read or find file: " + "data/spells/" + name + "/spell.ini");
 		}
 			
 		//add the spell to the player's arsenal of spells

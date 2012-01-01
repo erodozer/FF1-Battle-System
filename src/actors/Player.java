@@ -106,7 +106,7 @@ public class Player extends Actor {
 		level = 1;
 		
 		try {
-			Preferences	p = new IniPreferences(new Ini(new File("data/actors/jobs/" + pathname + "/job.ini")));
+			Preferences	p = new IniPreferences(new Ini(new File("data/actors/jobs/" + pathname + "/job.ini"))).node("initial");
 			maxhp = p.getInt("hp", 1);
 			hp = maxhp;
 			str = p.getInt("str", 1);
