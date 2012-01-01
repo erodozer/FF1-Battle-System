@@ -1,7 +1,12 @@
 package engine;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
+import java.util.prefs.Preferences;
+
+import org.ini4j.Ini;
+import org.ini4j.IniPreferences;
 
 import actors.Player;
 import scenes.*;
@@ -216,59 +221,41 @@ public class Engine{
 	 */
 	private void loadFromSave(int i)
 	{
-		Properties p = new Properties();
 		try {
-			p.load(new FileInputStream("data/actors/enemies/save" + i + ".ini"));
-			setParty(loadParty(p));
+			Preferences p = new IniPreferences(new Ini(new File("data/actors/enemies/save" + i + ".ini")));
+			Preferences map = p.node("map");
+			setParty(Party.loadFromFile(p));
+			
+			//if party could not load properly
+			if (party == null)
+				throw new Exception();
+			
+			//throw party to the map at which they saved
+			changeToWorld(map.get("where", "world"), map.getInt("x", 0), map.getInt("y", 0));
 		} catch (Exception e) {
 			System.out.println("Can not load file");
 		}
 	}
 	
 	/**
-	 * Takes a player and loads their stats from the save file
-	 * @param p				player to modify with save file data
-	 * @param saveFile		the save file
-	 * @param int i			player number
-	 * @return
+	 * Records save data to file
+	 * @param i
 	 */
-	private Player loadPlayer(Player p, Properties saveFile, int i)
+	private void recordSave(int i)
 	{
-		final String[] stats = {"Level", "HP", "Str", "Def", "Vit", "Acc", "Mag", "Spd", "Evd"};
 		
-		for (String stat : stats)
-			try {
-				p.getClass().getMethod("set"+stat, int.class).invoke(p, Integer.valueOf(saveFile.getProperty("player" + i + stat, "0")).intValue());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		return p;
-	}
-	
-	/**
-	 * Generates a party from save data
-	 * @param saveFile
-	 * @return
-	 */
-	private Party loadParty(Properties saveFile)
-	{
-		Party p = new Party();
-		for (int i = 0; i < 4; i++)
-		{
-			String name = saveFile.getProperty("player" + i + "name");
-			String job = saveFile.getProperty("player" + i + "job");
-			
-			p.add(name, job);
-			loadPlayer(p.get(i), saveFile, i);
-		}
-		return p;
 	}
 
+	/**
+	 * @param s the name of the current map the party is on
+	 */
 	public void setCurrentMap(String s) {
 		currentMap = s;
 	}
 
+	/**
+	 * @return the name of the current map the party is on
+	 */
 	public String getCurrentMap() {
 		return currentMap;
 	}

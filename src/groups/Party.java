@@ -82,23 +82,26 @@ public class Party extends ArrayList<Player>{
 	 * Load's all the party's data from a file
 	 * @param p 	Ini save file
 	 */
-	public void loadFromFile(Preferences p)
+	public static Party loadFromFile(Preferences p)
 	{
+		Party party = null;
+		
 		String[] sections;
 		try {
+			party = new Party();
 			sections = p.childrenNames();
 			for (String s : sections)
 				if (s.startsWith("player"))
-					this.add(Integer.parseInt(s.substring(6)), new Player(p.node(s)));
+					party.add(Integer.parseInt(s.substring(6)), new Player(p.node(s)));
 			
 			Preferences inv = p.node("inventory");
 			for (String s : inv.keys())
-				if (inventory.containsKey(s))
-					inventory.put(s, inv.getInt(s, 0));
+				if (party.inventory.containsKey(s))
+					party.inventory.put(s, inv.getInt(s, 0));
 		} catch (BackingStoreException e) {
 			System.err.println("Could not load party from save data");
 		}
-		
+		return party;
 	}
 	
 	
