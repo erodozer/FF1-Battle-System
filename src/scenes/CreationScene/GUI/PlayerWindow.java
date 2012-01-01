@@ -3,8 +3,6 @@ package scenes.CreationScene.GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 
-
-import actors.Job;
 import actors.Player;
 
 import engine.Sprite;
@@ -52,9 +50,7 @@ public class PlayerWindow extends Sprite {
 			return;
 		
 		g.drawString(p.getName(), w.getX() + 28, w.getY() + w.getHeight() - 10);
-		
-		if (p instanceof Job)
-			g.drawString(((Job)p).getJobName(), w.getX() + 12,  w.getY() + 22);
+		g.drawString(p.getJobName(), w.getX() + 12,  w.getY() + 22);
 	
 		p.getSprite().setX(w.getX() + w.getWidth()/2 - p.getSprite().getWidth()/2-10);
 		p.getSprite().setY(w.getY() + w.getHeight()/2 - p.getSprite().getHeight()/2+5);

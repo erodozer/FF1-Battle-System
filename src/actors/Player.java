@@ -1,6 +1,14 @@
 package actors;
 
 import java.awt.Graphics;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
+import java.util.Scanner;
+import java.util.prefs.Preferences;
 
 import scenes.BattleScene.BattleScene;
 import commands.*;
@@ -16,6 +24,29 @@ import engine.Sprite;
 
 public class Player extends Actor {
 
+	//All defined jobs can be found within the jobs directory 
+	public static final String[] AVAILABLEJOBS = new ArrayList<String>(){
+		{
+			for (String s : new File("data/actors/jobs").list())
+				if (new File("data/actors/jobs/" + s + "/job.ini").exists())
+					this.add(s);
+		}
+	}.toArray(new String[]{});
+	
+	
+	/*
+	 * S = STR
+	 * A = AGILITY/SPEED
+	 * V = VITALITY
+	 * I = INTELLIGENCE
+	 * L = LUCK
+	 * + = STRONG HP BOOST
+	 * 
+	 * First two lines define linear growth value of hit% and mdef
+	 */
+	protected String[] growth;
+	protected int[][] magicGrowth;
+	
 	protected int state;	//the player's current state for animation
 							// 0 = stand, 1 = walk, 2 = act, 3 = cast, 4 = victory
 	
@@ -40,17 +71,126 @@ public class Player extends Actor {
 	
 	protected Sprite mapSelf;			//map representation of the player
 	
+	private final String[] spriteNames = {"stand", "walk", "item", "cast", "victory", "dead"};
+	
+	protected String jobname;			//actual name of the job
+	private String pathname;			//name of the path to the job
+	
+	/*
+	 * spells are actually learned through items that teach the spell
+	 * but just for current testing purposes and capabilities, they
+	 * will learn the spells they are capable of learning at a level
+	 * automatically
+	 * 
+	 * This list is of the spells that job is actually capable of learning
+	 */
+	protected List<String> spellList;
+	
 	/**
 	 * Constructs a basic player
 	 * @param n
 	 */
-	public Player(String n)
+	public Player(String n, String j)
 	{
 		super(n);
+		System.out.println(Arrays.toString(AVAILABLEJOBS));
 		name = name.substring(0,Math.min(name.length(), 4));	//char limit of 4
 		level = 1;
 		exp = 0;
 		commands = new Command[]{new Attack(this), new ChooseSpell(this), new Drink(this), new ChooseItem(this), new Flee(this)};
+		spells = null;
+		pathname = j;
+		level = 1;
+		
+		Properties prop = new Properties();
+		try {
+			prop.load(new FileInputStream("data/actors/jobs/" + pathname + "/job.ini"));
+		} catch (Exception e) {
+			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/job.ini");
+		}
+		maxhp = Integer.valueOf(prop.getProperty("hp", "1")).intValue();
+		hp = maxhp;
+		str = Integer.valueOf(prop.getProperty("str", "1")).intValue();
+		itl = Integer.valueOf(prop.getProperty("int", "1")).intValue();
+		spd = Integer.valueOf(prop.getProperty("spd", "1")).intValue();
+		evd = Integer.valueOf(prop.getProperty("evd", "1")).intValue();
+		acc = Integer.valueOf(prop.getProperty("acc", "1")).intValue();
+		vit = Integer.valueOf(prop.getProperty("vit", "1")).intValue();
+		mdef = Integer.valueOf(prop.getProperty("mdef", "1")).intValue();
+		jobname = prop.getProperty("name", name);
+		
+		def = 0;	//def will always be 0 because no equipment is on by default
+	
+		//load growth curves
+		growth = new String[MAXLVL+1];
+		try {
+			FileInputStream f = new FileInputStream("data/actors/jobs/" + pathname + "/growth.txt");
+			Scanner s = new Scanner(f);
+			for (int i = 0; i <= MAXLVL; i++)
+				growth[i] = s.nextLine();
+		} catch (Exception e) {
+			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/growth.txt");
+			Arrays.fill(growth, "");
+		}
+	
+		//load mp level table
+		magicGrowth = new int[MAXLVL+1][8];
+		try {
+			FileInputStream f = new FileInputStream("data/actors/jobs/" + pathname + "/magicGrowth.txt");
+			Scanner s = new Scanner(f);
+			for (int i = 0; i < MAXLVL; i++)
+			{
+				String[] str = s.nextLine().split("/");
+				for (int x = 0; x < magicGrowth[i].length; x++)
+					magicGrowth[i][x] = Integer.valueOf(str[x]).intValue();
+			}
+		} catch (Exception e) {
+			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/magicGrowth.txt");
+		}
+		for (int i = 0; i < mp.length; i++)
+		{
+			mp[i][0] = magicGrowth[level-1][i];
+			mp[i][1] = magicGrowth[level-1][i];
+		}
+		
+		//load spells
+		spells = new Spell[8][3];
+		try {
+			FileInputStream f = new FileInputStream("data/actors/jobs/" + pathname + "/spells.txt");
+			Scanner s = new Scanner(f);
+			while (s.hasNext())
+			{
+				String spellName = s.next();
+				if (new File("data/spells/" + spellName + "/spell.ini").exists())
+					new Spell(this, spellName);
+			}
+		} catch (Exception e) {
+			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/spells.txt");
+		}		
+		loadSprites();
+	}
+	
+	/**
+	 * Constructs a player from a save file ini section
+	 * @param p		section that contains the player's data
+	 */
+	public Player(Preferences p)
+	{
+		this(p.get("name", "aaaa"), p.get("job", "Fighter"));
+		
+		hp = Integer.parseInt(p.get("hp", "1"));
+		maxhp = Integer.parseInt(p.get("maxhp", "1"));
+		int[][] m = {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}};
+		mp = m;
+		str = 1;
+		def = 1;
+		spd = 1;
+		evd = 1;
+		acc = 1;	
+		vit = 1;
+		itl = 1;
+		mdef = 1;
+		luk= 50;
 	}
 
 	/**
@@ -63,19 +203,17 @@ public class Player extends Actor {
 	}
 	
 	/**
-	 * Players themselves don't have sprites, that's determined by
-	 * their job that they get decorated with.  However, in the
-	 * event that they aren't decorated, they need a sprite just
-	 * so they don't crash.
+	 * Loads all the sprites that the job will use in battle
 	 */
 	@Override
-	protected void loadSprites() {
-		sprites = new Sprite[6];
-		//base battle sprites
-		for (int i = 0; i < sprites.length; i++)
-			sprites[i] = new Sprite("actors/base.png");
+	public void loadSprites()
+	{
+		sprites = new Sprite[spriteNames.length];
+		for (int i = 0; i < spriteNames.length; i++)
+			sprites[i] = new Sprite("actors/jobs/" + pathname + "/"+ spriteNames[i] + ".png");
 		//map wandering sprites
-		mapSelf = new Sprite("actors/jobs/basewalk.png", 2, 4);
+		mapSelf = new Sprite("actors/jobs/" + pathname + "/mapwalk.png", 2, 4);
+		
 		drawSprite = sprites[0];
 	}
 
@@ -87,22 +225,6 @@ public class Player extends Actor {
 	@Override
 	public Sprite getSprite() {
 		return drawSprite;
-	}
-
-	/**
-	 * When required exp is met, the player will level up
-	 * all the player's stats will be updated
-	 */
-	public void levelUp()
-	{
-		level++;
-		maxhp += 5;
-		hp = maxhp;
-		str += 1;
-		def += 1;
-		spd += 1;
-		evd += 1;
-		itl += 1;
 	}
 	
 	/**
@@ -240,8 +362,153 @@ public class Player extends Actor {
 		return moving;
 	}
 
+	/**
+	 * Retrieves the sprite used to represent the character on a map
+	 * @return
+	 */
 	public Sprite getMapSelf() {
 		return mapSelf;
 	}
 	
+	/**
+	 * Retrieves the sprites that are used for the job
+	 * @return
+	 */
+	public Sprite[] getSprites()
+	{
+		return sprites;
+	}
+	
+	/**
+	 * Retrieves the name by with the job is identified
+	 * @return
+	 */
+	public String getJobName() {
+		return jobname;
+	}
+	
+	/*
+	 * Jobs do not have setter methods for retrieving stat values.
+	 * This is because stat getters should be equations dependent on
+	 * the actor's level. Jobs do not have setter methods for retrieving 
+	 * stat values.  This is because stat getters should be equations 
+	 * dependent on the actor's level.  Additionally, these should only be
+	 * called upon level up.  
+	 * @param lvl	
+	 * 				level of the actor
+	 * @return	
+	 * 				the value of the stat when that actor is at the passed level
+	 */
+	
+	/**
+	 * Strength growth on level up
+	 */
+	protected int getStr(int lvl)
+	{
+		if (growth[lvl].contains("S"))
+			return 1;
+		else
+			return (Math.random() < .25)?0:1;
+	}
+	
+	/**
+	 * Speed/Agility growth on level up
+	 */
+	protected int getSpd(int lvl)
+	{
+		if (growth[lvl].contains("A"))
+			return 1;
+		else
+			return (Math.random() < .25)?0:1;
+	}
+	
+	/**
+	 * Intellegence growth on level up
+	 */
+	protected int getInt(int lvl)
+	{
+		if (growth[lvl].contains("I"))
+			return 1;
+		else
+			return (Math.random() < .25)?0:1;
+	}
+	
+	/**
+	 * Luck growth on level up
+	 */
+	protected int getLuck(int lvl)
+	{
+		if (growth[lvl].contains("L"))
+			return 1;
+		else
+			return (Math.random() < .25)?0:1;
+	}
+	
+	/**
+	 * Get vitality on level up
+	 */
+	protected int getVit(int lvl)
+	{
+		if (growth[lvl].contains("V"))
+			return 1;
+		else
+			return (Math.random() < .25)?0:1;
+	}
+	
+	/**
+	 * Growth for Hit%/Acc is linear
+	 */
+	protected int getAcc(int lvl)
+	{
+		return Integer.valueOf(growth[0]).intValue();
+	}
+
+	/**
+	 * Growth for Hit%/Acc is linear
+	 */
+	protected int getMDef(int lvl)
+	{
+		return Integer.valueOf(growth[1]).intValue();
+	}
+	
+	/**
+	 * HP can have strong levels where hp will go
+	 * up the default vit/4 plus an additional 20-25 points
+	 */
+	protected int getHP(int lvl)
+	{
+		int i = vit/4;
+		if (growth[lvl].contains("+"))
+			i += Math.random() * 5 + 20;
+		return i;
+	}
+	
+	/**
+	 * When required exp is met, the player will level up
+	 * all the player's stats will be updated
+	 * Defense does not grow because def is determined by armor
+	 */
+	public void levelUp()
+	{
+		level++;
+		//stats for level 1 are force on instantiation
+		// never should it ask for less than 2, error trap just in case
+		if (level < 2)
+			return;
+		
+		vit += getVit(level);
+		maxhp += getHP(level);
+		hp = maxhp;
+		str += getStr(level);
+		spd += getSpd(level);
+		itl += getInt(level);
+		mdef += getMDef(level);
+		acc += getAcc(level);
+		
+		for (int i = 0; i < mp.length; i++)
+		{
+			mp[i][0] = magicGrowth[level-1][i];
+			mp[i][1] = magicGrowth[level-1][i];
+		}
+	}
 }

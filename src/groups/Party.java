@@ -10,15 +10,20 @@ package groups;
  * 				are still alive.
  */
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
+import org.ini4j.jdk14.edu.emory.mathcs.backport.java.util.Arrays;
 
-import actors.Job;
 import actors.Player;
 
 public class Party extends ArrayList<Player>{
+	
+	HashMap<String, Integer> inventory = genInventory();
 	
 	/**
 	 * Returns a list of all members that are alive
@@ -34,13 +39,28 @@ public class Party extends ArrayList<Player>{
 	}
 
 	/**
+	 * Generates the party's inventory
+	 * @return
+	 */
+	private HashMap<String, Integer> genInventory() {
+		
+		HashMap<String, Integer> h = new HashMap<String, Integer>();
+		String[] l = new File("data/items").list();
+		for (String s : l)
+			if (new File("data/items/" + s + "/item.ini").exists())
+				h.put(s, 0);
+				
+		return h;
+	}
+
+	/**
 	 * Make new players with Job a
 	 */
 	public void add(String n, String job) {
-		if (Collections.binarySearch(Job.AVAILABLEJOBS, job) == -1)
+		if (Arrays.binarySearch(Player.AVAILABLEJOBS, job) == -1)
 			System.out.println("Job " + job + " does not exist");
 		else
-			this.add(new Job(new Player(n), job));
+			this.add(new Player(n, job));
 	}
 	
 	/**
@@ -55,5 +75,15 @@ public class Party extends ArrayList<Player>{
 				counter++;
 		return counter;
 	}	
+	
+	/**
+	 * Load's all the party's data from a file
+	 * @param p 	Ini save file
+	 */
+	public void loadFromFile(Properties p)
+	{
+		
+	}
+	
 	
 }
