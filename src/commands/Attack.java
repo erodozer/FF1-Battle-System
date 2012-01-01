@@ -1,7 +1,7 @@
 package commands;
 
 import actors.Actor;
-import actors.Job;
+import actors.Player;
 
 public class Attack extends Command {
 
@@ -95,8 +95,8 @@ public class Attack extends Command {
         D = (int)((Math.random()+1)*(invoker.getStr()/2))+1;
         
         //Black belts are special that their attack is their level*2 when unarmed
-		if (invoker instanceof Job)
-		    if (((Job)invoker).getJobName() == "Black Belt")
+		if (invoker instanceof Player)
+		    if (((Player)invoker).getJobName().equals("Bl. BELT"))
 		        D = invoker.getLevel()*2;
 		
 		int A = invoker.getTarget().getDef();

@@ -12,7 +12,6 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import actors.Job;
 import actors.Player;
 
 public class PartyTest extends TestCase{
@@ -44,7 +43,7 @@ public class PartyTest extends TestCase{
 		assertEquals(1, p.toArray().length);	
 		
 		assertEquals("APPL", p.get(0).getName());
-		assertEquals("Fighter", ((Job)p.get(0)).getJobName());
+		assertEquals("FIGHTER", p.get(0).getJobName());
 		
 	}
 	
@@ -56,8 +55,8 @@ public class PartyTest extends TestCase{
 	{
 		Party party = new Party();
 		party.add("APLJ", "Fighter");
-		party.add("RNBW", "BlackBelt");
-		party.add("TWIL", "RedMage");
+		party.add("RNBW", "Black Belt");
+		party.add("TWIL", "Red Mage");
 		
 		assertEquals(3, party.size());
 		assertEquals(3, party.getAlive());
@@ -72,8 +71,8 @@ public class PartyTest extends TestCase{
 	{
 		Party party = new Party();
 		party.add("APLJ", "Fighter");
-		party.add("RNBW", "BlackBelt");
-		party.add("TWIL", "RedMage");
+		party.add("RNBW", "Black Belt");
+		party.add("TWIL", "Red Mage");
 		
 		assertEquals(3, party.size());
 		assertEquals(3, party.getAlive());

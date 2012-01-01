@@ -60,7 +60,7 @@ public class AttackTest {
      */
     @Test
     public void testBlackBeltPunch() {
-        Actor a1 = new Job(new Player("Jill"), "Black Belt");
+        Actor a1 = new Player("Jill", "Black Belt");
         Actor a2 = new MockActor("Jeff");
         a2.setHP(10);
         a1.setStr(10);

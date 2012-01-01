@@ -3,7 +3,6 @@ package scenes.CreationScene.System;
 import engine.Engine;
 import engine.GameSystem;
 import groups.Party;
-import actors.Job;
 import actors.Player;
 
 /**
@@ -32,7 +31,7 @@ public class CreationSystem extends GameSystem{
 		e = Engine.getInstance();
 		party = new Party();
 		for (int i = 0; i < 4; i++)
-			party.add(new Job(new Player(""), Job.AVAILABLEJOBS.get(i)));
+			party.add(new Player("", Player.AVAILABLEJOBS[i]));
 		
 		index = 0;
 		activePlayer = party.get(0);

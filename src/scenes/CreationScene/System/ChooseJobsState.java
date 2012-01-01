@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 
 import engine.GameState;
 import engine.Input;
-import actors.Job;
 import actors.Player;
 
 /**
@@ -16,8 +15,8 @@ import actors.Player;
 public class ChooseJobsState extends GameState {
 
 	Player p;
-	Job[] jobs;
-	Job selectedJob;
+	Player[] jobs;
+	Player selectedJob;
 	int index;
 	
 	ChooseJobsState(CreationSystem c) {
@@ -27,9 +26,9 @@ public class ChooseJobsState extends GameState {
 	@Override
 	public void start() {
 		p = ((CreationSystem)parent).getActivePlayer();
-		jobs = new Job[Job.AVAILABLEJOBS.size()];
-		for (int i = 0; i < Job.AVAILABLEJOBS.size(); i++)
-			jobs[i] = new Job(p, Job.AVAILABLEJOBS.get(i));
+		jobs = new Player[Player.AVAILABLEJOBS.length];
+		for (int i = 0; i < Player.AVAILABLEJOBS.length; i++)
+			jobs[i] = new Player("", Player.AVAILABLEJOBS[i]);
 		index = ((CreationSystem)parent).getIndex();
 	}
 

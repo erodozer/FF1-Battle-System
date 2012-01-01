@@ -1,1 +1,2 @@
-CURE FIRE
+CURE
+LIT
