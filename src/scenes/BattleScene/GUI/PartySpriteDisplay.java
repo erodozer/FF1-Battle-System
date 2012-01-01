@@ -67,6 +67,7 @@ public class PartySpriteDisplay extends Sprite{
 			//Move the player in a walking animation
 			if (p == parent.getActiveActor() && p.getAlive())
 			{
+				//steps sprite forward
 				if (p.getMoving() == 0)
 				{
 					p.setState(Player.WALK);
@@ -78,8 +79,10 @@ public class PartySpriteDisplay extends Sprite{
 						p.setMoving(1);
 					}
 				}
+				//sprite stands still
 				else if (p.getMoving() == 1)
 					p.setX(window.getX() + 6);
+				//sprite moves back
 				else if (p.getMoving() == 2)
 				{
 					p.setState(Player.WALK);
@@ -96,6 +99,7 @@ public class PartySpriteDisplay extends Sprite{
 			}
 			else
 				p.setX(window.getX() + 16);
+			
 			if (!p.getAlive())
 				p.setState(Player.DEAD);
 			p.draw(g);
