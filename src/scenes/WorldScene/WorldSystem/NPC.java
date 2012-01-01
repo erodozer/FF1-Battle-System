@@ -31,10 +31,11 @@ public class NPC {
 						//   between 0 and 10
 						//   -1 to not move at all
 	
-	long startTime;
+	long startTime;		//time since last movement update
 	
-	int moving = 0;
+	int moving = 0;		//step in animation
 	int direction = Map.SOUTH;
+						//direction it is facing
 	
 	/**
 	 * Creates a standard npc
@@ -192,14 +193,23 @@ public class NPC {
 		moving %= 2;
 	}
 
+	/**
+	 * @return	x tile coordinate
+	 */
 	public int getX() {
 		return x;
 	}
 
+	/**
+	 * @return	y tile coordinate
+	 */
 	public int getY() {
 		return y;
 	}
 
+	/**
+	 * @return	npc's dialog
+	 */
 	public String getDialog() {
 		return dialog;
 	}
