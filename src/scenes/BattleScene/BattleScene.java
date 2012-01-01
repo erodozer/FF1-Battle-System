@@ -57,4 +57,13 @@ public class BattleScene extends Scene {
 		}
 	}
 
+	/**
+	 * Be sure to clear things out when done
+	 */
+	@Override
+	public void stop()
+	{
+		system = null;
+		display = null;
+	}
 }
