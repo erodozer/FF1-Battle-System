@@ -109,7 +109,7 @@ public class WorldSystem extends GameSystem
 				if (currentTerrain.formations.size() > 0)
 				{
 					encounterNum = 0;
-					Formation f = currentTerrain.formations.get((int)(Math.random()*currentTerrain.formations.size()));
+					Formation f = currentTerrain.getRandomFormation();
 					Engine.getInstance().changeToBattle(f, currentTerrain.getBackground());
 				}
 			//interact with event if stepped on

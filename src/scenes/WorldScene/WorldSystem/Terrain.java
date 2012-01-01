@@ -20,7 +20,7 @@ import java.util.prefs.Preferences;
  */
 public class Terrain {
 
-	ArrayList<Formation> formations;
+	ArrayList<String> formations;
 	Sprite background;
 	int encounterRate;
 	
@@ -30,17 +30,15 @@ public class Terrain {
 	 */
 	public Terrain(Preferences node) {
 		background = new Sprite("terrains/"+node.get("background", "grass.png"));
-		encounterRate = Integer.valueOf(node.get("rate", "10")).intValue();
-		formations = new ArrayList<Formation>();
+		encounterRate = node.getInt("rate", 10);
+		formations = new ArrayList<String>();
 		try {
 			for (String s : node.keys())
 				if (s.startsWith("formation"))
 				{
-					Formation f = new Formation();
-					for (String e : node.get(s, s).split(","))
-						f.add(e);
-					if (f.size() > 0)
-						formations.add(f);
+					String x = node.get(s, "");
+					if (x.trim().length() > 0)
+						formations.add(x);
 				}
 		} catch (BackingStoreException e) {
 			e.printStackTrace();
@@ -61,4 +59,15 @@ public class Terrain {
 		return background;
 	}
 
+	/**
+	 * @return picks a random formation of the terrain to fight
+	 */
+	public Formation getRandomFormation()
+	{
+		String s = formations.get((int)(Math.random()*formations.size()));
+		Formation f = new Formation();
+		for (String e : s.split(","))
+			f.add(e);
+		return (f.size() > 0)?f:null;
+	}
 }
