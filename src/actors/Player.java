@@ -10,6 +10,9 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.prefs.Preferences;
 
+import org.ini4j.Ini;
+import org.ini4j.IniPreferences;
+
 import scenes.BattleScene.BattleScene;
 import commands.*;
 import engine.Engine;
@@ -102,22 +105,22 @@ public class Player extends Actor {
 		pathname = j;
 		level = 1;
 		
-		Properties prop = new Properties();
 		try {
-			prop.load(new FileInputStream("data/actors/jobs/" + pathname + "/job.ini"));
+			Preferences	p = new IniPreferences(new Ini(new File("data/actors/jobs/" + pathname + "/job.ini")));
+			maxhp = p.getInt("hp", 1);
+			hp = maxhp;
+			str = p.getInt("str", 1);
+			itl = p.getInt("int", 1);
+			spd = p.getInt("spd", 1);
+			evd = p.getInt("evd", 1);
+			acc = p.getInt("acc", 1);
+			vit = p.getInt("vit", 1);
+			mdef = p.getInt("mdef", 1);
+			jobname = p.get("name", name);
 		} catch (Exception e) {
 			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/job.ini");
 		}
-		maxhp = Integer.valueOf(prop.getProperty("hp", "1")).intValue();
-		hp = maxhp;
-		str = Integer.valueOf(prop.getProperty("str", "1")).intValue();
-		itl = Integer.valueOf(prop.getProperty("int", "1")).intValue();
-		spd = Integer.valueOf(prop.getProperty("spd", "1")).intValue();
-		evd = Integer.valueOf(prop.getProperty("evd", "1")).intValue();
-		acc = Integer.valueOf(prop.getProperty("acc", "1")).intValue();
-		vit = Integer.valueOf(prop.getProperty("vit", "1")).intValue();
-		mdef = Integer.valueOf(prop.getProperty("mdef", "1")).intValue();
-		jobname = prop.getProperty("name", name);
+
 		
 		def = 0;	//def will always be 0 because no equipment is on by default
 	

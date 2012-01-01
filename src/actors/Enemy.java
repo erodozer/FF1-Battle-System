@@ -26,7 +26,7 @@ public class Enemy extends Actor {
 	public static final int LARGE = 128;
 	public static final int FULL = 212;
 	
-	int goldReward;		//amount of gold rewarded on killing the enemy
+	int goldReward = 0;	//amount of gold rewarded on killing the enemy
 	
 	int size;			//enemy sprite size type
 						//spacing of enemy sprites in the gui are spaced by the type of sprite they are
@@ -50,31 +50,31 @@ public class Enemy extends Actor {
 			Preferences elem = p.node("elemental");
 			Preferences main = p.node("main");
 			
-			maxhp = Integer.parseInt(dist.get("hp", "1"));
+			maxhp = dist.getInt("hp", 1);
 			hp = maxhp;
-			str = Integer.parseInt(dist.get("str", "1"));
-			def = Integer.parseInt(dist.get("def", "1"));
-			itl = Integer.parseInt(dist.get("int", "1"));
-			spd = Integer.parseInt(dist.get("spd", "1"));
-			evd = Integer.parseInt(dist.get("evd", "1"));
-			acc = Integer.parseInt(dist.get("acc", "1"));
-			vit = Integer.parseInt(dist.get("vit", "1"));
+			str = dist.getInt("str", 1);
+			def = dist.getInt("def", 1);
+			itl = dist.getInt("int", 1);
+			spd = dist.getInt("spd", 1);
+			evd = dist.getInt("evd", 1);
+			acc = dist.getInt("acc", 1);
+			vit = dist.getInt("vit", 1);
 			
-			fire = Integer.parseInt(elem.get("fire", "1"));
-			frez = Integer.parseInt(elem.get("frez", "1"));
-			elec = Integer.parseInt(elem.get("elec", "1"));
-			lght = Integer.parseInt(elem.get("lght", "1"));
-			dark = Integer.parseInt(elem.get("dark", "1"));
+			fire = elem.getInt("fire", 1);
+			frez = elem.getInt("frez", 1);
+			elec = elem.getInt("elec", 1);
+			lght = elem.getInt("lght", 1);
+			dark = elem.getInt("dark", 1);
 			
-			exp = Integer.parseInt(main.get("exp", "1"));
-			goldReward = Integer.parseInt(main.get("g", "0"));
-			Command[] c = {new Attack(this)};
-			commands = c;
-			loadSprites();
+			exp = main.getInt("exp", 1);
+			goldReward = main.getInt("g", 0);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		Command[] c = {new Attack(this)};
+		commands = c;
+		loadSprites();
 	}
 	
 	@Override
