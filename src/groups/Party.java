@@ -21,6 +21,8 @@ import java.util.prefs.Preferences;
 
 import org.ini4j.jdk14.edu.emory.mathcs.backport.java.util.Arrays;
 
+import engine.ItemDictionary;
+
 import actors.Player;
 
 public class Party extends ArrayList<Player>{
@@ -47,11 +49,8 @@ public class Party extends ArrayList<Player>{
 	private HashMap<String, Integer> genInventory() {
 		
 		HashMap<String, Integer> h = new HashMap<String, Integer>();
-		String[] l = new File("data/items").list();
-		for (String s : l)
-			if (new File("data/items/" + s + "/item.ini").exists())
-				h.put(s, 0);
-				
+		for (String s : ItemDictionary.map.keySet())
+			h.put(s, 0);	
 		return h;
 	}
 
