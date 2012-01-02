@@ -8,8 +8,15 @@ package groups;
  * 				the party class
  */
 
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.util.prefs.Preferences;
+
 import junit.framework.TestCase;
 
+import org.ini4j.Ini;
+import org.ini4j.IniPreferences;
 import org.junit.Test;
 
 import actors.Player;
@@ -84,5 +91,32 @@ public class PartyTest extends TestCase{
 		
 		assertEquals("RNBW", party.getAliveMembers()[0].getName());
 		assertEquals("TWIL", party.getAliveMembers()[1].getName());
+	}
+	
+	/**
+	 * Tests loading a party from save data
+	 */
+	@Test
+	public void testLoadFromFile()
+	{
+		Preferences save = null;
+		try {
+			save = new IniPreferences(new Ini(new File("savedata/test.ini")));
+		} catch (Exception e) {
+			fail("could not read test save file savadata/test.ini");
+		}
+		
+		Party party = Party.loadFromFile(save);
+		
+		assertEquals(3, party.size());
+		assertEquals(3, party.getAlive());
+		
+		
+		assertEquals("APPL", party.get(0).getName());
+		assertEquals("FIGHTER", party.get(0).getJobName());
+		assertEquals(5, party.get(0).getLevel());
+		
+		assertEquals("RNBW", party.get(1).getName());
+		assertEquals("TWIL", party.get(2).getName());
 	}
 }

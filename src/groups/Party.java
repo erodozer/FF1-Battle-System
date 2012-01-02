@@ -91,7 +91,7 @@ public class Party extends ArrayList<Player>{
 			sections = p.childrenNames();
 			for (String s : sections)
 				if (s.startsWith("player"))
-					party.add(Integer.parseInt(s.substring(6)), new Player(p.node(s)));
+					party.add(Integer.parseInt(s.substring(6))-1, new Player(p.node(s)));
 			
 			Preferences inv = p.node("inventory");
 			for (String s : inv.keys())

@@ -115,22 +115,26 @@ public class Player extends Actor {
 	{
 		this(p.get("name", "aaaa"), p.get("job", "Fighter"));
 		
+		/**
+		 * loads all the stats for the player,
+		 * if the stats don't exist then just use
+		 * the job's initial stats
+		 */
 		level = p.getInt("level", 1);
-		maxhp = p.getInt("maxhp", 1);
-		setHP(p.getInt("hp", 1));
-		mp = new int[8][2];
+		maxhp = p.getInt("maxhp", maxhp);
+		setHP(p.getInt("hp", hp));
 		for (int i = 0; i < mp.length; i++)
 		{
-			mp[i][0] = p.getInt("maxMpLvl"+(i+1), 0);
-			mp[i][1] = p.getInt("curMpLvl"+(i+1), 0);
+			mp[i][0] = p.getInt("maxMpLvl"+(i+1), mp[i][0]);
+			mp[i][1] = p.getInt("curMpLvl"+(i+1), mp[i][1]);
 		}
-		str = p.getInt("str", 1);
-		itl = p.getInt("int", 1);
-		spd = p.getInt("spd", 1);
-		acc = p.getInt("acc", 1);
-		vit = p.getInt("vit", 1);
-		mdef = p.getInt("mdef", 1);
-		luk = p.getInt("luck", 1);
+		str = p.getInt("str", str);
+		itl = p.getInt("int", itl);
+		spd = p.getInt("spd", spd);
+		acc = p.getInt("acc", acc);
+		vit = p.getInt("vit", vit);
+		mdef = p.getInt("mdef", mdef);
+		luk = p.getInt("luck", luk);
 	}
 
 	/**
