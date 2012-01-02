@@ -101,27 +101,67 @@ public class Player extends Actor {
 		level = 1;
 		exp = 0;
 		commands = new Command[]{new Attack(this), new ChooseSpell(this), new Drink(this), new ChooseItem(this), new Flee(this)};
-		spells = null;
-		pathname = j;
 		level = 1;
 		
-		try {
-			Preferences	p = new IniPreferences(new Ini(new File("data/actors/jobs/" + pathname + "/job.ini"))).node("initial");
-			maxhp = p.getInt("hp", 1);
-			hp = maxhp;
-			str = p.getInt("str", 1);
-			itl = p.getInt("int", 1);
-			spd = p.getInt("spd", 1);
-			evd = p.getInt("evd", 1);
-			acc = p.getInt("acc", 1);
-			vit = p.getInt("vit", 1);
-			mdef = p.getInt("mdef", 1);
-			jobname = p.get("name", name);
-		} catch (Exception e) {
-			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/job.ini");
-		}
-
+		loadJob(j);
+		loadSprites();
+	}
+	
+	/**
+	 * Constructs a player from a save file ini section
+	 * @param p		section that contains the player's data
+	 */
+	public Player(Preferences p)
+	{
+		this(p.get("name", "aaaa"), p.get("job", "Fighter"));
 		
+		level = p.getInt("level", 1);
+		hp = p.getInt("hp", 1);
+		maxhp = p.getInt("maxhp", 1);
+		mp = new int[8][2];
+		for (int i = 0; i < mp.length; i++)
+		{
+			mp[i][0] = p.getInt("maxMpLvl"+(i+1), 0);
+			mp[i][1] = p.getInt("curMpLvl"+(i+1), 0);
+		}
+		str = p.getInt("str", 1);
+		itl = p.getInt("int", 1);
+		spd = p.getInt("spd", 1);
+		evd = p.getInt("evd", 1);
+		acc = p.getInt("acc", 1);
+		vit = p.getInt("vit", 1);
+		mdef = p.getInt("mdef", 1);
+		luk = p.getInt("luck", 1);
+	}
+
+	/**
+	 * Loads the main data for a job
+	 * @param j			job name
+	 */
+	public void loadJob(String j)
+	{
+		pathname = j;
+		spells = null;
+		jobname = j;
+		
+		//set up initial stats if player is level 1
+		if (level == 1)
+			try {
+				Preferences	p = new IniPreferences(new Ini(new File("data/actors/jobs/" + pathname + "/job.ini"))).node("initial");
+				maxhp = p.getInt("hp", 1);
+				hp = maxhp;
+				str = p.getInt("str", 1);
+				itl = p.getInt("int", 1);
+				spd = p.getInt("spd", 1);
+				evd = p.getInt("evd", 1);
+				acc = p.getInt("acc", 1);
+				vit = p.getInt("vit", 1);
+				mdef = p.getInt("mdef", 1);
+				jobname = p.get("name", j);
+			} catch (Exception e) {
+				System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/job.ini\n	Initial job stats have not been loaded");
+			}
+
 		def = 0;	//def will always be 0 because no equipment is on by default
 	
 		//load growth curves
@@ -169,37 +209,9 @@ public class Player extends Actor {
 			}
 		} catch (Exception e) {
 			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/spells.txt");
-		}		
-		loadSprites();
+		}			
 	}
 	
-	/**
-	 * Constructs a player from a save file ini section
-	 * @param p		section that contains the player's data
-	 */
-	public Player(Preferences p)
-	{
-		this(p.get("name", "aaaa"), p.get("job", "Fighter"));
-		
-		level = p.getInt("level", 1);
-		hp = p.getInt("hp", 1);
-		maxhp = p.getInt("maxhp", 1);
-		mp = new int[8][2];
-		for (int i = 0; i < mp.length; i++)
-		{
-			mp[i][0] = p.getInt("maxMpLvl"+(i+1), 0);
-			mp[i][1] = p.getInt("curMpLvl"+(i+1), 0);
-		}
-		str = p.getInt("str", 1);
-		itl = p.getInt("int", 1);
-		spd = p.getInt("spd", 1);
-		evd = p.getInt("evd", 1);
-		acc = p.getInt("acc", 1);
-		vit = p.getInt("vit", 1);
-		mdef = p.getInt("mdef", 1);
-		luk = p.getInt("luck", 1);
-	}
-
 	/**
 	 * Get current evasionPlayer
 	 * @return
