@@ -8,7 +8,7 @@ import java.awt.Graphics;
  *
  *  Heads up display, mainly used for facading sprites for a scene to render
  */
-public class HUD extends Sprite
+public abstract class HUD extends Sprite
 {
 
     protected GameSystem parent;
@@ -33,10 +33,7 @@ public class HUD extends Sprite
     /**
      * Updates the display
      */
-    public void update()
-    {
-        
-    }
+    abstract public void update();
     
     /**
      * Paints the hud
