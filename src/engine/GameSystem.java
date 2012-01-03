@@ -16,7 +16,10 @@ public abstract class GameSystem
     /**
      * Updates the system
      */
-    abstract public void update();
+    public void update()
+    {
+    	state.handle();
+    }
 
     /**
      * Advances the system to the next state

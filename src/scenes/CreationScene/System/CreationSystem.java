@@ -75,14 +75,6 @@ public class CreationSystem extends GameSystem{
     	//e.changeToBattle(f);
 		e.changeToWorld("world", 12, 10);
 	}
-	
-	/**
-	 * Update loop
-	 */
-	@Override
-	public void update() {
-		state.handle();
-	}
 
 	/**
 	 * Gets the current party in development
