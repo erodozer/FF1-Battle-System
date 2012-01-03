@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 
 import scenes.BattleScene.System.*;
 
+import engine.GameScreen;
 import engine.GameSystem;
 import engine.HUD;
 import engine.Sprite;
@@ -32,7 +33,7 @@ public class BattleHUD extends HUD{
 	
 	private BattleSystem parent;
 	
-	private Font font;
+	private Font font = GameScreen.font;
 	
 	Sprite arrow;
 	
@@ -52,12 +53,6 @@ public class BattleHUD extends HUD{
 		md = new MessageDisplay(4, 160);
 		gd = new GameOverDisplay(4, 160);
 		vd = new VictoryDisplay(4, 160);
-		
-		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);
-		} catch (Exception e){
-			font = new Font("serif", Font.PLAIN, 10);
-		}
 		
 		arrow = new Sprite("hud/selectarrow.png");
 	}

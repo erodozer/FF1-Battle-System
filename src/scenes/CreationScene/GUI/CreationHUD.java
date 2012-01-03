@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 
 import scenes.CreationScene.System.*;
 
+import engine.GameScreen;
 import engine.HUD;
 
 /**
@@ -21,7 +22,7 @@ public class CreationHUD extends HUD{
 	public PartyDisplay partyd;
 	public NamingDisplay namingd;
 	
-	private Font font;
+	private Font font = GameScreen.font;
 	
 	/**
 	 * Constructs the HUD
@@ -32,13 +33,6 @@ public class CreationHUD extends HUD{
 		parent = p;
 		partyd = new PartyDisplay(p);	
 		namingd = new NamingDisplay(p);
-		
-		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);
-		} 
-		catch (Exception e){
-			font = new Font("serif", Font.PLAIN, 10);
-		}
 		
 	}
 	
