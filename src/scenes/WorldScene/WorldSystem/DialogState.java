@@ -5,6 +5,7 @@ import java.awt.Frame;
 import java.awt.event.KeyEvent;
 
 import engine.ContentPanel;
+import engine.GameScreen;
 import engine.GameState;
 import engine.GameSystem;
 import engine.Input;
@@ -66,8 +67,7 @@ public class DialogState extends GameState {
 	@Override
 	public void start() {
 		NPC n = ((WorldSystem)parent).activeNPC;
-		FontMetrics fm = Frame.getFrames()[0].getGraphics().getFontMetrics();		//if only there was an easier way to do this...
-		dialog = StringUtils.wrap(n.getDialog(), fm, ContentPanel.INTERNAL_RES_W - 10).toArray(new String[]{});
+		dialog = StringUtils.wrap(n.getDialog(), GameScreen.fontMetrics, ContentPanel.INTERNAL_RES_W - 10).toArray(new String[]{});
 		index = 0;
 	}
 
