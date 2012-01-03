@@ -64,15 +64,12 @@ public class CreationSystem extends GameSystem{
 	}
 	
 	/**
-	 * Ends creation and moves to first battle
+	 * Ends creation and moves to world map
 	 */
 	@Override
 	public void finish()
 	{
 		e.setParty(party);
-		//Formation f = new Formation();
-    	//f.add("Ntmare Mn");
-    	//e.changeToBattle(f);
 		e.changeToWorld("world", 12, 10);
 	}
 

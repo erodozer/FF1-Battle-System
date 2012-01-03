@@ -1,8 +1,10 @@
 package scenes.TitleScene.GUI;
 
+import java.awt.Font;
 import java.awt.Graphics;
 
 import scenes.TitleScene.System.*;
+import engine.GameScreen;
 import engine.HUD;
 
 /**
@@ -16,6 +18,7 @@ public class TitleGUI extends HUD {
 	private Intro intro;
 	private TitleScreen ts;
 	private TitleSystem parent;
+	Font font = GameScreen.font;
 	
 	public TitleGUI(TitleSystem t)
 	{
@@ -35,6 +38,7 @@ public class TitleGUI extends HUD {
 	
 	public void paint(Graphics g)
 	{
+		g.setFont(font);
 		if (parent.getState() instanceof IntroState)
 			intro.paint(g);
 		else

@@ -12,6 +12,7 @@ import actors.Player;
 import scenes.*;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;
+import scenes.TitleScene.TitleScene;
 import scenes.WorldScene.WorldScene;
 import groups.*;
 
@@ -66,7 +67,8 @@ public class Engine{
 	 */
 	public void startGame()
 	{
-		changeToCreation();
+		currentScene = new TitleScene();
+		currentScene.start();
 	}
 	
 	/**
@@ -86,15 +88,7 @@ public class Engine{
 	 */
 	public void changeToBattle(Formation formation)
 	{
-		if (currentScene != null && currentMap == null)
-			currentScene.stop();
-		try
-		{
-			Thread.sleep(500);
-		}
-		catch (InterruptedException e)
-		{
-		}
+		changeScene();
 		
 		currentScene = battle;
 		battle.start(formation);
@@ -107,15 +101,7 @@ public class Engine{
 	 * @param t
 	 */
 	public void changeToBattle(Formation f, Sprite background) {
-		if (currentScene != null && currentMap == null)
-			currentScene.stop();
-		try
-		{
-			Thread.sleep(500);
-		}
-		catch (InterruptedException e)
-		{
-		}
+		changeScene();
 		
 		currentScene = battle;	
 		battle.start(f, background);
@@ -126,20 +112,12 @@ public class Engine{
 	 * Switches the game's state to the world scene of the previously used map
 	 */
 	public void changeToWorld() {
+		//can't switch to the map when one has not been set yet
 		if (currentMap == null)
 			return;
 		
-		if (currentScene != null)
-			currentScene.stop();
-		try
-		{
-			Thread.sleep(500);
-		}
-		catch (InterruptedException e)
-		{
-		}
+		changeScene();
 		currentScene = world;
-		//world.start(currentMap, ((WorldSystem)world.getSystem()).getX(), ((WorldSystem)world.getSystem()).getY());
 	}
 		
 	/**
@@ -148,15 +126,7 @@ public class Engine{
 	 */
 	public void changeToWorld(String string, int startX, int startY)
 	{
-		if (currentScene != null)
-			currentScene.stop();
-		try
-		{
-			Thread.sleep(500);
-		}
-		catch (InterruptedException e)
-		{
-		}
+		changeScene();
 		currentScene = world;
 		world.start(string, startX, startY);
 	}
@@ -166,20 +136,25 @@ public class Engine{
 	 */
 	public void changeToCreation()
 	{
-		if (currentScene != null)
-			currentScene.stop();
-		try
-		{
-			Thread.sleep(500);
-		}
-		catch (InterruptedException e)
-		{
-		}
+		changeScene();
 		currentScene = creation;	
 		creation.start();
 		
 	}
 	
+	/**
+	 * Standard procedure executed when changing a scene
+	 */
+	private void changeScene()
+	{
+		if (currentScene != null)
+		{
+			currentScene.stop();
+			currentScene = null;
+		}
+		try{Thread.sleep(500);}
+		catch (InterruptedException e){}		
+	}
 	public Party getParty()
 	{
 		return party;
