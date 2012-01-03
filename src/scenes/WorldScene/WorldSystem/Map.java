@@ -81,8 +81,6 @@ public class Map {
 		width = (int)passabilityMap.getWidth();
 		height = (int)passabilityMap.getHeight();
 		
-		System.out.println(npcMap);
-		System.out.println(eventMap);
 	}
 	
 	/**
