@@ -1,5 +1,6 @@
 package scenes.TitleScene.GUI;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import scenes.TitleScene.System.TitleSystem;
@@ -30,15 +31,17 @@ public class TitleScreen extends Sprite {
 		super(null);
 		
 		background = new Sprite("titlebackground.png");
-		window = new Window(8, 200, 90, 60);
+		window = new Window(8, 160, 90, 60);
+		arrow = new Sprite("hud/selectarrow.png");
 	}
 
 	/**
 	 * Updates the display
+	 * @param titleState 
 	 */
-	public void update()
+	public void update(TitleState t)
 	{
-		index = ((TitleState)parent.getState()).getIndex();
+		index = t.getIndex();
 		arrow.setX(window.getX()-4);
 		arrow.setY(window.getY()+16+(index*18));
 	}
@@ -50,8 +53,9 @@ public class TitleScreen extends Sprite {
 	public void paint(Graphics g)
 	{
 		window.paint(g);
-		g.drawString("New Game", window.getX()+8, window.getY()+14);
-		g.drawString("Continue", window.getX()+8, window.getY()+32);
+		g.setColor(Color.WHITE);
+		g.drawString("New Game", window.getX()+12, window.getY()+26);
+		g.drawString("Continue", window.getX()+12, window.getY()+44);
 		arrow.paint(g);
 	}
 	
