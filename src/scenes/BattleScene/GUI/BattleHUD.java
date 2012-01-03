@@ -62,6 +62,12 @@ public class BattleHUD extends HUD{
 		arrow = new Sprite("hud/selectarrow.png");
 	}
 	
+	public void update(){}
+	
+	/**
+	 * Sets the background for the battle scene
+	 * @param s
+	 */
 	public void setBackground(Sprite s)
 	{
 		esprited.setBackground(s);
