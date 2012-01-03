@@ -72,4 +72,7 @@ public class WorldHUD extends HUD
 			dialog.paint(g);
 		}
 	}
+
+	@Override
+	public void update() {}
 }

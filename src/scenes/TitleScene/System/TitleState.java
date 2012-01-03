@@ -48,10 +48,7 @@ public class TitleState extends GameState {
 	 */
 	@Override
 	public void finish() {
-		if (index == 0)
-			e.changeToCreation();
-		else
-			e.loadFromSave(0);
+		parent.finish();
 	}
 
 	/**
@@ -61,6 +58,10 @@ public class TitleState extends GameState {
 	public void handleKeyInput(KeyEvent arg0) {
 		if (arg0.getKeyCode() == Input.KEY_A)
 			finish();
+		if (arg0.getKeyCode() == Input.KEY_DN)
+			index = 1;
+		else if (arg0.getKeyCode() == Input.KEY_UP)
+			index = 0;
 	}
 
 	/**

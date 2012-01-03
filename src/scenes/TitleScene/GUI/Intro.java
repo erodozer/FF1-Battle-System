@@ -8,6 +8,7 @@ import scenes.TitleScene.System.TitleSystem;
 import engine.ContentPanel;
 import engine.GameScreen;
 import engine.Sprite;
+import engine.StringUtils;
 
 /**
  * Intro
@@ -24,32 +25,29 @@ public class Intro extends Sprite {
 	private int page;
 	private String[] lines;
 	
-	IntroState parent;
-	
-	public Intro(TitleSystem t) {
+	public Intro() {
 		super(null);
-		parent = t.is;
 	}
 	
-	public void update()
+	public void update(IntroState i)
 	{
-		line = parent.getLine();
-		lines = parent.getLines();
-		page = parent.getPage();
-		alpha = parent.getAlpha();
+		lines = i.getLines();
+		line = i.getLine();
+		page = i.getPage();
+		alpha = i.getAlpha();
 	}
 	
 	@Override
 	public void paint(Graphics g)
 	{
 		g.setColor(Color.BLUE);
-		g.drawRect(0, 0, ContentPanel.INTERNAL_RES_W, ContentPanel.INTERNAL_RES_H);
+		g.fillRect(0, 0, ContentPanel.INTERNAL_RES_W, ContentPanel.INTERNAL_RES_H);
 		
 		g.setColor(Color.WHITE);
 		for (int i = 0; i < line; i++)
-			g.drawString(lines[i+page*10], 10, 16*i);
+			g.drawString(lines[i+page*10], 10, 24 + 21*i);
 		
 		g.setColor(new Color(255,255,255,alpha));
-		g.drawString(lines[line+page*10], 10, 16*line);
+		g.drawString(lines[line+page*10], 10, 24 + 21*line);
 	}
 }

@@ -1,36 +1,50 @@
 package scenes.TitleScene.System;
 
+import engine.Engine;
 import engine.GameSystem;
 
+/**
+ * TitleSystem
+ * @author nhydock
+ *
+ *	Main title screen system
+ */
 public class TitleSystem extends GameSystem {
 
-	IntroState is;
-	TitleState ts;
+	Engine engine;
 	
+	IntroState is;		//state for showing the blue backed intro story
+	TitleState ts;		//state for showing the title screen with choices
+	
+	/**
+	 * Constructs the title system
+	 */
 	public TitleSystem()
 	{
+		engine = Engine.getInstance();
+		
 		is = new IntroState(this);
 		ts = new TitleState(this);
 		
 		state = is;
-	}
-	
-	@Override
-	public void update() {
-		state.handle();
+		state.start();
 	}
 
 	@Override
 	public void setNextState() {
 		state = ts;
+		state.start();
 	}
 
 	/**
-	 * Do nothing
+	 * Goes into the game
 	 */
 	@Override
 	public void finish() {
-
+		if (ts.index == 0)
+			engine.changeToCreation();
+		else
+			engine.loadFromSave(0);
 	}
 
 }

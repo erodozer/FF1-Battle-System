@@ -6,14 +6,10 @@ import scenes.TitleScene.System.TitleSystem;
 
 public class TitleScene extends Scene {
 	
-	TitleSystem system;
-	TitleGUI display;
-	
 	public void start()
 	{
 		system = new TitleSystem();
-		system.start();
-		display = new TitleGUI(system);
+		display = new TitleGUI((TitleSystem)system);
 	}
 
 	public void stop()

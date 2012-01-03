@@ -2,8 +2,7 @@ package scenes.TitleScene.GUI;
 
 import java.awt.Graphics;
 
-import scenes.TitleScene.System.IntroState;
-import scenes.TitleScene.System.TitleSystem;
+import scenes.TitleScene.System.*;
 import engine.HUD;
 
 /**
@@ -14,21 +13,24 @@ import engine.HUD;
  */
 public class TitleGUI extends HUD {
 
-	Intro intro;
-	TitleScreen ts;
-	TitleSystem parent;
+	private Intro intro;
+	private TitleScreen ts;
+	private TitleSystem parent;
 	
 	public TitleGUI(TitleSystem t)
 	{
 		parent = t;
-		intro = new Intro(t);
-		ts = new TitleScreen(t);
+		intro = new Intro();
+		ts = new TitleScreen();
 	}
 	
 	@Override
 	public void update()
 	{
-		intro.update();
+		if (parent.getState() instanceof IntroState)
+			intro.update((IntroState)parent.getState());
+		else
+			ts.update((TitleState)parent.getState());
 	}
 	
 	public void paint(Graphics g)
