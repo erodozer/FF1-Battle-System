@@ -96,7 +96,6 @@ public class Player extends Actor {
 	public Player(String n, String j)
 	{
 		super(n);
-		System.out.println(Arrays.toString(AVAILABLEJOBS));
 		name = name.substring(0,Math.min(name.length(), 4));	//char limit of 4
 		level = 1;
 		exp = 0;
