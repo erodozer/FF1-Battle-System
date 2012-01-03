@@ -74,13 +74,10 @@ public class Engine{
 	 * the player had saved.
 	 * @param save
 	 */
+	@Deprecated
 	public void startGame(int save)
 	{
-		//since the other scenes have not yet been implemented
-		//loading a game restores the stats of the party
-		//and puts them back into the test battle against Nightmare Moon
 		loadFromSave(save);
-		startGame();
 	}
 	
 	/**
@@ -219,7 +216,7 @@ public class Engine{
 	 * Loads the save data
 	 * @param i		slot number
 	 */
-	private void loadFromSave(int i)
+	public void loadFromSave(int i)
 	{
 		try {
 			Preferences p = new IniPreferences(new Ini(new File("data/actors/enemies/save" + i + ".ini")));
