@@ -1,7 +1,12 @@
 package engine;
 
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileInputStream;
+
 import javax.swing.JFrame;
 
 /**
@@ -13,15 +18,19 @@ import javax.swing.JFrame;
 public class GameScreen extends JFrame implements KeyListener{
 
 	//frame resolution
-	final int FRAME_WIDTH = 512;
-	final int FRAME_HEIGHT = 512;
+	final static int FRAME_WIDTH = 512;
+	final static int FRAME_HEIGHT = 512;
 	
 	private ContentPanel c;
 	private Engine engine;
 	
+	//There's only 1 font used in the game
+	public static Font font;
+	public static FontMetrics fontMetrics; 
+	
 	//frame limiting
-    final int FRAMES_PER_SECOND = 30;					
-    final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
+    final static int FRAMES_PER_SECOND = 30;					
+    final static int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
     private int sleep_time = 0;
 
     Long next_game_tick = System.currentTimeMillis();
@@ -39,6 +48,13 @@ public class GameScreen extends JFrame implements KeyListener{
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setTitle("FF1 Battle System");
 		c = new ContentPanel(getWidth(), getHeight());
+		
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);
+		} 	catch (Exception e){
+			font = new Font("serif", Font.PLAIN, 10);
+		}
+		fontMetrics = c.getFontMetrics(font);
 		
 		setLayout(null);
 		setContentPane(c);
