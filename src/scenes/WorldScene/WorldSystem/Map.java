@@ -32,6 +32,8 @@ public class Map {
 	int width;
 	int height;
 	
+	Color clearColor;						//color the map clears to
+	
 	Sprite passabilityMap;					//map that determines which tiles can be stepped on (1x1 scale)
 	Sprite drawMap;							//map that is rendered to screen (16x16 scale)
 	Sprite formationMap;					//map of the different regions on the map with different formations and encounter rates
@@ -54,7 +56,7 @@ public class Map {
 		String path = "maps/" + location + "/";
 		Preferences pref = null;
 		try {
-			pref = new IniPreferences(new Ini(new File("data/" + path+"map.ini")));
+			pref = new IniPreferences(new Ini(new File("data/" + path + "map.ini")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,6 +69,7 @@ public class Map {
 					new NPC(this, pref.node(section));
 				else if (section.startsWith("Event@"))
 					new Event(this, pref.node(section));
+			clearColor = Color.decode(pref.node("map").get("clearColor", "#000000"));
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			System.err.println("can not find file: " + "data/" + path + "map.ini");
@@ -185,5 +188,9 @@ public class Map {
 	
 	public Sprite getDrawable() {
 		return drawMap;
+	}
+
+	public Color getClearColor() {
+		return clearColor;
 	}
 }
