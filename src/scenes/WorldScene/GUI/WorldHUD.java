@@ -35,6 +35,7 @@ public class WorldHUD extends HUD
 		e = Engine.getInstance();
 		map = m.getDrawable();
 		npcs = m.getAllNPCs();
+		clearColor = m.getClearColor();
 		
 		try {
 			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);
