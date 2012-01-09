@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 public class ContentPanel extends JPanel{
 
+	private static final Color DEFAULT_CLEAR_COLOR = Color.BLACK;
 	//NES Native resolution
 	public static final int INTERNAL_RES_W = 256;
 	public static final int INTERNAL_RES_H = 240;
@@ -17,14 +18,25 @@ public class ContentPanel extends JPanel{
 	private Graphics dbg;				//graphics context of the component
 	private Engine engine;
 	
+	private Color clearColor;			//color the background clears to
+	
 	public ContentPanel(int width, int height)
 	{
 		setSize(width, height);
 		setVisible(true);
 		
 		engine = Engine.getInstance();
+		clearColor = DEFAULT_CLEAR_COLOR;
 	}
 		
+	public void setClearColor(Color c)
+	{
+		if (c != null)
+			clearColor = c;
+		else
+			clearColor = DEFAULT_CLEAR_COLOR;
+	}
+	
 	/**
 	 * Updates the buffer
 	 */
@@ -42,7 +54,10 @@ public class ContentPanel extends JPanel{
 				dbg = dbImage.getGraphics();
 		}
 		dbg = dbImage.getGraphics();
-		dbg.setColor(Color.black);
+		if (engine.getCurrentScene() != null)
+			if (engine.getCurrentScene().getDisplay() != null)
+				setClearColor(engine.getCurrentScene().getDisplay().clearColor);
+		dbg.setColor(clearColor);
 		dbg.fillRect(0, 0, INTERNAL_RES_W, INTERNAL_RES_H);
 		
 		if (engine.getCurrentScene() != null)
