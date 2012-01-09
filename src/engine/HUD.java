@@ -1,5 +1,6 @@
 package engine;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -11,7 +12,8 @@ import java.awt.Graphics;
 public abstract class HUD extends Sprite
 {
 
-    protected GameSystem parent;
+    protected GameSystem parent;	//parent scene
+    protected Color clearColor;		//color the background of the scene clears to
     
     /**
      * Constructs a hud
