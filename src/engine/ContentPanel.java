@@ -30,8 +30,10 @@ public class ContentPanel extends JPanel{
 	
 	private Color clearColor;			//color the background clears to
 	
-	private int transition = 256;			//transition timer
-	private BufferedImage transFader;			//the transition fader grayscale image
+	private int transition = 256;		//transition timer
+	private static final int TRANSITIONRATE = 256/GameScreen.FRAMES_PER_SECOND;
+										//rate at which transitions occur
+	private BufferedImage transFader;	//the transition fader grayscale image
 	
 	public ContentPanel(int width, int height)
 	{
@@ -119,7 +121,7 @@ public class ContentPanel extends JPanel{
 			a[i] = 0;
 		}
 		
-		transition += 256/30;
+		transition += TRANSITIONRATE;
 		return new IndexColorModel(4, 256, r, g, b, a);
 	}
 	
@@ -132,9 +134,6 @@ public class ContentPanel extends JPanel{
 		render();
 		
 		if (dbImage != null)
-		{
 			graphics.drawImage(dbImage, 0, 0, getWidth(), getHeight(), null);
-		}
-		System.out.println(transition);
 	}	
 }
