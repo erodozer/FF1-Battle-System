@@ -2,14 +2,9 @@ package engine;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
-import java.awt.image.RGBImageFilter;
-import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -49,6 +44,10 @@ public class ContentPanel extends JPanel{
 		}
 	}
 		
+	/**
+	 * Sets the color that the panel's buffer clears to
+	 * @param c
+	 */
 	public void setClearColor(Color c)
 	{
 		if (c != null)
@@ -57,11 +56,17 @@ public class ContentPanel extends JPanel{
 			clearColor = DEFAULT_CLEAR_COLOR;
 	}
 	
+	/**
+	 * Tells the panel to show the transition animation
+	 */
 	public void evokeTransition()
 	{
 		transition = 0;
 	}
 	
+	/**
+	 * @return whether or not the panel is drawing the transition animation
+	 */
 	public boolean isTransitioning()
 	{
 		return transition < 255;
@@ -73,6 +78,7 @@ public class ContentPanel extends JPanel{
 	public void render()
 	{
 
+		//create the buffer if it hasn't been yet
 		if (dbImage == null)
 		{
 			dbImage = createImage(INTERNAL_RES_W, INTERNAL_RES_H);
@@ -84,15 +90,21 @@ public class ContentPanel extends JPanel{
 				dbg = dbImage.getGraphics();
 		}
 		dbg = dbImage.getGraphics();
+		
+		//use current scene's clear color if it exists
 		if (engine.getCurrentScene() != null)
 			if (engine.getCurrentScene().getDisplay() != null)
 				setClearColor(engine.getCurrentScene().getDisplay().clearColor);
+		
+		//clear the buffer
 		dbg.setColor(clearColor);
 		dbg.fillRect(0, 0, INTERNAL_RES_W, INTERNAL_RES_H);
 		
+		//draw the current scene
 		if (engine.getCurrentScene() != null)
 			engine.getCurrentScene().render(dbg);	
 		
+		//draw the transition
 		if (transition < 256 && transFader != null)
 		{
 			//dbg.drawImage(transFader, 0, 0, INTERNAL_RES_W, INTERNAL_RES_H, null);
@@ -101,7 +113,11 @@ public class ContentPanel extends JPanel{
 		}
 	}
 	
-	public IndexColorModel stepTransition()
+	/**
+	 * Updates the transition
+	 * @return
+	 */
+	private IndexColorModel stepTransition()
 	{
 		//bytes are 256 because of 32-bit png
 		byte[] r = new byte[256];
