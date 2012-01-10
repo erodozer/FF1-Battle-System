@@ -1,5 +1,6 @@
 package scenes.TitleScene.GUI;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -40,8 +41,14 @@ public class TitleGUI extends HUD {
 	{
 		g.setFont(font);
 		if (parent.getState() instanceof IntroState)
+		{
+			clearColor = Color.BLUE;
 			intro.paint(g);
+		}
 		else
+		{
+			clearColor = null;
 			ts.paint(g);
+		}
 	}
 }
