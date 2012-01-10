@@ -4,7 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.color.ColorSpace;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.IndexColorModel;
+import java.awt.image.RGBImageFilter;
+import java.awt.image.Raster;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class ContentPanel extends JPanel{
@@ -20,6 +30,9 @@ public class ContentPanel extends JPanel{
 	
 	private Color clearColor;			//color the background clears to
 	
+	private int transition = 256;			//transition timer
+	private BufferedImage transFader;			//the transition fader grayscale image
+	
 	public ContentPanel(int width, int height)
 	{
 		setSize(width, height);
@@ -27,6 +40,11 @@ public class ContentPanel extends JPanel{
 		
 		engine = Engine.getInstance();
 		clearColor = DEFAULT_CLEAR_COLOR;
+		try {
+			transFader = ImageIO.read(new File("data/transitions/slide.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 		
 	public void setClearColor(Color c)
@@ -35,6 +53,16 @@ public class ContentPanel extends JPanel{
 			clearColor = c;
 		else
 			clearColor = DEFAULT_CLEAR_COLOR;
+	}
+	
+	public void evokeTransition()
+	{
+		transition = 0;
+	}
+	
+	public boolean isTransitioning()
+	{
+		return transition < 255;
 	}
 	
 	/**
@@ -62,17 +90,51 @@ public class ContentPanel extends JPanel{
 		
 		if (engine.getCurrentScene() != null)
 			engine.getCurrentScene().render(dbg);	
-	}
 		
+		if (transition < 256 && transFader != null)
+		{
+			//dbg.drawImage(transFader, 0, 0, INTERNAL_RES_W, INTERNAL_RES_H, null);
+			dbg.drawImage(new BufferedImage(stepTransition(), transFader.getRaster(), false, null), 
+							   0, 0, INTERNAL_RES_W, INTERNAL_RES_H, null);
+		}
+	}
+	
+	public IndexColorModel stepTransition()
+	{
+		//bytes are 256 because of 32-bit png
+		byte[] r = new byte[256];
+		byte[] g = new byte[256];
+		byte[] b = new byte[256];
+		byte[] a = new byte[256];
+		Arrays.fill(r, (byte)clearColor.getRed());
+		Arrays.fill(g, (byte)clearColor.getGreen());
+		Arrays.fill(b, (byte)clearColor.getBlue());
+		Arrays.fill(a, (byte)255);
+		
+		for (int i = 0; i < transition; i++)
+		{
+			r[i] = (byte) 255;
+			g[i] = (byte) 255;
+			b[i] = (byte) 255;
+			a[i] = 0;
+		}
+		
+		transition += 256/30;
+		return new IndexColorModel(4, 256, r, g, b, a);
+	}
+	
 	/**
 	 * Paints the buffer to the panel
 	 */
 	public void paint()
 	{
-		Graphics2D g = (Graphics2D) getGraphics();
+		Graphics graphics = getGraphics();
 		render();
 		
 		if (dbImage != null)
-			g.drawImage(dbImage, 0, 0, getWidth(), getHeight(), null);
+		{
+			graphics.drawImage(dbImage, 0, 0, getWidth(), getHeight(), null);
+		}
+		System.out.println(transition);
 	}	
 }
