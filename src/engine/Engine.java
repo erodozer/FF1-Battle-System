@@ -29,12 +29,13 @@ public class Engine{
 	private BattleScene battle;			//battle scene
 	private MenuScene menu;				//menu interface
 	private WorldScene world;			//wandering the world
-	private CreationScene creation;		//create party
 	
 	private Scene currentScene;			//current scene being rendered
 	private String currentMap;			//current map the party is on
 	
 	private Party party;				//main party
+	
+	Thread transition;
 		
 	/**
 	 * Get the singleton instance
@@ -56,7 +57,6 @@ public class Engine{
 		battle = new BattleScene();
 		menu = new MenuScene();
 		world = new WorldScene();
-		creation = new CreationScene();
 		
 		party = new Party();
 		_instance = this;
@@ -67,6 +67,7 @@ public class Engine{
 	 */
 	public void startGame()
 	{
+		//changeScene();
 		currentScene = new TitleScene();
 		currentScene.start();
 	}
@@ -137,8 +138,8 @@ public class Engine{
 	public void changeToCreation()
 	{
 		changeScene();
-		currentScene = creation;	
-		creation.start();
+		currentScene = new CreationScene();;	
+		currentScene.start();
 		
 	}
 	
@@ -147,13 +148,17 @@ public class Engine{
 	 */
 	private void changeScene()
 	{
-		if (currentScene != null)
-		{
+		GameScreen.getInstance().c.evokeTransition();
+				
+		if (currentScene != null) {
 			currentScene.stop();
 			currentScene = null;
 		}
-		try{Thread.sleep(500);}
-		catch (InterruptedException e){}		
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+		}
+
 	}
 	public Party getParty()
 	{
