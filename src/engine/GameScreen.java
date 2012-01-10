@@ -17,12 +17,14 @@ import javax.swing.JFrame;
  */
 public class GameScreen extends JFrame implements KeyListener{
 
+	private static GameScreen _instance;	//singleton instance
+	
 	//frame resolution
 	final static int FRAME_WIDTH = 512;
 	final static int FRAME_HEIGHT = 512;
 	
-	private ContentPanel c;
-	private Engine engine;
+	ContentPanel c;
+	Engine engine;
 	
 	//There's only 1 font used in the game
 	public static Font font;
@@ -37,11 +39,23 @@ public class GameScreen extends JFrame implements KeyListener{
     // the current number of milliseconds
     // that have elapsed since the system was started
 
+	
+	/**
+	 * Get the singleton instance
+	 * @return
+	 */
+	public static GameScreen getInstance()
+	{
+		if (_instance == null)
+			new GameScreen();
+		
+		return _instance;
+	}
     
 	/**
 	 * Creates the main game screen
 	 */
-	public GameScreen()
+	private GameScreen()
 	{
 		engine = Engine.getInstance();
 		
@@ -94,6 +108,8 @@ public class GameScreen extends JFrame implements KeyListener{
 				}
 			}
 		}.start();
+		
+		_instance = this;
 	}
 
 	// test client
