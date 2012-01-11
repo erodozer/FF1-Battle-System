@@ -12,6 +12,8 @@ import actors.Player;
 import scenes.*;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;
+import scenes.ShopScene.ShopScene;
+import scenes.ShopScene.System.Shop;
 import scenes.TitleScene.TitleScene;
 import scenes.WorldScene.WorldScene;
 import groups.*;
@@ -140,6 +142,14 @@ public class Engine{
 		changeScene();
 		currentScene = new CreationScene();;	
 		currentScene.start();
+		
+	}
+	
+	public void changeToShop(Shop shop) {
+		changeScene();
+		ShopScene s = new ShopScene();
+		currentScene = s;	
+		s.start(shop);
 		
 	}
 	
