@@ -2,11 +2,11 @@ package scenes.ShopScene.System;
 
 import java.awt.event.KeyEvent;
 
+import scenes.GameState;
+import scenes.GameSystem;
 import scenes.ShopScene.ShopScene;
 
 import engine.Engine;
-import engine.GameState;
-import engine.GameSystem;
 import engine.Input;
 
 public class GreetState extends GameState {

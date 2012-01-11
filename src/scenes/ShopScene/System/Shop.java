@@ -43,4 +43,8 @@ public class Shop {
 	public Item[] getItems() {
 		return items;
 	}
+
+	public Sprite getShopKeeper() {
+		return shopKeeper;
+	}
 }
