@@ -1,7 +1,7 @@
 package scenes.TitleScene.System;
 
+import scenes.GameSystem;
 import engine.Engine;
-import engine.GameSystem;
 
 /**
  * TitleSystem

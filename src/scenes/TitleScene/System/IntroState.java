@@ -7,13 +7,14 @@ import java.io.FileNotFoundException;
 
 import engine.ContentPanel;
 import engine.GameScreen;
-import engine.GameState;
-import engine.GameSystem;
 import engine.Input;
 import engine.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import scenes.GameState;
+import scenes.GameSystem;
 
 public class IntroState extends GameState{
 

@@ -1,8 +1,9 @@
 package scenes.WorldScene.WorldSystem;
 
 import java.awt.event.KeyEvent;
+
+import scenes.GameSystem;
 import engine.Engine;
-import engine.GameSystem;
 import groups.Formation;
 
 public class WorldSystem extends GameSystem

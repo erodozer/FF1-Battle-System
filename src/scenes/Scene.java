@@ -3,8 +3,6 @@ package scenes;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import engine.GameSystem;
-import engine.HUD;
 
 /**
  * Scene.java

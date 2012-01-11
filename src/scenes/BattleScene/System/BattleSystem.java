@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import scenes.GameSystem;
+
 import commands.*;
 
 import engine.Engine;
-import engine.GameSystem;
 import engine.MP3;
 import groups.*;
 

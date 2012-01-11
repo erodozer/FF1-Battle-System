@@ -6,10 +6,10 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.FileInputStream;
 
+import scenes.HUD;
 import scenes.CreationScene.System.*;
 
 import engine.GameScreen;
-import engine.HUD;
 
 /**
  * HUD.java

@@ -6,11 +6,11 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.FileInputStream;
 
+import scenes.GameSystem;
+import scenes.HUD;
 import scenes.BattleScene.System.*;
 
 import engine.GameScreen;
-import engine.GameSystem;
-import engine.HUD;
 import engine.Sprite;
 
 /**

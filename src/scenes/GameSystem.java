@@ -1,4 +1,4 @@
-package engine;
+package scenes;
 
 import java.awt.event.KeyEvent;
 

@@ -1,7 +1,7 @@
 package scenes.CreationScene.System;
 
+import scenes.GameSystem;
 import engine.Engine;
-import engine.GameSystem;
 import groups.Party;
 import actors.Player;
 

@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import scenes.HUD;
 import scenes.TitleScene.System.*;
 import engine.GameScreen;
-import engine.HUD;
 
 /**
  * TitleGGUI

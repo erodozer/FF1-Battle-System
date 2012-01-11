@@ -4,10 +4,11 @@ import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 
+import scenes.GameState;
+import scenes.GameSystem;
+
 import engine.ContentPanel;
 import engine.GameScreen;
-import engine.GameState;
-import engine.GameSystem;
 import engine.Input;
 import engine.StringUtils;
 
