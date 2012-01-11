@@ -20,6 +20,7 @@ public class ShopScene extends Scene {
 	}
 
 	public void start(Shop shop) {
-		
+		system = new ShopSystem(shop);
+		display = new ShopGUI((ShopSystem)system);
 	}
 }

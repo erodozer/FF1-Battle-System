@@ -17,10 +17,10 @@ import org.ini4j.InvalidFileFormatException;
  */
 public class Item {
 
-	protected String name;
-	protected Preferences inifile;
+	protected String name;			//name of the item
+	protected Preferences inifile;	//data file
 
-	protected int worth;
+	protected int worth;			//price of the item
 	
 	
 	/**
@@ -44,8 +44,18 @@ public class Item {
 		
 	}
 
+	/**
+	 * @return	name of the item
+	 */
 	public String getName()
 	{
 		return name;
+	}
+
+	/**
+	 * @return	the cost of the item
+	 */
+	public int getPrice() {
+		return worth;
 	}
 }

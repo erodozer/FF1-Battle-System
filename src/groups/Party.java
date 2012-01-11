@@ -10,6 +10,8 @@ package groups;
  * 				are still alive.
  */
 
+import item.Item;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +30,7 @@ import actors.Player;
 public class Party extends ArrayList<Player>{
 	
 	HashMap<String, Integer> inventory = genInventory();
+	int gold;
 	
 	/**
 	 * Returns a list of all members that are alive
@@ -103,5 +106,55 @@ public class Party extends ArrayList<Player>{
 		return party;
 	}
 	
+	
+	/*
+	 * Simple methods for manipulating gold and stuff
+	 */
+	public void subtractGold(int i)
+	{
+		gold -= i;
+	}
+	
+	public void addGold(int i)
+	{
+		gold += i;
+	}
+	
+	public int getGold()
+	{
+		return gold;
+	}
+	
+	public void setGold(int i)
+	{
+		gold = i;
+	}
+	
+	/*
+	 * Simple methods for manipulating the inventory
+	 */
+	
+	/**
+	 * Adds the item to the party's possession
+	 */
+	public boolean addItem(Item i)
+	{
+		int count = inventory.get(i.getName());
+		
+		inventory.put(i.getName(), inventory.get(i.getName()) + 1);
+		
+		return (inventory.get(i.getName()) > count);
+	}
+	
+	/**
+	 * Removes the item from the party's possession
+	 */
+	public boolean removeItem(Item i)
+	{
+		int count = inventory.get(i.getName());
+		if (count > 0)
+			inventory.put(i.getName(), inventory.get(i.getName()) - 1);
+		return (inventory.get(i.getName()) < count);
+	}
 	
 }
