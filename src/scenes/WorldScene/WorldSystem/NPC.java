@@ -3,6 +3,9 @@ package scenes.WorldScene.WorldSystem;
 import java.awt.Graphics;
 import java.util.prefs.Preferences;
 
+import scenes.ShopScene.System.Shop;
+
+import engine.Engine;
 import engine.Sprite;
 
 /**
@@ -37,6 +40,14 @@ public class NPC {
 	int direction = Map.SOUTH;
 						//direction it is facing
 	
+	String whereTo;		//if interaction involves teleporting, where to
+	int whereToX;
+	int whereToY;
+	
+	Shop shop;
+	
+	String interact;	//interaction type
+	
 	/**
 	 * Creates a standard npc
 	 * @param m
@@ -55,6 +66,20 @@ public class NPC {
 		startTime = System.currentTimeMillis();
 		map.npcMap.put(x + " " + y, this);
 		
+		interact = node.get("interact", "dialog");
+		if (interact.equals("teleport"))
+		{
+			String[] s = node.get("whereTo", "world, 12, 10").split(",");
+			whereTo = s[0];
+			whereToX = Integer.parseInt(s[1]);
+			whereToY = Integer.parseInt(s[2]);
+		}
+		else if (interact.equals("dialog"))
+			dialog = node.get("dialog", "...");
+		else if (interact.equals("shop"))
+		{
+			shop = new Shop(node);
+		}
 	}
 	
 	/**
@@ -68,6 +93,15 @@ public class NPC {
 		x = 0;
 		y = 0;
 		speed = -1;
+	}
+	
+	public String interact()
+	{
+		if (whereTo != null)
+			Engine.getInstance().changeToWorld(whereTo, whereToX, whereToY);
+		else if (shop != null)
+			Engine.getInstance().changeToShop(shop);
+		return interact;
 	}
 	
 	/**
