@@ -94,7 +94,7 @@ public class ContentPanel extends JPanel{
 		//use current scene's clear color if it exists
 		if (engine.getCurrentScene() != null)
 			if (engine.getCurrentScene().getDisplay() != null)
-				setClearColor(engine.getCurrentScene().getDisplay().clearColor);
+				setClearColor(engine.getCurrentScene().getDisplay().getClearColor());
 		
 		//clear the buffer
 		dbg.setColor(clearColor);
