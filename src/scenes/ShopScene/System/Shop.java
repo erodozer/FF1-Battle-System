@@ -5,6 +5,7 @@ import item.Item;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
+import engine.ItemDictionary;
 import engine.MP3;
 import engine.Sprite;
 
@@ -27,7 +28,8 @@ public class Shop {
 		ArrayList<Item> i = new ArrayList<Item>();
 		
 		for (String s : node.get("items", "").split(","))
-			i.add(new Item(s.trim()));
+			if (ItemDictionary.map.containsKey(s.trim()))
+				i.add(new Item(s.trim()));
 				
 		items = i.toArray(new Item[]{});
 		
