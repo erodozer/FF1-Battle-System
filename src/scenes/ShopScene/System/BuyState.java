@@ -5,9 +5,10 @@ import item.Item;
 
 import java.awt.event.KeyEvent;
 
+import scenes.GameState;
+import scenes.GameSystem;
+
 import engine.Engine;
-import engine.GameState;
-import engine.GameSystem;
 import engine.Input;
 
 /**

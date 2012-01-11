@@ -7,12 +7,6 @@ import scenes.ShopScene.System.ShopSystem;
 
 public class ShopScene extends Scene {
 	
-	public void start()
-	{
-		system = new ShopSystem();
-		display = new ShopGUI((ShopSystem)system);
-	}
-
 	public void stop()
 	{
 		system = null;

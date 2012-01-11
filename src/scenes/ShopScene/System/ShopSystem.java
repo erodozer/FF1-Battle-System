@@ -1,6 +1,6 @@
 package scenes.ShopScene.System;
 
-import engine.GameSystem;
+import scenes.GameSystem;
 
 public class ShopSystem extends GameSystem {
 
@@ -8,27 +8,17 @@ public class ShopSystem extends GameSystem {
 	
 	//different states of the system
 	BuyState bs;
-	SellState ss;
+	//SellState ss;
 	GreetState gs;
-	
-	public ShopSystem()
-	{
-		bs = new BuyState(this);
-		ss = new SellState(this);
-		gs = new GreetState(this);
-		
-		state = gs;
-	}
 	
 	public ShopSystem(Shop s)
 	{
-		this();
-		setShop(s);
-	}
-	
-	public void setShop(Shop s)
-	{
 		shop = s;
+		bs = new BuyState(this);
+		//ss = new SellState(this);
+		gs = new GreetState(this);
+		
+		state = gs;
 		if (shop.bgm != null)
 			shop.bgm.play();
 	}
@@ -47,8 +37,8 @@ public class ShopSystem extends GameSystem {
 	public void setNextState() {
 		if (gs.index == 0)
 			state = bs;
-		else
-			state = ss;
+		//else
+		//	state = ss;
 		state.start();
 	}
 	
