@@ -64,7 +64,6 @@ public class NPC {
 		y = Integer.parseInt(pos.substring(pos.indexOf(',')+1));
 		setWalkSprite("npcs/" + node.get("sprite", "npc01.png"));
 		startTime = System.currentTimeMillis();
-		map.npcMap.put(x + " " + y, this);
 		
 		interact = node.get("interact", "dialog");
 		if (interact.equals("teleport"))
@@ -80,6 +79,8 @@ public class NPC {
 		{
 			shop = new Shop(node);
 		}
+		
+		map.npcMap.put(x + " " + y, this);
 	}
 	
 	/**
