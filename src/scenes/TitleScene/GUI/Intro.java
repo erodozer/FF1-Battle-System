@@ -40,6 +40,9 @@ public class Intro extends Sprite {
 	@Override
 	public void paint(Graphics g)
 	{
+		if (lines == null)
+			return;
+		
 		g.setColor(Color.WHITE);
 		for (int i = 0; i < line; i++)
 			g.drawString(lines[i+page*10], 10, 24 + 21*i);

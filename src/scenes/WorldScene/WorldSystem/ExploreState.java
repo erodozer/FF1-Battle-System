@@ -2,7 +2,8 @@ package scenes.WorldScene.WorldSystem;
 
 import java.awt.event.KeyEvent;
 
-import engine.GameState;
+import scenes.GameState;
+
 import engine.Input;
 
 /**
@@ -72,7 +73,7 @@ public class ExploreState extends GameState {
       		
         	NPC n = parent.map.npcMap.get(ahead[0] + " " + ahead[1]);
         	if (n != null)
-        		if (n.getDialog() != null)
+        		if (n.interact() == "dialog")
         		{
         			parent.activeNPC = n;
         			parent.setNextState();

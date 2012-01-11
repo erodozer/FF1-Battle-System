@@ -2,7 +2,8 @@ package scenes.CreationScene.System;
 
 import java.awt.event.KeyEvent;
 
-import engine.GameState;
+import scenes.GameState;
+
 import engine.Input;
 import actors.Player;
 

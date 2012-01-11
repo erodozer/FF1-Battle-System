@@ -1,7 +1,11 @@
-package engine;
+package scenes;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+
+import engine.GameScreen;
+import engine.Sprite;
 
 /**
  * HUD
@@ -15,6 +19,8 @@ public abstract class HUD extends Sprite
     protected GameSystem parent;	//parent scene
     protected Color clearColor;		//color the background of the scene clears to
     
+    protected Font font = GameScreen.font;
+	
     /**
      * Constructs a hud
      */
@@ -45,4 +51,8 @@ public abstract class HUD extends Sprite
     {
         super.paint(g);
     }
+
+	public Color getClearColor() {
+		return clearColor;
+	}
 }

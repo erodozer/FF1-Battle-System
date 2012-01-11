@@ -2,8 +2,9 @@ package scenes.BattleScene.System;
 
 import java.awt.event.KeyEvent;
 
+import scenes.GameState;
+
 import commands.*;
-import engine.GameState;
 import engine.Input;
 
 import actors.Actor;
