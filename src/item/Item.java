@@ -17,6 +17,7 @@ import org.ini4j.InvalidFileFormatException;
  */
 public class Item {
 
+	protected String name;
 	protected Preferences inifile;
 
 	protected int worth;
@@ -28,12 +29,14 @@ public class Item {
 	 */
 	public Item(String s)
 	{
+		name = s;
+		
 		Preferences p;
 		try {
 			inifile = new IniPreferences(new Ini(new File("data/items/" + s + "/item.ini")));
 			Preferences main = inifile.node("item");
 
-			
+			worth = main.getInt("price", 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,4 +44,8 @@ public class Item {
 		
 	}
 
+	public String getName()
+	{
+		return name;
+	}
 }
