@@ -8,19 +8,36 @@ import java.awt.event.KeyEvent;
 import engine.Engine;
 import engine.GameState;
 import engine.GameSystem;
+import engine.Input;
 
+/**
+ * BuyState
+ * @author nhydock
+ *
+ *	GameState for ShopSystem, allows player to buy items from the shop
+ */
 public class BuyState extends GameState {
 
-	int index;
-	Item[] items;
-	Party party;
+	ShopSystem parent;	//parent shop system
 	
+	int index;			//index of selected item
+	Item[] items;		//items for sale
+	Party party;		//your party
+	
+	/**
+	 * Constructs a buy state
+	 * @param c
+	 */
 	public BuyState(ShopSystem c) {
 		super(c);
+		parent = c;
 		items = c.shop.getItems();
 		party = Engine.getInstance().getParty();
 	}
 	
+	/**
+	 * Sets up initial settings
+	 */
 	@Override
 	public void start() {
 		index = 0;
@@ -31,16 +48,39 @@ public class BuyState extends GameState {
 
 	}
 
+	/**
+	 * Quit buy state
+	 */
 	@Override
 	public void finish() {
-		// TODO Auto-generated method stub
-
+		parent.start();
 	}
 
+	/**
+	 * Handles input
+	 */
 	@Override
 	public void handleKeyInput(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
+		int key = arg0.getKeyCode();		//key code of key pressed
+		
+		//navigate menu
+		if (key == Input.KEY_UP)
+			index--;
+		else if (key == Input.KEY_DN)
+			index++;
+		//buy item
+		else if (key == Input.KEY_A)
+		{
+			Item i = items[index];
+			//only buy the item if the party has enough money to buy it
+			if (i.getPrice() <= party.getGold())
+			{
+				party.addItem(i);
+				party.subtractGold(i.getPrice());
+			}
+		}
+		else if (key == Input.KEY_B)
+			finish();
 	}
 
 }
