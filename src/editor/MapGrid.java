@@ -140,8 +140,6 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		if (g == null)
 			return;
 		
-		g.setColor(Color.GRAY);
-		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		if (dbImage == null)
 		{

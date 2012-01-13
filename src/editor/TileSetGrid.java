@@ -130,8 +130,6 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		if (g == null)
 			return;
 		
-		g.setColor(Color.GRAY);
-		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setClip(0, 0, getWidth(), getHeight());
 		if (dbImage == null)
 		{

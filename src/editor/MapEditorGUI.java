@@ -1,4 +1,5 @@
 package editor;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -24,6 +25,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import engine.TileSet;
@@ -145,12 +147,18 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		 * Initialize editor
 		 */
 		editGrid = new MapGrid(this);
-		editGrid.setLocation(220, 10);
-		editGrid.setSize(420, 365);
+		JScrollPane editPane = new JScrollPane();
+		editPane.setLocation(220, 10);
+		editPane.setSize(420, 365);
+		editPane.setViewportView(editGrid);
+		editPane.getViewport().setBackground(Color.GRAY);
 		
 		tileGrid = new TileSetGrid(this);
-		tileGrid.setLocation(10, 125);
-		tileGrid.setSize(200, 250);
+		JScrollPane tilePane = new JScrollPane();
+		tilePane.setLocation(10, 125);
+		tilePane.setSize(200, 250);
+		tilePane.setViewportView(tileGrid);
+		tilePane.getViewport().setBackground(Color.GRAY);
 		
 		passability = new JCheckBox("Edit Passability");
 		passability.setSize(passability.getPreferredSize());
@@ -158,8 +166,8 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		
 		passability.addActionListener(this);
 		
-		add(tileGrid);
-		add(editGrid);
+		add(editPane);
+		add(tilePane);
 		add(passability);
 		
 		/*
@@ -168,7 +176,7 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		newMap(10,10);
 		setSize(680, 480);
 		setVisible(true);
-		
+		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 	}
 
 	/**
