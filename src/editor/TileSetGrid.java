@@ -69,12 +69,9 @@ public class TileSetGrid extends JComponent implements MouseListener {
 		if (!updating)
 			return;
 		
-		System.err.println("zoop bop");
-		
 		int k = (arg0.getX())/TileSet.TILE_DIMENSION;
 		int n = (arg0.getY())/TileSet.TILE_DIMENSION;
 		
-		System.out.println(k + " " + n);
 		if (k >= 0 && k < tileSet.getWidth() && n >= 0 && n < tileSet.getHeight())
 		{
 			x = k;
