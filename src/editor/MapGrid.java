@@ -9,16 +9,18 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
+import engine.TileSet;
+
 
 /**
- * TileSetGrid
+ * MapGrid
  * @author nhydock
  *
- *	Grid used for choosing tiles to map
+ *	Grid used for actually rendering the map
  */
 public class MapGrid extends JComponent implements MouseListener, MouseMotionListener {
 
-	BufferedImage tileSet;	//original tileset
+	TileSet tileSet;		//original tileset
 	
 	Image dbImage;			//image with grid drawn on it
 	
@@ -27,8 +29,6 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	int width = 1;			//width of the tileset
 	int height = 1;			//height of the tileset
 	
-	final static int TILE_DIMENSION = 32;			//drawn size
-	final static int ORIGINAL_DIMENSIONS = 16; 		//tile size on the original tileset
 	
 	int[][] tiles;
 	
@@ -39,6 +39,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	public MapGrid(MapEditorGUI p)
 	{
 		parent = p;
+		refreshTileSet();
 		setVisible(true);
 		
 		addMouseListener(this);
@@ -57,9 +58,9 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	/**
 	 * Set tile set to be used
 	 */
-	public void setTileSet(BufferedImage ts)
+	public void refreshTileSet()
 	{
-		tileSet = ts;
+		tileSet = parent.activeTileSet;
 		dbImage = null;
 		paint(getGraphics());
 	}
@@ -69,11 +70,13 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	 */
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		if (!updating)
+		if (!updating && x >= 0 && x < width && y >= 0 && y < height)
 			return;
 		
+		
 		tiles[x][y] = parent.tileSetIndex;
-		paint(getGraphics());
+		System.out.println(parent.tileSetIndex);
+		paintTile(x, y);
 	}
 
 	/**
@@ -84,10 +87,9 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		if (!updating)
 			return;
 		
-		x = arg0.getX()/TILE_DIMENSION;
-		y = arg0.getY()/TILE_DIMENSION;
-		
-		
+		x = arg0.getX()/TileSet.TILE_DIMENSION;
+		y = arg0.getY()/TileSet.TILE_DIMENSION;
+	
 		paint(getGraphics());
 	}
 	
@@ -116,6 +118,21 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	public void mouseDragged(MouseEvent arg0) {}
 
 	/**
+	 * Update a single tile
+	 * @param x
+	 * @param y
+	 */
+	public void paintTile(int x, int y)
+	{
+		Graphics g = dbImage.getGraphics();
+		
+		int n = tiles[x][y]%(int)tileSet.getWidth();
+		int k =	tiles[x][y]/(int)tileSet.getWidth();
+		System.err.println(tiles[x][y]%width);
+		tileSet.drawTile(g, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, n, k);
+	}
+	
+	/**
 	 * Draws the actual grid and tiles
 	 */
 	public void paint(Graphics g)
@@ -128,7 +145,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		
 		if (dbImage == null)
 		{
-			dbImage = createImage(width*TILE_DIMENSION, height*TILE_DIMENSION);
+			dbImage = createImage(width*TileSet.TILE_DIMENSION, height*TileSet.TILE_DIMENSION);
 			
 			Graphics g2 = dbImage.getGraphics();
 			g2.setColor(Color.GRAY);
@@ -140,22 +157,21 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 				{
 					n = tiles[x][y]%width;
 					k =	tiles[x][y]/width;
-					g2.drawImage(tileSet, x*TILE_DIMENSION, y*TILE_DIMENSION, x*TILE_DIMENSION+TILE_DIMENSION, y*TILE_DIMENSION+TILE_DIMENSION, 
-								 n*ORIGINAL_DIMENSIONS, k*ORIGINAL_DIMENSIONS, n*ORIGINAL_DIMENSIONS+ORIGINAL_DIMENSIONS, k*ORIGINAL_DIMENSIONS+ORIGINAL_DIMENSIONS, null);
+					tileSet.drawTile(g2, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, n, k);
 				}
-			
-			for (int i = 1; i < width; i++)
-				g2.drawLine(i*TILE_DIMENSION, 0, i*TILE_DIMENSION, height*TILE_DIMENSION);
-		
-			for (int i = 1; i < height; i++)
-				g2.drawLine(0, i*TILE_DIMENSION, width*TILE_DIMENSION, i*TILE_DIMENSION);
 		}
 		
 		g.drawImage(dbImage, 0, 0, null);
+		g.setColor(Color.BLACK);
+		for (int i = 1; i < width; i++)
+			g.drawLine(i*TileSet.TILE_DIMENSION, 0, i*TileSet.TILE_DIMENSION, height*TileSet.TILE_DIMENSION);
+	
+		for (int i = 1; i < height; i++)
+			g.drawLine(0, i*TileSet.TILE_DIMENSION, width*TileSet.TILE_DIMENSION, i*TileSet.TILE_DIMENSION);
 		if (x >= 0 && x < width && y >= 0 && y < height && updating)
 		{
 			g.setColor(Color.YELLOW);
-			g.drawRect(x*TILE_DIMENSION, y*TILE_DIMENSION, TILE_DIMENSION, TILE_DIMENSION);
+			g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
 		}
 	}
 

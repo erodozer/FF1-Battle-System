@@ -8,14 +8,24 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/**
+ * NewMapDialog
+ * @author nhydock
+ *
+ *	Little window for creating a new map
+ */
 public class NewMapDialog extends JDialog implements ActionListener {
 
-	JTextField width;
-	JTextField height;
-	JButton okButton;
+	JTextField width;			//width of the map
+	JTextField height;			//height of the map
+	JButton okButton;			//end dialog
 	
 	MapEditorGUI parent;		//parent gui
 	
+	/**
+	 * Constructs the dialog window
+	 * @param p		Parent GUI
+	 */
 	public NewMapDialog(MapEditorGUI p)
 	{
 		parent = p;
@@ -57,6 +67,9 @@ public class NewMapDialog extends JDialog implements ActionListener {
 		setResizable(false);
 	}
 
+	/**
+	 * Accepts button clicking
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == okButton)

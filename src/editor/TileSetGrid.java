@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import engine.TileSet;
+
 
 /**
  * TileSetGrid
@@ -18,16 +20,11 @@ import javax.swing.JPanel;
  */
 public class TileSetGrid extends JComponent implements MouseListener {
 
-	BufferedImage tileSet;	//original tileset
+	TileSet tileSet;		//original tileset
 	
 	Image dbImage;			//image with grid drawn on it
 	
 	int tileSelected;		//the tile selected
-	int tilewidth = 1;		//width of the tileset
-	int tileheight = 1;		//height of the tileset
-	
-	final static int TILE_DIMENSION = 32;			//drawn size
-	final static int ORIGINAL_DIMENSIONS = 16; 		//tile size on the original tileset
 	
 	MapEditorGUI parent;	//parent gui
 	
@@ -39,6 +36,7 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	public TileSetGrid(MapEditorGUI p)
 	{
 		parent = p;
+		refreshTileSet();
 		setVisible(true);
 		addMouseListener(this);
 	}
@@ -54,12 +52,9 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	/**
 	 * Set tile set to be used
 	 */
-	public void setTileSet(BufferedImage ts)
+	public void refreshTileSet()
 	{
-		tileSet = ts;
-		tilewidth = ts.getWidth()/ORIGINAL_DIMENSIONS;
-		tileheight = ts.getHeight()/ORIGINAL_DIMENSIONS;
-		System.out.println(tilewidth + " " + tileheight);
+		tileSet = parent.activeTileSet;
 		x = 0;
 		y = 0;
 		dbImage = null;
@@ -76,15 +71,15 @@ public class TileSetGrid extends JComponent implements MouseListener {
 		
 		System.err.println("zoop bop");
 		
-		int k = (arg0.getX())/TILE_DIMENSION;
-		int n = (arg0.getY())/TILE_DIMENSION;
+		int k = (arg0.getX())/TileSet.TILE_DIMENSION;
+		int n = (arg0.getY())/TileSet.TILE_DIMENSION;
 		
 		System.out.println(k + " " + n);
-		if (k >= 0 && k < tilewidth && n >= 0 && n < tileheight)
+		if (k >= 0 && k < tileSet.getWidth() && n >= 0 && n < tileSet.getHeight())
 		{
 			x = k;
 			y = n;
-			parent.tileSetIndex = x + (tilewidth*y);
+			parent.tileSetIndex = x + (y*(int)tileSet.getWidth());
 			paint(getGraphics());
 		}
 	}
@@ -122,29 +117,27 @@ public class TileSetGrid extends JComponent implements MouseListener {
 		g.setClip(0,0,getWidth(), getHeight());
 		if (dbImage == null)
 		{
-			dbImage = createImage(tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION);
+			dbImage = createImage((int)(tileSet.getWidth()*TileSet.TILE_DIMENSION), 
+								  (int)(tileSet.getHeight()*TileSet.TILE_DIMENSION));
 			
 			Graphics g2 = dbImage.getGraphics();
 			g2.setColor(Color.GRAY);
 			g2.fillRect(0, 0, dbImage.getWidth(null), dbImage.getHeight(null));
-			g2.setClip(0, 0, tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION);
-			g2.drawImage(tileSet, 0, 0, tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION, 0, 0, tilewidth*ORIGINAL_DIMENSIONS, tileheight*ORIGINAL_DIMENSIONS, null);
-			System.err.println(tilewidth*ORIGINAL_DIMENSIONS);
-			System.err.println(tilewidth*TILE_DIMENSION);
+			for (int x = 0; x < tileSet.getWidth(); x++)
+				for (int y = 0; y < tileSet.getHeight(); y++)
+					tileSet.drawTile(g2, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
 			
-			g2.setColor(Color.BLACK);
-			for (int i = 1; i < tilewidth; i++)
-				g2.drawLine(i*TILE_DIMENSION, 0, i*TILE_DIMENSION, tileheight*TILE_DIMENSION);
-		
-			for (int i = 1; i < tileheight; i++)
-				g2.drawLine(0, i*TILE_DIMENSION, tilewidth*TILE_DIMENSION, i*TILE_DIMENSION);
 		}
 		
 		g.drawImage(dbImage, 0, 0, null);
-		System.err.println(g.getClipBounds());
-		
+		g.setColor(Color.BLACK);
+		for (int i = 1; i < tileSet.getWidth(); i++)
+			g.drawLine(i*TileSet.TILE_DIMENSION, 0, i*TileSet.TILE_DIMENSION, (int)tileSet.getHeight()*TileSet.TILE_DIMENSION);
+	
+		for (int i = 1; i < tileSet.getHeight(); i++)
+			g.drawLine(0, i*TileSet.TILE_DIMENSION, (int)tileSet.getWidth()*TileSet.TILE_DIMENSION, i*TileSet.TILE_DIMENSION);
 		g.setColor(Color.YELLOW);
-		g.drawRect(x*TILE_DIMENSION, y*TILE_DIMENSION, TILE_DIMENSION, TILE_DIMENSION);
+		g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
 	}
 
 }
