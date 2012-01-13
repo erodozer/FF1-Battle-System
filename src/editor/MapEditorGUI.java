@@ -24,7 +24,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import engine.TileSet;
 
+/**
+ * MapEditorGUI
+ * @author nhydock
+ *
+ *	Simple GUI for map editing with a tile based system
+ */
 public class MapEditorGUI extends JFrame implements ActionListener{
 
 	/*
@@ -51,7 +58,7 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 	MapGrid editGrid;
 	TileSetGrid tileGrid;
 	
-	
+	TileSet activeTileSet;		//the current active tile set
 	int tileSetIndex;			//selected tile from the tile set
 	
 	int mapWidth  = 1;
@@ -120,6 +127,9 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		tileSetList.setLocation(10, 96);
 		tileSetList.addActionListener(this);
 		
+		//load tileset
+		activeTileSet = new TileSet((String)tileSetList.getItemAt(0));
+		
 		add(nameLabel);
 		add(nameField);
 		add(dL);
@@ -171,12 +181,8 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		{
 			JComboBox cb = (JComboBox)event.getSource();
 	        String name = (String)cb.getSelectedItem();
-			try {
-				tileGrid.setTileSet(ImageIO.read(new File("data/tilemaps/" + name)));
-				editGrid.setTileSet(tileGrid.tileSet);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			
+	        activeTileSet = new TileSet(name);
 		}
 	}
 	
