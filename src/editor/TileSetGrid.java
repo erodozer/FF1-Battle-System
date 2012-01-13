@@ -152,7 +152,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 						int xpos = x*TileSet.TILE_DIMENSION+(TileSet.TILE_DIMENSION/2);
 						int ypos = y*TileSet.TILE_DIMENSION+(TileSet.TILE_DIMENSION/2);
 						for (int i = 0; i < 9; i++)
-							g2.drawString(p, xpos-1*((i%3)-1), ypos-1*((i%3)-1));
+							g2.drawString(p, xpos-1*((i%3)-1), ypos-1*((i/3)-1));
 						g2.setColor(Color.WHITE);
 						g2.drawString(p, xpos, ypos);
 					}
