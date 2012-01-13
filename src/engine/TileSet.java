@@ -2,6 +2,8 @@ package engine;
 
 import java.awt.Graphics;
 
+import org.ini4j.jdk14.edu.emory.mathcs.backport.java.util.Arrays;
+
 /**
  * TileSet
  * @author nhydock
@@ -19,6 +21,9 @@ public class TileSet extends Sprite{
 		super("tilemaps/" + s);
 		xFrames = image.getWidth()/ORIGINAL_DIMENSIONS;
 		yFrames = image.getHeight()/ORIGINAL_DIMENSIONS;
+		passability = new char[xFrames][yFrames];
+		for (int i = 0; i < xFrames; i++)
+			passability[i][0] = 'a';
 	}
 	
 	@Override
@@ -31,6 +36,11 @@ public class TileSet extends Sprite{
 	public double getHeight()
 	{
 		return yFrames;
+	}
+	
+	public char getPassability(int x, int y)
+	{
+		return passability[x][y];
 	}
 	
 	/**
