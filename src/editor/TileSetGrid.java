@@ -1,8 +1,10 @@
 package editor;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +18,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.Scrollable;
 
 import engine.TileSet;
 
@@ -26,7 +29,7 @@ import engine.TileSet;
  *
  *	Grid used for choosing tiles to map
  */
-public class TileSetGrid extends JComponent implements ActionListener, MouseListener {
+public class TileSetGrid extends JComponent implements ActionListener, MouseListener, Scrollable {
 
 	TileSet tileSet;		//original tileset
 	
@@ -41,12 +44,17 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 
 	private boolean updating;
 	boolean passabilityMode;
+
+	private Dimension preferredScrollableSize;
 	
 	public TileSetGrid(MapEditorGUI p)
 	{
 		parent = p;
 		
-		refreshTileSet();
+		tileSet = parent.activeTileSet;
+		x = 0;
+		y = 0;
+		dbImage = null;
 		setVisible(true);
 		addMouseListener(this);
 	}
@@ -133,8 +141,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		g.setClip(0, 0, getWidth(), getHeight());
 		if (dbImage == null)
 		{
-			dbImage = createImage((int)(tileSet.getWidth()*TileSet.TILE_DIMENSION), 
-								  (int)(tileSet.getHeight()*TileSet.TILE_DIMENSION));
+			dbImage = createImage(getWidth(), getHeight());
 			
 			Graphics g2 = dbImage.getGraphics();
 			g2.setColor(Color.GRAY);
@@ -178,5 +185,39 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public Dimension getPreferredScrollableViewportSize() {
+		return getPreferredSize();
+	}
+	
+	@Override
+	public Dimension getPreferredSize()
+	{
+		preferredScrollableSize = new Dimension();
+		preferredScrollableSize.setSize(TileSet.TILE_DIMENSION*tileSet.getWidth(),TileSet.TILE_DIMENSION*tileSet.getHeight());
+		return preferredScrollableSize;
+	}
 
+	@Override
+	public int getScrollableBlockIncrement(Rectangle arg0, int arg1, int arg2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean getScrollableTracksViewportHeight() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getScrollableTracksViewportWidth() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getScrollableUnitIncrement(Rectangle arg0, int arg1, int arg2) {
+		return TileSet.TILE_DIMENSION;
+	}
 }

@@ -62,6 +62,8 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 	 */
 	MapGrid editGrid;
 	TileSetGrid tileGrid;
+	JScrollPane editPane;
+	JScrollPane tilePane;
 	
 	TileSet activeTileSet;		//the current active tile set
 	int tileSetIndex;			//selected tile from the tile set
@@ -147,17 +149,15 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		 * Initialize editor
 		 */
 		editGrid = new MapGrid(this);
-		JScrollPane editPane = new JScrollPane();
+		editPane = new JScrollPane(editGrid);
 		editPane.setLocation(220, 10);
 		editPane.setSize(420, 365);
-		editPane.setViewportView(editGrid);
 		editPane.getViewport().setBackground(Color.GRAY);
 		
 		tileGrid = new TileSetGrid(this);
-		JScrollPane tilePane = new JScrollPane();
+		tilePane = new JScrollPane(tileGrid);
 		tilePane.setLocation(10, 125);
 		tilePane.setSize(200, 250);
-		tilePane.setViewportView(tileGrid);
 		tilePane.getViewport().setBackground(Color.GRAY);
 		
 		passability = new JCheckBox("Edit Passability");
@@ -206,6 +206,8 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 	        String name = (String)cb.getSelectedItem();
 			
 	        activeTileSet = new TileSet(name);
+	        tileGrid.refreshTileSet();
+	        tilePane.setViewportView(tileGrid);
 		}
 		if (event.getSource() == passability)
 			tileGrid.swithPassabilityMode();

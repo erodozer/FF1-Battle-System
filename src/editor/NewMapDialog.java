@@ -75,6 +75,7 @@ public class NewMapDialog extends JDialog implements ActionListener {
 		if (event.getSource() == okButton)
 		{
 			parent.newMap(Integer.parseInt(width.getText()), Integer.parseInt(height.getText()));
+			parent.editPane.setViewportView(parent.editGrid);
 			dispose();
 		}
 	}
