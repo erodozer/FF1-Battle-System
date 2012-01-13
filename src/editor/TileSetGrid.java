@@ -138,7 +138,6 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		if (g == null)
 			return;
 		
-		g.setClip(0, 0, getWidth(), getHeight());
 		if (dbImage == null)
 		{
 			dbImage = createImage(getWidth(), getHeight());
@@ -187,7 +186,9 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	}
 	@Override
 	public Dimension getPreferredScrollableViewportSize() {
-		return getPreferredSize();
+		Dimension d = new Dimension();
+		d.setSize(getWidth(), getHeight());
+		return d;
 	}
 	
 	@Override

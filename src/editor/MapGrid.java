@@ -180,7 +180,9 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 
 	@Override
 	public Dimension getPreferredScrollableViewportSize() {
-		return getPreferredSize();
+		Dimension d = new Dimension();
+		d.setSize(getWidth(), getHeight());
+		return d;
 	}
 	
 	@Override
