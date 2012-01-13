@@ -207,6 +207,7 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 			
 	        activeTileSet = new TileSet(name);
 	        tileGrid.refreshTileSet();
+	        editGrid.refreshTileSet();
 	        tilePane.setViewportView(tileGrid);
 		}
 		if (event.getSource() == passability)
