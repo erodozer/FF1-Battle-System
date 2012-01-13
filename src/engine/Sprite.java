@@ -21,16 +21,16 @@ public class Sprite{
 	// made, if the image has already been loaded before it adds it
 	private static HashMap<String, BufferedImage> TEXTURECACHE = new HashMap<String, BufferedImage>();
 	
-	BufferedImage image;		//image that is drawn to screen
-	protected double width  = 1;//width of the buffered image
-	protected double height = 1;//height of the buffered image
-	protected double x = 0;		//x draw position on screen
-	protected double y = 0;		//y draw position on screen
+	protected BufferedImage image;		//image that is drawn to screen
+	protected double width  = 1;		//width of the buffered image
+	protected double height = 1;		//height of the buffered image
+	protected double x = 0;				//x draw position on screen
+	protected double y = 0;				//y draw position on screen
 	
-	private int[] rect;			//rectangle cropping for frames
-	private double[] crop;		//further cropping for what displays on screen
-	private int xFrames;		//number of horizontal frames
-	private int yFrames;		//number of vertical frames
+	protected int[] rect;					//rectangle cropping for frames
+	protected double[] crop;				//further cropping for what displays on screen
+	protected int xFrames;				//number of horizontal frames
+	protected int yFrames;				//number of vertical frames
 	
 	/**
 	 * Load the sprite from file path
