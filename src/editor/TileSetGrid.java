@@ -1,4 +1,5 @@
 package editor;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -6,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 
 /**
@@ -21,11 +23,22 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	Image dbImage;			//image with grid drawn on it
 	
 	int tileSelected;		//the tile selected
-	int width = 1;			//width of the tileset
-	int height = 1;			//height of the tileset
+	int tilewidth = 1;		//width of the tileset
+	int tileheight = 1;		//height of the tileset
 	
 	final static int TILE_DIMENSION = 32;			//drawn size
 	final static int ORIGINAL_DIMENSIONS = 16; 		//tile size on the original tileset
+	
+	MapEditorGUI parent;	//parent gui
+	
+	int x;
+	int y;
+	
+	public TileSetGrid(MapEditorGUI p)
+	{
+		parent = p;
+		setVisible(true);
+	}
 	
 	/**
 	 * Get the selected tile
@@ -41,8 +54,12 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	public void setTileSet(BufferedImage ts)
 	{
 		tileSet = ts;
-		width = ts.getWidth()/ORIGINAL_DIMENSIONS;
-		height = ts.getHeight()/ORIGINAL_DIMENSIONS;
+		tilewidth = ts.getWidth()/ORIGINAL_DIMENSIONS;
+		tileheight = ts.getHeight()/ORIGINAL_DIMENSIONS;
+		System.out.println(tileheight);
+		x = 0;
+		y = 0;
+		dbImage = null;
 	}
 	
 	/**
@@ -50,13 +67,12 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		int x;
-		int y;
+		System.err.println("zoop bop");
+		x = Math.max(0, Math.min(tilewidth-1, arg0.getX()/TILE_DIMENSION));
+		y = Math.max(0, Math.min(tileheight-1, arg0.getY()/TILE_DIMENSION));
 		
-		x = arg0.getX();
-		y = arg0.getY();
-		
-		tileSelected = x/TILE_DIMENSION + (width*y/TILE_DIMENSION);
+		parent.tileSetIndex = x + (tilewidth*y);
+		System.out.println(x + " " + y);
 	}
 
 	/*
@@ -76,24 +92,29 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	 */
 	public void paint(Graphics g)
 	{
-		super.paint(g);
-		
+		g.setColor(Color.GRAY);
+		g.fillRect(0, 0, getWidth(), getHeight());
 		if (dbImage == null)
 		{
-			dbImage = createImage(width*TILE_DIMENSION, height*TILE_DIMENSION);
+			dbImage = createImage(tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION);
 			
 			Graphics g2 = dbImage.getGraphics();
-			g2.drawImage(tileSet, 0, 0, width*TILE_DIMENSION, height*TILE_DIMENSION, 0, 0, width*ORIGINAL_DIMENSIONS, height*ORIGINAL_DIMENSIONS, null);
+			g2.setClip(0, 0, tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION);
+			g2.drawImage(tileSet, 0, 0, tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION, 0, 0, tilewidth*ORIGINAL_DIMENSIONS, tileheight*ORIGINAL_DIMENSIONS, null);
+			System.err.println(tilewidth*ORIGINAL_DIMENSIONS);
+			System.err.println(tilewidth*TILE_DIMENSION);
+			
+			g2.setColor(Color.BLACK);
+			for (int i = 1; i < tilewidth; i++)
+				g2.drawLine(i*TILE_DIMENSION, 0, i*TILE_DIMENSION, tileheight*TILE_DIMENSION);
 		
-			for (int i = 1; i < width; i++)
-				g2.drawLine(i*TILE_DIMENSION, 0, i*TILE_DIMENSION, height*TILE_DIMENSION);
-		
-			for (int i = 1; i < height; i++)
-				g2.drawLine(0, i*TILE_DIMENSION, width*TILE_DIMENSION, i*TILE_DIMENSION);
+			for (int i = 1; i < tileheight; i++)
+				g2.drawLine(0, i*TILE_DIMENSION, tilewidth*TILE_DIMENSION, i*TILE_DIMENSION);
 		}
 		
 		g.drawImage(dbImage, 0, 0, null);
-		
+		g.setColor(Color.YELLOW);
+		g.drawRect(x*TILE_DIMENSION, y*TILE_DIMENSION, TILE_DIMENSION, TILE_DIMENSION);
 	}
 
 }

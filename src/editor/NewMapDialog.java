@@ -61,9 +61,7 @@ public class NewMapDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == okButton)
 		{
-			parent.mapWidth = Integer.parseInt(width.getText());
-			parent.mapHeight = Integer.parseInt(height.getText());
-
+			parent.newMap(Integer.parseInt(width.getText()), Integer.parseInt(height.getText()));
 			dispose();
 		}
 	}

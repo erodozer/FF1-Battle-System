@@ -7,10 +7,14 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.Arrays;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -20,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-public class MapEditorGUI extends JFrame implements ActionListener, WindowListener{
+public class MapEditorGUI extends JFrame implements ActionListener{
 
 	/*
 	 * Main menu
@@ -38,14 +42,22 @@ public class MapEditorGUI extends JFrame implements ActionListener, WindowListen
 	 * Fields
 	 */
 	JTextField nameField;
+	JComboBox tileSetList;
 	
-	int tileIndex;			//selected tile from the tile set
+	/*
+	 * Map Editor
+	 */
+	MapGrid editGrid;
+	TileSetGrid tileGrid;
+	
+	
+	int tileSetIndex;			//selected tile from the tile set
 	
 	int mapWidth  = 1;
 	int mapHeight = 1;
 	
 	JLabel dimensionsLabel;
-	static final String[] tileMaps = buildTileMapList();
+	static final String[] tileSets = buildTileMapList();
 	
 	/*
 	 * Dialogs
@@ -85,15 +97,11 @@ public class MapEditorGUI extends JFrame implements ActionListener, WindowListen
 		mainPane = new JPanel();
 		
 		/*
-		 * Initilize layout system
-		 */
-		
-		/*
 		 * Initialize fields 
 		 */
 		JLabel nameLabel = new JLabel("Map name: ");
 		nameLabel.setSize(200,16);
-		nameLabel.setLocation(10,8);
+		nameLabel.setLocation(10,10);
 		nameField = new JTextField("map");
 		nameField.setSize(200, 24);
 		nameField.setLocation(10, 32);
@@ -106,15 +114,39 @@ public class MapEditorGUI extends JFrame implements ActionListener, WindowListen
 		dimensionsLabel.setSize(dimensionsLabel.getPreferredSize());
 		dimensionsLabel.setLocation(210-dimensionsLabel.getWidth(), 64);
 		
+		tileSetList = new JComboBox(tileSets);
+		tileSetList.setSize(200, 24);
+		tileSetList.setLocation(10, 96);
+		tileSetList.addActionListener(this);
+		
 		add(nameLabel);
 		add(nameField);
 		add(dL);
 		add(dimensionsLabel);
+		add(tileSetList);
+		
+		/*
+		 * Initialize editor
+		 */
+		editGrid = new MapGrid(this);
+		editGrid.setLocation(220, 10);
+		editGrid.setSize(420, 362);
+		
+		tileGrid = new TileSetGrid(this);
+		tileGrid.setLocation(10, 128);
+		tileGrid.setSize(200, 282);
+		
+		addMouseListener(tileGrid);
+		addMouseListener(editGrid);
+		
+		add(tileGrid);
+		add(editGrid);
 		
 		/*
 		 * Initialize GUI window 
 		 */
-		setSize(640, 480);
+		newMap(1,1);
+		setSize(680, 480);
 		setVisible(true);
 	}
 
@@ -135,49 +167,35 @@ public class MapEditorGUI extends JFrame implements ActionListener, WindowListen
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == createNew)
-		{
 			newMapDialog = new NewMapDialog(this);
-			newMapDialog.addWindowListener(this);
-		}
-	}
-
-	/**
-	 * Detects closing of dialogs
-	 */
-	@Override
-	public void windowClosed(WindowEvent event) {
-		System.out.println("doop doop");
-		if (event.getSource() == newMapDialog)
+		else if (event.getSource() == tileSetList)
 		{
-			nameField.setText("map");
-			dimensionsLabel.setText(mapWidth + " x " + mapHeight);
-			dimensionsLabel.setLocation(210 - dimensionsLabel.getWidth(), 64);
+			JComboBox cb = (JComboBox)event.getSource();
+	        String name = (String)cb.getSelectedItem();
+			try {
+				tileGrid.setTileSet(ImageIO.read(new File("data/tilemaps/" + name)));
+				editGrid.setTileSet(tileGrid.tileSet);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-
-	/*
-	 * Pointless methods 
-	 */
-	@Override
-	public void windowActivated(WindowEvent arg0) {}
-
-	@Override
-	public void windowClosing(WindowEvent arg0) {}
-
-	@Override
-	public void windowDeactivated(WindowEvent arg0) {}
-
-	@Override
-	public void windowDeiconified(WindowEvent arg0) {}
-
-	@Override
-	public void windowIconified(WindowEvent arg0) {	}
-
-	@Override
-	public void windowOpened(WindowEvent arg0) {}
-
 	
-
+	/**
+	 * Initializes a new map to edit
+	 * @param w
+	 * @param h
+	 */
+	public void newMap(int w, int h)
+	{
+		nameField.setText("map");
+		mapWidth = w;
+		mapHeight = h;
+		dimensionsLabel.setText(mapWidth + " x " + mapHeight);
+		dimensionsLabel.setLocation(210 - dimensionsLabel.getWidth(), 64);	
+		editGrid.newMap(mapWidth, mapHeight);
+	}
+	
 	/**
 	 * Runner method
 	 */
