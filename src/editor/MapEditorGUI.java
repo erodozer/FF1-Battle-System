@@ -15,6 +15,7 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -51,6 +52,7 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 	 */
 	JTextField nameField;
 	JComboBox tileSetList;
+	JCheckBox passability;
 	
 	/*
 	 * Map Editor
@@ -63,6 +65,8 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 	
 	int mapWidth  = 1;
 	int mapHeight = 1;
+	
+	boolean passabilityMode;
 	
 	JLabel dimensionsLabel;
 	static final String[] tileSets = buildTileMapList();
@@ -124,7 +128,7 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		
 		tileSetList = new JComboBox(tileSets);
 		tileSetList.setSize(200, 24);
-		tileSetList.setLocation(10, 96);
+		tileSetList.setLocation(10, 92);
 		tileSetList.addActionListener(this);
 		
 		//load tileset
@@ -141,19 +145,26 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		 */
 		editGrid = new MapGrid(this);
 		editGrid.setLocation(220, 10);
-		editGrid.setSize(420, 362);
+		editGrid.setSize(420, 365);
 		
 		tileGrid = new TileSetGrid(this);
-		tileGrid.setLocation(10, 128);
-		tileGrid.setSize(200, 282);
+		tileGrid.setLocation(10, 125);
+		tileGrid.setSize(200, 250);
+		
+		passability = new JCheckBox("Edit Passability");
+		passability.setSize(passability.getPreferredSize());
+		passability.setLocation(10, 380);
+		
+		passability.addActionListener(this);
 		
 		add(tileGrid);
 		add(editGrid);
+		add(passability);
 		
 		/*
 		 * Initialize GUI window 
 		 */
-		newMap(1,1);
+		newMap(10,10);
 		setSize(680, 480);
 		setVisible(true);
 		
@@ -187,6 +198,8 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 			
 	        activeTileSet = new TileSet(name);
 		}
+		if (event.getSource() == passability)
+			passabilityMode = ((JCheckBox)event.getSource()).isSelected();
 	}
 	
 	/**
