@@ -59,7 +59,7 @@ public class TileSetGrid extends JComponent implements MouseListener {
 		tileSet = ts;
 		tilewidth = ts.getWidth()/ORIGINAL_DIMENSIONS;
 		tileheight = ts.getHeight()/ORIGINAL_DIMENSIONS;
-		System.out.println(tileheight);
+		System.out.println(tilewidth + " " + tileheight);
 		x = 0;
 		y = 0;
 		dbImage = null;
@@ -76,11 +76,11 @@ public class TileSetGrid extends JComponent implements MouseListener {
 		
 		System.err.println("zoop bop");
 		
-		int k = (arg0.getX()-getX())/TILE_DIMENSION;
-		int n = (arg0.getY()-getY())/TILE_DIMENSION - 1;
+		int k = (arg0.getX())/TILE_DIMENSION;
+		int n = (arg0.getY())/TILE_DIMENSION;
 		
 		System.out.println(k + " " + n);
-		if (k >= 0 && k < tilewidth && n >= 0 && n < tilewidth)
+		if (k >= 0 && k < tilewidth && n >= 0 && n < tileheight)
 		{
 			x = k;
 			y = n;
@@ -125,7 +125,7 @@ public class TileSetGrid extends JComponent implements MouseListener {
 			dbImage = createImage(tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION);
 			
 			Graphics g2 = dbImage.getGraphics();
-			g2.setColor(Color.BLUE);
+			g2.setColor(Color.GRAY);
 			g2.fillRect(0, 0, dbImage.getWidth(null), dbImage.getHeight(null));
 			g2.setClip(0, 0, tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION);
 			g2.drawImage(tileSet, 0, 0, tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION, 0, 0, tilewidth*ORIGINAL_DIMENSIONS, tileheight*ORIGINAL_DIMENSIONS, null);
