@@ -12,6 +12,8 @@ public class TileSet extends Sprite{
 	public final static int TILE_DIMENSION = 32;			//drawn size
 	public final static int ORIGINAL_DIMENSIONS = 16; 		//tile size on the original tileset
 	
+	char[][] passability;
+	
 	public TileSet(String s)
 	{
 		super("tilemaps/" + s);

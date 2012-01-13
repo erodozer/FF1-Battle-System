@@ -2,10 +2,13 @@ package editor;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -18,7 +21,7 @@ import engine.TileSet;
  *
  *	Grid used for choosing tiles to map
  */
-public class TileSetGrid extends JComponent implements MouseListener {
+public class TileSetGrid extends JComponent implements ActionListener, MouseListener {
 
 	TileSet tileSet;		//original tileset
 	
@@ -32,10 +35,12 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	int y;
 
 	private boolean updating;
+	private boolean passabilityMode;
 	
 	public TileSetGrid(MapEditorGUI p)
 	{
 		parent = p;
+		
 		refreshTileSet();
 		setVisible(true);
 		addMouseListener(this);
@@ -87,7 +92,10 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		updating = true;
+		passabilityMode = parent.passabilityMode;
+		System.out.println(passabilityMode);
 	}
+	
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		updating = false;
@@ -135,6 +143,12 @@ public class TileSetGrid extends JComponent implements MouseListener {
 			g.drawLine(0, i*TileSet.TILE_DIMENSION, (int)tileSet.getWidth()*TileSet.TILE_DIMENSION, i*TileSet.TILE_DIMENSION);
 		g.setColor(Color.YELLOW);
 		g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
