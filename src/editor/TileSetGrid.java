@@ -33,11 +33,14 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	
 	int x;
 	int y;
+
+	private boolean updating;
 	
 	public TileSetGrid(MapEditorGUI p)
 	{
 		parent = p;
 		setVisible(true);
+		addMouseListener(this);
 	}
 	
 	/**
@@ -60,6 +63,7 @@ public class TileSetGrid extends JComponent implements MouseListener {
 		x = 0;
 		y = 0;
 		dbImage = null;
+		paint(getGraphics());
 	}
 	
 	/**
@@ -67,21 +71,39 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		System.err.println("zoop bop");
-		x = Math.max(0, Math.min(tilewidth-1, arg0.getX()/TILE_DIMENSION));
-		y = Math.max(0, Math.min(tileheight-1, arg0.getY()/TILE_DIMENSION));
+		if (!updating)
+			return;
 		
-		parent.tileSetIndex = x + (tilewidth*y);
-		System.out.println(x + " " + y);
+		System.err.println("zoop bop");
+		
+		int k = (arg0.getX()-getX())/TILE_DIMENSION;
+		int n = (arg0.getY()-getY())/TILE_DIMENSION - 1;
+		
+		System.out.println(k + " " + n);
+		if (k >= 0 && k < tilewidth && n >= 0 && n < tilewidth)
+		{
+			x = k;
+			y = n;
+			parent.tileSetIndex = x + (tilewidth*y);
+			paint(getGraphics());
+		}
 	}
 
 	/*
-	 * DO NOTHING METHODS
+	 * Only update when the mouse is within the panel
 	 */
 	@Override
-	public void mouseEntered(MouseEvent arg0) {}
+	public void mouseEntered(MouseEvent arg0) {
+		updating = true;
+	}
 	@Override
-	public void mouseExited(MouseEvent arg0) {}
+	public void mouseExited(MouseEvent arg0) {
+		updating = false;
+	}
+	
+	/*
+	 * DO NOTHING METHODS
+	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {}
 	@Override
@@ -92,13 +114,19 @@ public class TileSetGrid extends JComponent implements MouseListener {
 	 */
 	public void paint(Graphics g)
 	{
+		if (g == null)
+			return;
+		
 		g.setColor(Color.GRAY);
 		g.fillRect(0, 0, getWidth(), getHeight());
+		g.setClip(0,0,getWidth(), getHeight());
 		if (dbImage == null)
 		{
 			dbImage = createImage(tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION);
 			
 			Graphics g2 = dbImage.getGraphics();
+			g2.setColor(Color.BLUE);
+			g2.fillRect(0, 0, dbImage.getWidth(null), dbImage.getHeight(null));
 			g2.setClip(0, 0, tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION);
 			g2.drawImage(tileSet, 0, 0, tilewidth*TILE_DIMENSION, tileheight*TILE_DIMENSION, 0, 0, tilewidth*ORIGINAL_DIMENSIONS, tileheight*ORIGINAL_DIMENSIONS, null);
 			System.err.println(tilewidth*ORIGINAL_DIMENSIONS);
@@ -113,6 +141,8 @@ public class TileSetGrid extends JComponent implements MouseListener {
 		}
 		
 		g.drawImage(dbImage, 0, 0, null);
+		System.err.println(g.getClipBounds());
+		
 		g.setColor(Color.YELLOW);
 		g.drawRect(x*TILE_DIMENSION, y*TILE_DIMENSION, TILE_DIMENSION, TILE_DIMENSION);
 	}

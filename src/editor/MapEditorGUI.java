@@ -1,4 +1,5 @@
 package editor;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -136,9 +137,6 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		tileGrid.setLocation(10, 128);
 		tileGrid.setSize(200, 282);
 		
-		addMouseListener(tileGrid);
-		addMouseListener(editGrid);
-		
 		add(tileGrid);
 		add(editGrid);
 		
@@ -148,6 +146,7 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		newMap(1,1);
 		setSize(680, 480);
 		setVisible(true);
+		
 	}
 
 	private static String[] buildTileMapList()
