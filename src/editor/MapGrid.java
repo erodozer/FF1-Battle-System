@@ -52,7 +52,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		height = h;
 		tiles = new int[w][h];
 		dbImage = null;
-		paint(getGraphics());
+		repaint();
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	{
 		tileSet = parent.activeTileSet;
 		dbImage = null;
-		paint(getGraphics());
+		repaint();
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		x = arg0.getX()/TileSet.TILE_DIMENSION;
 		y = arg0.getY()/TileSet.TILE_DIMENSION;
 	
-		paint(getGraphics());
+		repaint();
 	}
 	
 	/*
@@ -98,12 +98,12 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		updating = true;
-		paint(getGraphics());
+		repaint();
 	}
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		updating = false;
-		paint(getGraphics());	
+		repaint();	
 	}
 	
 	/*
@@ -129,7 +129,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		int k =	tiles[x][y]/(int)tileSet.getWidth();
 		tileSet.drawTile(g, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, n, k);
 		
-		paint(getGraphics());
+		repaint();
 	}
 	
 	/**

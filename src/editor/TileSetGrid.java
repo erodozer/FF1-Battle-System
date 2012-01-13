@@ -68,7 +68,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		x = 0;
 		y = 0;
 		dbImage = null;
-		paint(getGraphics());
+		repaint();
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	{
 		passabilityMode = !passabilityMode;
 		dbImage = null;
-		paint(getGraphics());
+		repaint();
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 			x = k;
 			y = n;
 			parent.tileSetIndex = x + (y*(int)tileSet.getWidth());
-			paint(getGraphics());
+			repaint();
 		}
 	}
 
@@ -132,7 +132,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		
 		g.setColor(Color.GRAY);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		g.setClip(0,0,getWidth(), getHeight());
+		g.setClip(0, 0, getWidth(), getHeight());
 		if (dbImage == null)
 		{
 			dbImage = createImage((int)(tileSet.getWidth()*TileSet.TILE_DIMENSION), 
