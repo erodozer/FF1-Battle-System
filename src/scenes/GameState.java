@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 public abstract class GameState {
 
     protected GameSystem parent;
+    protected int index;
     
     /**
      * Creates a game state
@@ -49,5 +50,16 @@ public abstract class GameState {
     public void setParent(GameSystem p)
     {
         parent = p;
+    }
+    
+    /**
+     * Returns the index of the state, whatever that may be
+     * Might be the current step of the state or it might be the index in a menu
+     * that the state is handling.
+     * @return
+     */
+    public int getIndex()
+    {
+    	return index;
     }
 }
