@@ -1,13 +1,16 @@
 package editor;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
+import javax.swing.Scrollable;
 
 import engine.TileSet;
 
@@ -18,7 +21,7 @@ import engine.TileSet;
  *
  *	Grid used for actually rendering the map
  */
-public class MapGrid extends JComponent implements MouseListener, MouseMotionListener {
+public class MapGrid extends JComponent implements MouseListener, MouseMotionListener, Scrollable {
 
 	TileSet tileSet;		//original tileset
 	
@@ -35,6 +38,8 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	MapEditorGUI parent;	//parent gui
 
 	private boolean updating;
+
+	private Dimension preferredScrollableSize;
 	
 	public MapGrid(MapEditorGUI p)
 	{
@@ -143,7 +148,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		
 		if (dbImage == null)
 		{
-			dbImage = createImage(width*TileSet.TILE_DIMENSION, height*TileSet.TILE_DIMENSION);
+			dbImage = createImage(getWidth(), getHeight());
 			
 			Graphics g2 = dbImage.getGraphics();
 			g2.setColor(Color.GRAY);
@@ -171,6 +176,44 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			g.setColor(Color.YELLOW);
 			g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
 		}
+	}
+
+	@Override
+	public Dimension getPreferredScrollableViewportSize() {
+		return getPreferredSize();
+	}
+	
+	@Override
+	public Dimension getPreferredSize()
+	{
+		preferredScrollableSize = new Dimension();
+		preferredScrollableSize.setSize(TileSet.TILE_DIMENSION*width,TileSet.TILE_DIMENSION*height);
+		return preferredScrollableSize;
+	}
+	
+	@Override
+	public int getScrollableBlockIncrement(Rectangle visibleRect,
+			int orientation, int direction) {
+		// TODO Auto-generated method stub
+		return TileSet.TILE_DIMENSION;
+	}
+
+	@Override
+	public boolean getScrollableTracksViewportHeight() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getScrollableTracksViewportWidth() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getScrollableUnitIncrement(Rectangle visibleRect,
+			int orientation, int direction) {
+		return TileSet.TILE_DIMENSION;
 	}
 
 }
