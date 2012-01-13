@@ -159,6 +159,10 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		
 	}
 
+	/**
+	 * Creates a list of available tilemaps
+	 * @return
+	 */
 	private static String[] buildTileMapList()
 	{
 		String[] s = new File("data/tilemaps").list(new FilenameFilter() {
@@ -166,7 +170,6 @@ public class MapEditorGUI extends JFrame implements ActionListener{
                 return s.endsWith(".png");
               }
             });
-		System.err.println(Arrays.toString(s));
 		return s;
 	}
 	
