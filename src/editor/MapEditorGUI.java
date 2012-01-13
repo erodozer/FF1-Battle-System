@@ -191,6 +191,7 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		mapWidth = w;
 		mapHeight = h;
 		dimensionsLabel.setText(mapWidth + " x " + mapHeight);
+		dimensionsLabel.setSize(dimensionsLabel.getPreferredSize());
 		dimensionsLabel.setLocation(210 - dimensionsLabel.getWidth(), 64);	
 		editGrid.newMap(mapWidth, mapHeight);
 	}
