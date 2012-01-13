@@ -1,4 +1,5 @@
 package editor;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,10 +67,10 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 	int mapWidth  = 1;
 	int mapHeight = 1;
 	
-	boolean passabilityMode;
-	
 	JLabel dimensionsLabel;
 	static final String[] tileSets = buildTileMapList();
+	
+	Font font = new Font("Arial", 1, 32);
 	
 	/*
 	 * Dialogs
@@ -199,7 +200,7 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 	        activeTileSet = new TileSet(name);
 		}
 		if (event.getSource() == passability)
-			passabilityMode = ((JCheckBox)event.getSource()).isSelected();
+			tileGrid.swithPassabilityMode();
 	}
 	
 	/**

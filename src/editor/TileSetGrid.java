@@ -1,11 +1,16 @@
 package editor;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JCheckBox;
@@ -35,7 +40,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	int y;
 
 	private boolean updating;
-	private boolean passabilityMode;
+	boolean passabilityMode;
 	
 	public TileSetGrid(MapEditorGUI p)
 	{
@@ -67,6 +72,16 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	}
 	
 	/**
+	 * Switches to or from passability mode
+	 */
+	public void swithPassabilityMode()
+	{
+		passabilityMode = !passabilityMode;
+		dbImage = null;
+		paint(getGraphics());
+	}
+	
+	/**
 	 * Select tile to use
 	 */
 	@Override
@@ -92,8 +107,6 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		updating = true;
-		passabilityMode = parent.passabilityMode;
-		System.out.println(passabilityMode);
 	}
 	
 	@Override
@@ -130,7 +143,20 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 			g2.fillRect(0, 0, dbImage.getWidth(null), dbImage.getHeight(null));
 			for (int x = 0; x < tileSet.getWidth(); x++)
 				for (int y = 0; y < tileSet.getHeight(); y++)
+				{
 					tileSet.drawTile(g2, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
+					if (passabilityMode)
+					{
+						g2.setColor(Color.BLACK);
+						String p = ""+tileSet.getPassability(x, y);
+						int xpos = x*TileSet.TILE_DIMENSION+(TileSet.TILE_DIMENSION/2);
+						int ypos = y*TileSet.TILE_DIMENSION+(TileSet.TILE_DIMENSION/2);
+						for (int i = 0; i < 9; i++)
+							g2.drawString(p, xpos-1*((i%3)-1), ypos-1*((i%3)-1));
+						g2.setColor(Color.WHITE);
+						g2.drawString(p, xpos, ypos);
+					}
+				}
 			
 		}
 		
@@ -141,8 +167,12 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	
 		for (int i = 1; i < tileSet.getHeight(); i++)
 			g.drawLine(0, i*TileSet.TILE_DIMENSION, (int)tileSet.getWidth()*TileSet.TILE_DIMENSION, i*TileSet.TILE_DIMENSION);
-		g.setColor(Color.YELLOW);
-		g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
+		
+		if (!passabilityMode)
+		{
+			g.setColor(Color.YELLOW);
+			g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
+		}
 	}
 
 	@Override
