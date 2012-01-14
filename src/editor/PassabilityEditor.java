@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
@@ -24,6 +26,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -39,7 +42,7 @@ import engine.TileSet;
  *
  *	Simple GUI for editing the passability of a tileset
  */
-public class PassabilityEditor extends JPanel implements ActionListener{
+public class PassabilityEditor extends JPanel implements ActionListener, MouseListener{
 	
 	/*
 	 * Buttons
@@ -50,7 +53,8 @@ public class PassabilityEditor extends JPanel implements ActionListener{
 	/*
 	 * Fields
 	 */
-	JComboBox tileSetList;
+	JList tileSetList;
+	JScrollPane tileSetPane;
 	
 	/*
 	 * Map Editor
@@ -74,27 +78,30 @@ public class PassabilityEditor extends JPanel implements ActionListener{
 		nameLabel.setSize(200,16);
 		nameLabel.setLocation(10,10);
 		
-		tileSetList = new JComboBox(ToolKit.tileSets);
-		tileSetList.setSize(200, 24);
-		tileSetList.setLocation(10, 32);
-		tileSetList.addActionListener(this);
+		tileSetList = new JList(ToolKit.tileSets);
+		tileSetList.setSelectedIndex(0);
+		tileSetList.addMouseListener(this);
+		tileSetPane = new JScrollPane(tileSetList);
+		tileSetPane.setSize(200, 340);
+		tileSetPane.setLocation(10, 32);
+		
 		
 		//load tileset
-		activeTileSet = new TileSet((String)tileSetList.getItemAt(0));
+		activeTileSet = new TileSet((String)tileSetList.getSelectedValue());
 		
 		add(nameLabel);
-		add(tileSetList);
+		add(tileSetPane);
 		
 		/*
 		 * Initialize buttons
 		 */
 		saveButton = new JButton("Save");
-		saveButton.setSize(200, 24);
-		saveButton.setLocation(10, 64);
+		saveButton.setSize(250, 24);
+		saveButton.setLocation(70, 390);
 		saveButton.addActionListener(this);
 		resetButton = new JButton("Reset");
-		resetButton.setSize(200, 24);
-		resetButton.setLocation(10, 96);
+		resetButton.setSize(250, 24);
+		resetButton.setLocation(350, 390);
 		resetButton.addActionListener(this);
 		
 		add(saveButton);
@@ -157,8 +164,38 @@ public class PassabilityEditor extends JPanel implements ActionListener{
 	 */
 	public void restore()
 	{
-		activeTileSet = new TileSet((String)tileSetList.getSelectedItem());
+		activeTileSet = new TileSet((String)tileSetList.getSelectedValue());
         tileGrid.refreshTileSet();
         tilePane.setViewportView(tileGrid);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		if (arg0.getSource() == tileSetList)
+			restore();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
