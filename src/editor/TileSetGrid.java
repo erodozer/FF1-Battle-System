@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -29,7 +30,7 @@ import engine.TileSet;
  *
  *	Grid used for choosing tiles to map
  */
-public class TileSetGrid extends JComponent implements ActionListener, MouseListener, Scrollable {
+public class TileSetGrid extends JComponent implements ActionListener, MouseListener, MouseMotionListener, Scrollable {
 
 	TileSet tileSet;		//original tileset
 	
@@ -44,6 +45,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 
 	private boolean updating;
 	boolean passabilityMode;
+	char[][] passabilitySet;
 
 	private Dimension preferredScrollableSize;
 	
@@ -54,9 +56,11 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		tileSet = parent.activeTileSet;
 		x = 0;
 		y = 0;
+		passabilitySet = tileSet.getPassabilitySet();
 		dbImage = null;
 		setVisible(true);
 		addMouseListener(this);
+		addMouseMotionListener(this);
 	}
 	
 	/**
@@ -75,6 +79,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		tileSet = parent.activeTileSet;
 		x = 0;
 		y = 0;
+		passabilitySet = tileSet.getPassabilitySet();
 		dbImage = null;
 		repaint();
 	}
@@ -86,6 +91,16 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	{
 		passabilityMode = !passabilityMode;
 		dbImage = null;
+		if (!passabilityMode)
+		{
+			x = parent.tileSetIndex%(int)tileSet.getWidth();
+			y =	parent.tileSetIndex/(int)tileSet.getWidth();
+		}
+		else
+		{
+			x = -1;
+			y = -1;
+		}
 		repaint();
 	}
 	
@@ -96,6 +111,17 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	public void mouseClicked(MouseEvent arg0) {
 		if (!updating)
 			return;
+		
+		if (passabilityMode)
+		{
+			if (passabilitySet[x][y] == TileSet.PASSABLE)
+				passabilitySet[x][y] = TileSet.OVERLAY;
+			else if (passabilitySet[x][y] == TileSet.OVERLAY)
+				passabilitySet[x][y] = TileSet.IMPASSABLE;
+			else
+				passabilitySet[x][y] = TileSet.PASSABLE;
+			return;
+		}
 		
 		int k = (arg0.getX())/TileSet.TILE_DIMENSION;
 		int n = (arg0.getY())/TileSet.TILE_DIMENSION;
@@ -115,11 +141,18 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		updating = true;
+		repaint();
 	}
 	
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		updating = false;
+		if (passabilityMode)
+		{
+			x = -1;
+			y = -1;
+		}
+		repaint();
 	}
 	
 	/*
@@ -152,7 +185,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 					if (passabilityMode)
 					{
 						g2.setColor(Color.BLACK);
-						String p = ""+tileSet.getPassability(x, y);
+						String p = ""+passabilitySet[x][y];
 						int xpos = x*TileSet.TILE_DIMENSION+(TileSet.TILE_DIMENSION/2);
 						int ypos = y*TileSet.TILE_DIMENSION+(TileSet.TILE_DIMENSION/2);
 						for (int i = 0; i < 9; i++)
@@ -175,8 +208,11 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		if (!passabilityMode)
 		{
 			g.setColor(Color.YELLOW);
-			g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
 		}
+		else
+			g.setColor(Color.RED);
+		g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
+		
 	}
 
 	@Override
@@ -220,5 +256,19 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	@Override
 	public int getScrollableUnitIncrement(Rectangle arg0, int arg1, int arg2) {
 		return TileSet.TILE_DIMENSION;
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		if (!passabilityMode)
+			return;
+		
+		x = arg0.getX()/TileSet.TILE_DIMENSION;
+		y = arg0.getY()/TileSet.TILE_DIMENSION;
+	
+		repaint();
 	}
 }
