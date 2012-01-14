@@ -15,7 +15,10 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -49,6 +52,8 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 
 	private Dimension preferredScrollableSize;
 	
+	BufferedImage pTiles;
+	
 	public TileSetGrid(MapEditorGUI p)
 	{
 		parent = p;
@@ -57,6 +62,11 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		x = 0;
 		y = 0;
 		passabilitySet = tileSet.getPassabilitySet();
+		try {
+			pTiles = ImageIO.read(new File("data/passabilityTiles.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		dbImage = null;
 		setVisible(true);
 		addMouseListener(this);
@@ -180,15 +190,31 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		if (passabilityMode) {
 			g.setColor(Color.BLACK);
 			String p = "" + passabilitySet[x][y];
-			int xpos = x * TileSet.TILE_DIMENSION
-					+ (TileSet.TILE_DIMENSION / 2);
-			int ypos = y * TileSet.TILE_DIMENSION
-					+ (TileSet.TILE_DIMENSION / 2);
-			for (int i = 0; i < 9; i++)
-				g.drawString(p, xpos - 1 * ((i % 3) - 1), ypos - 1
-						* ((i / 3) - 1));
-			g.setColor(Color.WHITE);
-			g.drawString(p, xpos, ypos);
+			
+			int xpos;
+			int ypos;
+			
+			if (pTiles != null)
+			{
+				xpos = x * TileSet.TILE_DIMENSION;
+				ypos = y * TileSet.TILE_DIMENSION;
+				if (passabilitySet[x][y] == TileSet.OVERLAY)
+					g.drawImage(pTiles, xpos, ypos, xpos+TileSet.TILE_DIMENSION, ypos+TileSet.TILE_DIMENSION, 0, 0, 32, 32, null);
+				else if (passabilitySet[x][y] == TileSet.IMPASSABLE)
+					g.drawImage(pTiles, xpos, ypos, xpos+TileSet.TILE_DIMENSION, ypos+TileSet.TILE_DIMENSION, 32, 0, 64, 32, null);
+			}
+			else
+			{
+				xpos = x * TileSet.TILE_DIMENSION
+						+ (TileSet.TILE_DIMENSION / 2);
+				ypos = y * TileSet.TILE_DIMENSION
+						+ (TileSet.TILE_DIMENSION / 2);
+				for (int i = 0; i < 9; i++)
+					g.drawString(p, xpos - 1 * ((i % 3) - 1), ypos - 1
+							* ((i / 3) - 1));
+						g.setColor(Color.WHITE);
+				g.drawString(p, xpos, ypos);
+			}
 		}
 		repaint();
 	}
@@ -211,20 +237,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 			for (int x = 0; x < tileSet.getWidth(); x++)
 				for (int y = 0; y < tileSet.getHeight(); y++)
 				{
-					tileSet.drawTile(g2, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
-					if (passabilityMode) {
-						g2.setColor(Color.BLACK);
-						String p = "" + passabilitySet[x][y];
-						int xpos = x * TileSet.TILE_DIMENSION
-								+ (TileSet.TILE_DIMENSION / 2);
-						int ypos = y * TileSet.TILE_DIMENSION
-								+ (TileSet.TILE_DIMENSION / 2);
-						for (int i = 0; i < 9; i++)
-							g2.drawString(p, xpos - 1 * ((i % 3) - 1), ypos - 1
-									* ((i / 3) - 1));
-						g2.setColor(Color.WHITE);
-						g2.drawString(p, xpos, ypos);
-					}
+					paintTile(x, y);
 				}
 			
 		}
