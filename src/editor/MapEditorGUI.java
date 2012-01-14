@@ -189,14 +189,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		}
 		else if (event.getSource() == loadButton)
 		{
-			try
-			{
-				load(name);
-			}
-			catch (Exception e)
-			{
-				JOptionPane.showMessageDialog(this, "Sorry, The map could not be properly loaded");
-			}
+			new LoadMapDialog(this);
 		}
 		else if (event.getSource() == restoreButton)
 		{
