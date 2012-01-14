@@ -41,13 +41,13 @@ public class NewMapDialog extends JDialog implements ActionListener {
 		l2.setSize(20,20);
 		l2.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		
-		width = new JTextField("0");
+		width = new JTextField("1");
 		width.setSize(110, 24);
 		width.setLocation(5, 48);
 		
-		height = new JTextField("0");
+		height = new JTextField("1");
 		height.setSize(110, 24);
-		height.setLocation(135, 48);
+		height.setLocation(132, 48);
 		
 		okButton = new JButton("OK");
 		okButton.setSize(100, 32);
