@@ -60,6 +60,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		dbImage = null;
 		setVisible(true);
 		addMouseListener(this);
+		
 	}
 	
 	/**

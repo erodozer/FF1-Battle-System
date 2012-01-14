@@ -147,11 +147,15 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		restoreButton.setSize(buttonSize[0], buttonSize[1]);
 		restoreButton.setLocation(490, 390);
 		
+		newButton.addActionListener(this);
+		saveButton.addActionListener(this);
+		loadButton.addActionListener(this);
+		restoreButton.addActionListener(this);
+		
 		add(newButton);
 		add(saveButton);
 		add(loadButton);
 		add(restoreButton);
-		
 		
 		/*
 		 * Initialize GUI window 
@@ -175,6 +179,11 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	        tileGrid.refreshTileSet();
 	        editGrid.refreshTileSet();
 	        tilePane.setViewportView(tileGrid);
+		}
+		else if (event.getSource() == newButton)
+		{
+			NewMapDialog nm = new NewMapDialog(this);
+			nm.setLocationRelativeTo(this.getParent());
 		}
 	}
 	

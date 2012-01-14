@@ -1,27 +1,12 @@
 package editor;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
 
-public class ToolKit extends JFrame implements ActionListener{
-
-	/*
-	 * Main menu
-	 */
-	JMenuBar toolbar;
-	JMenu mainMenu;
-	JMenuItem createNew;
-	JMenuItem loadMap;
-	JMenuItem saveMap;
-	JMenuItem quit;
+public class ToolKit extends JFrame{
 	
 	MapEditorGUI mapEditor;
 	PassabilityEditor passabilityEditor;
@@ -67,14 +52,6 @@ public class ToolKit extends JFrame implements ActionListener{
               }
             });
 		return s;
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == createNew)
-		{
-			newMapDialog = new NewMapDialog(mapEditor);
-		}	
 	}
 	
 	/**
