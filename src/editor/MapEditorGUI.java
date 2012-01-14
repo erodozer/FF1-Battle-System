@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -74,6 +75,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	JLabel dimensionsLabel;
 	
 	Font font = new Font("Arial", 1, 32);
+	String name;
 	
 	public MapEditorGUI()
 	{
@@ -185,6 +187,21 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 			NewMapDialog nm = new NewMapDialog(this);
 			nm.setLocationRelativeTo(this.getParent());
 		}
+		else if (event.getSource() == loadButton)
+		{
+			try
+			{
+				load(name);
+			}
+			catch (Exception e)
+			{
+				JOptionPane.showMessageDialog(this, "Sorry, The map could not be properly loaded");
+			}
+		}
+		else if (event.getSource() == restoreButton)
+		{
+			restore();
+		}
 	}
 	
 	/**
@@ -203,11 +220,14 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		editGrid.newMap(mapWidth, mapHeight);
 	}
 	
+	/**
+	 * Save the map to the disk
+	 */
 	public void save()
 	{
         try
         {
-        	String name = nameField.getText();
+        	String n = nameField.getText();
             FileOutputStream stream = new FileOutputStream("data/maps/"+name+"/tiles.txt");
                                             //the stream for outputing data to the file
             PrintWriter pw = new PrintWriter(stream, true);
@@ -220,15 +240,45 @@ public class MapEditorGUI extends JPanel implements ActionListener{
             Ini map = new Ini();
             map.put("map", "tileset", activeTileSet.getName());
             map.store(new FileOutputStream("data/maps/"+name+"/map.ini"));
+            name = n;
         }
-        catch(IOException e)
+        catch(Exception e)
         {
-            System.err.println("Error saving session to file.");
+            JOptionPane.showMessageDialog(this, "Error saving session to file.");
         }
 	}
 	
-	public void load(String path)
+	/**
+	 * Load a map
+	 * @param path			name of the map
+	 * @throws IOException	if the map isn't properly made
+	 */
+	public void load(String path) throws Exception
 	{
+		String n = nameField.getText();
 		
+		Ini i = new Ini(new File("data/maps/" + name + "/map.ini"));
+		
+        activeTileSet = new TileSet(i.get("map", "tileset"));
+        tileGrid.refreshTileSet();
+        editGrid.refreshTileSet();
+        
+        editGrid.loadMap(new File("data/maps/" + name + "/tiles.txt"));
+        name = n;
+	}
+	
+	/**
+	 * Restore the map to its last saved state
+	 */
+	public void restore()
+	{
+		try
+		{
+			load(name);
+		}
+		catch (Exception e)
+		{
+			newMap(mapWidth, mapHeight);
+		}
 	}
 }
