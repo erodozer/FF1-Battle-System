@@ -19,6 +19,7 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -41,6 +42,14 @@ import engine.TileSet;
  *	Simple GUI for map editing with a tile based system
  */
 public class MapEditorGUI extends JPanel implements ActionListener{
+	
+	/*
+	 * Buttons
+	 */
+	JButton newButton;
+	JButton saveButton;
+	JButton loadButton;
+	JButton restoreButton;
 	
 	/*
 	 * Fields
@@ -119,6 +128,30 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		
 		add(editPane);
 		add(tilePane);
+		
+
+		/*
+		 * Initialize Buttons
+		 */
+		int[] buttonSize = {150, 24};
+		newButton = new JButton("New");
+		newButton.setSize(buttonSize[0], buttonSize[1]);
+		newButton.setLocation(10, 390);
+		saveButton = new JButton("Save");
+		saveButton.setSize(buttonSize[0], buttonSize[1]);
+		saveButton.setLocation(170, 390);
+		loadButton = new JButton("Load");
+		loadButton.setSize(buttonSize[0], buttonSize[1]);
+		loadButton.setLocation(330, 390);
+		restoreButton = new JButton("Restore");
+		restoreButton.setSize(buttonSize[0], buttonSize[1]);
+		restoreButton.setLocation(490, 390);
+		
+		add(newButton);
+		add(saveButton);
+		add(loadButton);
+		add(restoreButton);
+		
 		
 		/*
 		 * Initialize GUI window 
