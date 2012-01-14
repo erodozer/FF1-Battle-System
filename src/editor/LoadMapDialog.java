@@ -67,6 +67,7 @@ public class LoadMapDialog extends JDialog implements ActionListener {
 				parent.load((String)mapList.getSelectedItem());
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, "Sorry, The map could not be properly loaded");
+				e.printStackTrace();
 			}
 			dispose();
 			

@@ -88,7 +88,6 @@ public class NewMapDialog extends JDialog implements ActionListener {
 			else
 			{
 				parent.newMap(w, h);
-				parent.editPane.setViewportView(parent.editGrid);
 				dispose();
 			}
 		}

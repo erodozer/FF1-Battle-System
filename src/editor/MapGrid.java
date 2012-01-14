@@ -83,14 +83,15 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			int w = s.nextInt();
 			int h = s.nextInt();
 			
-			for (int i = 0; i < h; i++)
-				for (int n = 0; n < w; n++)
-					tiles[n][i] = s.nextInt();
+			tiles = new int[w][h];
+			for (int i = 0; i < w; i++)
+				for (int n = 0; n < h; n++)
+					tiles[i][n] = s.nextInt();
 			width = w;
 			height = h;
 			dbImage = null;
 			repaint();
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

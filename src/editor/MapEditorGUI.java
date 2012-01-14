@@ -87,7 +87,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		JLabel nameLabel = new JLabel("Map name: ");
 		nameLabel.setSize(200,16);
 		nameLabel.setLocation(10,10);
-		nameField = new JTextField("map");
+		nameField = new JTextField("");
 		nameField.setSize(200, 24);
 		nameField.setLocation(10, 32);
 		
@@ -187,6 +187,14 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 			NewMapDialog nm = new NewMapDialog(this);
 			nm.setLocationRelativeTo(this.getParent());
 		}
+		else if (event.getSource() == saveButton)
+		{
+			String n = nameField.getText();
+			if (new File("data/maps/" + n).exists())
+				if (JOptionPane.showConfirmDialog(this, "A map of name " + n + " already exists.  \nDo you wish to overwrite it?", "Overwrite", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
+					return;
+			save();
+		}
 		else if (event.getSource() == loadButton)
 		{
 			new LoadMapDialog(this);
@@ -204,13 +212,14 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	 */
 	public void newMap(int w, int h)
 	{
-		nameField.setText("map");
+		nameField.setText("");
 		mapWidth = w;
 		mapHeight = h;
 		dimensionsLabel.setText(mapWidth + " x " + mapHeight);
 		dimensionsLabel.setSize(dimensionsLabel.getPreferredSize());
 		dimensionsLabel.setLocation(210 - dimensionsLabel.getWidth(), 64);	
 		editGrid.newMap(mapWidth, mapHeight);
+		editPane.setViewportView(editGrid);
 	}
 	
 	/**
@@ -221,7 +230,8 @@ public class MapEditorGUI extends JPanel implements ActionListener{
         try
         {
         	String n = nameField.getText();
-            FileOutputStream stream = new FileOutputStream("data/maps/"+name+"/tiles.txt");
+        	new File("data/maps/"+n).mkdir();
+            FileOutputStream stream = new FileOutputStream("data/maps/"+n+"/tiles.txt");
                                             //the stream for outputing data to the file
             PrintWriter pw = new PrintWriter(stream, true);
                                             //writes data to the stream
@@ -232,12 +242,14 @@ public class MapEditorGUI extends JPanel implements ActionListener{
             
             Ini map = new Ini();
             map.put("map", "tileset", activeTileSet.getName());
-            map.store(new FileOutputStream("data/maps/"+name+"/map.ini"));
+            map.store(new FileOutputStream("data/maps/"+n+"/map.ini"));
             name = n;
+            JOptionPane.showMessageDialog(this, "Map successfully saved");
         }
         catch(Exception e)
         {
             JOptionPane.showMessageDialog(this, "Error saving session to file.");
+            e.printStackTrace();
         }
 	}
 	
@@ -248,17 +260,18 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	 */
 	public void load(String path) throws Exception
 	{
-		String n = nameField.getText();
+		Ini i = new Ini(new File("data/maps/" + path + "/map.ini"));
 		
-		Ini i = new Ini(new File("data/maps/" + name + "/map.ini"));
-		
-        activeTileSet = new TileSet(i.get("map", "tileset"));
+        activeTileSet = new TileSet(i.get("map", "tileset")+".png");
         tileGrid.refreshTileSet();
         editGrid.refreshTileSet();
         
-        editGrid.loadMap(new File("data/maps/" + name + "/tiles.txt"));
-        name = n;
-	}
+        editGrid.loadMap(new File("data/maps/" + path + "/tiles.txt"));
+        name = path;
+        nameField.setText(name);
+
+		editPane.setViewportView(editGrid);
+    }
 	
 	/**
 	 * Restore the map to its last saved state
