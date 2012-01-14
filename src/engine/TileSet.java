@@ -35,16 +35,17 @@ public class TileSet extends Sprite{
 		passability = new char[xFrames][yFrames];
 		try
 		{
-			Scanner reader = new Scanner(new FileInputStream("data/tilemaps/" + name + ".ini"));
-			for (int i = 0; i < xFrames; i++)
+			Scanner reader = new Scanner(new FileInputStream("data/tilemaps/" + name + ".txt"));
+			for (int i = 0; i < yFrames; i++)
 			{
 				String line = reader.nextLine();
-				for (int n = 0; n < yFrames; n++)
-					passability[i][n] = line.charAt(n);
+				for (int n = 0; n < xFrames; n++)
+					passability[n][i] = line.charAt(n);
 			}
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			for (int i = 0; i < xFrames; i++)
 				for (int n = 0; n < yFrames; n++)
 					passability[i][n] = PASSABLE;

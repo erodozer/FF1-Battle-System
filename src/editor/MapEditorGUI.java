@@ -30,6 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import org.ini4j.Ini;
+
 import engine.TileSet;
 
 /**
@@ -172,6 +174,10 @@ public class MapEditorGUI extends JPanel implements ActionListener{
             pw.println(editGrid.toString());
             
             stream.close();
+            
+            Ini map = new Ini();
+            map.put("map", "tileset", activeTileSet.getName());
+            map.store(new FileOutputStream("data/maps/"+name+"/map.ini"));
         }
         catch(IOException e)
         {

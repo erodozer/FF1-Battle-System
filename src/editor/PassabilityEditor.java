@@ -19,6 +19,7 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -40,7 +41,11 @@ import engine.TileSet;
  */
 public class PassabilityEditor extends JPanel implements ActionListener{
 	
-	JPanel mainPane;
+	/*
+	 * Buttons
+	 */
+	JButton saveButton;
+	JButton resetButton;
 	
 	/*
 	 * Fields
@@ -81,13 +86,28 @@ public class PassabilityEditor extends JPanel implements ActionListener{
 		add(tileSetList);
 		
 		/*
+		 * Initialize buttons
+		 */
+		saveButton = new JButton("Save");
+		saveButton.setSize(200, 24);
+		saveButton.setLocation(10, 64);
+		saveButton.addActionListener(this);
+		resetButton = new JButton("Reset");
+		resetButton.setSize(200, 24);
+		resetButton.setLocation(10, 96);
+		resetButton.addActionListener(this);
+		
+		add(saveButton);
+		add(resetButton);
+		
+		
+		/*
 		 * Initialize editor
 		 */
-		
 		tileGrid = new PassabilityGrid(this);
 		tilePane = new JScrollPane(tileGrid);
 		tilePane.setLocation(220, 10);
-		tilePane.setSize(200, 365);
+		tilePane.setSize(420, 365);
 		tilePane.getViewport().setBackground(Color.GRAY);
 		
 		add(tilePane);
@@ -100,20 +120,22 @@ public class PassabilityEditor extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == tileSetList)
 		{
-			JComboBox cb = (JComboBox)event.getSource();
-	        String name = (String)cb.getSelectedItem();
-			
-	        activeTileSet = new TileSet(name);
-	        tileGrid.refreshTileSet();
-	        tilePane.setViewportView(tileGrid);
+			restore();
 		}
+		else if (event.getSource() == saveButton)
+			save();
+		else if (event.getSource() == resetButton)
+			restore();
 	}
 	
+	/**
+	 * Save the tile set's changes
+	 */
 	public void save()
 	{
         try
         {
-        	FileOutputStream stream = new FileOutputStream("data/tilemaps/" + activeTileSet.getName() + ".ini");
+        	FileOutputStream stream = new FileOutputStream("data/tilemaps/" + activeTileSet.getName() + ".txt");
                                             //the stream for outputing data to the file
             PrintWriter pw = new PrintWriter(stream, true);
                                             //writes data to the stream
@@ -121,10 +143,22 @@ public class PassabilityEditor extends JPanel implements ActionListener{
             pw.println(tileGrid.toString());
             
             stream.close();
+            
+            restore();
         }
         catch(IOException e)
         {
             System.err.println("Error saving session to file.");
         }
+	}
+	
+	/**
+	 * Restore the tile set's passability to its original conditions
+	 */
+	public void restore()
+	{
+		activeTileSet = new TileSet((String)tileSetList.getSelectedItem());
+        tileGrid.refreshTileSet();
+        tilePane.setViewportView(tileGrid);
 	}
 }
