@@ -228,11 +228,13 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	{
 		String output = "";
 		
-		output += width + " " + height;
+		output += width + " " + height + '\n';
 		for (int x = 0; x < width; x++)
+		{
 			for (int y = 0; y < height; y++)
 				output += tiles[x][y] + " ";
-		
+			output += '\n';
+		}
 		return output;
 	}
 

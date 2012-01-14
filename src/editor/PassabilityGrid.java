@@ -262,4 +262,17 @@ public class PassabilityGrid extends JComponent implements ActionListener, Mouse
 	
 		repaint();
 	}
+	
+	public String toString()
+	{
+		String output = "";
+		
+		for (int y = 0; y < tileSet.getHeight(); y++)
+		{
+			for (int x = 0; x < tileSet.getWidth(); x++)
+				output += passabilitySet[x][y];
+			output += '\n';
+		}	
+		return output;
+	}
 }
