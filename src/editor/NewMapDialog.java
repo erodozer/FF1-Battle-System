@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -21,6 +22,10 @@ public class NewMapDialog extends JDialog implements ActionListener {
 	JButton okButton;			//end dialog
 	
 	MapEditorGUI parent;		//parent gui
+	
+	private static final int MAXWIDTH = 500;
+	private static final int MAXHEIGHT = 500;
+	
 	
 	/**
 	 * Constructs the dialog window
@@ -74,9 +79,18 @@ public class NewMapDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == okButton)
 		{
-			parent.newMap(Integer.parseInt(width.getText()), Integer.parseInt(height.getText()));
-			parent.editPane.setViewportView(parent.editGrid);
-			dispose();
+			int w, h;
+			w = Integer.parseInt(width.getText());
+			h = Integer.parseInt(height.getText());
+			
+			if (w > MAXWIDTH || h > MAXHEIGHT || w < 1 || h < 1)
+				JOptionPane.showMessageDialog(this, "Woah there, dimensions need to be within 1x1 to " + MAXWIDTH + "x" + MAXHEIGHT);
+			else
+			{
+				parent.newMap(w, h);
+				parent.editPane.setViewportView(parent.editGrid);
+				dispose();
+			}
 		}
 	}
 	
