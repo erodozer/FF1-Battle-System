@@ -36,17 +36,7 @@ import engine.TileSet;
  *
  *	Simple GUI for map editing with a tile based system
  */
-public class MapEditorGUI extends JFrame implements ActionListener{
-
-	/*
-	 * Main menu
-	 */
-	JMenuBar toolbar;
-	JMenu mainMenu;
-	JMenuItem createNew;
-	JMenuItem loadMap;
-	JMenuItem saveMap;
-	JMenuItem quit;
+public class MapEditorGUI extends JPanel implements ActionListener{
 	
 	JPanel mainPane;
 	
@@ -76,42 +66,9 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 	
 	Font font = new Font("Arial", 1, 32);
 	
-	/*
-	 * Dialogs
-	 */
-	NewMapDialog newMapDialog;
-	
 	public MapEditorGUI()
 	{
 		setLayout(null);
-		
-		/*
-		 * Initialize all the toolbar components 
-		 */
-		toolbar = new JMenuBar();
-		mainMenu = new JMenu("File");
-		createNew = new JMenuItem("Create New Map");
-		createNew.addActionListener(this);
-		
-		loadMap = new JMenuItem("Load Map");
-		loadMap.addActionListener(this);
-		
-		saveMap = new JMenuItem("Save Map");
-		saveMap.addActionListener(this);
-		
-		quit = new JMenuItem("Quit");
-		quit.addActionListener(this);
-		
-		mainMenu.add(createNew);
-		mainMenu.add(loadMap);
-		mainMenu.add(saveMap);
-		mainMenu.add(quit);
-		
-		toolbar.add(mainMenu);
-		
-		setJMenuBar(toolbar);
-		
-		mainPane = new JPanel();
 		
 		/*
 		 * Initialize fields 
@@ -174,9 +131,7 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		 * Initialize GUI window 
 		 */
 		newMap(10,10);
-		setSize(680, 480);
-		setVisible(true);
-		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
+
 	}
 
 	/**
@@ -198,9 +153,7 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == createNew)
-			newMapDialog = new NewMapDialog(this);
-		else if (event.getSource() == tileSetList)
+		if (event.getSource() == tileSetList)
 		{
 			JComboBox cb = (JComboBox)event.getSource();
 	        String name = (String)cb.getSelectedItem();
@@ -230,11 +183,4 @@ public class MapEditorGUI extends JFrame implements ActionListener{
 		editGrid.newMap(mapWidth, mapHeight);
 	}
 	
-	/**
-	 * Runner method
-	 */
-	public static void main(String[] args)
-	{
-		MapEditorGUI g = new MapEditorGUI();
-	}
 }
