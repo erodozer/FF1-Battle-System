@@ -33,98 +33,65 @@ import javax.swing.JTextField;
 import engine.TileSet;
 
 /**
- * MapEditorGUI
+ * PassabilityEditor
  * @author nhydock
  *
- *	Simple GUI for map editing with a tile based system
+ *	Simple GUI for editing the passability of a tileset
  */
-public class MapEditorGUI extends JPanel implements ActionListener{
+public class PassabilityEditor extends JPanel implements ActionListener{
+	
+	JPanel mainPane;
 	
 	/*
 	 * Fields
 	 */
-	JTextField nameField;
 	JComboBox tileSetList;
 	
 	/*
 	 * Map Editor
 	 */
-	MapGrid editGrid;
-	TileSetGrid tileGrid;
-	JScrollPane editPane;
+	PassabilityGrid tileGrid;
 	JScrollPane tilePane;
 	
 	TileSet activeTileSet;		//the current active tile set
 	int tileSetIndex;			//selected tile from the tile set
 	
-	private int mapWidth  = 1;
-	private int mapHeight = 1;
-	
-	JLabel dimensionsLabel;
-	
 	Font font = new Font("Arial", 1, 32);
 	
-	public MapEditorGUI()
+	public PassabilityEditor()
 	{
 		setLayout(null);
 		
 		/*
 		 * Initialize fields 
 		 */
-		JLabel nameLabel = new JLabel("Map name: ");
+		JLabel nameLabel = new JLabel("Tile set: ");
 		nameLabel.setSize(200,16);
 		nameLabel.setLocation(10,10);
-		nameField = new JTextField("map");
-		nameField.setSize(200, 24);
-		nameField.setLocation(10, 32);
-		
-		JLabel dL = new JLabel("Dimensions: ");
-		dL.setSize(dL.getPreferredSize());
-		dL.setLocation(10, 64);
-		
-		dimensionsLabel = new JLabel(mapWidth + " x " + mapHeight);
-		dimensionsLabel.setSize(dimensionsLabel.getPreferredSize());
-		dimensionsLabel.setLocation(210-dimensionsLabel.getWidth(), 64);
 		
 		tileSetList = new JComboBox(ToolKit.tileSets);
 		tileSetList.setSize(200, 24);
-		tileSetList.setLocation(10, 92);
+		tileSetList.setLocation(10, 32);
 		tileSetList.addActionListener(this);
 		
 		//load tileset
 		activeTileSet = new TileSet((String)tileSetList.getItemAt(0));
 		
 		add(nameLabel);
-		add(nameField);
-		add(dL);
-		add(dimensionsLabel);
 		add(tileSetList);
 		
 		/*
 		 * Initialize editor
 		 */
-		editGrid = new MapGrid(this);
-		editPane = new JScrollPane(editGrid);
-		editPane.setLocation(220, 10);
-		editPane.setSize(420, 365);
-		editPane.getViewport().setBackground(Color.GRAY);
 		
-		tileGrid = new TileSetGrid(this);
+		tileGrid = new PassabilityGrid(this);
 		tilePane = new JScrollPane(tileGrid);
-		tilePane.setLocation(10, 125);
-		tilePane.setSize(200, 250);
+		tilePane.setLocation(220, 10);
+		tilePane.setSize(200, 365);
 		tilePane.getViewport().setBackground(Color.GRAY);
 		
-		add(editPane);
 		add(tilePane);
-		
-		/*
-		 * Initialize GUI window 
-		 */
-		newMap(10,10);
-
 	}
-
 	
 	/**
 	 * Handles most input
@@ -138,38 +105,20 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 			
 	        activeTileSet = new TileSet(name);
 	        tileGrid.refreshTileSet();
-	        editGrid.refreshTileSet();
 	        tilePane.setViewportView(tileGrid);
 		}
-	}
-	
-	/**
-	 * Initializes a new map to edit
-	 * @param w
-	 * @param h
-	 */
-	public void newMap(int w, int h)
-	{
-		nameField.setText("map");
-		mapWidth = w;
-		mapHeight = h;
-		dimensionsLabel.setText(mapWidth + " x " + mapHeight);
-		dimensionsLabel.setSize(dimensionsLabel.getPreferredSize());
-		dimensionsLabel.setLocation(210 - dimensionsLabel.getWidth(), 64);	
-		editGrid.newMap(mapWidth, mapHeight);
 	}
 	
 	public void save()
 	{
         try
         {
-        	String name = nameField.getText();
-            FileOutputStream stream = new FileOutputStream("data/maps/"+name+"/tiles.txt");
+        	FileOutputStream stream = new FileOutputStream("data/tilemaps/" + activeTileSet.getName() + ".ini");
                                             //the stream for outputing data to the file
             PrintWriter pw = new PrintWriter(stream, true);
                                             //writes data to the stream
 
-            pw.println(editGrid.toString());
+            pw.println(tileGrid.toString());
             
             stream.close();
         }
@@ -177,10 +126,5 @@ public class MapEditorGUI extends JPanel implements ActionListener{
         {
             System.err.println("Error saving session to file.");
         }
-	}
-	
-	public void load(String path)
-	{
-		
 	}
 }

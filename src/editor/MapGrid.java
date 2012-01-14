@@ -8,6 +8,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import javax.swing.JComponent;
 import javax.swing.Scrollable;
@@ -217,5 +220,37 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			int orientation, int direction) {
 		return TileSet.TILE_DIMENSION;
 	}
+	
+	/**
+	 * Creates a string representation of the map
+	 */
+	public String toString()
+	{
+		String output = "";
+		
+		output += width + " " + height;
+		for (int x = 0; x < width; x++)
+			for (int y = 0; y < height; y++)
+				output += tiles[x][y] + " ";
+		
+		return output;
+	}
 
+	/**
+	 * Loads the tile map from a file
+	 */
+	public void load(File f)
+	{
+		try {
+			Scanner s = new Scanner(f);
+			width = s.nextInt();
+			height = s.nextInt();
+			for (int x = 0; x < width; x++)
+				for (int y = 0; y < height; y++)
+					tiles[x][y] = s.nextInt();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

@@ -23,17 +23,19 @@ public class TileSet extends Sprite{
 	public final static char OVERLAY = 'o';
 	public final static char IMPASSABLE = 'i';
 	
+	String name;
 	char[][] passability;
 	
 	public TileSet(String s)
 	{
 		super("tilemaps/" + s);
+		name = s.substring(0, s.indexOf('.'));
 		xFrames = image.getWidth()/ORIGINAL_DIMENSIONS;
 		yFrames = image.getHeight()/ORIGINAL_DIMENSIONS;
 		passability = new char[xFrames][yFrames];
 		try
 		{
-			Scanner reader = new Scanner(new FileInputStream("data/tilemaps/" + (s.substring(0, s.indexOf('.')) + ".ini")));
+			Scanner reader = new Scanner(new FileInputStream("data/tilemaps/" + name + ".ini"));
 			for (int i = 0; i < xFrames; i++)
 			{
 				String line = reader.nextLine();
@@ -47,6 +49,11 @@ public class TileSet extends Sprite{
 				for (int n = 0; n < yFrames; n++)
 					passability[i][n] = PASSABLE;
 		}
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 	
 	@Override

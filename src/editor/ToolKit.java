@@ -2,6 +2,8 @@ package editor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FilenameFilter;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -22,12 +24,16 @@ public class ToolKit extends JFrame implements ActionListener{
 	JMenuItem quit;
 	
 	MapEditorGUI mapEditor;
+	PassabilityEditor passabilityEditor;
 	
 	/*
 	 * Dialogs
 	 */
 	NewMapDialog newMapDialog;
 	JTabbedPane tabbedPane;
+	
+	static final String[] tileSets = buildTileMapList();
+	
 	
 	public ToolKit()
 	{
@@ -62,11 +68,12 @@ public class ToolKit extends JFrame implements ActionListener{
 		setJMenuBar(toolbar);	
 
 		mapEditor = new MapEditorGUI();
+		passabilityEditor = new PassabilityEditor();
 		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setSize(680, 440);
 		tabbedPane.addTab("Map Editor", mapEditor);
-		
+		tabbedPane.addTab("Passability Editor", passabilityEditor);
 		add(tabbedPane);
 		
 		setTitle("JFF1 Toolkit");
@@ -74,6 +81,20 @@ public class ToolKit extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 
+	/**
+	 * Creates a list of available tilemaps
+	 * @return
+	 */
+	private static String[] buildTileMapList()
+	{
+		String[] s = new File("data/tilemaps").list(new FilenameFilter() {
+            public boolean accept(File f, String s) {
+                return s.endsWith(".png");
+              }
+            });
+		return s;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == createNew)
