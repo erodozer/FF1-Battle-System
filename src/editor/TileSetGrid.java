@@ -120,19 +120,22 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 				passabilitySet[x][y] = TileSet.IMPASSABLE;
 			else
 				passabilitySet[x][y] = TileSet.PASSABLE;
-			return;
+			paintTile(x, y);
 		}
-		
-		int k = (arg0.getX())/TileSet.TILE_DIMENSION;
-		int n = (arg0.getY())/TileSet.TILE_DIMENSION;
-		
-		if (k >= 0 && k < tileSet.getWidth() && n >= 0 && n < tileSet.getHeight())
+		else
 		{
-			x = k;
-			y = n;
-			parent.tileSetIndex = x + (y*(int)tileSet.getWidth());
+			int k = (arg0.getX()) / TileSet.TILE_DIMENSION;
+			int n = (arg0.getY()) / TileSet.TILE_DIMENSION;
+
+			if (k >= 0 && k < tileSet.getWidth() && n >= 0
+					&& n < tileSet.getHeight()) {
+				x = k;
+				y = n;
+				parent.tileSetIndex = x + (y * (int) tileSet.getWidth());
+			}
 			repaint();
 		}
+		
 	}
 
 	/*
@@ -164,6 +167,33 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	public void mouseReleased(MouseEvent arg0) {}
 	
 	/**
+	 * Update a single tile
+	 * @param x
+	 * @param y
+	 */
+	public void paintTile(int x, int y)
+	{
+		Graphics g = dbImage.getGraphics();
+		
+		tileSet.drawTile(g, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
+		
+		if (passabilityMode) {
+			g.setColor(Color.BLACK);
+			String p = "" + passabilitySet[x][y];
+			int xpos = x * TileSet.TILE_DIMENSION
+					+ (TileSet.TILE_DIMENSION / 2);
+			int ypos = y * TileSet.TILE_DIMENSION
+					+ (TileSet.TILE_DIMENSION / 2);
+			for (int i = 0; i < 9; i++)
+				g.drawString(p, xpos - 1 * ((i % 3) - 1), ypos - 1
+						* ((i / 3) - 1));
+			g.setColor(Color.WHITE);
+			g.drawString(p, xpos, ypos);
+		}
+		repaint();
+	}
+	
+	/**
 	 * Draws the actual grid and tiles
 	 */
 	public void paint(Graphics g)
@@ -182,14 +212,16 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 				for (int y = 0; y < tileSet.getHeight(); y++)
 				{
 					tileSet.drawTile(g2, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
-					if (passabilityMode)
-					{
+					if (passabilityMode) {
 						g2.setColor(Color.BLACK);
-						String p = ""+passabilitySet[x][y];
-						int xpos = x*TileSet.TILE_DIMENSION+(TileSet.TILE_DIMENSION/2);
-						int ypos = y*TileSet.TILE_DIMENSION+(TileSet.TILE_DIMENSION/2);
+						String p = "" + passabilitySet[x][y];
+						int xpos = x * TileSet.TILE_DIMENSION
+								+ (TileSet.TILE_DIMENSION / 2);
+						int ypos = y * TileSet.TILE_DIMENSION
+								+ (TileSet.TILE_DIMENSION / 2);
 						for (int i = 0; i < 9; i++)
-							g2.drawString(p, xpos-1*((i%3)-1), ypos-1*((i/3)-1));
+							g2.drawString(p, xpos - 1 * ((i % 3) - 1), ypos - 1
+									* ((i / 3) - 1));
 						g2.setColor(Color.WHITE);
 						g2.drawString(p, xpos, ypos);
 					}
