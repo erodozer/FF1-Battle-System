@@ -74,6 +74,29 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	}
 	
 	/**
+	 * Loads the tile map from a file
+	 */
+	public void loadMap(File f)
+	{
+		try {
+			Scanner s = new Scanner(f);
+			int w = s.nextInt();
+			int h = s.nextInt();
+			
+			for (int i = 0; i < h; i++)
+				for (int n = 0; n < w; n++)
+					tiles[n][i] = s.nextInt();
+			width = w;
+			height = h;
+			dbImage = null;
+			repaint();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
 	 * Draw Tile
 	 */
 	@Override
@@ -238,21 +261,4 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		return output;
 	}
 
-	/**
-	 * Loads the tile map from a file
-	 */
-	public void load(File f)
-	{
-		try {
-			Scanner s = new Scanner(f);
-			width = s.nextInt();
-			height = s.nextInt();
-			for (int x = 0; x < width; x++)
-				for (int y = 0; y < height; y++)
-					tiles[x][y] = s.nextInt();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-	}
 }
