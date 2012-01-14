@@ -38,40 +38,14 @@ public class ToolKit extends JFrame implements ActionListener{
 	public ToolKit()
 	{
 		setLayout(null);
-		setSize(680, 480);
+		setSize(660, 480);
 		setResizable(false);
-		
-		/*
-		 * Initialize all the toolbar components 
-		 */
-		toolbar = new JMenuBar();
-		mainMenu = new JMenu("File");
-		createNew = new JMenuItem("Create New Map");
-		createNew.addActionListener(this);
-		
-		loadMap = new JMenuItem("Load Map");
-		loadMap.addActionListener(this);
-		
-		saveMap = new JMenuItem("Save Map");
-		saveMap.addActionListener(this);
-		
-		quit = new JMenuItem("Quit");
-		quit.addActionListener(this);
-		
-		mainMenu.add(createNew);
-		mainMenu.add(loadMap);
-		mainMenu.add(saveMap);
-		mainMenu.add(quit);
-		
-		toolbar.add(mainMenu);
-		
-		setJMenuBar(toolbar);	
 
 		mapEditor = new MapEditorGUI();
 		passabilityEditor = new PassabilityEditor();
 		
 		tabbedPane = new JTabbedPane();
-		tabbedPane.setSize(680, 440);
+		tabbedPane.setSize(660, 480);
 		tabbedPane.addTab("Map Editor", mapEditor);
 		tabbedPane.addTab("Passability Editor", passabilityEditor);
 		add(tabbedPane);
