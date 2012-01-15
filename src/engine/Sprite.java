@@ -27,10 +27,12 @@ public class Sprite{
 	protected double x = 0;				//x draw position on screen
 	protected double y = 0;				//y draw position on screen
 	
-	protected int[] rect;					//rectangle cropping for frames
-	protected double[] crop;				//further cropping for what displays on screen
+	protected int[] rect;				//rectangle cropping for frames
+	protected double[] crop;			//further cropping for what displays on screen
 	protected int xFrames;				//number of horizontal frames
 	protected int yFrames;				//number of vertical frames
+	
+	protected String path;				//filepath to the image
 	
 	/**
 	 * Load the sprite from file path
@@ -48,6 +50,8 @@ public class Sprite{
 	public Sprite(String s, int xFrames, int yFrames)
 	{
 		if (s != null)
+		{
+			path = s;
 			if (TEXTURECACHE.containsKey(s))
 			{
 				image = TEXTURECACHE.get(s);
@@ -63,6 +67,7 @@ public class Sprite{
 				}
 				TEXTURECACHE.put(s, image);
 			}
+		}
 		if (image != null)
 		{
 			width = image.getWidth();
@@ -190,5 +195,20 @@ public class Sprite{
 			g.drawImage(image, drawX, drawY, drawX + finalWidth, drawY + finalHeight, 
 							sourceX, sourceY, sourceWidth, sourceHeight, null);
 		}
+	}
+
+	/**
+	 * @return	the file name of the image
+	 */
+	public String getName()
+	{
+		return path.substring(path.lastIndexOf('/')+1);
+	}
+	
+	/**
+	 * @return	path to the image file
+	 */
+	public String getPath() {
+		return path;
 	}
 }

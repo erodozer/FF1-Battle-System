@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Vector;
@@ -37,6 +38,8 @@ import javax.swing.JTextField;
 
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
+
+import scenes.WorldScene.WorldSystem.Terrain;
 
 import editor.ToolKit;
 import engine.TileSet;
@@ -92,7 +95,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	Font font = new Font("Arial", 1, 32);
 	String name;
 	
-	Vector<Region> regions;
+	Vector<Terrain> regions;
 	
 	public MapEditorGUI()
 	{
@@ -276,6 +279,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 				rRemButton.setVisible(false);
 				rEdtButton.setVisible(false);
 			}
+			editGrid.refreshRegionMode();
 		}
 		else if (event.getSource() == rAddButton)
 		{
@@ -283,7 +287,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		}
 		else if (event.getSource() == rEdtButton)
 		{
-			new RegionEditorDialog(this, regionList.getSelectedIndex(), (Region)regionList.getSelectedValue());
+			new RegionEditorDialog(this, regionList.getSelectedIndex(), (Terrain)regionList.getSelectedValue());
 		}
 	}
 	
@@ -303,7 +307,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		editGrid.newMap(mapWidth, mapHeight);
 		editPane.setViewportView(editGrid);
 		name = null;
-		regions = new Vector<Region>();
+		regions = new Vector<Terrain>();
 		regionList.setListData(regions);
 		regionPane.setViewportView(regionList);
 	}
@@ -316,8 +320,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
         try
         {
         	String n = nameField.getText();
-        	new File("data/maps/"+n).mkdir();
-            FileOutputStream stream = new FileOutputStream("data/maps/"+n+"/tiles.txt");
+        	FileOutputStream stream = new FileOutputStream("data/maps/"+n+"/tiles.txt");
                                             //the stream for outputing data to the file
             PrintWriter pw = new PrintWriter(stream, true);
                                             //writes data to the stream
@@ -326,16 +329,17 @@ public class MapEditorGUI extends JPanel implements ActionListener{
             
             stream.close();
             
-            Ini map = new Ini();
-            map.put("map", "tileset", activeTileSet.getName());
+            stream = new FileOutputStream("data/maps/"+n+"/map.ini");
+            Ini ini = new Ini(new File("data/maps/"+n+"/map.ini"));
             
-            PrintWriter w = new PrintWriter("");
+            ini.put("map", "tileset", activeTileSet.getName());
+            
             for (int i = 0; i < regions.size(); i++)
-            	w.write("\n"+regions.get(i).save(i));
-    		map.store(w);
+            	regions.get(i).save(ini, "Region"+i);
+    		
+            ini.store(stream);
+            stream.close();
             
-            map.store(new FileOutputStream("data/maps/"+n+"/map.ini"));
-                    
             name = n;
             JOptionPane.showMessageDialog(this, "Map successfully saved");
         }
@@ -356,6 +360,13 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		Ini i = new Ini(new File("data/maps/" + path + "/map.ini"));
 		Preferences p = new IniPreferences(i);
 		
+		regions = new Vector<Terrain>();
+		for (String s : p.childrenNames())
+			if (s.startsWith("Region"))
+				regions.add(Integer.parseInt(s.substring(6)), new Terrain(p.node(s)));
+		regionList.setListData(regions);
+		regionPane.setViewportView(regionList);
+						
         activeTileSet = new TileSet(i.get("map", "tileset")+".png");
         tileGrid.refreshTileSet();
         editGrid.refreshTileSet();

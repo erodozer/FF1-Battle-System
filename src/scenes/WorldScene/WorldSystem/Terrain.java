@@ -4,8 +4,12 @@ import engine.Sprite;
 import groups.Formation;
 
 import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.Vector;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
+import org.ini4j.Ini;
 
 /**
  * Terrain
@@ -20,18 +24,21 @@ import java.util.prefs.Preferences;
  */
 public class Terrain {
 
-	ArrayList<String> formations;
-	Sprite background;
-	int encounterRate;
+	String name	= "plains";
+	Vector<String> formations = new Vector<String>();
+	Sprite background = new Sprite("terrains/grass.png");
+	int encounterRate = 1;
 	
 	/**
 	 * Constructs a Terrain from a node in a map's ini file
 	 * @param node
 	 */
 	public Terrain(Preferences node) {
+		if (node == null)
+			return;
+		
 		background = new Sprite("terrains/"+node.get("background", "grass.png"));
-		encounterRate = node.getInt("rate", 10);
-		formations = new ArrayList<String>();
+		encounterRate = node.getInt("rate", 1);
 		try {
 			for (String s : node.keys())
 				if (s.startsWith("formation"))
@@ -54,9 +61,43 @@ public class Terrain {
 	public int getRate() {
 		return (int)((Math.random()+1)*encounterRate);
 	}
+	
+	public void setRate(int value) {
+		encounterRate = value;
+	}
+	
+	public int getStraightRate(){
+		return encounterRate;
+	}
 
+	/**
+	 * Sets the background image to use in battle
+	 * @return
+	 */
 	public Sprite getBackground() {
 		return background;
+	}
+	
+	public void setBackground(String s)
+	{
+		background = new Sprite("terrains/"+s);
+	}
+	
+	/**
+	 * Set the terrain name to help with identification
+	 * @param s
+	 */
+	public void setName(String s)
+	{
+		name = s;
+	}
+	
+	/**
+	 * @return	terrain name
+	 */
+	public String getName()
+	{
+		return name;
 	}
 
 	/**
@@ -69,5 +110,30 @@ public class Terrain {
 		for (String e : s.split(","))
 			f.add(e);
 		return (f.size() > 0)?f:null;
+	}
+	
+	public String[] getFormations()
+	{
+		return formations.toArray(new String[]{});
+	}
+	
+	/**
+	 * Creates an ini entry for saving
+	 * @param number
+	 * @return
+	 */
+	public void save(Ini p, String section)
+	{
+		p.put(section, "name", name);
+		p.put(section, "background", background.getName());
+		p.put(section, "rate", ""+encounterRate);
+		Formatter f = new Formatter();
+		for (int i = 0; i < 0; i++)
+			p.put(section, f.format("\nformation%03d = ", formations.get(i)).toString(), "");
+	}
+
+	public String toString()
+	{
+		return name;
 	}
 }
