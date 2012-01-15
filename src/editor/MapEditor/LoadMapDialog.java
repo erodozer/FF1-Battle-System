@@ -2,6 +2,7 @@ package editor.MapEditor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,7 +25,7 @@ public class LoadMapDialog extends JDialog implements ActionListener {
 	
 	JComboBox mapList;			//map list combo box
 	MapEditorGUI parent;		//parent gui
-	
+
 	/**
 	 * Constructs the dialog window
 	 * @param p		Parent GUI

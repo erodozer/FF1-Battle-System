@@ -5,6 +5,7 @@ import groups.Formation;
 
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.List;
 import java.util.Vector;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -112,9 +113,9 @@ public class Terrain {
 		return (f.size() > 0)?f:null;
 	}
 	
-	public String[] getFormations()
+	public Vector<String> getFormations()
 	{
-		return formations.toArray(new String[]{});
+		return formations;
 	}
 	
 	/**
@@ -127,13 +128,21 @@ public class Terrain {
 		p.put(section, "name", name);
 		p.put(section, "background", background.getName());
 		p.put(section, "rate", ""+encounterRate);
-		Formatter f = new Formatter();
-		for (int i = 0; i < 0; i++)
-			p.put(section, f.format("\nformation%03d = ", formations.get(i)).toString(), "");
+		Formatter f;
+		for (int i = 0; i < formations.size(); i++)
+		{
+			f = new Formatter();
+			p.put(section, f.format("formation%03d", i+1).toString(), formations.get(i));
+		}
 	}
 
 	public String toString()
 	{
 		return name;
+	}
+
+	public void setFormations(List<String> f) {
+		formations = new Vector<String>();
+		formations.addAll(f);
 	}
 }
