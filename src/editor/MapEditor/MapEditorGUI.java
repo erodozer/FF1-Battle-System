@@ -85,7 +85,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	JButton rEdtButton;			//edit region properties
 	
 	TileSet activeTileSet;		//the current active tile set
-	int tileSetIndex;			//selected tile from the tile set
+	int[][] tileSelected;		//current selected group of tiles
 	
 	private int mapWidth  = 1;
 	private int mapHeight = 1;
