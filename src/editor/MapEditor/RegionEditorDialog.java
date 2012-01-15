@@ -172,13 +172,14 @@ public class RegionEditorDialog extends JDialog implements ActionListener {
 		setLocationRelativeTo(parent);
 	}
 	
-	public RegionEditorDialog(MapEditorGUI p, int i, Region r)
+	public RegionEditorDialog(MapEditorGUI p, int i, Terrain r)
 	{
 		this(p);
 		index = i;
 		nameField.setText(r.getName());
-		terrain.setSelectedItem(r.getBackground());
-		eRateSpinner.setValue(r.getEncounterRate());
+		terrain.setSelectedItem(r.getBackground().getName());
+		eRateSpinner.setValue(r.getStraightRate());
+		fList.setListData(r.getFormations());
 	}
 
 	/**
@@ -188,10 +189,10 @@ public class RegionEditorDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == okButton)
 		{
-			Region r = new Region(null);
+			Terrain r = new Terrain(null);
 			r.setBackground((String)terrain.getSelectedItem());
 			r.setName(nameField.getText());
-			r.setEncounterRate((Integer)eRateSpinner.getValue());
+			r.setRate((Integer)eRateSpinner.getValue());
 			if (index == -1)
 				parent.regions.add(r);
 			else

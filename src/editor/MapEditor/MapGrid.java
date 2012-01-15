@@ -35,8 +35,10 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	int width = 1;			//width of the tileset
 	int height = 1;			//height of the tileset
 	
+	boolean regionMode;		//edit regions
 	
-	int[][] tiles;
+	int[][] tiles;			//map tiles
+	int[][] regions;		//region tiles
 	
 	MapEditorGUI parent;	//parent gui
 
@@ -59,8 +61,8 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		width = w;
 		height = h;
 		tiles = new int[w][h];
-		dbImage = null;
-		repaint();
+		regions = new int[w][h];
+		forceClear();
 	}
 	
 	/**
@@ -69,8 +71,25 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	public void refreshTileSet()
 	{
 		tileSet = parent.activeTileSet;
+		forceClear();
+	}
+	
+	/**
+	 * Set region mode
+	 */
+	public void refreshRegionMode()
+	{
+		regionMode = parent.regionCheckBox.isSelected();
+		forceClear();
+	}
+	
+	/**
+	 * Forces the map to redraw itself entirely
+	 */
+	public void forceClear()
+	{
 		dbImage = null;
-		repaint();
+		repaint();	
 	}
 	
 	/**
@@ -87,10 +106,13 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			for (int i = 0; i < w; i++)
 				for (int n = 0; n < h; n++)
 					tiles[i][n] = s.nextInt();
+			regions = new int[w][h];
+			for (int i = 0; i < w; i++)
+				for (int n = 0; n < h; n++)
+					regions[i][n] = s.nextInt();
 			width = w;
 			height = h;
-			dbImage = null;
-			repaint();
+			forceClear();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -105,8 +127,10 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		if (!updating && x >= 0 && x < width && y >= 0 && y < height)
 			return;
 		
-		
-		tiles[x][y] = parent.tileSetIndex;
+		if (regionMode)
+			regions[x][y] = parent.regionList.getSelectedIndex()+1;
+		else
+			tiles[x][y] = parent.tileSetIndex;
 		paintTile(x, y);
 	}
 
@@ -161,6 +185,19 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		int k =	tiles[x][y]/(int)tileSet.getWidth();
 		tileSet.drawTile(g, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, n, k);
 		
+		if (regionMode)
+		{
+			int xpos = x * TileSet.TILE_DIMENSION + (TileSet.TILE_DIMENSION / 2);
+			int ypos = y * TileSet.TILE_DIMENSION + (TileSet.TILE_DIMENSION / 2);
+			String p = ""+regions[x][y];
+			if (regions[x][y] == 0)
+				p = "-";
+			for (int i = 0; i < 9; i++)
+				g.drawString(p, xpos - 1 * ((i % 3) - 1), ypos - 1
+					* ((i / 3) - 1));
+			g.setColor(Color.WHITE);
+			g.drawString(p, xpos, ypos);
+		}
 		repaint();
 	}
 	
@@ -184,11 +221,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			int n, k;	//n = x on the tileset, k = y on the tileset
 			for (int x = 0; x < width; x++)
 				for (int y = 0; y < height; y++)
-				{
-					n = tiles[x][y]%width;
-					k =	tiles[x][y]/width;
-					tileSet.drawTile(g2, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, n, k);
-				}
+					paintTile(x, y);
 		}
 		
 		g.drawImage(dbImage, 0, 0, null);
@@ -200,7 +233,10 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			g.drawLine(0, i*TileSet.TILE_DIMENSION, width*TileSet.TILE_DIMENSION, i*TileSet.TILE_DIMENSION);
 		if (x >= 0 && x < width && y >= 0 && y < height && updating)
 		{
-			g.setColor(Color.YELLOW);
+			if (regionMode)
+				g.setColor(Color.RED);
+			else
+				g.setColor(Color.YELLOW);
 			g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
 		}
 	}
@@ -253,10 +289,17 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		String output = "";
 		
 		output += width + " " + height + '\n';
-		for (int x = 0; x < width; x++)
+		for (int y = 0; y < height; y++)
 		{
-			for (int y = 0; y < height; y++)
+			for (int x = 0; x < width; x++)
 				output += tiles[x][y] + " ";
+			output += '\n';
+		}
+		output += "\n";
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+				output += regions[x][y] + " ";
 			output += '\n';
 		}
 		return output;
