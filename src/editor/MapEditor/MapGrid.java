@@ -305,4 +305,20 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		return output;
 	}
 
+	/**
+	 * Sets all tiles set to the designated region
+	 * to be part of no region
+	 * @param i
+	 */
+	public void removeRegion(int i) {
+		for (int y = 0; y < height; y++)
+			for (int x = 0; x < width; x++)
+				if (regions[x][y] == i+1)
+				{
+					regions[x][y] = 0;
+					paintTile(x, y);
+				}
+		
+	}
+
 }
