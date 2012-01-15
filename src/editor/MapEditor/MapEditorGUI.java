@@ -363,7 +363,12 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		regions = new Vector<Terrain>();
 		for (String s : p.childrenNames())
 			if (s.startsWith("Region"))
-				regions.add(Integer.parseInt(s.substring(6)), new Terrain(p.node(s)));
+			{
+				int index = Integer.parseInt(s.substring(6));
+				if (index+1 > regions.size())
+					regions.setSize(index+1);
+				regions.set(index, new Terrain(p.node(s)));
+			}
 		regionList.setListData(regions);
 		regionPane.setViewportView(regionList);
 						
