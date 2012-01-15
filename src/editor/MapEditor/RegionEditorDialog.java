@@ -179,7 +179,9 @@ public class RegionEditorDialog extends JDialog implements ActionListener {
 		nameField.setText(r.getName());
 		terrain.setSelectedItem(r.getBackground().getName());
 		eRateSpinner.setValue(r.getStraightRate());
-		fList.setListData(r.getFormations());
+		formations = r.getFormations();
+		fList.setListData(formations);
+		fPane.setViewportView(fList);
 	}
 
 	/**
@@ -187,12 +189,14 @@ public class RegionEditorDialog extends JDialog implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
+		//close dialog and save changes to the region
 		if (event.getSource() == okButton)
 		{
 			Terrain r = new Terrain(null);
 			r.setBackground((String)terrain.getSelectedItem());
 			r.setName(nameField.getText());
 			r.setRate((Integer)eRateSpinner.getValue());
+			r.setFormations(formations);
 			if (index == -1)
 				parent.regions.add(r);
 			else
@@ -201,8 +205,28 @@ public class RegionEditorDialog extends JDialog implements ActionListener {
 			parent.regionPane.setViewportView(parent.regionList);
 			dispose();
 		}
-		else if (event.getSource() == cancelButton)
+		
+		//close dialog without saving changes
+		if (event.getSource() == cancelButton)
 			dispose();
+		
+		if (fList.getSelectedIndex() != -1)
+		{
+			// edit a formation
+			if (event.getSource() == fEdtButton)
+				new FormationDialog(this, fList.getSelectedIndex());
+			// remove a formation
+			else if (event.getSource() == fRemButton) {
+				formations.remove(fList.getSelectedIndex());
+				fList.setListData(formations);
+				fPane.setViewportView(fList);
+			}
+		}
+		// create a new formation
+		if (event.getSource() == fAddButton)
+			new FormationDialog(this);
+				
+
 	}
 	
 }

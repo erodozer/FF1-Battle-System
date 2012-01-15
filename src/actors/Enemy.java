@@ -9,6 +9,7 @@ package actors;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.prefs.Preferences;
 
@@ -21,6 +22,14 @@ import engine.Sprite;
 
 public class Enemy extends Actor {
 
+	public static final String[] AVAILABLEENEMIES = new ArrayList<String>(){
+		{
+			for (String s : new File("data/actors/enemies").list())
+				if (new File("data/actors/enemies/" + s + "/enemy.ini").exists())
+					this.add(s);
+		}
+	}.toArray(new String[]{});
+	
 	public static final int SMALL = 66;
 	public static final int MEDIUM = 98;
 	public static final int LARGE = 128;
