@@ -7,12 +7,24 @@ import java.util.Vector;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+/**
+ * Region
+ * @author nhydock
+ *
+ *	Map regions for adding variation in battles
+ */
 public class Region {
 
-	String background = "grass.png";
+	String name = "plains";				//region name
+	String background = "grass.png";	//battle background image
+	int encounterRate = 1;				//rate at which an encounter occurs
 	
 	Vector<String> formations = new Vector<String>();
+										//battle formations found in the region
 	
+	/**
+	 * Construct a region from saved settings in a map.ini
+	 */
 	public Region(Preferences p)
 	{
 		if (p == null)
@@ -30,12 +42,30 @@ public class Region {
 		}
 	}
 	
+	/**
+	 * Adds a formation to the list
+	 * @param s
+	 */
 	public void addFormation(String s)
 	{
 		formations.add(s);
 	}
 	
+	public void setEncounterRate(int i)
+	{
+		encounterRate = i;
+	}
 	
+	public int getEncounterRate()
+	{
+		return encounterRate;
+	}
+	
+	/**
+	 * Creates an ini entry for saving
+	 * @param number
+	 * @return
+	 */
 	public String save(int number)
 	{
 		String output = "[Region:"+number+"]";
@@ -46,5 +76,28 @@ public class Region {
 			output += formatter.format("\nformation%03d = ", formations.get(i));
 		
 		return output;
+	}
+	
+	public String toString()
+	{
+		return name;
+	}
+
+	public String getBackground() {
+		return background;
+	}
+	
+	public void setBackground(String s)
+	{
+		background = s;
+	}
+
+	public void setName(String text) {
+		name = text;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 }

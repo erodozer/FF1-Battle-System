@@ -92,7 +92,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	Font font = new Font("Arial", 1, 32);
 	String name;
 	
-	Vector<Region> regions = new Vector<Region>();
+	Vector<Region> regions;
 	
 	public MapEditorGUI()
 	{
@@ -145,7 +145,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		tilePane.setSize(200, 250);
 		tilePane.getViewport().setBackground(Color.GRAY);
 		
-		regionList = new JList(regions);
+		regionList = new JList();
 		regionPane = new JScrollPane(regionList);
 		regionPane.setSize(200, 200);
 		regionPane.setLocation(10, 125);
@@ -283,7 +283,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		}
 		else if (event.getSource() == rEdtButton)
 		{
-			new RegionEditorDialog(this, regionList.getSelectedIndex());
+			new RegionEditorDialog(this, regionList.getSelectedIndex(), (Region)regionList.getSelectedValue());
 		}
 	}
 	
@@ -302,6 +302,10 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		dimensionsLabel.setLocation(210 - dimensionsLabel.getWidth(), 64);	
 		editGrid.newMap(mapWidth, mapHeight);
 		editPane.setViewportView(editGrid);
+		name = null;
+		regions = new Vector<Region>();
+		regionList.setListData(regions);
+		regionPane.setViewportView(regionList);
 	}
 	
 	/**
@@ -324,7 +328,14 @@ public class MapEditorGUI extends JPanel implements ActionListener{
             
             Ini map = new Ini();
             map.put("map", "tileset", activeTileSet.getName());
+            
+            PrintWriter w = new PrintWriter("");
+            for (int i = 0; i < regions.size(); i++)
+            	w.write("\n"+regions.get(i).save(i));
+    		map.store(w);
+            
             map.store(new FileOutputStream("data/maps/"+n+"/map.ini"));
+                    
             name = n;
             JOptionPane.showMessageDialog(this, "Map successfully saved");
         }
@@ -352,11 +363,6 @@ public class MapEditorGUI extends JPanel implements ActionListener{
         editGrid.loadMap(new File("data/maps/" + path + "/tiles.txt"));
         name = path;
         nameField.setText(name);
-
-        PrintWriter w = new PrintWriter("");
-        for (Region r : regions)
-        	w.write("\n"+r.toString());
-		i.store(w);
 		
 		editPane.setViewportView(editGrid);
     }
