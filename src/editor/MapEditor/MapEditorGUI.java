@@ -289,6 +289,15 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		{
 			new RegionEditorDialog(this, regionList.getSelectedIndex(), (Terrain)regionList.getSelectedValue());
 		}
+		else if (event.getSource() == rRemButton)
+		{
+			//remove the region from the map
+			editGrid.removeRegion(regionList.getSelectedIndex());
+			
+			regions.remove(regionList.getSelectedIndex());
+			regionList.setListData(regions);
+			regionPane.setViewportView(regionList);
+		}
 	}
 	
 	/**
