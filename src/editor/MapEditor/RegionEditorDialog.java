@@ -16,7 +16,10 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.JSpinner.NumberEditor;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
@@ -34,6 +37,11 @@ import scenes.WorldScene.WorldSystem.Terrain;
  */
 public class RegionEditorDialog extends JDialog implements ActionListener {
 
+	String name = "plains";		//region name
+	JTextField nameField;		//region naming field
+	
+	JSpinner eRateSpinner;		//spinner for encounter rate
+	
 	String[] terrains;			//available terrains to choose from
 	JComboBox terrain;			//drop down list of the terrains
 	
@@ -62,15 +70,43 @@ public class RegionEditorDialog extends JDialog implements ActionListener {
 		setLayout(null);
 		
 		/*
-		 * Initialize Terrain selector
+		 * Initialize naming field
 		 */
-		JLabel l = new JLabel("Terrains");
+		JLabel l = new JLabel("Name");
 		l.setSize(l.getPreferredSize());
 		l.setLocation(10, 10);
 		
+		nameField = new JTextField("plains");
+		nameField.setSize(200, 24);
+		nameField.setLocation(10, 32);
+		
+		add(l);
+		add(nameField);
+		
+		/*
+		 * Initialize encounter spinner
+		 */
+		l = new JLabel("Encounter rate");
+		l.setSize(l.getPreferredSize());
+		l.setLocation(10, 64);
+		
+		eRateSpinner = new JSpinner(new SpinnerNumberModel(1,1,20,1));
+		eRateSpinner.setSize(eRateSpinner.getPreferredSize());
+		eRateSpinner.setLocation(210-eRateSpinner.getWidth(), 62);
+		
+		add(l);
+		add(eRateSpinner);
+		
+		/*
+		 * Initialize Terrain selector
+		 */
+		l = new JLabel("Terrain");
+		l.setSize(l.getPreferredSize());
+		l.setLocation(10, 96);
+		
 		terrain = new JComboBox(ToolKit.terrains);
 		terrain.setSize(200, 24);
-		terrain.setLocation(10, 32);
+		terrain.setLocation(10, 120);
 		
 		add(l);
 		add(terrain);
@@ -78,16 +114,16 @@ public class RegionEditorDialog extends JDialog implements ActionListener {
 		/*
 		 * Initialize formation list
 		 */
-		JLabel l2 = new JLabel("Formations");
-		l2.setSize(l2.getPreferredSize());
-		l2.setLocation(10, 68);
+		l = new JLabel("Formations");
+		l.setSize(l.getPreferredSize());
+		l.setLocation(10, 156);
 		
 		fList = new JList(formations);
 		fPane = new JScrollPane(fList);
-		fPane.setSize(200, 230);
-		fPane.setLocation(10, 92);
+		fPane.setSize(200, 160);
+		fPane.setLocation(10, 172);
 		
-		add(l2);
+		add(l);
 		add(fPane);
 		
 		/*
@@ -136,15 +172,13 @@ public class RegionEditorDialog extends JDialog implements ActionListener {
 		setLocationRelativeTo(parent);
 	}
 	
-	public RegionEditorDialog(MapEditorGUI p, int i)
+	public RegionEditorDialog(MapEditorGUI p, int i, Region r)
 	{
 		this(p);
 		index = i;
-		try {
-			load(i);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		nameField.setText(r.getName());
+		terrain.setSelectedItem(r.getBackground());
+		eRateSpinner.setValue(r.getEncounterRate());
 	}
 
 	/**
@@ -155,7 +189,9 @@ public class RegionEditorDialog extends JDialog implements ActionListener {
 		if (event.getSource() == okButton)
 		{
 			Region r = new Region(null);
-			r.background = (String)terrain.getSelectedItem();
+			r.setBackground((String)terrain.getSelectedItem());
+			r.setName(nameField.getText());
+			r.setEncounterRate((Integer)eRateSpinner.getValue());
 			if (index == -1)
 				parent.regions.add(r);
 			else
@@ -166,15 +202,6 @@ public class RegionEditorDialog extends JDialog implements ActionListener {
 		}
 		else if (event.getSource() == cancelButton)
 			dispose();
-	}
-	
-	
-	public void load(int i) throws Exception 
-	{
-		Preferences p = new IniPreferences(new Ini(new File("data/maps/"+parent.name+"/map.ini")));
-		Region r = new Region(p.node("Region"+index));
-		terrain.setSelectedItem(r.background);
-		
 	}
 	
 }
