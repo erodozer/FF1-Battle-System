@@ -7,6 +7,10 @@ import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
+import editor.MapEditor.MapEditorGUI;
+import editor.MapEditor.NewMapDialog;
+import editor.PassabilityEditor.PassabilityEditor;
+
 public class ToolKit extends JFrame{
 	
 	MapEditorGUI mapEditor;
@@ -18,8 +22,9 @@ public class ToolKit extends JFrame{
 	NewMapDialog newMapDialog;
 	JTabbedPane tabbedPane;
 	
-	static final String[] tileSets = buildTileMapList();
-	static final String[] maps = buildMapList();
+	public static final String[] tileSets = buildTileMapList();
+	public static final String[] maps = buildMapList();
+	public static final String[] terrains = buildTerrainList();
 	
 	
 	public ToolKit()
@@ -51,6 +56,20 @@ public class ToolKit extends JFrame{
 	private static String[] buildTileMapList()
 	{
 		String[] s = new File("data/tilemaps").list(new FilenameFilter() {
+            public boolean accept(File f, String s) {
+                return s.endsWith(".png");
+              }
+            });
+		return s;
+	}
+	
+	/**
+	 * Creates a list of available tilemaps
+	 * @return
+	 */
+	private static String[] buildTerrainList()
+	{
+		String[] s = new File("data/terrains").list(new FilenameFilter() {
             public boolean accept(File f, String s) {
                 return s.endsWith(".png");
               }

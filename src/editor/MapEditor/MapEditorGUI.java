@@ -1,4 +1,4 @@
-package editor;
+package editor.MapEditor;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -16,6 +16,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Vector;
+import java.util.prefs.Preferences;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -24,6 +26,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -33,7 +36,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import org.ini4j.Ini;
+import org.ini4j.IniPreferences;
 
+import editor.ToolKit;
 import engine.TileSet;
 
 /**
@@ -51,6 +56,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	JButton saveButton;
 	JButton loadButton;
 	JButton restoreButton;
+	JCheckBox regionCheckBox;
 	
 	/*
 	 * Fields
@@ -66,6 +72,15 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	JScrollPane editPane;
 	JScrollPane tilePane;
 	
+	/*
+	 * Region Editor
+	 */
+	JList regionList;			//list of regions
+	JScrollPane regionPane;		//displays list of regions
+	JButton rAddButton;			//add region
+	JButton rRemButton;			//remove region
+	JButton rEdtButton;			//edit region properties
+	
 	TileSet activeTileSet;		//the current active tile set
 	int tileSetIndex;			//selected tile from the tile set
 	
@@ -76,6 +91,8 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	
 	Font font = new Font("Arial", 1, 32);
 	String name;
+	
+	Vector<Region> regions = new Vector<Region>();
 	
 	public MapEditorGUI()
 	{
@@ -128,8 +145,46 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		tilePane.setSize(200, 250);
 		tilePane.getViewport().setBackground(Color.GRAY);
 		
+		regionList = new JList(regions);
+		regionPane = new JScrollPane(regionList);
+		regionPane.setSize(200, 200);
+		regionPane.setLocation(10, 125);
+		regionPane.setVisible(false);
+		
+		regionCheckBox = new JCheckBox("Region Editor");
+		regionCheckBox.setSize(regionCheckBox.getPreferredSize());
+		regionCheckBox.setLocation(210-regionCheckBox.getWidth(), 8);
+		regionCheckBox.addActionListener(this);
+		
+		rRemButton = new JButton("-");
+		rRemButton.setSize(rRemButton.getPreferredSize());
+		rRemButton.setLocation(210-rRemButton.getWidth(), 335);
+		
+		rAddButton = new JButton("+");
+		rAddButton.setSize(rAddButton.getPreferredSize());
+		rAddButton.setLocation(rRemButton.getX()-rAddButton.getWidth(), 335);
+		
+		
+		rEdtButton = new JButton("Edit");
+		rEdtButton.setSize(100,24);
+		rEdtButton.setLocation(10, 335);
+		
+		rAddButton.addActionListener(this);
+		rRemButton.addActionListener(this);
+		rEdtButton.addActionListener(this);
+		
+		rAddButton.setVisible(false);
+		rRemButton.setVisible(false);
+		rEdtButton.setVisible(false);
+		
+		add(rAddButton);
+		add(rRemButton);
+		add(rEdtButton);
+		
 		add(editPane);
 		add(tilePane);
+		add(regionPane);
+		add(regionCheckBox);
 		
 
 		/*
@@ -203,6 +258,33 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		{
 			restore();
 		}
+		else if (event.getSource() == regionCheckBox)
+		{
+			if (regionCheckBox.isSelected())
+			{
+				tilePane.setVisible(false);
+				regionPane.setVisible(true);
+				rAddButton.setVisible(true);
+				rRemButton.setVisible(true);
+				rEdtButton.setVisible(true);
+			}
+			else
+			{
+				tilePane.setVisible(true);
+				regionPane.setVisible(false);
+				rAddButton.setVisible(false);
+				rRemButton.setVisible(false);
+				rEdtButton.setVisible(false);
+			}
+		}
+		else if (event.getSource() == rAddButton)
+		{
+			new RegionEditorDialog(this);
+		}
+		else if (event.getSource() == rEdtButton)
+		{
+			new RegionEditorDialog(this, regionList.getSelectedIndex());
+		}
 	}
 	
 	/**
@@ -261,6 +343,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	public void load(String path) throws Exception
 	{
 		Ini i = new Ini(new File("data/maps/" + path + "/map.ini"));
+		Preferences p = new IniPreferences(i);
 		
         activeTileSet = new TileSet(i.get("map", "tileset")+".png");
         tileGrid.refreshTileSet();
@@ -270,6 +353,11 @@ public class MapEditorGUI extends JPanel implements ActionListener{
         name = path;
         nameField.setText(name);
 
+        PrintWriter w = new PrintWriter("");
+        for (Region r : regions)
+        	w.write("\n"+r.toString());
+		i.store(w);
+		
 		editPane.setViewportView(editGrid);
     }
 	

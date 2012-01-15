@@ -1,4 +1,4 @@
-package editor;
+package editor.PassabilityEditor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -33,7 +33,7 @@ import engine.TileSet;
  *
  *	Grid used for choosing tiles to map
  */
-public class TileSetGrid extends JComponent implements ActionListener, MouseListener, Scrollable {
+public class PassabilityGrid extends JComponent implements ActionListener, MouseListener, MouseMotionListener, Scrollable {
 
 	TileSet tileSet;		//original tileset
 	
@@ -41,26 +41,35 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	
 	int tileSelected;		//the tile selected
 	
-	MapEditorGUI parent;	//parent gui
+	PassabilityEditor parent;	//parent gui
 	
 	int x;
 	int y;
 
 	private boolean updating;
-	
+	char[][] passabilitySet;
+
 	private Dimension preferredScrollableSize;
 	
-	public TileSetGrid(MapEditorGUI p)
+	BufferedImage pTiles;
+	
+	public PassabilityGrid(PassabilityEditor p)
 	{
 		parent = p;
 		
 		tileSet = parent.activeTileSet;
 		x = 0;
 		y = 0;
+		passabilitySet = tileSet.getPassabilitySet();
+		try {
+			pTiles = ImageIO.read(new File("data/passabilityTiles.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		dbImage = null;
 		setVisible(true);
 		addMouseListener(this);
-		
+		addMouseMotionListener(this);
 	}
 	
 	/**
@@ -79,6 +88,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		tileSet = parent.activeTileSet;
 		x = 0;
 		y = 0;
+		passabilitySet = tileSet.getPassabilitySet();
 		dbImage = null;
 		repaint();
 	}
@@ -90,18 +100,14 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	public void mouseClicked(MouseEvent arg0) {
 		if (!updating)
 			return;
-
-		int k = (arg0.getX()) / TileSet.TILE_DIMENSION;
-		int n = (arg0.getY()) / TileSet.TILE_DIMENSION;
-
-		if (k >= 0 && k < tileSet.getWidth() && n >= 0
-				&& n < tileSet.getHeight()) {
-			x = k;
-			y = n;
-			parent.tileSetIndex = x + (y * (int) tileSet.getWidth());
-		}
-		repaint();
 		
+		if (passabilitySet[x][y] == TileSet.PASSABLE)
+			passabilitySet[x][y] = TileSet.OVERLAY;
+		else if (passabilitySet[x][y] == TileSet.OVERLAY)
+			passabilitySet[x][y] = TileSet.IMPASSABLE;
+		else
+			passabilitySet[x][y] = TileSet.PASSABLE;
+		paintTile(x, y);		
 	}
 
 	/*
@@ -116,6 +122,8 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		updating = false;
+		x = -1;
+		y = -1;
 		repaint();
 	}
 	
@@ -126,6 +134,44 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	public void mousePressed(MouseEvent arg0) {}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
+	
+	/**
+	 * Update a single tile
+	 * @param x
+	 * @param y
+	 */
+	public void paintTile(int x, int y)
+	{
+		Graphics g = dbImage.getGraphics();
+		
+		tileSet.drawTile(g, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
+		
+		g.setColor(Color.BLACK);
+		String p = "" + passabilitySet[x][y];
+			
+		int xpos;
+		int ypos;
+			
+		if (pTiles != null) {
+			xpos = x * TileSet.TILE_DIMENSION;
+			ypos = y * TileSet.TILE_DIMENSION;
+			if (passabilitySet[x][y] == TileSet.OVERLAY)
+				g.drawImage(pTiles, xpos, ypos, xpos + TileSet.TILE_DIMENSION,
+						ypos + TileSet.TILE_DIMENSION, 0, 0, 32, 32, null);
+			else if (passabilitySet[x][y] == TileSet.IMPASSABLE)
+				g.drawImage(pTiles, xpos, ypos, xpos + TileSet.TILE_DIMENSION,
+						ypos + TileSet.TILE_DIMENSION, 32, 0, 64, 32, null);
+		} else {
+			xpos = x * TileSet.TILE_DIMENSION + (TileSet.TILE_DIMENSION / 2);
+			ypos = y * TileSet.TILE_DIMENSION + (TileSet.TILE_DIMENSION / 2);
+			for (int i = 0; i < 9; i++)
+				g.drawString(p, xpos - 1 * ((i % 3) - 1), ypos - 1
+						* ((i / 3) - 1));
+			g.setColor(Color.WHITE);
+			g.drawString(p, xpos, ypos);
+		}
+		repaint();
+	}
 	
 	/**
 	 * Draws the actual grid and tiles
@@ -144,7 +190,10 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 			g2.fillRect(0, 0, dbImage.getWidth(null), dbImage.getHeight(null));
 			for (int x = 0; x < tileSet.getWidth(); x++)
 				for (int y = 0; y < tileSet.getHeight(); y++)
-					tileSet.drawTile(g2, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
+				{
+					paintTile(x, y);
+				}
+			
 		}
 		
 		g.drawImage(dbImage, 0, 0, null);
@@ -155,7 +204,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		for (int i = 1; i < tileSet.getHeight(); i++)
 			g.drawLine(0, i*TileSet.TILE_DIMENSION, (int)tileSet.getWidth()*TileSet.TILE_DIMENSION, i*TileSet.TILE_DIMENSION);
 		
-		g.setColor(Color.YELLOW);
+		g.setColor(Color.RED);
 		g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
 		
 	}
@@ -203,4 +252,27 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		return TileSet.TILE_DIMENSION;
 	}
 
+	@Override
+	public void mouseDragged(MouseEvent arg0) {}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		x = arg0.getX()/TileSet.TILE_DIMENSION;
+		y = arg0.getY()/TileSet.TILE_DIMENSION;
+	
+		repaint();
+	}
+	
+	public String toString()
+	{
+		String output = "";
+		
+		for (int y = 0; y < tileSet.getHeight(); y++)
+		{
+			for (int x = 0; x < tileSet.getWidth(); x++)
+				output += passabilitySet[x][y];
+			output += '\n';
+		}	
+		return output;
+	}
 }
