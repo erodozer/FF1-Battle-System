@@ -33,40 +33,46 @@ import engine.TileSet;
  *
  *	Grid used for choosing tiles to map
  */
-public class TileSetGrid extends JComponent implements ActionListener, MouseListener, Scrollable {
+public class TileSetGrid extends JComponent implements ActionListener, MouseListener, MouseMotionListener, Scrollable {
 
 	TileSet tileSet;		//original tileset
 	
 	Image dbImage;			//image with grid drawn on it
 	
-	int tileSelected;		//the tile selected
+	int[][] tileSelected;		//the tile selected
 	
 	MapEditorGUI parent;	//parent gui
 	
 	int x;
 	int y;
+	int x2;
+	int y2;
 
 	private boolean updating;
 	
 	private Dimension preferredScrollableSize;
+
+	private boolean dragging;
 	
 	public TileSetGrid(MapEditorGUI p)
 	{
 		parent = p;
 		
 		tileSet = parent.activeTileSet;
+		tileSelected = new int[][]{{0}};
+		parent.tileSelected = tileSelected;
 		x = 0;
 		y = 0;
 		dbImage = null;
 		setVisible(true);
 		addMouseListener(this);
-		
+		addMouseMotionListener(this);
 	}
 	
 	/**
 	 * Get the selected tile
 	 */
-	public int getTileSelected()
+	public int[][] getTileSelected()
 	{
 		return tileSelected;
 	}
@@ -83,26 +89,9 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		repaint();
 	}
 	
-	/**
-	 * Select tile to use
-	 */
+
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		if (!updating)
-			return;
-
-		int k = (arg0.getX()) / TileSet.TILE_DIMENSION;
-		int n = (arg0.getY()) / TileSet.TILE_DIMENSION;
-
-		if (k >= 0 && k < tileSet.getWidth() && n >= 0
-				&& n < tileSet.getHeight()) {
-			x = k;
-			y = n;
-			parent.tileSetIndex = x + (y * (int) tileSet.getWidth());
-		}
-		repaint();
-		
-	}
+	public void mouseClicked(MouseEvent arg0) {}
 
 	/*
 	 * Only update when the mouse is within the panel
@@ -119,13 +108,59 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		repaint();
 	}
 	
-	/*
-	 * DO NOTHING METHODS
+	/**
+	 * Select tile to use
 	 */
 	@Override
-	public void mousePressed(MouseEvent arg0) {}
+	public void mousePressed(MouseEvent arg0) {
+		if (!updating)
+			return;
+
+		x = (arg0.getX()) / TileSet.TILE_DIMENSION;
+		y = (arg0.getY()) / TileSet.TILE_DIMENSION;
+		x2 = x;
+		y2 = y;
+
+		tileSelected = new int[][]{{0}};
+		repaint();
+	}
 	@Override
-	public void mouseReleased(MouseEvent arg0) {}
+	public void mouseReleased(MouseEvent arg0) {
+		if (!updating)
+			return;
+
+		dragging = false;
+
+		int t1, t2, t3, t4;
+		t1 = Math.min(x, x2);
+		t2 = Math.min(y, y2);
+		t3 = Math.max(x, x2);
+		t4 = Math.max(y, y2);
+		x = t1;
+		y = t2;
+		x2 = t3;
+		y2 = t4;
+		tileSelected = new int[x2 - x + 1][y2 - y + 1];
+		for (int i = 0; i < tileSelected.length; i++)
+			for (int j = 0; j < tileSelected[0].length; j++)
+				tileSelected[i][j] = (x + i) + ((y + j) * (int) tileSet.getWidth());
+		parent.tileSelected = tileSelected;
+
+		repaint();
+	}
+	
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		if (!updating)
+			return;
+		
+		dragging = true;
+		x2 = (arg0.getX()) / TileSet.TILE_DIMENSION;
+		y2 = (arg0.getY()) / TileSet.TILE_DIMENSION;
+	
+		repaint();		
+	}
+
 	
 	/**
 	 * Draws the actual grid and tiles
@@ -156,7 +191,11 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 			g.drawLine(0, i*TileSet.TILE_DIMENSION, (int)tileSet.getWidth()*TileSet.TILE_DIMENSION, i*TileSet.TILE_DIMENSION);
 		
 		g.setColor(Color.YELLOW);
-		g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
+		if (dragging)
+			g.drawRect(Math.min(x, x2)*TileSet.TILE_DIMENSION, Math.min(y, y2)*TileSet.TILE_DIMENSION, 
+					   TileSet.TILE_DIMENSION*(Math.abs(x2-x)+1), TileSet.TILE_DIMENSION*(Math.abs(y2-y)+1));
+		else
+			g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION*(tileSelected.length), TileSet.TILE_DIMENSION*(tileSelected[0].length));
 		
 	}
 
@@ -201,6 +240,10 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 	@Override
 	public int getScrollableUnitIncrement(Rectangle arg0, int arg1, int arg2) {
 		return TileSet.TILE_DIMENSION;
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
 	}
 
 }

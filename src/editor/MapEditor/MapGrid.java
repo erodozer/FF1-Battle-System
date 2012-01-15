@@ -30,7 +30,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	
 	Image dbImage;			//image with grid drawn on it
 	
-	int tileSelected;		//the tile selected
+	int[][] tileSelected;	//the tile selected
 	int x, y;				//the tile selected
 	int width = 1;			//width of the tileset
 	int height = 1;			//height of the tileset
@@ -128,10 +128,19 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			return;
 		
 		if (regionMode)
+		{
 			regions[x][y] = parent.regionList.getSelectedIndex()+1;
+			paintTile(x, y);
+		}
 		else
-			tiles[x][y] = parent.tileSetIndex;
-		paintTile(x, y);
+		{
+			for (int i = 0; i < tileSelected.length; i++)
+				for (int n = 0; n < tileSelected[0].length; n++)
+				{
+					tiles[x+i][y+n] = tileSelected[i][n];
+					paintTile(x+i, y+n);
+				}
+		}
 	}
 
 	/**
@@ -154,6 +163,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		updating = true;
+		tileSelected = parent.tileSelected;
 		repaint();
 	}
 	@Override
@@ -237,7 +247,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 				g.setColor(Color.RED);
 			else
 				g.setColor(Color.YELLOW);
-			g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
+			g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION*(tileSelected.length), TileSet.TILE_DIMENSION*(tileSelected[0].length));
 		}
 	}
 
