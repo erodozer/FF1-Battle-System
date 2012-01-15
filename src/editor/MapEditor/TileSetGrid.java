@@ -132,10 +132,10 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		dragging = false;
 
 		int t1, t2, t3, t4;
-		t1 = Math.min(x, x2);
-		t2 = Math.min(y, y2);
-		t3 = Math.max(x, x2);
-		t4 = Math.max(y, y2);
+		t1 = Math.max(0, Math.min(x, x2));
+		t2 = Math.max(0, Math.min(y, y2));
+		t3 = Math.min((int)tileSet.getWidth(), Math.max(x, x2));
+		t4 = Math.min((int)tileSet.getHeight(), Math.max(y, y2));
 		x = t1;
 		y = t2;
 		x2 = t3;
