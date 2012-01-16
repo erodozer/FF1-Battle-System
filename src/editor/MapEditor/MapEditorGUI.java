@@ -383,7 +383,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		regionList.setListData(regions);
 		regionPane.setViewportView(regionList);
 						
-        activeTileSet = new TileSet(i.get("map", "tileset")+".png");
+        activeTileSet = new TileSet(p.node("map").get("tileset", "world")+".png");
         tileGrid.refreshTileSet();
         editGrid.refreshTileSet();
         
