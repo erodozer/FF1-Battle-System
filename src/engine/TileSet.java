@@ -91,6 +91,13 @@ public class TileSet extends Sprite{
 	public void drawTile(Graphics g, int x, int y, int tileX, int tileY)
 	{
 		if (g != null)
+			g.drawImage(image, x, y, x+ORIGINAL_DIMENSIONS, y+ORIGINAL_DIMENSIONS, 
+				 tileX*ORIGINAL_DIMENSIONS, tileY*ORIGINAL_DIMENSIONS, tileX*ORIGINAL_DIMENSIONS+ORIGINAL_DIMENSIONS, tileY*ORIGINAL_DIMENSIONS+ORIGINAL_DIMENSIONS, null);
+	}
+	
+	public void drawEditorTile(Graphics g, int x, int y, int tileX, int tileY)
+	{
+		if (g != null)
 			g.drawImage(image, x, y, x+TILE_DIMENSION, y+TILE_DIMENSION, 
 				 tileX*ORIGINAL_DIMENSIONS, tileY*ORIGINAL_DIMENSIONS, tileX*ORIGINAL_DIMENSIONS+ORIGINAL_DIMENSIONS, tileY*ORIGINAL_DIMENSIONS+ORIGINAL_DIMENSIONS, null);
 	}
