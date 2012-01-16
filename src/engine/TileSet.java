@@ -23,9 +23,12 @@ public class TileSet extends Sprite{
 	public final static char OVERLAY = 'o';
 	public final static char IMPASSABLE = 'i';
 	
-	String name;
 	char[][] passability;
 	
+	/**
+	 * Loads a tileset
+	 * @param s
+	 */
 	public TileSet(String s)
 	{
 		super("tilemaps/" + s);
@@ -52,28 +55,43 @@ public class TileSet extends Sprite{
 		}
 	}
 	
-	public String getName()
-	{
-		return name;
-	}
-	
+	/**
+	 * Tile width of the tile set
+	 */
 	@Override
 	public double getWidth()
 	{
 		return xFrames;
 	}
 	
+	/**
+	 * Tile height of the tile set
+	 */
 	@Override
 	public double getHeight()
 	{
 		return yFrames;
 	}
 	
+	/**
+	 * Gets the passability value of a tile in the tile set by its
+	 * x and y position in the tile set
+	 */
 	public char getPassability(int x, int y)
 	{
 		return passability[x][y];
 	}
 	
+	/**
+	 * Gets the passability value of a tile by its tile id
+	 */
+	public char getPassability(int i) {
+		return passability[i%xFrames][i/xFrames];
+	}
+	
+	/**
+	 * Gets the entire passability set for the tile set
+	 */
 	public char[][] getPassabilitySet()
 	{
 		return passability;
@@ -95,10 +113,20 @@ public class TileSet extends Sprite{
 				 tileX*ORIGINAL_DIMENSIONS, tileY*ORIGINAL_DIMENSIONS, tileX*ORIGINAL_DIMENSIONS+ORIGINAL_DIMENSIONS, tileY*ORIGINAL_DIMENSIONS+ORIGINAL_DIMENSIONS, null);
 	}
 	
+	/**
+	 * Draw a specific tile scaled for the editor tool kit
+	 * @param g			Graphics to draw to
+	 * @param x			x pos on the graphics
+	 * @param y			y pos
+	 * @param tileX		horizontal tile choice
+	 * @param tileY		vertical tile
+	 * @return
+	 */
 	public void drawEditorTile(Graphics g, int x, int y, int tileX, int tileY)
 	{
 		if (g != null)
 			g.drawImage(image, x, y, x+TILE_DIMENSION, y+TILE_DIMENSION, 
 				 tileX*ORIGINAL_DIMENSIONS, tileY*ORIGINAL_DIMENSIONS, tileX*ORIGINAL_DIMENSIONS+ORIGINAL_DIMENSIONS, tileY*ORIGINAL_DIMENSIONS+ORIGINAL_DIMENSIONS, null);
 	}
+
 }
