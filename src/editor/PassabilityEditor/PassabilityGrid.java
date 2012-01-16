@@ -144,7 +144,7 @@ public class PassabilityGrid extends JComponent implements ActionListener, Mouse
 	{
 		Graphics g = dbImage.getGraphics();
 		
-		tileSet.drawTile(g, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
+		tileSet.drawEditorTile(g, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
 		
 		g.setColor(Color.BLACK);
 		String p = "" + passabilitySet[x][y];
