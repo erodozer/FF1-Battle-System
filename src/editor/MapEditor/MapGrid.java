@@ -17,6 +17,7 @@ import java.util.Scanner;
 
 import javax.swing.JComponent;
 import javax.swing.Scrollable;
+import javax.swing.SwingUtilities;
 
 import engine.TileSet;
 
@@ -137,7 +138,11 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		
 		if (regionMode)
 		{
-			regions[x][y] = parent.regionList.getSelectedIndex()+1;
+			if (SwingUtilities.isLeftMouseButton(arg0))
+				regions[x][y] = parent.regionList.getSelectedIndex()+1;
+			//clear region with right button click
+			else if (SwingUtilities.isRightMouseButton(arg0))
+				regions[x][y] = 0;
 			paintTile(x, y);
 		}
 	}
@@ -317,6 +322,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		
 		if (regionMode)
 		{
+			g.setColor(Color.BLACK);
 			int xpos = x * TileSet.TILE_DIMENSION + (TileSet.TILE_DIMENSION / 2);
 			int ypos = y * TileSet.TILE_DIMENSION + (TileSet.TILE_DIMENSION / 2);
 			String p = ""+regions[x][y];
