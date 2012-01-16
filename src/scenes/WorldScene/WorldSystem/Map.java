@@ -1,26 +1,34 @@
 package scenes.WorldScene.WorldSystem;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.Vector;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
+import engine.ContentPanel;
 import engine.Sprite;
+import engine.TileSet;
 
 public class Map {
 
-	//tile size
-	public static final int TILESIZE = 16;
+	public static final int drawRowsMax = ContentPanel.INTERNAL_RES_W/TileSet.ORIGINAL_DIMENSIONS+2;
+	public static final int drawColsMax = ContentPanel.INTERNAL_RES_H/TileSet.ORIGINAL_DIMENSIONS+2;
 	
-	//passability colors
-	private static final int IMPASSABLE = Color.decode("#000000").getRGB();
-	private static final int PASSABLE = Color.decode("#FFFFFF").getRGB();
-	private static final int OVERLAY = Color.decode("#999999").getRGB();
+	//map buffer
+	Image dbImage;			//map all drawn up
+	
+	//tile set used
+	public TileSet tileSet;
 	
 	//direction a sprite is facing
 	public static final int SOUTH = 1;
@@ -34,14 +42,13 @@ public class Map {
 	
 	Color clearColor;						//color the map clears to
 	
-	Sprite passabilityMap;					//map that determines which tiles can be stepped on (1x1 scale)
-	Sprite drawMap;							//map that is rendered to screen (16x16 scale)
-	Sprite formationMap;					//map of the different regions on the map with different formations and encounter rates
-	
-	HashMap<Color, Terrain> terrains;		//terrains of the map
+	Vector<Terrain> terrains;				//terrains of the map
 	
 	HashMap<String, NPC> npcMap;			//hashmap of all the npc locations
 	HashMap<String, Event> eventMap;		//hashmap of all the event locations
+	
+	int[][] tiles;
+	int[][] regionMap;
 	
 	/**
 	 * Loads up a new map
@@ -49,7 +56,7 @@ public class Map {
 	 */
 	public Map(String location)
 	{
-		terrains = new HashMap<Color, Terrain>();
+		terrains = new Vector<Terrain>();
 		npcMap = new HashMap<String, NPC>();
 		eventMap = new HashMap<String, Event>();
 		
@@ -63,13 +70,19 @@ public class Map {
 		
 		try {
 			for (String section : pref.childrenNames())
-				if (section.charAt(0) == '#')
-					terrains.put(Color.decode(section), new Terrain(pref.node(section)));
+				if (section.startsWith("Region"))
+				{
+					int index = Integer.parseInt(section.substring(6));
+					if (index+1 > terrains.size())
+						terrains.setSize(index+1);
+					terrains.set(index, new Terrain(pref.node(section)));
+				}
 				else if (section.startsWith("NPC@"))
 					new NPC(this, pref.node(section));
 				else if (section.startsWith("Event@"))
 					new Event(this, pref.node(section));
 			clearColor = Color.decode(pref.node("map").get("clearColor", "#000000"));
+			tileSet = new TileSet(pref.node("map").get("tileset", "world") + ".png");
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			System.err.println("can not find file: " + "data/" + path + "map.ini");
@@ -77,13 +90,24 @@ public class Map {
 			e.printStackTrace();
 		}
 		
-		passabilityMap = new Sprite(path+"pass.png");
-		formationMap = new Sprite(path+"formation.png");
-		drawMap = new Sprite(path+"map.png");
-		
-		width = (int)passabilityMap.getWidth();
-		height = (int)passabilityMap.getHeight();
-		
+		//load tiles and region maps
+		try {
+			Scanner s = new Scanner(new File("data/" + path + "tiles.txt"));
+			int w = width = s.nextInt();
+			int h = height = s.nextInt();
+
+			tiles = new int[w][h];
+			for (int i = 0; i < h; i++)
+				for (int n = 0; n < w; n++)
+					tiles[n][i] = s.nextInt();
+			regionMap = new int[w][h];
+			for (int i = 0; i < h; i++)
+				for (int n = 0; n < w; n++)
+					regionMap[n][i] = s.nextInt();
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -100,7 +124,7 @@ public class Map {
 			return false;
 
 		// check the passibility map
-		if (passabilityMap.getImage().getRGB(x, y) == IMPASSABLE)
+		if (tileSet.getPassability(tiles[x][y]) == TileSet.IMPASSABLE)
 			return false;
 
 		// check for an npc at the position
@@ -113,7 +137,7 @@ public class Map {
 	
 	public boolean getOverlay(int x, int y)
 	{
-		return passabilityMap.getImage().getRGB(x, y) == OVERLAY;
+		return tileSet.getPassability(tiles[x][y]) == TileSet.OVERLAY;
 	}
 	
 	/**
@@ -166,10 +190,14 @@ public class Map {
 	 */
 	public Terrain getTerrain(int x, int y)
 	{
-		for (Color c : terrains.keySet())
-			if (c.getRGB() == formationMap.getImage().getRGB(x, y))
-				return terrains.get(c);
-		return null;
+		try
+		{
+			return terrains.get(regionMap[x][y]);		
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
 	}
 	
 
@@ -185,12 +213,44 @@ public class Map {
 	{
 		return eventMap.values().toArray(new Event[]{});
 	}
-	
-	public Sprite getDrawable() {
-		return drawMap;
-	}
 
 	public Color getClearColor() {
 		return clearColor;
+	}
+	
+	/**
+	 * Update a single tile
+	 * @param x
+	 * @param y
+	 */
+	public void paintTile(Graphics g, int x, int y)
+	{
+		int n = tiles[x][y]%(int)tileSet.getWidth();
+		int k =	tiles[x][y]/(int)tileSet.getWidth();
+		tileSet.drawTile(g, x*TileSet.ORIGINAL_DIMENSIONS, y*TileSet.ORIGINAL_DIMENSIONS, n, k);
+	
+		if (npcMap.containsKey(x + " " + y))
+			npcMap.get(x + " " + y).draw(g);
+	}
+	
+	/**
+	 * Draws the actual grid and tiles
+	 */
+	public void paint(Graphics g)
+	{
+		if (g == null)
+			return;
+	
+
+	
+	}
+
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight()
+	{
+		return height;
 	}
 }

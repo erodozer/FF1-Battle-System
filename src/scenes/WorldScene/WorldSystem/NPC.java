@@ -7,6 +7,7 @@ import scenes.ShopScene.System.Shop;
 
 import engine.Engine;
 import engine.Sprite;
+import engine.TileSet;
 
 /**
  * NPC
@@ -214,8 +215,8 @@ public class NPC {
 			walkSprite.trim(0,0,1,.6);
 		else
 			walkSprite.trim(0,0,1,1);
-		walkSprite.setX(x*Map.TILESIZE-walkSprite.getWidth()/2+Map.TILESIZE/2);
-		walkSprite.setY(y*Map.TILESIZE-walkSprite.getHeight()+Map.TILESIZE);
+		walkSprite.setX(x*TileSet.ORIGINAL_DIMENSIONS-walkSprite.getWidth()/2+TileSet.ORIGINAL_DIMENSIONS/2);
+		walkSprite.setY(y*TileSet.ORIGINAL_DIMENSIONS-walkSprite.getHeight()+TileSet.ORIGINAL_DIMENSIONS);
 		walkSprite.paint(g);
 	}
 	
