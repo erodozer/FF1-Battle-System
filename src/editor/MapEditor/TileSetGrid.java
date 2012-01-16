@@ -161,6 +161,21 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		repaint();		
 	}
 
+	/**
+	 * Update a single tile
+	 * @param x
+	 * @param y
+	 */
+	public void paintTile(int x, int y)
+	{
+		Graphics g = dbImage.getGraphics();
+		g.setColor(Color.GRAY);
+		g.fillRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
+		
+		tileSet.drawEditorTile(g, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
+		
+		repaint();
+	}
 	
 	/**
 	 * Draws the actual grid and tiles
@@ -174,12 +189,9 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 		{
 			dbImage = createImage(getWidth(), getHeight());
 			
-			Graphics g2 = dbImage.getGraphics();
-			g2.setColor(Color.GRAY);
-			g2.fillRect(0, 0, dbImage.getWidth(null), dbImage.getHeight(null));
 			for (int x = 0; x < tileSet.getWidth(); x++)
 				for (int y = 0; y < tileSet.getHeight(); y++)
-					tileSet.drawEditorTile(g2, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
+					paintTile(x, y);
 		}
 		
 		g.drawImage(dbImage, 0, 0, null);
@@ -191,12 +203,14 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 			g.drawLine(0, i*TileSet.TILE_DIMENSION, (int)tileSet.getWidth()*TileSet.TILE_DIMENSION, i*TileSet.TILE_DIMENSION);
 		
 		g.setColor(Color.YELLOW);
-		if (dragging)
-			g.drawRect(Math.min(x, x2)*TileSet.TILE_DIMENSION, Math.min(y, y2)*TileSet.TILE_DIMENSION, 
+		if (tileSelected != null)
+		{
+			if (dragging)
+				g.drawRect(Math.min(x, x2)*TileSet.TILE_DIMENSION, Math.min(y, y2)*TileSet.TILE_DIMENSION, 
 					   TileSet.TILE_DIMENSION*(Math.abs(x2-x)+1), TileSet.TILE_DIMENSION*(Math.abs(y2-y)+1));
-		else
-			g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION*(tileSelected.length), TileSet.TILE_DIMENSION*(tileSelected[0].length));
-		
+			else
+				g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION*(tileSelected.length), TileSet.TILE_DIMENSION*(tileSelected[0].length));
+		}
 	}
 
 	@Override
