@@ -132,15 +132,6 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			regions[x][y] = parent.regionList.getSelectedIndex()+1;
 			paintTile(x, y);
 		}
-		else
-		{
-			for (int i = 0; i < tileSelected.length; i++)
-				for (int n = 0; n < tileSelected[0].length; n++)
-				{
-					tiles[x+i][y+n] = tileSelected[i][n];
-					paintTile(x+i, y+n);
-				}
-		}
 	}
 
 	/**
@@ -176,11 +167,37 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	 * DO NOTHING METHODS
 	 */
 	@Override
-	public void mousePressed(MouseEvent arg0) {}
+	public void mousePressed(MouseEvent arg0) {
+		if (!updating || regionMode)
+			return;
+		else
+		{
+			for (int i = 0; i < tileSelected.length; i++)
+				for (int n = 0; n < tileSelected[0].length; n++)
+				{
+					tiles[x+i][y+n] = tileSelected[i][n];
+					paintTile(x+i, y+n);
+				}
+		}
+	}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
 	@Override
-	public void mouseDragged(MouseEvent arg0) {}
+	public void mouseDragged(MouseEvent arg0) {
+		if (!updating || regionMode)
+			return;
+		else
+		{
+			x = arg0.getX()/TileSet.TILE_DIMENSION;
+			y = arg0.getY()/TileSet.TILE_DIMENSION;
+			for (int i = 0; i < tileSelected.length; i++)
+				for (int n = 0; n < tileSelected[0].length; n++)
+				{
+					tiles[x+i][y+n] = tileSelected[i][n];
+					paintTile(x+i, y+n);
+				}
+		}
+	}
 
 	/**
 	 * Update a single tile
