@@ -33,6 +33,7 @@ public class Sprite{
 	protected int yFrames;				//number of vertical frames
 	
 	protected String path;				//filepath to the image
+	protected String name;				//filename of the image
 	
 	/**
 	 * Load the sprite from file path
@@ -52,6 +53,7 @@ public class Sprite{
 		if (s != null)
 		{
 			path = s;
+			name = path.substring(path.lastIndexOf('/')+1);
 			if (TEXTURECACHE.containsKey(s))
 			{
 				image = TEXTURECACHE.get(s);
@@ -202,7 +204,7 @@ public class Sprite{
 	 */
 	public String getName()
 	{
-		return path.substring(path.lastIndexOf('/')+1);
+		return name;
 	}
 	
 	/**
