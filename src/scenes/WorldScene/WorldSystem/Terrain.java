@@ -39,6 +39,7 @@ public class Terrain {
 			return;
 		
 		background = new Sprite("terrains/"+node.get("background", "grass.png"));
+		name = node.get("name", "palins");
 		encounterRate = node.getInt("rate", 1);
 		try {
 			for (String s : node.keys())
