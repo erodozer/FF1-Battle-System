@@ -3,6 +3,7 @@ package scenes.WorldScene.WorldSystem;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -228,22 +229,8 @@ public class Map {
 		int n = tiles[x][y]%(int)tileSet.getWidth();
 		int k =	tiles[x][y]/(int)tileSet.getWidth();
 		tileSet.drawTile(g, x*TileSet.ORIGINAL_DIMENSIONS, y*TileSet.ORIGINAL_DIMENSIONS, n, k);
-	
-		if (npcMap.containsKey(x + " " + y))
-			npcMap.get(x + " " + y).draw(g);
 	}
 	
-	/**
-	 * Draws the actual grid and tiles
-	 */
-	public void paint(Graphics g)
-	{
-		if (g == null)
-			return;
-	
-
-	
-	}
 
 	public int getWidth() {
 		return width;
@@ -252,5 +239,9 @@ public class Map {
 	public int getHeight()
 	{
 		return height;
+	}
+
+	public NPC getNPC(int x, int y) {
+		return npcMap.get(x + " " + y);
 	}
 }

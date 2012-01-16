@@ -91,7 +91,8 @@ public class WorldSystem extends GameSystem
      */
     @Override
 	public void keyPressed(KeyEvent evt) {
-    	state.handleKeyInput(evt);
+    	if (!leader.walking)
+    		state.handleKeyInput(evt);
     }
 	
 	/**
