@@ -224,7 +224,10 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 				for (int j = 0; j < tileSelected[0].length; j++)
 					tileSelected[i][j] = tiles[x+i][y+j];
 			parent.tileSelected = tileSelected;
+			copying = false;
+			dragging = false;
 		}
+		repaint();
 	}
 	
 	@Override
@@ -261,8 +264,8 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		{
 			copying = true;
 			dragging = false;
-			x2 = tileSelected.length;
-			y2 = tileSelected[0].length;
+			x2 = x;
+			y2 = y;
 		}
 		repaint();
 	}
