@@ -27,8 +27,13 @@ public class NPC {
 	int x;				//horizontal position on the map
 	int y;				//vertical position on the map
 	
-	double xSlide;		//slide movement for drawing to map
-	double ySlide;
+	double drawX;
+	double drawY;
+	
+	double xRate;
+	double yRate;
+	
+	static final double rate = .25;
 	
 	int speed;			//speed at which the character wanders
 						// higher the number, slower the speed
@@ -48,6 +53,8 @@ public class NPC {
 	Shop shop;
 	
 	String interact;	//interaction type
+	
+	boolean walking;
 	
 	/**
 	 * Creates a standard npc
@@ -155,11 +162,11 @@ public class NPC {
 				{
 					walk();
 					direction = dir;
-					xSlide = (pos[0]-x)/5.0;
-					ySlide = (pos[1]-y)/5.0;
 					map.npcMap.remove(this.x + " " + this.y);
 					x = pos[0];
 					y = pos[1];
+					xRate = (drawX-x)*rate;
+					yRate = (drawY-y)*rate;
 					map.npcMap.put(x + " " + y, this);
 					break;
 				}
@@ -183,6 +190,8 @@ public class NPC {
 			map.npcMap.remove(this.x + " " + this.y);
 			this.x = x;
 			this.y = y;
+			xRate = (x-drawX)*rate;
+			yRate = (y-drawY)*rate;
 			map.npcMap.put(x + " " + y, this);
 		}		
 	}
@@ -215,8 +224,42 @@ public class NPC {
 			walkSprite.trim(0,0,1,.6);
 		else
 			walkSprite.trim(0,0,1,1);
-		walkSprite.setX(x*TileSet.ORIGINAL_DIMENSIONS-walkSprite.getWidth()/2+TileSet.ORIGINAL_DIMENSIONS/2);
-		walkSprite.setY(y*TileSet.ORIGINAL_DIMENSIONS-walkSprite.getHeight()+TileSet.ORIGINAL_DIMENSIONS);
+		if (drawX != x)
+		{
+			walking = true;
+			walk();
+			drawX += xRate;
+			if (xRate < 0)
+			{
+				if (drawX < x)
+					drawX = x;
+			}
+			else
+			{
+				if (drawX > x)
+					drawX = x;
+			}
+		}
+		if (drawY != y)
+		{
+			walking = true;
+			walk();
+			drawY += yRate;
+			if (yRate < 0)
+			{
+				if (drawY < y)
+					drawY = y;
+			}
+			else
+			{
+				if (drawY > y)
+					drawY = y;
+			}
+		}
+		if (drawX == x && drawY == y)
+			walking = false;
+		walkSprite.setX(getDrawX());
+		walkSprite.setY(getDrawY());
 		walkSprite.paint(g);
 	}
 	
@@ -241,6 +284,16 @@ public class NPC {
 	 */
 	public int getY() {
 		return y;
+	}
+	
+	public int getDrawX()
+	{
+		return (int)((int)(drawX*TileSet.ORIGINAL_DIMENSIONS)-walkSprite.getWidth()/2+TileSet.ORIGINAL_DIMENSIONS/2);
+	}
+	
+	public int getDrawY()
+	{
+		return (int)((int)((drawY+1)*TileSet.ORIGINAL_DIMENSIONS)-walkSprite.getHeight());
 	}
 
 	/**

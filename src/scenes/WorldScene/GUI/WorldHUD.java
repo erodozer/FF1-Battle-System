@@ -59,14 +59,22 @@ public class WorldHUD extends HUD
 		g.setColor(Color.WHITE);
 		g.setFont(font);
 		
-		int xOffset = -(parent.getLeader().getX()-Map.drawColsMax/2+1)*TileSet.ORIGINAL_DIMENSIONS;
-		int yOffset = -(parent.getLeader().getY()-Map.drawRowsMax/2-1)*TileSet.ORIGINAL_DIMENSIONS;
+		int xOffset = -(parent.getLeader().getDrawX()-Map.drawColsMax/2*TileSet.ORIGINAL_DIMENSIONS);
+		int yOffset = -(parent.getLeader().getDrawY()-(Map.drawRowsMax/2)*TileSet.ORIGINAL_DIMENSIONS);
 		g.translate(xOffset, yOffset);
 		
 		for (int x = Math.max(0, parent.getLeader().getX()-Map.drawColsMax/2-1); x < Math.min(map.getWidth(), parent.getLeader().getX()+Map.drawColsMax+1); x++)
 			for (int y =  Math.max(0, parent.getLeader().getY()-Map.drawRowsMax/2-1); y < Math.min(map.getHeight(), parent.getLeader().getY()+Map.drawRowsMax+1); y++)
 				map.paintTile(g, x, y);
 		
+		for (int x = Math.max(0, parent.getLeader().getX()-Map.drawColsMax/2-1); x < Math.min(map.getWidth(), parent.getLeader().getX()+Map.drawColsMax+1); x++)
+			for (int y =  Math.max(0, parent.getLeader().getY()-Map.drawRowsMax/2-1); y < Math.min(map.getHeight(), parent.getLeader().getY()+Map.drawRowsMax+1); y++)
+			{
+				NPC n = map.getNPC(x,y);
+				if (n != null)
+					n.draw(g);
+			}
+			
 		//reset the translate
 		g.translate(-xOffset, -yOffset);
 		if (((WorldSystem)parent).getState() instanceof DialogState)
