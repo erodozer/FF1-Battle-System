@@ -179,7 +179,7 @@ public class TileSetGrid extends JComponent implements ActionListener, MouseList
 			g2.fillRect(0, 0, dbImage.getWidth(null), dbImage.getHeight(null));
 			for (int x = 0; x < tileSet.getWidth(); x++)
 				for (int y = 0; y < tileSet.getHeight(); y++)
-					tileSet.drawTile(g2, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
+					tileSet.drawEditorTile(g2, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, x, y);
 		}
 		
 		g.drawImage(dbImage, 0, 0, null);
