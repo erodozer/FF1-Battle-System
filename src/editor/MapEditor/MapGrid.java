@@ -210,7 +210,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		
 		int n = tiles[x][y]%(int)tileSet.getWidth();
 		int k =	tiles[x][y]/(int)tileSet.getWidth();
-		tileSet.drawTile(g, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, n, k);
+		tileSet.drawEditorTile(g, x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, n, k);
 		
 		if (regionMode)
 		{
