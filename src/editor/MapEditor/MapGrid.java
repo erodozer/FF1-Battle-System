@@ -49,6 +49,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 
 	private boolean updating;	//gui knows to accept input
 	private boolean copying;	//gui knows to copy the selected tiles to be the active tiles for painting
+	private boolean copy1;		//gui knows to copy just 1 tile
 
 	private Dimension preferredScrollableSize;
 
@@ -193,17 +194,43 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		{
 			x2 = x;
 			y2 = y;
-			dragging = true;
+			if (copy1)
+			{
+				selectTile();
+				copying = false;
+				copy1 = false;
+			}
+			else
+				dragging = true;
 		}
 		else
 		{
-			for (int i = 0; i < tileSelected.length; i++)
-				for (int n = 0; n < tileSelected[0].length; n++)
+			for (int i = 0; i < Math.min(tileSelected.length, width-x); i++)
+				for (int n = 0; n < Math.min(tileSelected[0].length, height-y); n++)
 				{
 					tiles[x+i][y+n] = tileSelected[i][n];
 					paintTile(x+i, y+n);
 				}
 		}
+	}
+	
+	public void selectTile()
+	{
+		int t1, t2, t3, t4;
+		t1 = Math.max(0, Math.min(x, x2));
+		t2 = Math.max(0, Math.min(y, y2));
+		t3 = Math.min((int)width, Math.max(x, x2));
+		t4 = Math.min((int)height, Math.max(y, y2));
+		x = t1;
+		y = t2;
+		x2 = t3;
+		y2 = t4;
+		tileSelected = new int[x2 - x + 1][y2 - y + 1];
+		for (int i = 0; i < tileSelected.length; i++)
+			for (int j = 0; j < tileSelected[0].length; j++)
+				tileSelected[i][j] = tiles[x+i][y+j];
+		parent.tileSelected = tileSelected;
+		copying = false;
 	}
 	
 	/*
@@ -215,22 +242,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			return;
 		if (copying)
 		{
-			int t1, t2, t3, t4;
-			t1 = Math.max(0, Math.min(x, x2));
-			t2 = Math.max(0, Math.min(y, y2));
-			t3 = Math.min((int)width, Math.max(x, x2));
-			t4 = Math.min((int)height, Math.max(y, y2));
-			x = t1;
-			y = t2;
-			x2 = t3;
-			y2 = t4;
-			tileSelected = new int[x2 - x + 1][y2 - y + 1];
-			for (int i = 0; i < tileSelected.length; i++)
-				for (int j = 0; j < tileSelected[0].length; j++)
-					tileSelected[i][j] = tiles[x+i][y+j];
-			parent.tileSelected = tileSelected;
-			copying = false;
-			dragging = false;
+			selectTile();
 		}
 		repaint();
 	}
@@ -249,8 +261,8 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		{
 			x = arg0.getX()/TileSet.TILE_DIMENSION;
 			y = arg0.getY()/TileSet.TILE_DIMENSION;
-			for (int i = 0; i < tileSelected.length; i++)
-				for (int n = 0; n < tileSelected[0].length; n++)
+			for (int i = 0; i < Math.min(tileSelected.length, width-x); i++)
+				for (int n = 0; n < Math.min(tileSelected[0].length, height-y); n++)
 				{
 					tiles[x+i][y+n] = tileSelected[i][n];
 					paintTile(x+i, y+n);
@@ -272,6 +284,14 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			x2 = x;
 			y2 = y;
 		}
+		else if (arg0.getKeyCode() == KeyEvent.VK_CONTROL)
+		{
+			copying = true;
+			copy1 = true;
+			dragging = false;
+			x2 = x;
+			y2 = y;	
+		}
 		repaint();
 	}
 
@@ -281,6 +301,12 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		if (arg0.getKeyCode() == KeyEvent.VK_SHIFT)
 		{
 			copying = false;
+			dragging = false;
+		}
+		else if (arg0.getKeyCode() == KeyEvent.VK_CONTROL)
+		{
+			copying = false;
+			copy1 = false;
 			dragging = false;
 		}
 		repaint();
