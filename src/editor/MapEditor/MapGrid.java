@@ -244,10 +244,15 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		if (x >= 0 && x < width && y >= 0 && y < height && updating)
 		{
 			if (regionMode)
+			{
 				g.setColor(Color.RED);
+				g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION);
+			}
 			else
+			{
 				g.setColor(Color.YELLOW);
-			g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION*(tileSelected.length), TileSet.TILE_DIMENSION*(tileSelected[0].length));
+				g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION*(tileSelected.length), TileSet.TILE_DIMENSION*(tileSelected[0].length));
+			}
 		}
 	}
 
