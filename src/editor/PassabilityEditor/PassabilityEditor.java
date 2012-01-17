@@ -97,12 +97,12 @@ public class PassabilityEditor extends JPanel implements ActionListener, MouseLi
 		 * Initialize buttons
 		 */
 		saveButton = new JButton("Save");
-		saveButton.setSize(250, 24);
-		saveButton.setLocation(70, 390);
+		saveButton.setSize(230, 24);
+		saveButton.setLocation(650, 320);
 		saveButton.addActionListener(this);
 		resetButton = new JButton("Reset");
-		resetButton.setSize(250, 24);
-		resetButton.setLocation(350, 390);
+		resetButton.setSize(230, 24);
+		resetButton.setLocation(650, 350);
 		resetButton.addActionListener(this);
 		
 		add(saveButton);

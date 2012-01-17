@@ -89,7 +89,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	 */
 	public void refreshRegionMode()
 	{
-		regionMode = parent.regionCheckBox.isSelected();
+		regionMode = parent.regionButton.isSelected();
 		forceClear();
 	}
 	

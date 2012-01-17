@@ -30,14 +30,14 @@ public class ToolKit extends JFrame{
 	public ToolKit()
 	{
 		setLayout(null);
-		setSize(660, 480);
+		setSize(900, 440);
 		setResizable(false);
 
 		mapEditor = new MapEditorGUI();
 		passabilityEditor = new PassabilityEditor();
 		
 		tabbedPane = new JTabbedPane();
-		tabbedPane.setSize(660, 480);
+		tabbedPane.setSize(this.getWidth(), this.getHeight());
 		tabbedPane.addTab("Map Editor", mapEditor);
 		tabbedPane.addTab("Passability Editor", passabilityEditor);
 		add(tabbedPane);

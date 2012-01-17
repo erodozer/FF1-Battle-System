@@ -22,6 +22,7 @@ import java.util.prefs.Preferences;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -33,6 +34,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -59,7 +61,15 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	JButton saveButton;
 	JButton loadButton;
 	JButton restoreButton;
-	JCheckBox regionCheckBox;
+	
+	/*
+	 * Mode switcher
+	 */
+	JRadioButton mapButton;
+	JRadioButton regionButton;
+	JRadioButton passButton;
+	JRadioButton spriteButton;
+	ButtonGroup modeGroup;
 	
 	/*
 	 * Fields
@@ -104,16 +114,20 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		/*
 		 * Initialize fields 
 		 */
-		JLabel nameLabel = new JLabel("Map name: ");
-		nameLabel.setSize(200,16);
-		nameLabel.setLocation(10,10);
+		JLabel l = new JLabel("Map name: ");
+		l.setSize(200,16);
+		l.setLocation(10,10);
 		nameField = new JTextField("");
 		nameField.setSize(200, 24);
 		nameField.setLocation(10, 32);
 		
-		JLabel dL = new JLabel("Dimensions: ");
-		dL.setSize(dL.getPreferredSize());
-		dL.setLocation(10, 64);
+		add(l);
+		
+		l = new JLabel("Dimensions: ");
+		l.setSize(l.getPreferredSize());
+		l.setLocation(10, 64);
+		
+		add(l);
 		
 		dimensionsLabel = new JLabel(mapWidth + " x " + mapHeight);
 		dimensionsLabel.setSize(dimensionsLabel.getPreferredSize());
@@ -127,9 +141,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		//load tileset
 		activeTileSet = new TileSet((String)tileSetList.getItemAt(0));
 		
-		add(nameLabel);
 		add(nameField);
-		add(dL);
 		add(dimensionsLabel);
 		add(tileSetList);
 		
@@ -154,23 +166,54 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		regionPane.setLocation(10, 125);
 		regionPane.setVisible(false);
 		
-		regionCheckBox = new JCheckBox("Region Editor");
-		regionCheckBox.setSize(regionCheckBox.getPreferredSize());
-		regionCheckBox.setLocation(210-regionCheckBox.getWidth(), 8);
-		regionCheckBox.addActionListener(this);
+		l = new JLabel("Editor Mode");
+		l.setSize(l.getPreferredSize());
+		l.setLocation(650, 10);
+		
+		mapButton = new JRadioButton("Map Editor");
+		mapButton.setSize(mapButton.getPreferredSize());
+		mapButton.setLocation(650, 40);
+		mapButton.setSelected(true);
+		mapButton.addActionListener(this);
+		
+		regionButton = new JRadioButton("Region Editor");
+		regionButton.setSize(regionButton.getPreferredSize());
+		regionButton.setLocation(650, 70);
+		regionButton.addActionListener(this);
+		
+		passButton = new JRadioButton("Override Passability Editor");
+		passButton.setSize(passButton.getPreferredSize());
+		passButton.setLocation(650, 100);
+		passButton.addActionListener(this);
+		
+		spriteButton = new JRadioButton("Sprite Editor");
+		spriteButton.setSize(spriteButton.getPreferredSize());
+		spriteButton.setLocation(650, 130);
+		spriteButton.addActionListener(this);
+		
+		add(l);
+		add(mapButton);
+		add(regionButton);
+		add(passButton);
+		add(spriteButton);
+		
+		modeGroup = new ButtonGroup();
+		modeGroup.add(mapButton);
+		modeGroup.add(regionButton);
+		modeGroup.add(passButton);
+		modeGroup.add(spriteButton);
 		
 		rRemButton = new JButton("-");
-		rRemButton.setSize(rRemButton.getPreferredSize());
-		rRemButton.setLocation(210-rRemButton.getWidth(), 335);
+		rRemButton.setSize(48,24);
+		rRemButton.setLocation(210-rRemButton.getWidth(), 350);
 		
 		rAddButton = new JButton("+");
-		rAddButton.setSize(rAddButton.getPreferredSize());
-		rAddButton.setLocation(rRemButton.getX()-rAddButton.getWidth(), 335);
-		
+		rAddButton.setSize(48,24);
+		rAddButton.setLocation(rRemButton.getX()-rAddButton.getWidth(), 350);
 		
 		rEdtButton = new JButton("Edit");
 		rEdtButton.setSize(100,24);
-		rEdtButton.setLocation(10, 335);
+		rEdtButton.setLocation(10, 350);
 		
 		rAddButton.addActionListener(this);
 		rRemButton.addActionListener(this);
@@ -187,25 +230,24 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		add(editPane);
 		add(tilePane);
 		add(regionPane);
-		add(regionCheckBox);
 		
 
 		/*
 		 * Initialize Buttons
 		 */
-		int[] buttonSize = {150, 24};
+		int[] buttonSize = {230, 24};
 		newButton = new JButton("New");
 		newButton.setSize(buttonSize[0], buttonSize[1]);
-		newButton.setLocation(10, 390);
+		newButton.setLocation(650, 260);
 		saveButton = new JButton("Save");
 		saveButton.setSize(buttonSize[0], buttonSize[1]);
-		saveButton.setLocation(170, 390);
+		saveButton.setLocation(650, 290);
 		loadButton = new JButton("Load");
 		loadButton.setSize(buttonSize[0], buttonSize[1]);
-		loadButton.setLocation(330, 390);
+		loadButton.setLocation(650, 320);
 		restoreButton = new JButton("Restore");
 		restoreButton.setSize(buttonSize[0], buttonSize[1]);
-		restoreButton.setLocation(490, 390);
+		restoreButton.setLocation(650, 350);
 		
 		newButton.addActionListener(this);
 		saveButton.addActionListener(this);
@@ -261,30 +303,19 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		{
 			restore();
 		}
-		else if (event.getSource() == regionCheckBox)
-		{
-			if (regionCheckBox.isSelected())
-			{
-				tilePane.setVisible(false);
-				regionPane.setVisible(true);
-				rAddButton.setVisible(true);
-				rRemButton.setVisible(true);
-				rEdtButton.setVisible(true);
-			}
-			else
-			{
-				tilePane.setVisible(true);
-				regionPane.setVisible(false);
-				rAddButton.setVisible(false);
-				rRemButton.setVisible(false);
-				rEdtButton.setVisible(false);
-			}
-			editGrid.refreshRegionMode();
-		}
 		else if (event.getSource() == rAddButton)
 		{
 			new RegionEditorDialog(this);
 		}
+		else if (regionButton.isSelected())
+		{
+			setModeRegion();
+		}	
+		else if (mapButton.isSelected())
+		{
+			setModeMap();
+		}
+		
 		if (regionList.getSelectedValue() != null)
 		{
 			if (event.getSource() == rEdtButton) {
@@ -407,5 +438,27 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		{
 			newMap(mapWidth, mapHeight);
 		}
+	}
+	
+	public void setModeMap()
+	{
+		tilePane.setVisible(true);
+		regionPane.setVisible(false);
+		rAddButton.setVisible(false);
+		rRemButton.setVisible(false);
+		rEdtButton.setVisible(false);
+		editGrid.refreshRegionMode();
+		
+	}
+	
+	public void setModeRegion()
+	{
+		tilePane.setVisible(false);
+		regionPane.setVisible(true);
+		rAddButton.setVisible(true);
+		rRemButton.setVisible(true);
+		rEdtButton.setVisible(true);	
+		editGrid.refreshRegionMode();
+		
 	}
 }
