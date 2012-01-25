@@ -34,7 +34,10 @@ public class ItemDictionary {
 	private static HashMap<String, Item> genItems()
 	{
 		HashMap<String, Item> h = new HashMap<String, Item>();
-		String[] l = new File("data/items").list();			//all the items in the items directory
+		File location = new File("data/items");
+		if (location.exists())
+		{
+		String[] l = location.list();			//all the items in the items directory
 		Preferences p;
 		for (String s : l)
 		{
@@ -47,6 +50,7 @@ public class ItemDictionary {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
 		}
 		return h;
 	}
