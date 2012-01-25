@@ -2,6 +2,8 @@ package scenes;
 
 import java.awt.event.KeyEvent;
 
+import engine.Input;
+
 /**
  * GameState
  * @author nhydock
@@ -39,9 +41,19 @@ public abstract class GameState {
 
     /**
      * Handles the key input for the state
-     * @param arg0
+     * By default it will just assume it takes input
+     * of up and down to increase or decrease the index
+     * and will then call the state's update code.
+     * @param e
      */
-    abstract public void handleKeyInput(KeyEvent arg0);
+    public void handleKeyInput(KeyEvent e)
+    {
+    	if (e.getKeyCode() == Input.KEY_DN)
+			index++;
+		else if (e.getKeyCode() == Input.KEY_UP)
+			index--;
+    	handle();
+    }
     
     /**
      * Parent system/scene that the state is interacting with
