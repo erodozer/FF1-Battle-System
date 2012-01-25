@@ -79,16 +79,21 @@ public class NewMapDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == okButton)
 		{
-			int w, h;
-			w = Integer.parseInt(width.getText());
-			h = Integer.parseInt(height.getText());
 			
-			if (w > MAXWIDTH || h > MAXHEIGHT || w < 1 || h < 1)
-				JOptionPane.showMessageDialog(this, "Woah there, dimensions need to be within 1x1 to " + MAXWIDTH + "x" + MAXHEIGHT);
-			else
+			try
 			{
+				int w, h;
+				w = Integer.parseInt(width.getText());
+				h = Integer.parseInt(height.getText());
+				
+				if (w > MAXWIDTH || h > MAXHEIGHT || w < 1 || h < 1)
+					throw new Exception();
 				parent.newMap(w, h);
 				dispose();
+			}
+			catch (Exception e)
+			{
+				JOptionPane.showMessageDialog(this, "Woah there, dimensions need to be within 1x1 to " + MAXWIDTH + "x" + MAXHEIGHT);
 			}
 		}
 	}
