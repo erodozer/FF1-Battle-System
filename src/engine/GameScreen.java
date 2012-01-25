@@ -1,5 +1,7 @@
 package engine;
 
+import groups.Party;
+
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.event.KeyEvent;
@@ -20,8 +22,8 @@ public class GameScreen extends JFrame implements KeyListener{
 	private static GameScreen _instance;	//singleton instance
 	
 	//frame resolution
-	final static int FRAME_WIDTH = 512;
-	final static int FRAME_HEIGHT = 512;
+	final static int FRAME_WIDTH = 256;
+	final static int FRAME_HEIGHT = 240;
 	
 	ContentPanel c;
 	Engine engine;
@@ -133,6 +135,16 @@ public class GameScreen extends JFrame implements KeyListener{
 		}
 		if (engine.getCurrentScene() != null)
 			engine.getCurrentScene().keyPressed(arg0);
+		if (arg0.getKeyCode() == Input.KEY_QUICKSTART)
+		{
+			Party p = new Party();
+			p.add("APPL", "Fighter");
+			p.add("TWIL", "Red Mage");
+			p.add("RNBW", "Black Belt");
+			p.add("FLUT", "White Mage");
+			engine.setParty(p);
+			engine.changeToWorld("world", 3, 3);
+		}
 		arg0.consume();
 	}
 

@@ -12,6 +12,7 @@ import actors.Player;
 import scenes.*;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;
+import scenes.MenuScene.MenuScene;
 import scenes.ShopScene.ShopScene;
 import scenes.ShopScene.System.Shop;
 import scenes.TitleScene.TitleScene;
@@ -38,7 +39,7 @@ public class Engine{
 	private Party party;				//main party
 	
 	Thread transition;
-		
+
 	/**
 	 * Get the singleton instance
 	 * @return
@@ -59,7 +60,7 @@ public class Engine{
 		battle = new BattleScene();
 		menu = new MenuScene();
 		world = new WorldScene();
-		
+		menu = new MenuScene();
 		party = new Party();
 		_instance = this;
 	}
@@ -151,6 +152,13 @@ public class Engine{
 		currentScene = s;	
 		s.start(shop);
 		
+	}
+	
+	public void changeToMenu()
+	{
+		changeScene();
+		currentScene = menu;	
+		menu.start();
 	}
 	
 	/**
