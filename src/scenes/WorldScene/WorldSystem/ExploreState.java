@@ -85,6 +85,11 @@ public class ExploreState extends GameState {
     		WorldSystem.leaderIndex = (WorldSystem.leaderIndex + 1) % parent.e.getParty().size();
     		parent.leader.setWalkSprite(parent.e.getParty().get(WorldSystem.leaderIndex).getMapSelf());
     	}
+    	//show main menu
+    	else if (evt.getKeyCode() == Input.KEY_START)
+    	{
+    		parent.e.changeToMenu();
+    	}
 	}
 
 	/**
