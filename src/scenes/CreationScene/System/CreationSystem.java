@@ -31,7 +31,7 @@ public class CreationSystem extends GameSystem{
 		e = Engine.getInstance();
 		party = new Party();
 		for (int i = 0; i < 4; i++)
-			party.add(new Player("", Player.AVAILABLEJOBS[i]));
+			party.add(new Player("", Player.AVAILABLEJOBS.get(i)));
 		
 		index = 0;
 		activePlayer = party.get(0);
