@@ -61,7 +61,7 @@ public class Party extends ArrayList<Player>{
 	 * Make new players with Job a
 	 */
 	public void add(String n, String job) {
-		if (Arrays.binarySearch(Player.AVAILABLEJOBS, job) == -1)
+		if (Player.AVAILABLEJOBS.indexOf(job) == -1)
 			System.out.println("Job " + job + " does not exist");
 		else
 			this.add(new Player(n, job));

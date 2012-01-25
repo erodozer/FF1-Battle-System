@@ -28,13 +28,14 @@ import engine.Sprite;
 public class Player extends Actor {
 
 	//All defined jobs can be found within the jobs directory 
-	public static final String[] AVAILABLEJOBS = new ArrayList<String>(){
+	public static final ArrayList<String> AVAILABLEJOBS = new ArrayList<String>(){
 		{
 			for (String s : new File("data/actors/jobs").list())
 				if (new File("data/actors/jobs/" + s + "/job.ini").exists())
 					this.add(s);
+			System.out.println(this);
 		}
-	}.toArray(new String[]{});
+	};
 	
 	
 	/*
