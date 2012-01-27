@@ -20,38 +20,54 @@ public class MenuSystem extends GameSystem
 	Engine e = Engine.getInstance();
 	
 	//different game states
-	HashMap<String, GameState> states;
+	GameState[] states;
 	
 	//character party
 	Party party;
 	
+	//different states for the menu
+	MenuState ms;
+	InventoryState is;
+	WeaponState ws;
+	ArmorState as;
+	StatusState ss;
+	
+	/**
+	 * Constructs the menu core
+	 */
 	public MenuSystem()
 	{
 		party = e.getParty();
-		final MenuSystem x = this;
-		states = new HashMap<String, GameState>(){
-				{
-					this.put("MAIN", new MenuState(x));
-					this.put("ITEM", new InventoryState(x));
-					this.put("MAGIC", null);
-					this.put("WEAPON", new WeaponState(x));
-					this.put("ARMOR", new ArmorState(x));
-					this.put("STATUS", new StatusState(x));
-				}
-			};
+		ms = new MenuState(this);
+		
+		state = ms;
+		
+		states = new GameState[]{ms, is, null, ws, as, ss};
 	}
 	
+	/**
+	 * Advances the state into submenus
+	 */
 	@Override
 	public void setNextState()
 	{
-		
+		if (state == ms)
+		{
+			state = states[ms.getIndex()+1];
+		}
+		state.start();
 	}
 
+	/**
+	 * end conditions
+	 */
 	@Override
 	public void finish()
 	{
-		// TODO Auto-generated method stub
-
+		if (state == ms)
+			e.changeToWorld();
+		else
+			state = ms;
 	}
 
 }
