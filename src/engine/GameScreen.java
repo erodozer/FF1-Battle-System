@@ -22,8 +22,8 @@ public class GameScreen extends JFrame implements KeyListener{
 	private static GameScreen _instance;	//singleton instance
 	
 	//frame resolution
-	final static int FRAME_WIDTH = 256;
-	final static int FRAME_HEIGHT = 240;
+	final static int FRAME_WIDTH = 512;
+	final static int FRAME_HEIGHT = 480;
 	
 	ContentPanel c;
 	Engine engine;
