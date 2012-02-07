@@ -24,6 +24,7 @@ public class MainGUI extends HUD
 	Engine e = Engine.getInstance();		//engine
 	Party p;								//party
 	PlayerWindow[] statWindows;				//shows different player stats
+	OrbWindow oWin;							//shows the party's orbs collected
 	
 	Window goldWindow;						//shows party's gold
 	Window menuWindow;						//shows menu selection
@@ -43,7 +44,7 @@ public class MainGUI extends HUD
 		for (int i = 0; i < p.size(); i++)
 			statWindows[i] = new PlayerWindow(p.get(i), 92+(PlayerWindow.WIDTH)*(i%2), 2 + (PlayerWindow.HEIGHT + 2)*(i/2));
 		goldWindow = new Window(5, 84, 80, 36, Color.BLUE);
-	
+		oWin = new OrbWindow(p, 9, 20);
 		menuWindow = new Window(10, 122, 68, 118, Color.BLUE);
 	}
 	
@@ -61,6 +62,8 @@ public class MainGUI extends HUD
 		menuWindow.paint(g);
 		for (int i = 0; i < MenuState.commands.length; i++)
 			g.drawString(MenuState.commands[i], menuWindow.getX()+8, menuWindow.getY()+36+(16*i));
+	
+		oWin.paint(g);
 	}
 	
 	/**
@@ -81,6 +84,12 @@ public class MainGUI extends HUD
 	
 }
 
+/**
+ * PlayerWindow
+ * @author nhydock
+ *
+ *	Displays basic menu stats for the character
+ */
 class PlayerWindow
 {
 	public static final int WIDTH = 80;
@@ -122,5 +131,50 @@ class PlayerWindow
 		g.drawString(p.getMp(4) + "/" + p.getMp(5) + "/" + p.getMp(6) + "/" + p.getMp(7),
 			         x+10, y+100);
 	
+	}
+}
+
+/**
+ * OrbWindow
+ * @author nhydock
+ *
+ *	Window from FF1 in the menu that displays the orbs discovered
+ *	Kind of a sign of progress in the game
+ */
+class OrbWindow
+{
+	public static final int WIDTH = 72;
+	public static final int HEIGHT = 58;
+	public static final int LENGTH = 6;		//amount of orbs to be displayed
+	
+	int x;
+	int y;
+	
+	Window w;
+	Sprite[] orbs;
+	Party p;
+	
+	public OrbWindow(Party p, int x, int y)
+	{
+		this.p = p;
+		this.x = x;
+		this.y = y;
+		w = new Window(x, y, WIDTH, HEIGHT, Color.BLUE);
+		
+		orbs = new Sprite[LENGTH];
+		for (int i = 0; i < LENGTH; i++)
+		{
+			orbs[i] = new Sprite("orbs.png", LENGTH, 2);
+			orbs[i].setX(w.getX() + 10 + 18*(i%(LENGTH/2)));
+			orbs[i].setY(w.getY() + 12 + 18*(i/(LENGTH/2)));
+			orbs[i].setFrame(i, 1);
+		}
+	}
+	
+	public void paint(Graphics g)
+	{
+		w.paint(g);
+		for (Sprite s : orbs)
+			s.paint(g);
 	}
 }
