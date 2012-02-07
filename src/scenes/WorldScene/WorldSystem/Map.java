@@ -22,8 +22,9 @@ import engine.TileSet;
 
 public class Map {
 
-	public static final int drawRowsMax = ContentPanel.INTERNAL_RES_W/TileSet.ORIGINAL_DIMENSIONS+2;
-	public static final int drawColsMax = ContentPanel.INTERNAL_RES_H/TileSet.ORIGINAL_DIMENSIONS+2;
+	public static final int OFFSCREEN_RENDER = 2;		//additional tiles to render offscreen
+	public static final int drawRowsMax = ContentPanel.INTERNAL_RES_W/TileSet.ORIGINAL_DIMENSIONS;
+	public static final int drawColsMax = ContentPanel.INTERNAL_RES_H/TileSet.ORIGINAL_DIMENSIONS;
 	
 	//map buffer
 	Image dbImage;			//map all drawn up
