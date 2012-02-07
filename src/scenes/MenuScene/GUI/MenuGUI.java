@@ -12,8 +12,7 @@ import engine.Window;
 import groups.Party;
 import scenes.GameState;
 import scenes.HUD;
-import scenes.MenuScene.System.MenuState;
-import scenes.MenuScene.System.MenuSystem;
+import scenes.MenuScene.System.*;
 
 
 /**
@@ -32,6 +31,7 @@ public class MenuGUI extends HUD
 	GameState state;
 	
 	MainGUI mg;
+	InventoryGUI ig;
 	
 	/**
 	 * Construct the gui
@@ -41,6 +41,7 @@ public class MenuGUI extends HUD
 		this.parent = parent;
 		arrow = new Sprite("hud/selectarrow.png");
 		mg = new MainGUI(this);
+		ig = new InventoryGUI(this);
 	}
 	
 	/**
@@ -50,6 +51,7 @@ public class MenuGUI extends HUD
 	public void update()
 	{
 		state = parent.getState();
+		
 	}
 
 	/**
@@ -63,6 +65,13 @@ public class MenuGUI extends HUD
 		{
 			mg.paint(g);
 			pos = mg.getArrowPosition();
+			arrow.setX(pos[0]);
+			arrow.setY(pos[1]);
+		}
+		else if (parent.getState() instanceof InventoryState)
+		{
+			ig.paint(g);
+			pos = ig.getArrowPosition();
 			arrow.setX(pos[0]);
 			arrow.setY(pos[1]);
 		}

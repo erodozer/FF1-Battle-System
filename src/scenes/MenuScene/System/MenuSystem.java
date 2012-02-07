@@ -39,6 +39,7 @@ public class MenuSystem extends GameSystem
 	{
 		party = e.getParty();
 		ms = new MenuState(this);
+		is = new InventoryState(this);
 		
 		state = ms;
 		
