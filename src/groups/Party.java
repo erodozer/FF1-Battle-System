@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -157,4 +158,22 @@ public class Party extends ArrayList<Player>{
 		return (inventory.get(i.getName()) < count);
 	}
 	
+	/**
+	 * Generates a list of the items in possession
+	 * @return
+	 */
+	public String[][] getItemList()
+	{
+		String[] keys = inventory.keySet().toArray(new String[]{});
+		String[][] items = new String[keys.length][2];
+		for (int i = 0; i < keys.length; i++)
+		{
+			if (inventory.get(keys[i]).intValue() <= 0)
+				continue;
+			
+			items[i][0] = keys[i];
+			items[i][1] = ""+inventory.get(keys[i]).intValue();
+		}
+		return items;
+	}
 }
