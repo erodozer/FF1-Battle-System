@@ -7,9 +7,13 @@ import scenes.GameState;
 public class InventoryState extends GameState
 {
 
+	boolean hasItems = false;
+	
 	public InventoryState(MenuSystem menuSystem)
 	{
 		super(menuSystem);
+		if (menuSystem.party.getItemList().length > 0)
+			hasItems = true;
 	}
 
 	@Override
@@ -29,15 +33,14 @@ public class InventoryState extends GameState
 	@Override
 	public void finish()
 	{
-		// TODO Auto-generated method stub
-
+		parent.setNextState();
 	}
 
 	@Override
 	public void handleKeyInput(KeyEvent arg0)
 	{
-		// TODO Auto-generated method stub
-
+		if (!hasItems)
+			finish();
 	}
 
 }
