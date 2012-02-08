@@ -25,8 +25,6 @@ public class MenuGUI extends HUD
 {
 
 	Sprite arrow;
-	Font font = GameScreen.font;
-	FontMetrics fm = GameScreen.fontMetrics;
 	
 	GameState state;
 	
@@ -61,6 +59,8 @@ public class MenuGUI extends HUD
 	public void paint(Graphics g)
 	{
 		int[] pos;
+		g.setFont(GameScreen.font);
+		g.setColor(Color.WHITE);
 		if (parent.getState() instanceof MenuState)
 		{
 			mg.paint(g);

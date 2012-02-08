@@ -49,7 +49,7 @@ public class InventoryGUI extends HUD
 	{
 		itemWindow.paint(g);
 		titleWindow.paint(g);
-		g.drawString("Title", titleWindow.getX() + 10, titleWindow.getY()+12);
+		g.drawString("Title", titleWindow.getX() + 10, titleWindow.getY()+18);
 	}
 	
 	/**

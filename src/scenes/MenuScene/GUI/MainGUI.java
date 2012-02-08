@@ -57,7 +57,7 @@ public class MainGUI extends HUD
 			statWindows[i].paint(g);
 		goldWindow.paint(g);
 		String s = String.format("%6d G", p.getGold());
-		g.drawString(s, goldWindow.getX() + goldWindow.getWidth() - 10 - parentGUI.fm.stringWidth(s), goldWindow.getY()+24);
+		g.drawString(s, goldWindow.getX() + goldWindow.getWidth() - 10 - fm.stringWidth(s), goldWindow.getY()+24);
 
 		menuWindow.paint(g);
 		for (int i = 0; i < MenuState.commands.length; i++)
@@ -119,8 +119,6 @@ class PlayerWindow
 		
 		s.paint(g);
 		
-		g.setFont(GameScreen.font);
-		g.setColor(Color.WHITE);
 		g.drawString(p.getName(), x + 10, y+20);
 		g.drawString("L " + p.getLevel(), x+10, y+36);
 		g.drawString("HP", x+10, y+56);
