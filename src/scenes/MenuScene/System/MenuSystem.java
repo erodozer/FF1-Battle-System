@@ -56,6 +56,10 @@ public class MenuSystem extends GameSystem
 		{
 			state = states[ms.getIndex()+1];
 		}
+		else
+		{
+			state = ms;
+		}
 		state.start();
 	}
 
