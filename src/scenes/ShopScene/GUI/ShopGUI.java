@@ -26,9 +26,10 @@ public class ShopGUI extends HUD {
 	//windows
 	Window nameWindow;
 	Window greetWindow;
-	Window greetSelect;
 	Window itemSelect;
 	Window moneyWindow;
+	
+	ModeWindow mw;			//select shop mode
 	
 	Sprite arrow;			//cursor sprite
 	Sprite shopKeeper;		//shopkeeper sprite
@@ -42,9 +43,6 @@ public class ShopGUI extends HUD {
 	
 	int index;				//selection index
 	
-	String[] greetCommands = {"Buy", "Sell", "Exit"};
-							//entrance menu
-	
 	public ShopGUI(ShopSystem s)
 	{
 		super();
@@ -52,13 +50,13 @@ public class ShopGUI extends HUD {
 		shop = parent.getShop();
 		nameWindow = new Window(120, 32, 100, 64);
 		greetWindow = new Window(10, 26, 80, 120, Color.BLUE);
-		greetSelect = new Window(100, 150, 60, 90, Color.BLUE);
+		mw = new ModeWindow(this, 100, 150);
 		itemSelect = new Window(200, 48, 100, 180, Color.BLUE);
 		moneyWindow = new Window(130, 190, 100, 36, Color.GREEN);
 		
 		greeting = StringUtils.wrap(parent.getShop().getGreeting(), GameScreen.fontMetrics, greetWindow.getWidth()-15).toArray(new String[]{});
 		
-		arrow = new Sprite("hud/arrow.png");
+		arrow = new Sprite("hud/selectarrow.png");
 		party = Engine.getInstance().getParty();
 		shopKeeper = shop.getShopKeeper();
 		shopKeeper.setX(ContentPanel.INTERNAL_RES_W/2-shopKeeper.getWidth());
@@ -88,6 +86,8 @@ public class ShopGUI extends HUD {
 	@Override
 	public void update() {
 		index = parent.getState().getIndex();
+		if ((parent.getState() instanceof GreetState))
+			mw.update();
 	}
 
 	/**
@@ -107,13 +107,12 @@ public class ShopGUI extends HUD {
 		for (int i = 0; i < greeting.length && i < 5; i++)
 			g.drawString(greeting[i], greetWindow.getX()+5, greetWindow.getY()+20+16*i);
 		
-		greetSelect.paint(g);
-		for (int i = 0; i < greetCommands.length; i++)
-			g.drawString(greetCommands[i], greetSelect.getX()+5, greetSelect.getY()+10+(18*i));
 		
 		moneyWindow.paint(g);
 		String s = party.getGold() + " G";
 		g.drawString(s, moneyWindow.getX() + moneyWindow.getWidth()-10 - GameScreen.fontMetrics.stringWidth(s), moneyWindow.getY()+20);
+		
+		int[] cursorpos;
 		
 		if (!(parent.getState() instanceof GreetState))
 		{
@@ -129,10 +128,54 @@ public class ShopGUI extends HUD {
 		}
 		else
 		{
-			arrow.setX(greetSelect.getX()-5);
-			arrow.setY(greetSelect.getY()+10+(index*18));	
+			mw.paint(g);
+			cursorpos = mw.getArrowPos();
+			arrow.setX(cursorpos[0]-5);
+			arrow.setY(cursorpos[1]);	
 		}
 		arrow.paint(g);
 		
+	}
+	
+	/**
+	 * ModeWindow
+	 * @author nhydock
+	 *
+	 *	Little Window that displays buy/sell/exit choice
+	 */
+	class ModeWindow
+	{
+		Window window;
+		
+		//entrance menu
+
+		int index;
+		ShopGUI parent;
+		int x, y;
+		
+		public ModeWindow(ShopGUI p, int a, int b)
+		{
+			parent = p;
+			x = a;
+			y = b;
+			window = new Window(x, y, 60, 90, Color.BLUE);
+		}
+		
+		public void update()
+		{
+			index = parent.index;
+		}
+		
+		public int[] getArrowPos()
+		{
+			return new int[]{window.getX()-5, window.getY()+10+(18*index)};
+		}
+		
+		public void paint(Graphics g)
+		{
+			window.paint(g);
+			for (int i = 0; i < GreetState.commands.length; i++)
+				g.drawString(GreetState.commands[i], window.getX()+8, window.getY()+20+(18*i));
+		}
 	}
 }

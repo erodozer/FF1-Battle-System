@@ -21,7 +21,6 @@ public class BuyState extends GameState {
 
 	ShopSystem parent;	//parent shop system
 	
-	int index;			//index of selected item
 	Item[] items;		//items for sale
 	Party party;		//your party
 	
@@ -46,7 +45,6 @@ public class BuyState extends GameState {
 
 	@Override
 	public void handle() {
-
 	}
 
 	/**
@@ -82,6 +80,7 @@ public class BuyState extends GameState {
 		}
 		else if (key == Input.KEY_B)
 			finish();
+		index = Math.max(0, Math.min(index, items.length-1));
 	}
 
 }
