@@ -31,7 +31,7 @@ import actors.Player;
 public class Party extends ArrayList<Player>{
 	
 	HashMap<String, Integer> inventory = genInventory();
-	int gold;
+	int gold = 500;		//party starts off with 500 g
 	
 	/**
 	 * Returns a list of all members that are alive
