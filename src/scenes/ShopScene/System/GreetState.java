@@ -11,8 +11,8 @@ import engine.Input;
 
 public class GreetState extends GameState {
 
-	int index;		//index of command chosen
-
+	public static final String[] commands = {"Buy", "Sell", "Exit"};
+	
 	public GreetState(GameSystem c) {
 		super(c);
 	}
@@ -55,6 +55,8 @@ public class GreetState extends GameState {
 		//cancel shop
 		else if (key == Input.KEY_B)
 			finish();
+		index = Math.max(0, Math.min(index, commands.length-1));
+		
 	}
 
 }

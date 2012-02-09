@@ -35,7 +35,7 @@ public class ShopSystem extends GameSystem {
 	 */
 	@Override
 	public void setNextState() {
-		if (gs.index == 0)
+		if (gs.getIndex() == 0)
 			state = bs;
 		//else
 		//	state = ss;
