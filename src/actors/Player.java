@@ -61,24 +61,20 @@ public class Player extends Actor {
 							//  that's what controls animation
 
 	//constant values for different state animations
-	public static final int STAND = 0;
-	public static final int WALK = 1;
-	public static final int ACT = 2;
-	public static final int CAST = 3;
-	public static final int VICT = 4;
-	public static final int DEAD = 5;
-	public static final int WEAK = 6;
+	public static final int STAND = 1;
+	public static final int WALK = 2;
+	public static final int ACT = 3;
+	public static final int CAST = 4;
+	public static final int VICT = 5;
+	public static final int DEAD = 6;
+	public static final int WEAK = 7;
 
 	protected Sprite drawSprite;	//sprite to draw to screen that represents the player
 	protected double x;				//sprite position x
 	protected double y;				//sprite position y
 	
-	protected Sprite mapSelf;			//map representation of the player
-	
-	private final String[] spriteNames = {"stand", "walk", "item", "cast", "victory", "dead"};
-	
-	protected String jobname;			//actual name of the job
-	private String pathname;			//name of the path to the job
+	protected String jobname;		//actual name of the job
+	private String pathname;		//name of the path to the job
 	
 	/*
 	 * spells are actually learned through items that teach the spell
@@ -230,11 +226,11 @@ public class Player extends Actor {
 	@Override
 	public void loadSprites()
 	{
-		sprites = new Sprite[spriteNames.length];
-		for (int i = 0; i < spriteNames.length; i++)
-			sprites[i] = new Sprite("actors/jobs/" + pathname + "/"+ spriteNames[i] + ".png");
+		sprites = new Sprite[2];
+		//battle sprite
+		sprites[0] =  new Sprite("actors/jobs/" + pathname + "/battle.png", 1, 7);
 		//map wandering sprites
-		mapSelf = new Sprite("actors/jobs/" + pathname + "/mapwalk.png", 2, 4);
+		sprites[1] = new Sprite("actors/jobs/" + pathname + "/mapwalk.png", 2, 4);
 		
 		drawSprite = sprites[0];
 	}
@@ -344,24 +340,29 @@ public class Player extends Actor {
 	{
 		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
 		{
-			if (getState() == WEAK)
-				drawSprite = sprites[5];
-			if (getState() == WALK && drawSprite == sprites[0])
-				drawSprite = sprites[1];
-			else if (getState() == ACT && drawSprite == sprites[0])
-				drawSprite = sprites[2];
-			else if (getState() == CAST && drawSprite == sprites[0])
-				drawSprite = sprites[3];
-			else if (getState() == VICT && drawSprite == sprites[0])
-				drawSprite = sprites[4];
+			drawSprite = sprites[0];
+			if (getState() != STAND && getState() != DEAD)
+			{
+				if (drawSprite.getFrame()[1] != STAND)
+					drawSprite.setFrame(1, STAND);
+				else
+					drawSprite.setFrame(1, getState());
+			}
+			else if (getState() == DEAD)
+				drawSprite.setFrame(1, DEAD);
 			else
-				drawSprite = sprites[0];
-		
-			if (getState() == DEAD)
-				drawSprite = sprites[5];
+			{
+				if (hp < maxhp*.25)
+					drawSprite.setFrame(1, WEAK);
+				else
+					drawSprite.setFrame(1, STAND);
+			}
 		}
 		else
+		{
 			drawSprite = sprites[0];
+			drawSprite.setFrame(1, STAND);
+		}
 		
 		drawSprite.paint(g);
 	}
@@ -389,7 +390,7 @@ public class Player extends Actor {
 	 * @return
 	 */
 	public Sprite getMapSelf() {
-		return mapSelf;
+		return sprites[1];
 	}
 	
 	/**
