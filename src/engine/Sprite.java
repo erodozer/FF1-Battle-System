@@ -50,6 +50,8 @@ public class Sprite{
 	 */
 	public Sprite(String s, int xFrames, int yFrames)
 	{
+		rect = new int[4];
+		crop = new double[4];
 		if (s != null)
 		{
 			path = s;
@@ -164,6 +166,16 @@ public class Sprite{
 			return;
 		rect[0] = (int)(((x-1)/(double)xFrames)*width);
 		rect[1] = (int)(((y-1)/(double)yFrames)*height);
+	}
+	
+	/**
+	 * Gets the current frame of animation
+	 * @return
+	 */
+	public int[] getFrame()
+	{
+		return new int[]{(int)(((rect[0]/(double)width)*xFrames)+1),
+						 (int)(((rect[1]/(double)height)*yFrames)+1)};
 	}
 	
 	/**
