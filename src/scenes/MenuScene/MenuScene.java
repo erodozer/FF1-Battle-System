@@ -25,4 +25,10 @@ public class MenuScene extends Scene{
 		this.system = system;
 		this.display = display;
 	}
+	
+	public void stop()
+	{
+		system = null;
+		display = null;
+	}
 }

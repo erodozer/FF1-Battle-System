@@ -91,7 +91,7 @@ class ItemWindow
 	Window w;
 	Sprite[] orbs;
 	Party p;
-	String[][] itemList;
+	String[] itemList;
 	
 	int index;
 	
@@ -123,6 +123,6 @@ class ItemWindow
 	{
 		w.paint(g);
 		for (int i = 0; i < Math.min(itemList.length, index+16); i++)
-			g.drawString(String.format("%5s %2s", itemList[i][0], itemList[i][1]), w.getX()+15 + 50*i, w.getY() + 20 + 24*i);
+			g.drawString(String.format("%5s %2s", itemList[i], p.getItemCount(itemList[i])), w.getX()+15 + 50*(i%2), w.getY() + 50 + 24*(i/2));
 	}
 }
