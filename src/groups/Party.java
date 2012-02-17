@@ -12,17 +12,11 @@ package groups;
 
 import item.Item;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
-import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-
-import org.ini4j.jdk14.edu.emory.mathcs.backport.java.util.Arrays;
 
 import engine.ItemDictionary;
 
@@ -54,7 +48,8 @@ public class Party extends ArrayList<Player>{
 		
 		HashMap<String, Integer> h = new HashMap<String, Integer>();
 		for (String s : ItemDictionary.map.keySet())
-			h.put(s, 0);	
+			h.put(s, 0);
+		System.out.println(h);
 		return h;
 	}
 
@@ -158,22 +153,29 @@ public class Party extends ArrayList<Player>{
 		return (inventory.get(i.getName()) < count);
 	}
 	
+	public int getItemCount(String s)
+	{
+		if (s != null)
+			return inventory.get(s);
+		return 0;
+	}
+	
 	/**
 	 * Generates a list of the items in possession
 	 * @return
 	 */
-	public String[][] getItemList()
+	public String[] getItemList()
 	{
 		String[] keys = inventory.keySet().toArray(new String[]{});
-		String[][] items = new String[keys.length][2];
+		List<String> items = new ArrayList<String>();
 		for (int i = 0; i < keys.length; i++)
 		{
 			if (inventory.get(keys[i]).intValue() <= 0)
 				continue;
 			
-			items[i][0] = keys[i];
-			items[i][1] = ""+inventory.get(keys[i]).intValue();
+			items.add(""+keys[i]);
 		}
-		return items;
+		System.out.println(items);
+		return items.toArray(new String[]{});
 	}
 }
