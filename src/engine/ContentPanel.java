@@ -17,7 +17,7 @@ public class ContentPanel extends JPanel{
 	private static final Color DEFAULT_CLEAR_COLOR = Color.BLACK;
 	//NES Native resolution
 	public static final int INTERNAL_RES_W = 256;
-	public static final int INTERNAL_RES_H = 240;
+	public static final int INTERNAL_RES_H = 224;
 	
 	private Image dbImage;				//image to draw to
 	private Graphics dbg;				//graphics context of the component
