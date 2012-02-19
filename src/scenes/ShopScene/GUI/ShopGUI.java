@@ -16,6 +16,7 @@ import scenes.ShopScene.System.ShopSystem;
 import engine.ContentPanel;
 import engine.Engine;
 import engine.GameScreen;
+import engine.NES;
 import engine.Sprite;
 import engine.StringUtils;
 import engine.Window;
@@ -49,10 +50,10 @@ public class ShopGUI extends HUD {
 		parent = s;
 		shop = parent.getShop();
 		nameWindow = new Window(120, 32, 100, 64);
-		greetWindow = new Window(10, 26, 80, 120, Color.BLUE);
-		mw = new ModeWindow(this, 100, 150);
-		itemSelect = new Window(200, 48, 100, 180, Color.BLUE);
-		moneyWindow = new Window(130, 190, 100, 36, Color.GREEN);
+		greetWindow = new Window(9, 27, 70, 92, NES.BLUE);
+		mw = new ModeWindow(this, 49, 139);
+		itemSelect = new Window(177, 11, 70, 172, NES.BLUE);
+		moneyWindow = new Window(145, 187, 78, 28, NES.GREEN);
 		
 		greeting = StringUtils.wrap(parent.getShop().getGreeting(), GameScreen.fontMetrics, greetWindow.getWidth()-15).toArray(new String[]{});
 		
@@ -119,12 +120,12 @@ public class ShopGUI extends HUD {
 			itemSelect.paint(g);
 			for (int i = 0; i < items.length; i++)
 			{
-				g.drawString(items[i].getName(), itemSelect.getX()+10, itemSelect.getY()+10+(i*32));
+				g.drawString(items[i].getName(), itemSelect.getX()+10, itemSelect.getY()+24+(i*32));
 				String price = items[i].getPrice() + " G";
-				g.drawString(price, itemSelect.getX()+itemSelect.getWidth()-10-GameScreen.fontMetrics.stringWidth(price), itemSelect.getY()+22+(i*32));
+				g.drawString(price, itemSelect.getX()+itemSelect.getWidth()-10-GameScreen.fontMetrics.stringWidth(price), itemSelect.getY()+34+(i*32));
 			}
-			arrow.setX(itemSelect.getX()-5);
-			arrow.setY(itemSelect.getY()+5+(index*32));
+			arrow.setX(itemSelect.getX()-8);
+			arrow.setY(itemSelect.getY()+16+(index*32));
 		}
 		else
 		{
@@ -158,7 +159,7 @@ public class ShopGUI extends HUD {
 			parent = p;
 			x = a;
 			y = b;
-			window = new Window(x, y, 60, 90, Color.BLUE);
+			window = new Window(x, y, 70, 76, NES.BLUE);
 		}
 		
 		public void update()
