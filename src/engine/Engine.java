@@ -71,8 +71,9 @@ public class Engine{
 	public void startGame()
 	{
 		//changeScene();
-		currentScene = new TitleScene();
-		currentScene.start();
+		TitleScene s = new TitleScene();
+		s.start();
+		currentScene = s;
 	}
 	
 	/**
@@ -94,8 +95,8 @@ public class Engine{
 	{
 		changeScene();
 		
-		currentScene = battle;
 		battle.start(formation);
+		currentScene = battle;
 		
 	}
 	
@@ -107,8 +108,8 @@ public class Engine{
 	public void changeToBattle(Formation f, Sprite background) {
 		changeScene();
 		
-		currentScene = battle;	
 		battle.start(f, background);
+		currentScene = battle;	
 		
 	}
 
@@ -131,8 +132,8 @@ public class Engine{
 	public void changeToWorld(String string, int startX, int startY)
 	{
 		changeScene();
-		currentScene = world;
 		world.start(string, startX, startY);
+		currentScene = world;
 	}
 	
 	/**
@@ -141,24 +142,25 @@ public class Engine{
 	public void changeToCreation()
 	{
 		changeScene();
-		currentScene = new CreationScene();;	
-		currentScene.start();
+		CreationScene s = new CreationScene(); 
+		s.start();
+		currentScene = s;
 		
 	}
 	
 	public void changeToShop(Shop shop) {
 		changeScene();
 		ShopScene s = new ShopScene();
-		currentScene = s;	
 		s.start(shop);
+		currentScene = s;	
 		
 	}
 	
 	public void changeToMenu()
 	{
 		changeScene();
-		currentScene = menu;	
 		menu.start();
+		currentScene = menu;	
 	}
 	
 	/**
