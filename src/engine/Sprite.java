@@ -29,6 +29,8 @@ public class Sprite{
 	
 	protected int[] rect;				//rectangle cropping for frames
 	protected double[] crop;			//further cropping for what displays on screen
+	protected int scaleW;
+	protected int scaleH;
 	protected int xFrames;				//number of horizontal frames
 	protected int yFrames;				//number of vertical frames
 	
@@ -77,6 +79,8 @@ public class Sprite{
 			width = image.getWidth();
 			height = image.getHeight();
 			rect = new int[]{0, 0, (int)width/xFrames, (int)height/yFrames};
+			scaleW = rect[2];
+			scaleH = rect[3];
 			this.xFrames = xFrames;
 			this.yFrames = yFrames;
 			crop = new double[]{0, 0, 1, 1};
@@ -191,6 +195,17 @@ public class Sprite{
 	}
 	
 	/**
+	 * Scales the width and height of the image
+	 * @param w
+	 * @param h
+	 */
+	public void scale(int w, int h)
+	{
+		scaleW = w;
+		scaleH = h;
+	}
+	
+	/**
 	 * Paint the sprite to screen
 	 * @param g
 	 */
@@ -200,8 +215,8 @@ public class Sprite{
 		{
 			int drawX = (int)x;
 			int drawY = (int)y;
-			int finalWidth = (int)(rect[2]*(crop[2]-crop[0]));
-			int finalHeight = (int)(rect[3]*(crop[3]-crop[1]));
+			int finalWidth = (int)(scaleW*(crop[2]-crop[0]));
+			int finalHeight = (int)(scaleH*(crop[3]-crop[1]));
 			int sourceX = (int)(rect[0]+crop[0]*rect[2]);
 			int sourceY = (int)(rect[1]+crop[1]*rect[3]);
 			int sourceWidth = (int)(sourceX + rect[2]*(crop[2]-crop[0]));
