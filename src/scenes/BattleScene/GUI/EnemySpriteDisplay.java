@@ -22,7 +22,7 @@ public class EnemySpriteDisplay extends Sprite{
 	public EnemySpriteDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 132, 150);
+		window = new Window(x, y, 132, 144);
 		background = new Sprite(null);
 		update();
 	}
@@ -39,7 +39,7 @@ public class EnemySpriteDisplay extends Sprite{
 		{
 			Enemy e = parent.getFormation().get(i);
 			e.getSprite().setX(window.getX()+12);
-			e.getSprite().setY(window.getY()+40+(e.getSprite().getHeight()+5)*(i%3));
+			e.getSprite().setY(window.getY()+40+(e.getSprite().getHeight()*(i%3)));
 		}
 	}
 	

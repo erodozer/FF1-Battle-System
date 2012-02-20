@@ -28,7 +28,7 @@ public class PartySpriteDisplay extends Sprite{
 	public PartySpriteDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 65, 150);
+		window = new Window(x, y, 65, 144);
 		background = new Sprite(null);
 		//Sets all the sprites to their initial positions
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
@@ -36,7 +36,7 @@ public class PartySpriteDisplay extends Sprite{
 			Player p = Engine.getInstance().getParty().get(i);
 			p.setMoving(0);
 			p.setState(Player.STAND);
-			p.setPosition(window.getX() + 16, window.getY()+38+(p.getSprite().getHeight()-6)*i);
+			p.setPosition(window.getX() + 16, window.getY()+32+(p.getSprite().getHeight()-6)*i);
 		}
 	}
 
@@ -102,6 +102,7 @@ public class PartySpriteDisplay extends Sprite{
 			
 			if (!p.getAlive())
 				p.setState(Player.DEAD);
+			p.setY(window.getY()+32+(24*i));
 			p.draw(g);
 		}
 	}

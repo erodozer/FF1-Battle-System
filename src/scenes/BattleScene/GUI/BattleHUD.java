@@ -49,7 +49,7 @@ public class BattleHUD extends HUD{
 		esprited = new EnemySpriteDisplay(6, 2);
 		elistd = new EnemyListDisplay(6, 136);
 		cd = new CommandDisplay(92,136);
-		sd = new SpellDisplay(12, 158);
+		sd = new SpellDisplay(14, 144);
 		md = new MessageDisplay(6, 143);
 		gd = new GameOverDisplay(6, 143);
 		vd = new VictoryDisplay(6, 143);
