@@ -60,6 +60,9 @@ public class Player extends Actor {
 							//setting character state is still important because
 							//  that's what controls animation
 
+	boolean canCast = true; //determined by if the job can learn spells, if it can
+							//then the player is marked as not being able to cast
+							//spells
 	//constant values for different state animations
 	public static final int STAND = 1;
 	public static final int WALK = 2;
@@ -207,7 +210,7 @@ public class Player extends Actor {
 					new Spell(this, spellName);
 			}
 		} catch (Exception e) {
-			System.err.println("can not find file: " + "data/actors/jobs/" + pathname + "/spells.txt");
+			canCast = false;
 		}			
 	}
 	
@@ -533,5 +536,13 @@ public class Player extends Actor {
 			mp[i][0] = magicGrowth[level-1][i];
 			mp[i][1] = magicGrowth[level-1][i];
 		}
+	}
+
+	/**
+	 * @return is the player able to cast magic
+	 */
+	public boolean canCast()
+	{
+		return canCast;
 	}
 }
