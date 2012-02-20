@@ -5,8 +5,6 @@ import actors.Player;
 
 public class Attack extends Command {
 
-	int hits;				//depending on the skill of the attacker, multiple hits
-							//may land and do damage to the target
 	final int base = 168;	//this is the base hit chance value
 	
 	/**
@@ -35,6 +33,8 @@ public class Attack extends Command {
 		
 		/*
 		 * Calculate the chance of hitting
+		 * depending on the skill of the attacker, multiple hits
+		 * may land and do damage to the target
 		 */
 		int H = invoker.getAcc();
 		int E = invoker.getTarget().getEvd();

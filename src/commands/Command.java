@@ -10,11 +10,11 @@ import actors.Actor;
  */
 public abstract class Command {
 
-	protected String name;
-	protected Actor invoker;
-	protected int damage;
-	protected int speedBonus = 0;
-	protected int hits = 1;
+	protected String name;						//name of the command
+	protected Actor invoker;					//actor using the command
+	protected int damage;						//damage the command will deal to the target
+	protected int speedBonus = 0;				//additional time it takes to use the command
+	protected int hits = 1;						//number of times the command will damage the target
 	protected boolean targetable = false;		//false = foes, true = allies
 	
 	/**
