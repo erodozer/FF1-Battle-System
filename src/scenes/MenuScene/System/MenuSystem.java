@@ -52,15 +52,17 @@ public class MenuSystem extends GameSystem
 	@Override
 	public void setNextState()
 	{
+		//null checks only temp in here to prevent menu crashing
 		if (state == ms)
 		{
-			state = states[ms.getIndex()+1];
+			state = (states[ms.getIndex()+1] != null)?states[ms.getIndex()+1]:ms;
 		}
 		else
 		{
 			state = ms;
 		}
-		state.start();
+		if (state != null)
+			state.start();
 	}
 
 	/**
