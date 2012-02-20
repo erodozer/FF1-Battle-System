@@ -44,15 +44,15 @@ public class BattleHUD extends HUD{
 	public BattleHUD()
 	{
 		super();
-		psprited = new PartySpriteDisplay(132, 4);	
-		pstatd = new PartyStatusDisplay(204, 32);	
-		esprited = new EnemySpriteDisplay(4, 4);
-		elistd = new EnemyListDisplay(4, 150);
-		cd = new CommandDisplay(94,150);
+		psprited = new PartySpriteDisplay(135, 2);	
+		pstatd = new PartyStatusDisplay(199, 16);	
+		esprited = new EnemySpriteDisplay(6, 2);
+		elistd = new EnemyListDisplay(6, 136);
+		cd = new CommandDisplay(92,136);
 		sd = new SpellDisplay(12, 158);
-		md = new MessageDisplay(4, 160);
-		gd = new GameOverDisplay(4, 160);
-		vd = new VictoryDisplay(4, 160);
+		md = new MessageDisplay(6, 143);
+		gd = new GameOverDisplay(6, 143);
+		vd = new VictoryDisplay(6, 143);
 		
 		arrow = new Sprite("hud/selectarrow.png");
 	}

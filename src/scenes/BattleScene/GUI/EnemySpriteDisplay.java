@@ -22,7 +22,7 @@ public class EnemySpriteDisplay extends Sprite{
 	public EnemySpriteDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 128, 156);
+		window = new Window(x, y, 132, 150);
 		background = new Sprite(null);
 		update();
 	}

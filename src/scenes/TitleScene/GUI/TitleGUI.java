@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import scenes.HUD;
 import scenes.TitleScene.System.*;
 import engine.GameScreen;
+import engine.NES;
 
 /**
  * TitleGGUI
@@ -42,7 +43,7 @@ public class TitleGUI extends HUD {
 		g.setFont(font);
 		if (parent.getState() instanceof IntroState)
 		{
-			clearColor = Color.BLUE;
+			clearColor = NES.BLUE;
 			intro.paint(g);
 		}
 		else

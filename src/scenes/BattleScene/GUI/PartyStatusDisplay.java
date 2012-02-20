@@ -25,7 +25,7 @@ public class PartyStatusDisplay extends Sprite{
 		super(null);
 		windows = new Window[Engine.getInstance().getParty().size()];
 		for (int i = 0; i < windows.length; i++)
-			windows[i] = new Window(x, y + 48*i, 48, 56);
+			windows[i] = new Window(x, y + 48*i, 50, 56);
 	}
 
 	/**

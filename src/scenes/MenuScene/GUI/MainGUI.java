@@ -9,6 +9,7 @@ import scenes.HUD;
 import scenes.MenuScene.System.MenuState;
 import engine.Engine;
 import engine.GameScreen;
+import engine.NES;
 import engine.Sprite;
 import engine.Window;
 import groups.Party;
@@ -42,10 +43,10 @@ public class MainGUI extends HUD
 		p = e.getParty();
 		statWindows = new PlayerWindow[p.size()];
 		for (int i = 0; i < p.size(); i++)
-			statWindows[i] = new PlayerWindow(p.get(i), 92+(PlayerWindow.WIDTH)*(i%2), 2 + (PlayerWindow.HEIGHT + 2)*(i/2));
-		goldWindow = new Window(5, 84, 80, 36, Color.BLUE);
-		oWin = new OrbWindow(p, 9, 20);
-		menuWindow = new Window(10, 122, 68, 118, Color.BLUE);
+			statWindows[i] = new PlayerWindow(p.get(i), 90+(PlayerWindow.WIDTH-2)*(i%2), 1+(PlayerWindow.HEIGHT)*(i/2));
+		goldWindow = new Window(8, 73, 84, 40, NES.BLUE);
+		oWin = new OrbWindow(p, 12, 9);
+		menuWindow = new Window(17, 113, 66, 112, NES.BLUE);
 	}
 	
 	/**
@@ -61,7 +62,7 @@ public class MainGUI extends HUD
 
 		menuWindow.paint(g);
 		for (int i = 0; i < MenuState.commands.length; i++)
-			g.drawString(MenuState.commands[i], menuWindow.getX()+8, menuWindow.getY()+36+(16*i));
+			g.drawString(MenuState.commands[i], menuWindow.getX()+8, menuWindow.getY()+24+(16*i));
 	
 		oWin.paint(g);
 	}
@@ -73,7 +74,7 @@ public class MainGUI extends HUD
 	public int[] getArrowPosition()
 	{
 		index = parentGUI.state.getIndex();
-		return new int[]{menuWindow.getX()-8,  menuWindow.getY()+24+(16*index)};
+		return new int[]{menuWindow.getX()-8,  menuWindow.getY()+16+(16*index)};
 	}
 
 	/**
@@ -92,8 +93,8 @@ public class MainGUI extends HUD
  */
 class PlayerWindow
 {
-	public static final int WIDTH = 80;
-	public static final int HEIGHT = 118;
+	public static final int WIDTH = 82;
+	public static final int HEIGHT = 112;
 	
 	int x;
 	int y;
@@ -110,7 +111,7 @@ class PlayerWindow
 		s = p.getSprite();
 		s.setX(x+WIDTH-8-s.getWidth());
 		s.setY(y+8);
-		w = new Window(x, y, WIDTH, HEIGHT, Color.BLUE);
+		w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
 	}
 	
 	public void paint(Graphics g)
@@ -141,8 +142,8 @@ class PlayerWindow
  */
 class OrbWindow
 {
-	public static final int WIDTH = 72;
-	public static final int HEIGHT = 58;
+	public static final int WIDTH = 76;
+	public static final int HEIGHT = 64;
 	public static final int LENGTH = 6;		//amount of orbs to be displayed
 	
 	int x;
@@ -157,14 +158,14 @@ class OrbWindow
 		this.p = p;
 		this.x = x;
 		this.y = y;
-		w = new Window(x, y, WIDTH, HEIGHT, Color.BLUE);
+		w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
 		
 		orbs = new Sprite[LENGTH];
 		for (int i = 0; i < LENGTH; i++)
 		{
 			orbs[i] = new Sprite("orbs.png", LENGTH, 2);
-			orbs[i].setX(w.getX() + 10 + 18*(i%(LENGTH/2)));
-			orbs[i].setY(w.getY() + 12 + 18*(i/(LENGTH/2)));
+			orbs[i].setX(w.getX() + 12 + 18*(i%(LENGTH/2)));
+			orbs[i].setY(w.getY() + 16 + 18*(i/(LENGTH/2)));
 			orbs[i].setFrame(i, 1);
 		}
 	}
