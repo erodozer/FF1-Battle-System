@@ -42,7 +42,7 @@ public class MenuSystem extends GameSystem
 		is = new InventoryState(this);
 		
 		state = ms;
-		
+		state.start();
 		states = new GameState[]{ms, is, null, ws, as, ss};
 	}
 	
