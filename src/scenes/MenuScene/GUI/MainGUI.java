@@ -124,12 +124,13 @@ class PlayerWindow
 		g.drawString("L " + p.getLevel(), x+10, y+36);
 		g.drawString("HP", x+10, y+56);
 		g.drawString(String.format("%3d/%3d", p.getHP(), p.getMaxHP()), x+10, y+64);
-		g.drawString("MAGIC", x+10, y+84);
-		g.drawString(p.getMp(0) + "/" + p.getMp(1) + "/" + p.getMp(2) + "/" +p.getMp(3) + "/",
-				     x+10, y+92);
-		g.drawString(p.getMp(4) + "/" + p.getMp(5) + "/" + p.getMp(6) + "/" + p.getMp(7),
-			         x+10, y+100);
-	
+		
+		if (p.canCast())
+		{
+			g.drawString("MAGIC", x + 10, y + 84);
+			g.drawString(p.getMp(0) + "/" + p.getMp(1) + "/" + p.getMp(2) + "/" + p.getMp(3) + "/", x + 10, y + 92);
+			g.drawString(p.getMp(4) + "/" + p.getMp(5) + "/" + p.getMp(6) + "/" + p.getMp(7), x + 10, y + 100);
+		}
 	}
 }
 
