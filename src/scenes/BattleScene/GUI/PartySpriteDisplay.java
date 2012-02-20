@@ -28,7 +28,7 @@ public class PartySpriteDisplay extends Sprite{
 	public PartySpriteDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 72, 156);
+		window = new Window(x, y, 65, 150);
 		background = new Sprite(null);
 		//Sets all the sprites to their initial positions
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)

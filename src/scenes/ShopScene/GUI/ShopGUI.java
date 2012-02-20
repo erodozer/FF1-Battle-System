@@ -49,11 +49,11 @@ public class ShopGUI extends HUD {
 		super();
 		parent = s;
 		shop = parent.getShop();
-		nameWindow = new Window(120, 32, 100, 64);
-		greetWindow = new Window(9, 27, 70, 92, NES.BLUE);
-		mw = new ModeWindow(this, 49, 139);
-		itemSelect = new Window(177, 11, 70, 172, NES.BLUE);
-		moneyWindow = new Window(145, 187, 78, 28, NES.GREEN);
+		nameWindow = new Window(116, 30, 104, 68);
+		greetWindow = new Window(5, 25, 74, 96, NES.BLUE);
+		mw = new ModeWindow(this, 45, 137);
+		itemSelect = new Window(175, 9, 74, 176, NES.BLUE);
+		moneyWindow = new Window(143, 185, 82, 32, NES.GREEN);
 		
 		greeting = StringUtils.wrap(parent.getShop().getGreeting(), GameScreen.fontMetrics, greetWindow.getWidth()-15).toArray(new String[]{});
 		
@@ -106,7 +106,7 @@ public class ShopGUI extends HUD {
 		
 		greetWindow.paint(g);
 		for (int i = 0; i < greeting.length && i < 5; i++)
-			g.drawString(greeting[i], greetWindow.getX()+5, greetWindow.getY()+20+16*i);
+			g.drawString(greeting[i], greetWindow.getX()+8, greetWindow.getY()+20+16*i);
 		
 		
 		moneyWindow.paint(g);
@@ -159,7 +159,7 @@ public class ShopGUI extends HUD {
 			parent = p;
 			x = a;
 			y = b;
-			window = new Window(x, y, 70, 76, NES.BLUE);
+			window = new Window(x, y, 74, 80, NES.BLUE);
 		}
 		
 		public void update()
@@ -169,14 +169,14 @@ public class ShopGUI extends HUD {
 		
 		public int[] getArrowPos()
 		{
-			return new int[]{window.getX()-5, window.getY()+10+(18*index)};
+			return new int[]{window.getX()-5, window.getY()+16+(16*index)};
 		}
 		
 		public void paint(Graphics g)
 		{
 			window.paint(g);
 			for (int i = 0; i < GreetState.commands.length; i++)
-				g.drawString(GreetState.commands[i], window.getX()+8, window.getY()+20+(18*i));
+				g.drawString(GreetState.commands[i], window.getX()+8, window.getY()+26+(16*i));
 		}
 	}
 }

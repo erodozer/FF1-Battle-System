@@ -26,11 +26,11 @@ public class MessageDisplay extends Sprite{
 	{
 		super(null);
 		windows = new Window[5];
-		windows[0] = new Window(x,    y,    84,  32);
-		windows[1] = new Window(x+84, y,    116, 32);
-		windows[2] = new Window(x,    y+24, 84,  32);
-		windows[3] = new Window(x+84, y+24, 116, 32);
-		windows[4] = new Window(x, 	  y+48, 200, 32);
+		windows[0] = new Window(x,    y,    84,  34);
+		windows[1] = new Window(x+82, y,    90, 34);
+		windows[2] = new Window(x,    y+24, 84,  34);
+		windows[3] = new Window(x+82, y+24, 90, 34);
+		windows[4] = new Window(x, 	  y+48, 194, 34);
 
 	}
 	

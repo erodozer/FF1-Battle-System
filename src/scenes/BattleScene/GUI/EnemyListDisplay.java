@@ -17,7 +17,7 @@ public class EnemyListDisplay extends Sprite{
 	public EnemyListDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 90, 82);
+		window = new Window(x, y, 88, 80);
 		
 		names = new ArrayList<String>();
 	}

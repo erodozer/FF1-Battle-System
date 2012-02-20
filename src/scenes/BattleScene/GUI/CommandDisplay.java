@@ -26,7 +26,7 @@ public class CommandDisplay extends Sprite{
 	public CommandDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 110, 82);
+		window = new Window(x, y, 108, 80);
 		arrow = new Sprite("hud/selectarrow.png");
 
 	}
@@ -53,10 +53,10 @@ public class CommandDisplay extends Sprite{
 		
 		Actor a = parent.getActiveActor();
 		for (int i = 0; i < a.getCommands().length; i++)
-			g.drawString(a.getCommands()[i].toString(), window.getX() + 20 + 60*(i/4), 
+			g.drawString(a.getCommands()[i].toString(), window.getX() + 18 + 60*(i/4), 
 							window.getY() + 24 + 16 * (i % 4));
 		
-		arrow.setX(window.getX() + 60*(index/4));
+		arrow.setX(window.getX() + 1 + 60*(index/4));
 		arrow.setY(window.getY() + 24 + 16 * (index % 4) - arrow.getHeight()/2);
 		arrow.paint(g);
 	}
