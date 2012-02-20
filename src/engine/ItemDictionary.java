@@ -37,20 +37,26 @@ public class ItemDictionary {
 		File location = new File("data/items");
 		if (location.exists())
 		{
-		String[] l = location.list();			//all the items in the items directory
-		Preferences p;
-		for (String s : l)
-		{
-			try {
-				p = new IniPreferences(new Ini(new File("data/items/" + s + "/item.ini")));
-				if (p.nodeExists("equipment"))
-					h.put(s, new Equipment(s));
-				else
-					h.put(s, new Item(s));
-			} catch (Exception e) {
-				e.printStackTrace();
+			String[] l = location.list(); //all the items in the items directory
+			Preferences p;
+			for (String s : l)
+			{
+				if (!new File("data/items/"+s).isDirectory())
+					continue;
+				
+				try
+				{
+					p = new IniPreferences(new Ini(new File("data/items/" + s + "/item.ini")));
+					if (p.nodeExists("equipment"))
+						h.put(s, new Equipment(s));
+					else
+						h.put(s, new Item(s));
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
-		}
 		}
 		return h;
 	}
