@@ -2,6 +2,7 @@ package engine;
 
 import groups.Party;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.event.KeyEvent;
@@ -61,9 +62,9 @@ public class GameScreen extends JFrame implements KeyListener{
 	{
 		engine = Engine.getInstance();
 		
-		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setTitle("FF1 Battle System");
-		c = new ContentPanel(getWidth(), getHeight());
+		c = new ContentPanel(FRAME_WIDTH, FRAME_HEIGHT);
+		c.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		
 		try {
 			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);
@@ -111,7 +112,9 @@ public class GameScreen extends JFrame implements KeyListener{
 			}
 		}.start();
 		
+		pack();
 		_instance = this;
+		
 	}
 
 	// test client
