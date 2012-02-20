@@ -27,7 +27,7 @@ public class SpellDisplay extends Sprite{
 	public SpellDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 184, 80);
+		window = new Window(x, y, 178, 80);
 		arrow = new Sprite("hud/selectarrow.png");
 
 	}
