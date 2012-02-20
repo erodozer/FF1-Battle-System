@@ -49,7 +49,6 @@ public class Party extends ArrayList<Player>{
 		HashMap<String, Integer> h = new HashMap<String, Integer>();
 		for (String s : ItemDictionary.map.keySet())
 			h.put(s, 0);
-		System.out.println(h);
 		return h;
 	}
 
@@ -175,7 +174,6 @@ public class Party extends ArrayList<Player>{
 			
 			items.add(""+keys[i]);
 		}
-		System.out.println(items);
 		return items.toArray(new String[]{});
 	}
 }
