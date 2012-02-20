@@ -9,6 +9,7 @@ import scenes.HUD;
 import scenes.MenuScene.System.MenuState;
 import engine.Engine;
 import engine.GameScreen;
+import engine.NES;
 import engine.Sprite;
 import engine.Window;
 import groups.Party;
@@ -24,9 +25,9 @@ public class InventoryGUI extends HUD
 	Engine e = Engine.getInstance();		//engine
 	Party p;								//party
 	
-	ItemWindow itemWindow;						//shows party's gold
+	ItemWindow itemWindow;					//shows party's gold
 	Window titleWindow;						//shows menu selection
-	
+	Window messageWindow;					//little message window
 	MenuGUI parentGUI; 						//core gui for the menu system
 	int index;								//selected option index
 	
@@ -38,8 +39,11 @@ public class InventoryGUI extends HUD
 	{
 		parentGUI = parent;
 		p = e.getParty();
-		titleWindow = new Window(5, 5, 80, 28, Color.BLUE);
-		itemWindow = new ItemWindow(p, 10,10);
+		titleWindow = new Window(10, 5, 80, 38, NES.BLUE);
+		itemWindow = new ItemWindow(p, 10,22);
+		
+		messageWindow = new Window(10, 168, 232, 48, NES.BLUE);
+		
 	}
 	
 	/**
@@ -49,7 +53,12 @@ public class InventoryGUI extends HUD
 	{
 		itemWindow.paint(g);
 		titleWindow.paint(g);
-		g.drawString("Title", titleWindow.getX() + 10, titleWindow.getY()+18);
+		g.drawString("ITEM", titleWindow.getX() + 10, titleWindow.getY()+28);
+		if (itemWindow.itemList.length == 0)
+		{
+			messageWindow.paint(g);
+			g.drawString("No items founds", messageWindow.getX() + 10, messageWindow.getY() + 21);
+		}
 	}
 	
 	/**
@@ -59,7 +68,12 @@ public class InventoryGUI extends HUD
 	public int[] getArrowPosition()
 	{
 		index = parentGUI.state.getIndex();
-		return new int[]{(int)itemWindow.getX()-8,  (int)itemWindow.getY()+24+(16*index)};
+		int[] pos;
+		if (itemWindow.itemList.length > 0)
+			pos = new int[]{itemWindow.w.getX()+ 2 + 80*(index%2), itemWindow.w.getY() + 34 + 24*(index/2)};
+		else
+			pos = new int[]{-100, -100};
+		return pos;
 	}
 
 	/**
@@ -83,7 +97,7 @@ public class InventoryGUI extends HUD
 class ItemWindow
 {
 	public static final int WIDTH = 232;
-	public static final int HEIGHT = 180;
+	public static final int HEIGHT = 146;
 	
 	int x;
 	int y;
@@ -100,7 +114,7 @@ class ItemWindow
 		this.p = p;
 		this.x = x;
 		this.y = y;
-		w = new Window(x, y, WIDTH, HEIGHT, Color.BLUE);	
+		w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);	
 		itemList = p.getItemList();
 	}
 	
@@ -119,10 +133,11 @@ class ItemWindow
 		return y;
 	}
 
+	
 	public void paint(Graphics g)
 	{
 		w.paint(g);
 		for (int i = 0; i < Math.min(itemList.length, index+16); i++)
-			g.drawString(String.format("%5s %2s", itemList[i], p.getItemCount(itemList[i])), w.getX()+15 + 50*(i%2), w.getY() + 50 + 24*(i/2));
+			g.drawString(String.format("%5s %2s", itemList[i], p.getItemCount(itemList[i])), w.getX()+15 + 80*(i%2), w.getY() + 40 + 24*(i/2));
 	}
 }
