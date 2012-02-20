@@ -21,8 +21,8 @@ public class VictoryDisplay extends Sprite{
 	public VictoryDisplay(int x, int y)
 	{
 		super(null);
-		windows = new Window[]{new Window(x, y+50, 180, 32), new Window(x, y, 90, 32), new Window(x+82, y, 90, 32), 
-							   new Window(x, y+26, 90, 32), new Window(x+82, y+26, 90, 32)};
+		windows = new Window[]{new Window(x, y+48, 180, 34), new Window(x, y, 90, 34), new Window(x+82, y, 90, 34), 
+							   new Window(x, y+24, 90, 34), new Window(x+82, y+24, 90, 34)};
 	}
 
 
