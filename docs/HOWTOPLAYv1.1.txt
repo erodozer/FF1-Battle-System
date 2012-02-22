@@ -1,0 +1,51 @@
+=Introduction=
+
+Version 1.1 of the engine focuses on the development of the Environment
+exploration system of FF1 for the NES.  It's a tile based system where
+walking around is done within blocks that are 16x16.
+
+Wandering around the starting map in different locations can cause different
+encounters and at different rates.  For example, Forests have a much higher 
+encounter rate than walking around in grass.
+
+==STARTING THE GAME==
+
+Just a heads up, input is done using the arrow keys and X (A button) and
+Z (B button).  New to this are the Function keys START (S) and SELECT (A). 
+
+Upon starting the game, the intro will display the story fading in line by
+line, just like how the classic FF games presented their story.  You can
+speed through this line by line by pressing the A button, or you can skip
+straight to the title screen by pressing START.
+
+From the title screen you can choose to start a new game (continue is not
+yet working).  Once you start a new game, party creation will start.  This
+is no different than before.
+
+==A NEW WORLD AWAITS!==
+
+After picking your characters, you'll be plopped right into the test world.
+For now it looks identical to the original FF1 map, this will change in the
+future as more content is changed.
+
+Walking around can be done using the arrow keys.  Interacting with the test
+NPCs that are around don't really do too much, they don't have dialog.  A
+few tiles south of where you start will teleport you to the top-left portion
+of the map.  Also, if you find Derpy, talk to her and you'll get to buy
+some items which don't do anything yet, but hey, you can hold items!  That's
+a plus, right?
+
+If you wander around enough you'll encounter an enemy formation.  Fighting
+is the same as before, a little polish here and there has been done to it
+to make it more pixel perfect.  Running away from the battle or winning the
+battle will take you back to the map.
+
+Some other fun things about the map, if you press SELECT, you can cycle
+through your party for your sprite representative member.  Pressing START
+will take you into the menu screen where you can view your items, see the
+basic stats of your character, and see how much G you have.  Battle rewards
+do not yet take effect so winning G from a battle won't show up yet.
+
+That's it to playing Version 1.1.  Have fun and enjoy making new content for
+the engine.
+
