@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import actors.Player;
 
+import engine.NES;
 import engine.Sprite;
 import engine.Window;
 
@@ -26,7 +27,9 @@ public class PlayerWindow extends Sprite {
 	public PlayerWindow(Player p, int x, int y)
 	{
 		super(null);
-		w = new Window(x, y, 86, 84, Color.BLUE);
+		w = new Window(x, y, 86, 84, NES.BLUE);
+		this.x = x;
+		this.y = y;
 		this.p = p;
 	}
 	

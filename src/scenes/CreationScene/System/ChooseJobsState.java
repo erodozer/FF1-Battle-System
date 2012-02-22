@@ -49,6 +49,8 @@ public class ChooseJobsState extends GameState {
 	public void handleKeyInput(KeyEvent arg0) {
 		if (arg0.getKeyCode() == Input.KEY_A)
 			finish();
+		else if (arg0.getKeyCode() == Input.KEY_B)
+			((CreationSystem)parent).index = Math.max(0, ((CreationSystem)parent).index-1);
 		else if (arg0.getKeyCode() == Input.KEY_DN ||
 				 arg0.getKeyCode() == Input.KEY_UP ||
 				 arg0.getKeyCode() == Input.KEY_LT ||

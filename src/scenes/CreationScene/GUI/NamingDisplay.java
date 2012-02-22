@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import scenes.CreationScene.System.CreationSystem;
 import scenes.CreationScene.System.NamingState;
 
+import engine.NES;
 import engine.Sprite;
 import engine.Window;
 
@@ -14,7 +15,6 @@ public class NamingDisplay extends Sprite {
 	CreationSystem parent;
 	Window nameWindow;
 	Window inputWindow;
-	Sprite arrow;
 	
 	char[][] grid;
 	String name;
@@ -27,8 +27,7 @@ public class NamingDisplay extends Sprite {
 		parent = p;
 
 		nameWindow = new Window(108, 15, 55, 34, Color.red);
-		inputWindow = new Window(40, 62, 183, 160, Color.blue);
-		arrow = new Sprite("hud/selectarrow.png");	
+		inputWindow = new Window(40, 62, 183, 160, NES.BLUE);
 		
 		grid = NamingState.letters;
 		name = "";
@@ -39,6 +38,11 @@ public class NamingDisplay extends Sprite {
 		x = s.getX();
 		y = s.getY();
 		name = s.getName();
+	}
+	
+	public int[] getArrowPosition()
+	{
+		return new int[]{inputWindow.getX() - 4 + 16*x, inputWindow.getY() + 12 + 16*y};
 	}
 	
 	@Override
@@ -53,9 +57,6 @@ public class NamingDisplay extends Sprite {
 				g.drawString(""+grid[i][n], inputWindow.getX() + 16 + 16*n, inputWindow.getY() + 22 + 16*i);
 		
 		g.drawString("SELECT  NAME",  inputWindow.getX() + 42, inputWindow.getY() + inputWindow.getHeight() - 10);
-		
-		arrow.setX(inputWindow.getX() + 8 + 16*x - arrow.getWidth()/2 - 2);
-		arrow.setY(inputWindow.getY() + 8 + 16*y + 4);
-		arrow.paint(g);
+
 	}
 }
