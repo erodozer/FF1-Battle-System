@@ -3,9 +3,6 @@ package scenes.BattleScene.GUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
-import java.io.FileInputStream;
-
 import scenes.GameSystem;
 import scenes.HUD;
 import scenes.BattleScene.System.*;
@@ -57,6 +54,7 @@ public class BattleHUD extends HUD{
 		arrow = new Sprite("hud/selectarrow.png");
 	}
 	
+	@Override
 	public void update(){}
 	
 	/**

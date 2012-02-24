@@ -1,7 +1,5 @@
 package scenes.MenuScene.System;
 
-import java.util.HashMap;
-
 import engine.Engine;
 import groups.Party;
 

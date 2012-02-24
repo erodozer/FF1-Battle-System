@@ -2,7 +2,6 @@ package editor.MapEditor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -10,9 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import javax.swing.JComponent;
@@ -219,8 +216,8 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		int t1, t2, t3, t4;
 		t1 = Math.max(0, Math.min(x, x2));
 		t2 = Math.max(0, Math.min(y, y2));
-		t3 = Math.min((int)width, Math.max(x, x2));
-		t4 = Math.min((int)height, Math.max(y, y2));
+		t3 = Math.min(width, Math.max(x, x2));
+		t4 = Math.min(height, Math.max(y, y2));
 		x = t1;
 		y = t2;
 		x2 = t3;
@@ -366,6 +363,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	/**
 	 * Draws the actual grid and tiles
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		if (g == null)
@@ -449,6 +447,7 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	/**
 	 * Creates a string representation of the map
 	 */
+	@Override
 	public String toString()
 	{
 		String output = "";

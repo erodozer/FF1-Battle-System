@@ -8,8 +8,6 @@ package groups;
  * 				the party class
  */
 
-import static org.junit.Assert.fail;
-
 import java.io.File;
 import java.util.prefs.Preferences;
 

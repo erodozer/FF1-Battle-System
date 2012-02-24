@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.WindowConstants;
 
 import editor.MapEditor.MapEditorGUI;
 import editor.MapEditor.NewMapDialog;
@@ -43,7 +44,7 @@ public class ToolKit extends JFrame{
 		add(tabbedPane);
 		
 		setTitle("JFF1 Toolkit");
-		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
+		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		setVisible(true);
 		
 		System.out.println(Arrays.toString(maps));
@@ -56,7 +57,8 @@ public class ToolKit extends JFrame{
 	private static String[] buildTileMapList()
 	{
 		String[] s = new File("data/tilemaps").list(new FilenameFilter() {
-            public boolean accept(File f, String s) {
+            @Override
+			public boolean accept(File f, String s) {
                 return s.endsWith(".png");
               }
             });
@@ -70,7 +72,8 @@ public class ToolKit extends JFrame{
 	private static String[] buildTerrainList()
 	{
 		String[] s = new File("data/terrains").list(new FilenameFilter() {
-            public boolean accept(File f, String s) {
+            @Override
+			public boolean accept(File f, String s) {
                 return s.endsWith(".png");
               }
             });
@@ -84,7 +87,8 @@ public class ToolKit extends JFrame{
 	private static String[] buildMapList()
 	{
 		String[] s = new File("data/maps").list(new FilenameFilter() {
-            public boolean accept(File f, String s) {
+            @Override
+			public boolean accept(File f, String s) {
             	return (new File("data/maps/"+s+"/map.ini").exists());
               }
             });

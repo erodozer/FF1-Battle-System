@@ -1,10 +1,7 @@
 package scenes.TitleScene.System;
 
-import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import engine.ContentPanel;
 import engine.GameScreen;
 import engine.Input;
@@ -14,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import scenes.GameState;
-import scenes.GameSystem;
 
 public class IntroState extends GameState{
 

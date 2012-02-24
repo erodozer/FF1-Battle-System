@@ -1,9 +1,6 @@
 package scenes.MenuScene;
 
-import engine.Sprite;
 import scenes.Scene;
-import scenes.BattleScene.GUI.BattleHUD;
-import scenes.BattleScene.System.BattleSystem;
 import scenes.MenuScene.GUI.MenuGUI;
 import scenes.MenuScene.System.MenuSystem;
 
@@ -26,6 +23,7 @@ public class MenuScene extends Scene{
 		this.display = display;
 	}
 	
+	@Override
 	public void stop()
 	{
 		system = null;

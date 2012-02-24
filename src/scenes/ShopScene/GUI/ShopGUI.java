@@ -3,7 +3,6 @@ package scenes.ShopScene.GUI;
 import item.Item;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 
 import actors.Player;

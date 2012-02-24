@@ -6,7 +6,6 @@ import engine.Engine;
 import engine.Input;
 
 import scenes.GameState;
-import scenes.GameSystem;
 
 /**
  * MenuState

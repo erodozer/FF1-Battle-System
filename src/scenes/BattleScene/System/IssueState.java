@@ -212,6 +212,7 @@ public class IssueState extends GameState
 	 * Retrieves the current index of the command/target selected
 	 * @return
 	 */
+	@Override
 	public int getIndex() {
 		return index;
 	}

@@ -1,5 +1,6 @@
 package editor.MapEditor;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -44,7 +45,7 @@ public class NewMapDialog extends JDialog implements ActionListener {
 		JLabel l2 = new JLabel("x");
 		l2.setLocation(120, 48);
 		l2.setSize(20,20);
-		l2.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		l2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		width = new JTextField("1");
 		width.setSize(110, 24);

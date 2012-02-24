@@ -6,14 +6,13 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.FileInputStream;
 
+import Map.Map;
+import Map.NPC;
+
 import scenes.HUD;
 import scenes.WorldScene.WorldSystem.DialogState;
-import scenes.WorldScene.WorldSystem.Map;
-import scenes.WorldScene.WorldSystem.NPC;
 import scenes.WorldScene.WorldSystem.WorldSystem;
-import engine.ContentPanel;
 import engine.Engine;
-import engine.Sprite;
 import engine.TileSet;
 
 /**
@@ -77,9 +76,9 @@ public class WorldHUD extends HUD
 			
 		//reset the translate
 		g.translate(-xOffset, -yOffset);
-		if (((WorldSystem)parent).getState() instanceof DialogState)
+		if (parent.getState() instanceof DialogState)
 		{
-			DialogState s = (DialogState)((WorldSystem)parent).getState();
+			DialogState s = (DialogState)parent.getState();
 			dialog.setDialog(s.getDialog(), s.getIndex());
 			dialog.paint(g);
 		}

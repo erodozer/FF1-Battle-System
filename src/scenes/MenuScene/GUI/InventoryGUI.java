@@ -1,14 +1,9 @@
 package scenes.MenuScene.GUI;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
-import actors.Player;
-
 import scenes.HUD;
-import scenes.MenuScene.System.MenuState;
 import engine.Engine;
-import engine.GameScreen;
 import engine.NES;
 import engine.Sprite;
 import engine.Window;
@@ -49,6 +44,7 @@ public class InventoryGUI extends HUD
 	/**
 	 * Paints the component
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		itemWindow.paint(g);

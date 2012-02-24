@@ -9,8 +9,6 @@ import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 import org.junit.Test;
 
-import scenes.WorldScene.WorldSystem.Event;
-
 public class ShopTest {
 
 	@Test

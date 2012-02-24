@@ -3,9 +3,6 @@ package scenes.CreationScene.GUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
-import java.io.FileInputStream;
-
 import scenes.HUD;
 import scenes.CreationScene.System.*;
 

@@ -1,6 +1,5 @@
 package scenes.MenuScene.GUI;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import actors.Player;
@@ -8,7 +7,6 @@ import actors.Player;
 import scenes.HUD;
 import scenes.MenuScene.System.MenuState;
 import engine.Engine;
-import engine.GameScreen;
 import engine.NES;
 import engine.Sprite;
 import engine.Window;
@@ -52,6 +50,7 @@ public class MainGUI extends HUD
 	/**
 	 * Paints the component
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		for (int i = 0; i < statWindows.length; i++)

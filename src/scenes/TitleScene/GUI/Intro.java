@@ -4,11 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import scenes.TitleScene.System.IntroState;
-import scenes.TitleScene.System.TitleSystem;
-import engine.ContentPanel;
-import engine.GameScreen;
 import engine.Sprite;
-import engine.StringUtils;
 
 /**
  * Intro

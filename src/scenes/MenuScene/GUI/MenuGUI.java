@@ -1,15 +1,10 @@
 package scenes.MenuScene.GUI;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 
-import engine.Engine;
 import engine.GameScreen;
 import engine.Sprite;
-import engine.Window;
-import groups.Party;
 import scenes.GameState;
 import scenes.HUD;
 import scenes.MenuScene.System.*;

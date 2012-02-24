@@ -1,33 +1,22 @@
 package editor.MapEditor;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.Vector;
-import java.util.prefs.Preferences;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.JSpinner;
-import javax.swing.JSpinner.NumberEditor;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import org.ini4j.Ini;
-import org.ini4j.IniPreferences;
-import org.ini4j.InvalidFileFormatException;
+import Map.Terrain;
 
 import editor.ToolKit;
 
-import scenes.WorldScene.WorldSystem.Terrain;
 
 /**
  * NewMapDialog

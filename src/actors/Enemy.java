@@ -8,9 +8,7 @@ package actors;
  */
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Properties;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;

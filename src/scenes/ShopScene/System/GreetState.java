@@ -4,8 +4,6 @@ import java.awt.event.KeyEvent;
 
 import scenes.GameState;
 import scenes.GameSystem;
-import scenes.ShopScene.ShopScene;
-
 import engine.Engine;
 import engine.Input;
 

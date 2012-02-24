@@ -1,6 +1,5 @@
 package scenes.TitleScene.GUI;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -38,6 +37,7 @@ public class TitleGUI extends HUD {
 			ts.update((TitleState)parent.getState());
 	}
 	
+	@Override
 	public void paint(Graphics g)
 	{
 		g.setFont(font);

@@ -6,12 +6,14 @@ import scenes.TitleScene.System.TitleSystem;
 
 public class TitleScene extends Scene {
 	
+	@Override
 	public void start()
 	{
 		system = new TitleSystem();
 		display = new TitleGUI((TitleSystem)system);
 	}
 
+	@Override
 	public void stop()
 	{
 		system = null;

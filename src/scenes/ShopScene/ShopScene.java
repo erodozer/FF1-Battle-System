@@ -7,6 +7,7 @@ import scenes.ShopScene.System.ShopSystem;
 
 public class ShopScene extends Scene {
 	
+	@Override
 	public void stop()
 	{
 		system = null;

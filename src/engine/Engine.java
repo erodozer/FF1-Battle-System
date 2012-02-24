@@ -1,14 +1,11 @@
 package engine;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
-import actors.Player;
 import scenes.*;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;

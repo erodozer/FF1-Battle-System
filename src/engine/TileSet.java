@@ -4,8 +4,6 @@ import java.awt.Graphics;
 import java.io.FileInputStream;
 import java.util.Scanner;
 
-import org.ini4j.jdk14.edu.emory.mathcs.backport.java.util.Arrays;
-
 /**
  * TileSet
  * @author nhydock

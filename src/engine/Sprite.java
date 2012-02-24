@@ -178,8 +178,8 @@ public class Sprite{
 	 */
 	public int[] getFrame()
 	{
-		return new int[]{(int)(((rect[0]/(double)width)*xFrames)+1),
-						 (int)(((rect[1]/(double)height)*yFrames)+1)};
+		return new int[]{(int)(((rect[0]/width)*xFrames)+1),
+						 (int)(((rect[1]/height)*yFrames)+1)};
 	}
 	
 	/**

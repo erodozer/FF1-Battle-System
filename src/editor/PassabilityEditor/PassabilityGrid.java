@@ -2,26 +2,19 @@ package editor.PassabilityEditor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.Scrollable;
 
 import engine.TileSet;
@@ -176,6 +169,7 @@ public class PassabilityGrid extends JComponent implements ActionListener, Mouse
 	/**
 	 * Draws the actual grid and tiles
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		if (g == null)
@@ -263,6 +257,7 @@ public class PassabilityGrid extends JComponent implements ActionListener, Mouse
 		repaint();
 	}
 	
+	@Override
 	public String toString()
 	{
 		String output = "";

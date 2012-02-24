@@ -3,8 +3,6 @@ package scenes.TitleScene.System;
 import java.awt.event.KeyEvent;
 
 import scenes.GameState;
-import scenes.GameSystem;
-
 import engine.Engine;
 import engine.Input;
 
@@ -68,6 +66,7 @@ public class TitleState extends GameState {
 	/**
 	 * @return	the chosen command index
 	 */
+	@Override
 	public int getIndex() {
 		return index;
 	}
