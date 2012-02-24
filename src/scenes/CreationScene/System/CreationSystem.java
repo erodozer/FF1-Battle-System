@@ -119,4 +119,15 @@ public class CreationSystem extends GameSystem{
         }
         state.start();
     }
+    
+    /**
+     * Sets the current active player to the previous one
+     */
+    public void setPrevious()
+    {
+    	index = Math.max(0, index-1);
+    	activePlayer = party.get(index);
+    	state = cjs;
+    	state.start();
+    }
 }

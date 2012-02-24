@@ -50,7 +50,9 @@ public class ChooseJobsState extends GameState {
 		if (arg0.getKeyCode() == Input.KEY_A)
 			finish();
 		else if (arg0.getKeyCode() == Input.KEY_B)
-			((CreationSystem)parent).index = Math.max(0, ((CreationSystem)parent).index-1);
+		{
+			((CreationSystem)parent).setPrevious();
+		}
 		else if (arg0.getKeyCode() == Input.KEY_DN ||
 				 arg0.getKeyCode() == Input.KEY_UP ||
 				 arg0.getKeyCode() == Input.KEY_LT ||
