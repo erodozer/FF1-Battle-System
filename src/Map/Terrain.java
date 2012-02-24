@@ -1,9 +1,8 @@
-package scenes.WorldScene.WorldSystem;
+package Map;
 
 import engine.Sprite;
 import groups.Formation;
 
-import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Vector;
@@ -137,6 +136,7 @@ public class Terrain {
 		}
 	}
 
+	@Override
 	public String toString()
 	{
 		return name;

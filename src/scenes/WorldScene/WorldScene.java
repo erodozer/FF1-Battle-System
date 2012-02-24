@@ -1,9 +1,9 @@
 package scenes.WorldScene;
 
+import Map.Map;
 import engine.Engine;
 import scenes.Scene;
 import scenes.WorldScene.GUI.WorldHUD;
-import scenes.WorldScene.WorldSystem.Map;
 import scenes.WorldScene.WorldSystem.WorldSystem;
 
 /**

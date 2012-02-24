@@ -2,6 +2,9 @@ package scenes.WorldScene.WorldSystem;
 
 import java.awt.event.KeyEvent;
 
+import Map.Map;
+import Map.NPC;
+
 import scenes.GameState;
 
 import engine.Input;
@@ -42,8 +45,8 @@ public class ExploreState extends GameState {
 	 */
 	@Override
 	public void handle() {
-		x = parent.leader.x;
-		y = parent.leader.y;
+		x = parent.leader.getX();
+		y = parent.leader.getY();
 		
 		for (NPC n : parent.map.getAllNPCs())
 			n.move();
@@ -71,7 +74,7 @@ public class ExploreState extends GameState {
         {
         	int[] ahead = Map.getCoordAhead(x, y, parent.leader.getDirection());
       		
-        	NPC n = parent.map.npcMap.get(ahead[0] + " " + ahead[1]);
+        	NPC n = parent.map.getNPC(ahead[0], ahead[1]);
         	if (n != null)
         		if (n.interact() == "dialog")
         		{

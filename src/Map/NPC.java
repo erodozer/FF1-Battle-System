@@ -1,4 +1,4 @@
-package scenes.WorldScene.WorldSystem;
+package Map;
 
 import java.awt.Graphics;
 import java.util.prefs.Preferences;
@@ -54,7 +54,7 @@ public class NPC {
 	
 	String interact;	//interaction type
 	
-	boolean walking;
+	private boolean walking;
 	
 	/**
 	 * Creates a standard npc
@@ -88,7 +88,7 @@ public class NPC {
 			shop = new Shop(node);
 		}
 		
-		map.npcMap.put(x + " " + y, this);
+		map.putNPC(x, y, this);
 	}
 	
 	/**
@@ -162,12 +162,12 @@ public class NPC {
 				{
 					walk();
 					direction = dir;
-					map.npcMap.remove(this.x + " " + this.y);
+					map.removeNPC(this.x, this.y);
 					x = pos[0];
 					y = pos[1];
 					xRate = (drawX-x)*rate;
 					yRate = (drawY-y)*rate;
-					map.npcMap.put(x + " " + y, this);
+					map.putNPC(x, y, this);
 					break;
 				}
 				else
@@ -187,12 +187,12 @@ public class NPC {
 		if (map.getPassability(x, y))
 		{
 			walk();
-			map.npcMap.remove(this.x + " " + this.y);
+			map.removeNPC(this.x, this.y);
 			this.x = x;
 			this.y = y;
 			xRate = (x-drawX)*rate;
 			yRate = (y-drawY)*rate;
-			map.npcMap.put(x + " " + y, this);
+			map.putNPC(x, y, this);
 		}		
 	}
 	
@@ -226,7 +226,7 @@ public class NPC {
 			walkSprite.trim(0,0,1,1);
 		if (drawX != x)
 		{
-			walking = true;
+			setWalking(true);
 			walk();
 			drawX += xRate;
 			if (xRate < 0)
@@ -242,7 +242,7 @@ public class NPC {
 		}
 		if (drawY != y)
 		{
-			walking = true;
+			setWalking(true);
 			walk();
 			drawY += yRate;
 			if (yRate < 0)
@@ -257,7 +257,7 @@ public class NPC {
 			}
 		}
 		if (drawX == x && drawY == y)
-			walking = false;
+			setWalking(false);
 		walkSprite.setX(getDrawX());
 		walkSprite.setY(getDrawY());
 		walkSprite.paint(g);
@@ -301,6 +301,14 @@ public class NPC {
 	 */
 	public String getDialog() {
 		return dialog;
+	}
+
+	public boolean isWalking() {
+		return walking;
+	}
+
+	public void setWalking(boolean walking) {
+		this.walking = walking;
 	}
 
 }

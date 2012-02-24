@@ -2,6 +2,10 @@ package scenes.WorldScene.WorldSystem;
 
 import java.awt.event.KeyEvent;
 
+import Map.Map;
+import Map.NPC;
+import Map.Terrain;
+
 import scenes.GameSystem;
 import engine.Engine;
 import groups.Formation;
@@ -91,7 +95,7 @@ public class WorldSystem extends GameSystem
      */
     @Override
 	public void keyPressed(KeyEvent evt) {
-    	if (!leader.walking)
+    	if (!leader.isWalking())
     		state.handleKeyInput(evt);
     }
 	
@@ -108,15 +112,15 @@ public class WorldSystem extends GameSystem
 			if (currentTerrain != null)
 				encounterNum += currentTerrain.getRate();
 			if (encounterNum > 100)
-				if (currentTerrain.formations.size() > 0)
+				if (currentTerrain.getFormations().size() > 0)
 				{
 					encounterNum = 0;
 					Formation f = currentTerrain.getRandomFormation();
 					Engine.getInstance().changeToBattle(f, currentTerrain.getBackground());
 				}
 			//interact with event if stepped on
-			if (map.eventMap.get(x + " " + y) != null)
-				map.eventMap.get(x + " " + y).interact();
+			if (map.getEventMap().get(x + " " + y) != null)
+				map.getEventMap().get(x + " " + y).interact();
 		}
 	}
 

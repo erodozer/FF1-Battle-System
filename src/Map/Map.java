@@ -1,12 +1,10 @@
-package scenes.WorldScene.WorldSystem;
+package Map;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
@@ -16,8 +14,8 @@ import java.util.prefs.Preferences;
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
+
 import engine.ContentPanel;
-import engine.Sprite;
 import engine.TileSet;
 
 public class Map {
@@ -46,8 +44,8 @@ public class Map {
 	
 	Vector<Terrain> terrains;				//terrains of the map
 	
-	HashMap<String, NPC> npcMap;			//hashmap of all the npc locations
-	HashMap<String, Event> eventMap;		//hashmap of all the event locations
+	private HashMap<String, NPC> npcMap;			//hashmap of all the npc locations
+	private HashMap<String, Event> eventMap;		//hashmap of all the event locations
 	
 	int[][] tiles;
 	int[][] regionMap;
@@ -213,7 +211,7 @@ public class Map {
 
 	public Event[] getAllEvents()
 	{
-		return eventMap.values().toArray(new Event[]{});
+		return getEventMap().values().toArray(new Event[]{});
 	}
 
 	public Color getClearColor() {
@@ -245,4 +243,28 @@ public class Map {
 	public NPC getNPC(int x, int y) {
 		return npcMap.get(x + " " + y);
 	}
+
+	public Event getEvent(int x, int y) {
+		return eventMap.get(x + " " + y);
+	}
+	public HashMap<String, Event> getEventMap() {
+		return eventMap;
+	}
+
+	public void putNPC(int x, int y, NPC npc) {
+		npcMap.put(x + " " + y, npc);	
+	}
+
+	public void removeNPC(int x, int y) {
+		npcMap.remove(x + " " + y);
+	}
+
+	public void removeEvent(int x, int y) {
+		eventMap.remove(x + " " + y);
+	}
+
+	public void putEvent(int x, int y, Event event) {
+		eventMap.put(x + " " + y, event);		
+	}
+
 }

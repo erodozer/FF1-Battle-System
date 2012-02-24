@@ -1,8 +1,8 @@
 package scenes.WorldScene.WorldSystem;
 
-import java.awt.FontMetrics;
-import java.awt.Frame;
 import java.awt.event.KeyEvent;
+
+import Map.NPC;
 
 import scenes.GameState;
 import scenes.GameSystem;
@@ -76,6 +76,7 @@ public class DialogState extends GameState {
 	 * Gets the line index
 	 * @return
 	 */
+	@Override
 	public int getIndex() {
 		return index;
 	}
