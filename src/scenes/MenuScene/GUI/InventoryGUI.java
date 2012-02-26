@@ -80,60 +80,53 @@ public class InventoryGUI extends HUD
 		itemWindow.updateIndex(parent.getState().getIndex());
 	}
 	
-}
 
+	/**
+	 * ItemWindow
+	 * 
+	 * @author nhydock
+	 * 
+	 *         Window from FF1 in the menu that displays the items the party has
+	 */
+	class ItemWindow 
+	{
+		public static final int WIDTH = 232;
+		public static final int HEIGHT = 146;
 
-/**
- * ItemWindow
- * @author nhydock
- *
- *	Window from FF1 in the menu that displays the items the
- *	party has
- */
-class ItemWindow
-{
-	public static final int WIDTH = 232;
-	public static final int HEIGHT = 146;
-	
-	int x;
-	int y;
-	
-	Window w;
-	Sprite[] orbs;
-	Party p;
-	String[] itemList;
-	
-	int index;
-	
-	public ItemWindow(Party p, int x, int y)
-	{
-		this.p = p;
-		this.x = x;
-		this.y = y;
-		w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);	
-		itemList = p.getItemList();
-	}
-	
-	public void updateIndex(int i)
-	{
-		index = i;
-	}
-	
-	public int getX()
-	{
-		return x;
-	}
-	
-	public int getY()
-	{
-		return y;
-	}
+		int x;
+		int y;
 
-	
-	public void paint(Graphics g)
-	{
-		w.paint(g);
-		for (int i = 0; i < Math.min(itemList.length, index+16); i++)
-			g.drawString(String.format("%5s %2s", itemList[i], p.getItemCount(itemList[i])), w.getX()+15 + 80*(i%2), w.getY() + 40 + 24*(i/2));
+		Window w;
+		Sprite[] orbs;
+		Party p;
+		String[] itemList;
+
+		int index;
+
+		public ItemWindow(Party p, int x, int y) {
+			this.p = p;
+			this.x = x;
+			this.y = y;
+			w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
+			itemList = p.getItemList();
+		}
+
+		public void updateIndex(int i) {
+			index = i;
+		}
+
+		public int getX() {
+			return x;
+		}
+
+		public int getY() {
+			return y;
+		}
+
+		public void paint(Graphics g) {
+			w.paint(g);
+			for (int i = 0; i < Math.min(itemList.length, index + 16); i++)
+				g.drawString(String.format("%5s %2s", itemList[i], p.getItemCount(itemList[i])), w.getX() + 15 + 80 * (i % 2), w.getY() + 40 + 24 * (i / 2));
+		}
 	}
 }
