@@ -261,6 +261,14 @@ public class Player extends Actor {
 	}
 
 	/**
+	 * @return the amount of exp required to level up
+	 */
+	public int getExpToLevel()
+	{
+		return getExpCurve(level+1) - exp;
+	}
+	
+	/**
 	 * Sets the player's animation state with a string
 	 * @param string
 	 */
