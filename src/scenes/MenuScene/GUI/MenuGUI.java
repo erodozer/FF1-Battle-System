@@ -25,6 +25,9 @@ public class MenuGUI extends HUD
 	
 	MainGUI mg;
 	InventoryGUI ig;
+	StatusGUI sg;
+	
+	HUD currentGUI;
 	
 	/**
 	 * Construct the gui
@@ -35,6 +38,9 @@ public class MenuGUI extends HUD
 		arrow = new Sprite("hud/selectarrow.png");
 		mg = new MainGUI(this);
 		ig = new InventoryGUI(this);
+		sg = new StatusGUI(this);
+		
+		currentGUI = mg;
 	}
 	
 	/**
@@ -44,7 +50,13 @@ public class MenuGUI extends HUD
 	public void update()
 	{
 		state = parent.getState();
-		
+		if (parent.getState() instanceof MenuState)
+			currentGUI = mg;
+		else if (parent.getState() instanceof InventoryState)
+			currentGUI = ig;
+		else if (parent.getState() instanceof StatusState)
+			currentGUI = sg;
+		currentGUI.update();
 	}
 
 	/**
@@ -53,24 +65,15 @@ public class MenuGUI extends HUD
 	@Override
 	public void paint(Graphics g)
 	{
-		int[] pos;
+		int[] pos = new int[2];
 		g.setFont(GameScreen.font);
 		g.setColor(Color.WHITE);
-		if (parent.getState() instanceof MenuState)
-		{
-			mg.paint(g);
-			pos = mg.getArrowPosition();
-			arrow.setX(pos[0]);
-			arrow.setY(pos[1]);
-		}
-		else if (parent.getState() instanceof InventoryState)
-		{
-			ig.paint(g);
-			pos = ig.getArrowPosition();
-			arrow.setX(pos[0]);
-			arrow.setY(pos[1]);
-		}
 		
+		currentGUI.paint(g);
+		pos = currentGUI.getArrowPosition();
+		
+		arrow.setX(pos[0]);
+		arrow.setY(pos[1]);
 		arrow.paint(g);
 	}
 }

@@ -77,7 +77,7 @@ public class InventoryGUI extends HUD
 	 */
 	@Override
 	public void update(){
-		itemWindow.updateIndex(parent.getState().getIndex());
+		itemWindow.updateIndex(parentGUI.state.getIndex());
 	}
 	
 

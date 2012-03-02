@@ -29,6 +29,7 @@ public class MenuState extends GameState
 	public void start()
 	{
 		index = 0;
+		((MenuSystem)parent).pickPlayer = false;
 	}
 
 	@Override
@@ -36,8 +37,12 @@ public class MenuState extends GameState
 	{
 		if (index < 0)
 			index = commands.length-1;
-		else if (index >= commands.length)
-			index = 0;
+		if (((MenuSystem)parent).isPickingPlayer())
+			if (index >= e.getParty().size())
+				index = 0;
+		else
+			if (index >= commands.length)
+				index = 0;
 	}
 
 	@Override
@@ -56,6 +61,14 @@ public class MenuState extends GameState
 		if (arg0.getKeyCode() == Input.KEY_A)
 			parent.setNextState();
 		else if (arg0.getKeyCode() == Input.KEY_B)
-			parent.finish();
+		{
+			if (((MenuSystem)parent).isPickingPlayer())
+			{
+				((MenuSystem)parent).pickPlayer = false;
+				index = 0;
+			}
+			else
+				parent.finish();
+		}
 	}
 }

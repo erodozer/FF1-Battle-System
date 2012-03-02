@@ -2,6 +2,8 @@ package scenes.MenuScene.GUI;
 
 import java.awt.Graphics;
 
+import actors.Player;
+
 import scenes.HUD;
 import engine.Engine;
 import engine.NES;
@@ -18,11 +20,16 @@ import groups.Party;
 public class StatusGUI extends HUD
 {
 	Engine e = Engine.getInstance();		//engine
-	Party p;								//party
+	Player p;								//player
+	Sprite pSprite;							//player sprite
 	
-	NumberWindow itemWindow;				//shows all the number representations of the player's stats
-	Window titleWindow;						//shows menu selection
-	Window messageWindow;					//little message window
+	Window nameWindow;						//shows name of the player
+	Window lvlWindow;						//shows the level of the player
+	Window jobWindow;						//shows sprite and job of player
+	Window expWindow;						//shows exp requirement to level
+	Window statWindow;						//stat window
+	Window bttlWindow;						//battle stats
+	
 	MenuGUI parentGUI; 						//core gui for the menu system
 	int index;								//selected option index
 	
@@ -33,12 +40,15 @@ public class StatusGUI extends HUD
 	public StatusGUI(MenuGUI parent)
 	{
 		parentGUI = parent;
-		p = e.getParty();
-		titleWindow = new Window(10, 5, 80, 38, NES.BLUE);
-		itemWindow = new NumberWindow(p, 10,22);
+		nameWindow = new Window(7, 17, 66, 40, NES.BLUE);
 		
-		messageWindow = new Window(10, 168, 232, 48, NES.BLUE);
+		jobWindow = new Window(71, 5, 114, 52, NES.BLUE);
 		
+		lvlWindow = new Window(183, 17, 66, 40, NES.BLUE);
+		expWindow = new Window(31, 57, 186, 56, NES.BLUE);
+		statWindow = new Window(7, 113, 114, 104, NES.BLUE);
+		
+		bttlWindow = new Window(119, 113, 130, 104, NES.BLUE);
 	}
 	
 	/**
@@ -47,14 +57,35 @@ public class StatusGUI extends HUD
 	@Override
 	public void paint(Graphics g)
 	{
-		itemWindow.paint(g);
-		titleWindow.paint(g);
-		g.drawString("ITEM", titleWindow.getX() + 10, titleWindow.getY()+28);
-		if (itemWindow.itemList.length == 0)
-		{
-			messageWindow.paint(g);
-			g.drawString("No items founds", messageWindow.getX() + 10, messageWindow.getY() + 21);
-		}
+		if (p == null)
+			return;
+		
+		//name window contents
+		nameWindow.paint(g);
+		g.drawString(p.getName(), nameWindow.getX()+12, nameWindow.getY()+24);
+		
+		//job window contents
+		jobWindow.paint(g);
+		g.drawString(p.getJobName(), jobWindow.getX()+50, jobWindow.getY()+36);
+		pSprite.paint(g);
+		
+		//level window contents
+		lvlWindow.paint(g);
+		g.drawString("LEV " + p.getLevel(), lvlWindow.getX()+12, lvlWindow.getY()+24);
+		
+		//exp window contents
+		expWindow.paint(g);
+		g.drawString("EXP. POINTS", expWindow.getX()+16, expWindow.getY()+24);
+		g.drawString("FOR LEV UP", expWindow.getX()+16, expWindow.getY()+42);
+		
+		g.drawString(""+p.getExp(), expWindow.getX()+expWindow.getWidth()-30, expWindow.getY()+24);
+		g.drawString(""+p.getExpToLevel(), expWindow.getX()+expWindow.getWidth()-30, expWindow.getY()+42);
+
+		//stat window contents
+		statWindow.paint(g);
+		
+		//battle window contents
+		bttlWindow.paint(g);
 	}
 	
 	/**
@@ -63,76 +94,19 @@ public class StatusGUI extends HUD
 	 */
 	public int[] getArrowPosition()
 	{
-		index = parentGUI.state.getIndex();
-		int[] pos;
-		if (itemWindow.itemList.length > 0)
-			pos = new int[]{itemWindow.w.getX()+ 2 + 80*(index%2), itemWindow.w.getY() + 34 + 24*(index/2)};
-		else
-			pos = new int[]{-100, -100};
-		return pos;
+		return new int[]{-100, -100};
 	}
 
 	/**
-	 * Do nothing
+	 * Update player
 	 */
 	@Override
 	public void update(){
-		itemWindow.updateIndex(parent.getState().getIndex());
-	}
-	
-	/**
-	 * ItemWindow
-	 * @author nhydock
-	 *
-	 *	Window from FF1 in the menu that displays the items the
-	 *	party has
-	 */
-	class NumberWindow
-	{
-		public static final int WIDTH = 232;
-		public static final int HEIGHT = 146;
-		
-		int x;
-		int y;
-		
-		Window w;
-		Sprite[] orbs;
-		Party p;
-		String[] itemList;
-		
-		int index;
-		
-		public NumberWindow(Party p, int x, int y)
-		{
-			this.p = p;
-			this.x = x;
-			this.y = y;
-			w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);	
-			itemList = p.getItemList();
-		}
-		
-		public void updateIndex(int i)
-		{
-			index = i;
-		}
-		
-		public int getX()
-		{
-			return x;
-		}
-		
-		public int getY()
-		{
-			return y;
-		}
-
-		
-		public void paint(Graphics g)
-		{
-			w.paint(g);
-			for (int i = 0; i < Math.min(itemList.length, index+16); i++)
-				g.drawString(String.format("%5s %2s", itemList[i], p.getItemCount(itemList[i])), w.getX()+15 + 80*(i%2), w.getY() + 40 + 24*(i/2));
-		}
+		int index = parentGUI.state.getIndex();
+		p = e.getParty().get(index);
+		pSprite = p.getSprite();
+		pSprite.setX(jobWindow.getX()+4);
+		pSprite.setY(jobWindow.getY()+8);
 	}
 }
 

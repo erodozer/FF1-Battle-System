@@ -6,6 +6,7 @@ import actors.Player;
 
 import scenes.HUD;
 import scenes.MenuScene.System.MenuState;
+import scenes.MenuScene.System.MenuSystem;
 import engine.Engine;
 import engine.NES;
 import engine.Sprite;
@@ -73,7 +74,13 @@ public class MainGUI extends HUD
 	public int[] getArrowPosition()
 	{
 		index = parentGUI.state.getIndex();
-		return new int[]{menuWindow.getX()-8,  menuWindow.getY()+16+(16*index)};
+		int[] pos;
+		
+		if (((MenuSystem)(parentGUI.getParent())).isPickingPlayer())
+			pos = new int[]{(int)statWindows[index].getX()-15,  (int)statWindows[index].getY()+20};
+		else
+			pos = new int[]{menuWindow.getX()-8,  menuWindow.getY()+16+(16*index)};
+		return pos;
 	}
 
 	/**
@@ -82,7 +89,6 @@ public class MainGUI extends HUD
 	@Override
 	public void update(){}
 	
-}
 
 /**
  * PlayerWindow
@@ -90,7 +96,7 @@ public class MainGUI extends HUD
  *
  *	Displays basic menu stats for the character
  */
-class PlayerWindow
+private class PlayerWindow
 {
 	public static final int WIDTH = 82;
 	public static final int HEIGHT = 112;
@@ -107,16 +113,26 @@ class PlayerWindow
 		this.p = p;
 		this.x = x;
 		this.y = y;
-		s = p.getSprite();
-		s.setX(x+WIDTH-8-s.getWidth());
-		s.setY(y+8);
 		w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
+	}
+	
+	public int getX()
+	{
+		return w.getX();
+	}
+	
+	public int getY()
+	{
+		return w.getY();
 	}
 	
 	public void paint(Graphics g)
 	{
 		w.paint(g);
 		
+		s = p.getSprite();
+		s.setX(x+WIDTH-8-s.getWidth());
+		s.setY(y+8);
 		s.paint(g);
 		
 		g.drawString(p.getName(), x + 10, y+20);
@@ -140,7 +156,7 @@ class PlayerWindow
  *	Window from FF1 in the menu that displays the orbs discovered
  *	Kind of a sign of progress in the game
  */
-class OrbWindow
+private class OrbWindow
 {
 	public static final int WIDTH = 76;
 	public static final int HEIGHT = 64;
@@ -177,3 +193,6 @@ class OrbWindow
 			s.paint(g);
 	}
 }
+
+}
+

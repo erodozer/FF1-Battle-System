@@ -30,6 +30,8 @@ public class MenuSystem extends GameSystem
 	ArmorState as;
 	StatusState ss;
 	
+	boolean pickPlayer;
+	
 	/**
 	 * Constructs the menu core
 	 */
@@ -38,6 +40,7 @@ public class MenuSystem extends GameSystem
 		party = e.getParty();
 		ms = new MenuState(this);
 		is = new InventoryState(this);
+		ss = new StatusState(this);
 		
 		state = ms;
 		state.start();
@@ -53,12 +56,26 @@ public class MenuSystem extends GameSystem
 		//null checks only temp in here to prevent menu crashing
 		if (state == ms)
 		{
-			state = (states[ms.getIndex()+1] != null)?states[ms.getIndex()+1]:ms;
+			if (states[ms.getIndex()+1] == ss && !pickPlayer)
+			{
+				pickPlayer = true;
+				ms.setIndex(0);
+				return;
+			}
+			
+			if (pickPlayer)
+			{
+				ss.setIndex(ms.getIndex());
+				state = ss;
+			}
+			else
+				state = (states[ms.getIndex()+1] != null)?states[ms.getIndex()+1]:ms;
 		}
 		else
 		{
 			state = ms;
 		}
+		
 		if (state != null)
 			state.start();
 	}
@@ -75,4 +92,11 @@ public class MenuSystem extends GameSystem
 			state = ms;
 	}
 
+	/**
+	 * @return if the player for a sub menu is currently being picked
+	 */
+	public boolean isPickingPlayer()
+	{
+		return pickPlayer;
+	}
 }
