@@ -41,6 +41,14 @@ public abstract class HUD extends Sprite
     }
     
     /**
+     * @return the parent system
+     */
+    public GameSystem getParent()
+    {
+    	return parent;
+    }
+    
+    /**
      * Updates the display
      */
     abstract public void update();
