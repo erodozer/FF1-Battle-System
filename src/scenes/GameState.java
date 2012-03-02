@@ -74,4 +74,13 @@ public abstract class GameState {
     {
     	return index;
     }
+    
+    /**
+     * Manually force the index of the state
+     * @param i
+     */
+    public void setIndex(int i)
+    {
+    	index = i;
+    }
 }
