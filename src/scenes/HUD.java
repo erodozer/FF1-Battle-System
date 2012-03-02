@@ -57,4 +57,16 @@ public abstract class HUD extends Sprite
 	public Color getClearColor() {
 		return clearColor;
 	}
+
+	
+	/**
+	 * Most scenes have an arrow drawn to screen.
+	 * This will control where the arrow should be drawn if it's
+	 * dependent on a HUD's control/view
+	 * @return	default draws arrow off screen
+	 */
+	public int[] getArrowPosition()
+	{
+		return new int[]{-100, -100};
+	}
 }
