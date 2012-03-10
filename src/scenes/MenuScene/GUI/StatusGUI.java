@@ -65,7 +65,7 @@ public class StatusGUI extends HUD
 		
 		//name window contents
 		nameWindow.paint(g);
-		f.drawString(g, p.getName(), 2, 14, nameWindow);
+		f.drawString(g, p.getName(), 0, 14, 1, nameWindow);
 		
 		//job window contents
 		jobWindow.paint(g);
@@ -80,16 +80,35 @@ public class StatusGUI extends HUD
 		expWindow.paint(g);
 		
 		f.drawString(g, "EXP. POINTS", 6, 14, expWindow);
-		f.drawString(g, ""+p.getExp(), 10, 14, 2, expWindow);
+		f.drawString(g, ""+p.getExp(), 6, 14, 2, expWindow);
 		
 		f.drawString(g, "FOR LEV UP", 6, 32, expWindow);
-		f.drawString(g, ""+p.getExpToLevel(), 10, 32, 2, expWindow);
+		f.drawString(g, ""+p.getExpToLevel(), 6, 32, 2, expWindow);
 
 		//stat window contents
 		statWindow.paint(g);
-		
+		f.drawString(g, "STR.", 6, 14, statWindow);
+		f.drawString(g, ""+p.getStr(), 6, 14, 2, statWindow);
+		f.drawString(g, "AGL.", 6, 30, statWindow);
+		f.drawString(g, ""+p.getSpd(), 6, 30, 2, statWindow);
+		f.drawString(g, "INT.", 6, 46, statWindow);
+		f.drawString(g, ""+p.getInt(), 6, 46, 2, statWindow);
+		f.drawString(g, "VIT.", 6, 62, statWindow);
+		f.drawString(g, ""+p.getVit(), 6, 62, 2, statWindow);
+		f.drawString(g, "LUCK", 6, 78, statWindow);
+		f.drawString(g, ""+p.getLuck(), 6, 78, 2, statWindow);
+
 		//battle window contents
 		bttlWindow.paint(g);
+		f.drawString(g, "DAMAGE", 6, 14, bttlWindow);
+		f.drawString(g, ""+p.getStr(), 6, 14, 2, bttlWindow);
+		f.drawString(g, "HIT %", 6, 30, bttlWindow);
+		f.drawString(g, ""+p.getAcc(), 6, 30, 2, bttlWindow);
+		f.drawString(g, "ABSORB", 6, 46, bttlWindow);
+		f.drawString(g, ""+p.getMDef(), 6, 46, 2, bttlWindow);
+		f.drawString(g, "EVADE %", 6, 62, bttlWindow);
+		f.drawString(g, ""+p.getEvd(), 6, 62, 2, bttlWindow);
+
 	}
 	
 	/**
