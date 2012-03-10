@@ -228,19 +228,17 @@ public class SFont {
 	{
 		if (anchor != null)
 		{
-			x += anchor.getX();
-			y += anchor.getY();
-			
-			//windows have additional reserved thickness of 10 pixels
-			y += 10;
-			
 			//right align anchors to right side
 			if (alignment == 2)
-				x += anchor.getWidth() - 10;
-			else if (alignment == 1)
-				x += anchor.getWidth()/2;
+				x = anchor.getX() + anchor.getWidth() - 10 - x;
+			//center align anchors to center of the window
+			else if (alignment == 2)
+				x = anchor.getX() + anchor.getWidth() - 10 - x;
 			else
-				x += 10;
+				x = anchor.getX() + 10 + x;
+				
+			//windows have additional reserved thickness of 10 pixels
+			y += anchor.getY() + 10;	
 		}
 		
 		drawString(g, text, x, y, alignment, c);
