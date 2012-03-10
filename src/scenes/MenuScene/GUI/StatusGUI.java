@@ -7,6 +7,7 @@ import actors.Player;
 import scenes.HUD;
 import engine.Engine;
 import engine.NES;
+import engine.SFont;
 import engine.Sprite;
 import engine.Window;
 import groups.Party;
@@ -32,6 +33,8 @@ public class StatusGUI extends HUD
 	
 	MenuGUI parentGUI; 						//core gui for the menu system
 	int index;								//selected option index
+	
+	SFont f = SFont.loadFont("default");	//font
 	
 	/**
 	 * Constructs the gui component
@@ -62,24 +65,25 @@ public class StatusGUI extends HUD
 		
 		//name window contents
 		nameWindow.paint(g);
-		g.drawString(p.getName(), nameWindow.getX()+12, nameWindow.getY()+24);
+		f.drawString(g, p.getName(), 2, 14, nameWindow);
 		
 		//job window contents
 		jobWindow.paint(g);
-		g.drawString(p.getJobName(), jobWindow.getX()+50, jobWindow.getY()+36);
+		f.drawString(g, p.getJobName(), 40, 26, jobWindow);
 		pSprite.paint(g);
 		
 		//level window contents
 		lvlWindow.paint(g);
-		g.drawString("LEV " + p.getLevel(), lvlWindow.getX()+12, lvlWindow.getY()+24);
+		f.drawString(g, "LEV " + p.getLevel(), 2, 14, lvlWindow);
 		
 		//exp window contents
 		expWindow.paint(g);
-		g.drawString("EXP. POINTS", expWindow.getX()+16, expWindow.getY()+24);
-		g.drawString("FOR LEV UP", expWindow.getX()+16, expWindow.getY()+42);
 		
-		g.drawString(""+p.getExp(), expWindow.getX()+expWindow.getWidth()-30, expWindow.getY()+24);
-		g.drawString(""+p.getExpToLevel(), expWindow.getX()+expWindow.getWidth()-30, expWindow.getY()+42);
+		f.drawString(g, "EXP. POINTS", 6, 14, expWindow);
+		f.drawString(g, ""+p.getExp(), 10, 14, 2, expWindow);
+		
+		f.drawString(g, "FOR LEV UP", 6, 32, expWindow);
+		f.drawString(g, ""+p.getExpToLevel(), 10, 32, 2, expWindow);
 
 		//stat window contents
 		statWindow.paint(g);
