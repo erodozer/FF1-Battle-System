@@ -235,8 +235,8 @@ public class SFont {
 			if (alignment == 2)
 				x = anchor.getX() + anchor.getWidth() - 10 - x;
 			//center align anchors to center of the window
-			else if (alignment == 2)
-				x = anchor.getX() + anchor.getWidth() - 10 - x;
+			else if (alignment == 1)
+				x = anchor.getX() + anchor.getWidth()/2 - x;
 			else
 				x = anchor.getX() + 10 + x;
 				
