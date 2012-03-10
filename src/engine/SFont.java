@@ -4,7 +4,7 @@ package engine;
  * SFont.java
  * @author nhydock
  *
- *	SFont is an extended functionality wrapper to drawing strings in java's Graphics class.
+ *  SFont is an extended functionality wrapper to drawing strings in java's Graphics class.
  *  Too many times have I had to do silly math to right align things or get font to look like
  *  it's being rendered inside of a "window", so this was created to help handle all that
  *  for me.
@@ -212,6 +212,10 @@ public class SFont {
 	
 	/**
 	 * Draws a string to the display
+	 * Aligning a string within a window will position the string 
+	 * 	in relation to the windows sides for alignment as well.
+	 * 	A right align string will be anchored in relation to the right side
+	 * 	of the window, and a center aligned string will be in center position
 	 * @param g				Graphics buffer to draw to
 	 * @param text			String to draw
 	 * @param x				x position
@@ -226,6 +230,17 @@ public class SFont {
 		{
 			x += anchor.getX();
 			y += anchor.getY();
+			
+			//windows have additional reserved thickness of 10 pixels
+			y += 10;
+			
+			//right align anchors to right side
+			if (alignment == 2)
+				x += anchor.getWidth() - 10;
+			else if (alignment == 1)
+				x += anchor.getWidth()/2;
+			else
+				x += 10;
 		}
 		
 		drawString(g, text, x, y, alignment, c);
