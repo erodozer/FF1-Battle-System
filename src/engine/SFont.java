@@ -88,6 +88,7 @@ public class SFont {
 		
 		//save the current color of graphics
 		Color c2 = g.getColor();
+		Font fn = g.getFont();
 		
 		//change color to the font color, white by default
 		if (c != null)
@@ -95,9 +96,11 @@ public class SFont {
 		else 
 			g.setColor(NES.WHITE);
 			
+		g.setFont(f);
 		g.drawString(text, x, y);		//draws the string to screen
 		
-		//make sure color resets to what it was before rendering the text
+		//make sure things reset to what they were before rendering the text
+		g.setFont(fn);
 		g.setColor(c2);
 	}
 	
