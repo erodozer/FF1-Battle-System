@@ -57,7 +57,7 @@ public class SFont {
 	{
 		try {
 			f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/"+fontName+".ttf"))).deriveFont(24.0f);
-			fm = new BufferedImage(0, 1, 1).getGraphics().getFontMetrics(f);
+			fm = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR).getGraphics().getFontMetrics(f);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
