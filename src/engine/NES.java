@@ -15,5 +15,6 @@ public class NES
 	public static final Color TEAL = Color.decode("#3cbcfc");
 	public static final Color VIOLET = Color.decode("#8c0074");
 	public static final Color BLACK = Color.decode("#000000");
+	public static final Color WHITE = Color.decode("#ffffff");
 	
 }
