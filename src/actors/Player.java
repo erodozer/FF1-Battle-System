@@ -1,5 +1,7 @@
 package actors;
 
+import item.Item;
+
 import java.awt.Graphics;
 import java.io.File;
 import java.io.FileInputStream;
@@ -87,6 +89,23 @@ public class Player extends Actor {
 	 * This list is of the spells that job is actually capable of learning
 	 */
 	protected List<String> spellList;
+	
+	/*
+	 * Player equipment in FF1 is a little complex.  Players are able
+	 * to have a small personal inventory for holding up to 4 weapons,
+	 * then another one for 4 pieces of armor.  They may have up to
+	 * 4 different typed pieces of armor equipped, and only 1 weapon
+	 * equipped.
+	 */
+	
+	//currently equipped pieces
+	
+	Item weapon;
+	ArrayList<Item> equippedArmor = new ArrayList<Item>();
+	
+	//currently held pieces
+	Item[] armor = new Item[4];
+	Item[] weapons = new Item[4];
 	
 	/**
 	 * Constructs a basic player
@@ -551,5 +570,53 @@ public class Player extends Actor {
 	public boolean canCast()
 	{
 		return canCast;
+	}
+
+	/**
+	 * @return the currently equipped weapon of the player
+	 */
+	public Item getWeapon() {
+		return weapon;
+	}
+	
+	/**
+	 * @return the weapons that the player is carrying
+	 */
+	public Item[] getWeapons() {
+		return weapons;
+	}
+
+	/**
+	 * Equips the weapon
+	 * @param w		the weapon to equip
+	 */
+	public void setWeapon(Item w) {
+		weapon = w;
+	}
+
+	/**
+	 * @return	armor in player's possession
+	 */
+	public Item[] getArmor() {
+		return armor;
+	}
+
+	/**
+	 * Checks to see if the player is currently wearing the piece of armor
+	 * @param item		piece of armor
+	 * @return	
+	 */
+	public boolean isWearing(Item item) {
+		return equippedArmor.contains(item);
+	}
+	
+	public void wearArmor(Item i)
+	{
+		equippedArmor.add(i);
+	}
+	
+	public void takeOffArmor(Item i)
+	{
+		equippedArmor.remove(i);
 	}
 }
