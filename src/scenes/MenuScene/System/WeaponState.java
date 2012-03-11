@@ -2,10 +2,12 @@ package scenes.MenuScene.System;
 
 import java.awt.event.KeyEvent;
 
+import engine.Input;
+
 import scenes.GameState;
 import scenes.GameSystem;
 
-public class WeaponState extends GameState
+public class WeaponState extends EquipmentState
 {
 
 	public WeaponState(GameSystem c)
@@ -13,32 +15,28 @@ public class WeaponState extends GameState
 		super(c);
 	}
 
-	@Override
-	public void start()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void handle()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void finish()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
+	/**
+	 * Handles input/navigating the list of items
+	 */
 	@Override
 	public void handleKeyInput(KeyEvent arg0)
 	{
-		// TODO Auto-generated method stub
+		super.handleKeyInput(arg0);
 		
+		int key = arg0.getKeyCode();
+		
+		if (mode != 0)
+		{
+			if (key == Input.KEY_A)
+			{
+				if (player.getWeapon() == player.getWeapons()[row+col])
+					player.setWeapon(null);
+				else if (player.getWeapons()[row+col] != null)
+					player.setWeapon(player.getWeapons()[row+col]);
+			}
+		}
+		//exit the menu
+		if (key == Input.KEY_B)
+			finish();
 	}
-
 }

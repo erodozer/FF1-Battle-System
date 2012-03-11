@@ -41,6 +41,7 @@ public class MenuSystem extends GameSystem
 		ms = new MenuState(this);
 		is = new InventoryState(this);
 		ss = new StatusState(this);
+		ws = new WeaponState(this);
 		
 		state = ms;
 		state.start();
@@ -53,7 +54,6 @@ public class MenuSystem extends GameSystem
 	@Override
 	public void setNextState()
 	{
-		//null checks only temp in here to prevent menu crashing
 		if (state == ms)
 		{
 			if (states[ms.getIndex()+1] == ss && !pickPlayer)
@@ -69,6 +69,7 @@ public class MenuSystem extends GameSystem
 				state = ss;
 			}
 			else
+				//null checks only temp in here to prevent menu crashing
 				state = (states[ms.getIndex()+1] != null)?states[ms.getIndex()+1]:ms;
 		}
 		else
