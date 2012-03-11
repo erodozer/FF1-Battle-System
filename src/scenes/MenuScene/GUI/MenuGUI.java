@@ -19,15 +19,17 @@ import scenes.MenuScene.System.*;
 public class MenuGUI extends HUD
 {
 
-	Sprite arrow;
+	Sprite arrow;		//arrow pointer
 	
-	GameState state;
+	GameState state;	//the current system state
 	
-	MainGUI mg;
-	InventoryGUI ig;
-	StatusGUI sg;
+	MainGUI mg;			//main gui
+	InventoryGUI ig;	//inventory gui
+	StatusGUI sg;		//status gui
+	EquipmentGUI wg;	//weapon gui
+	EquipmentGUI ag;	//armor gui
 	
-	HUD currentGUI;
+	HUD currentGUI;		//the gui that is currently supposed to be visible
 	
 	/**
 	 * Construct the gui
@@ -39,6 +41,8 @@ public class MenuGUI extends HUD
 		mg = new MainGUI(this);
 		ig = new InventoryGUI(this);
 		sg = new StatusGUI(this);
+		wg = new EquipmentGUI(this);
+		ag = new EquipmentGUI(this);
 		
 		currentGUI = mg;
 	}
@@ -56,6 +60,10 @@ public class MenuGUI extends HUD
 			currentGUI = ig;
 		else if (parent.getState() instanceof StatusState)
 			currentGUI = sg;
+		else if (parent.getState() instanceof WeaponState)
+			currentGUI = wg;
+		else if (parent.getState() instanceof ArmorState)
+			currentGUI = ag;
 		currentGUI.update();
 	}
 
