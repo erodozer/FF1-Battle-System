@@ -76,7 +76,7 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 	/*
 	 * Enemy Stats
 	 */
-	final String[] STATS = {"HP", "Strength", "Defense", "Speed", "Evade", "Vitality", "Intelligence", "Resistance", "Hit %"};
+	final String[] STATS = {"HP", "STR", "DEF", "VIT", "INT", "SPD", "LUCK", "EVADE", "RESIST", "Hit %"};
 	JSpinner[] statSpinners;
 	
 	/*
@@ -157,11 +157,11 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		{
 			l = new JLabel(STATS[i] + ": ");
 			l.setSize(l.getPreferredSize());
-			l.setLocation(450, 32 + (36*i));
+			l.setLocation(450, 32 + (28*i));
 			
 			JSpinner s = new JSpinner(new SpinnerNumberModel(0, 0, 255, 1));
 			s.setSize(100, 24);
-			s.setLocation(520, 32 + (36*i));
+			s.setLocation(530, 32 + (28*i));
 			statSpinners[i] = s;
 			add(l);
 			add(s);
@@ -184,12 +184,12 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		{
 			l = new JLabel(ELEM[i] + ": ");
 			l.setSize(l.getPreferredSize());
-			l.setLocation(650, 32 + (36*i));
+			l.setLocation(650, 32 + (28*i));
 			
 			JSpinner s = new JSpinner(new SpinnerListModel(ELEM_VALUES));
 			s.setValue(ELEM_VALUES.get(1));
 			s.setSize(100, 24);
-			s.setLocation(720, 32 + (36*i));
+			s.setLocation(730, 32 + (28*i));
 			elemSpinners[i] = s;
 			add(l);
 			add(s);
@@ -250,12 +250,13 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		statSpinners[0].setValue(e.getMaxHP());
 		statSpinners[1].setValue(e.getStr());
 		statSpinners[2].setValue(e.getDef());
-		statSpinners[3].setValue(e.getSpd());
-		statSpinners[4].setValue(e.getEvd());
-		statSpinners[5].setValue(e.getVit());
-		statSpinners[6].setValue(e.getInt());
-		statSpinners[7].setValue(e.getMDef());
-		statSpinners[8].setValue(e.getAcc());
+		statSpinners[3].setValue(e.getVit());
+		statSpinners[4].setValue(e.getInt());
+		statSpinners[5].setValue(e.getSpd());
+		statSpinners[6].setValue(e.getLuck());
+		statSpinners[7].setValue(e.getEvd());
+		statSpinners[8].setValue(e.getMDef());
+		statSpinners[9].setValue(e.getAcc());
 		
 		//load elemental resistance
 		for (int i = 0; i < ELEM_VALUES.size(); i++)
