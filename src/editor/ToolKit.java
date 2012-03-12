@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
+import editor.EnemyEditor.EnemyEditorGUI;
 import editor.MapEditor.MapEditorGUI;
 import editor.MapEditor.NewMapDialog;
 import editor.PassabilityEditor.PassabilityEditor;
@@ -16,6 +17,7 @@ public class ToolKit extends JFrame{
 	
 	MapEditorGUI mapEditor;
 	PassabilityEditor passabilityEditor;
+	EnemyEditorGUI enemyEditor;
 	
 	/*
 	 * Dialogs
@@ -36,11 +38,13 @@ public class ToolKit extends JFrame{
 
 		mapEditor = new MapEditorGUI();
 		passabilityEditor = new PassabilityEditor();
+		enemyEditor = new EnemyEditorGUI();
 		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setSize(this.getWidth(), this.getHeight());
 		tabbedPane.addTab("Map Editor", mapEditor);
 		tabbedPane.addTab("Passability Editor", passabilityEditor);
+		tabbedPane.addTab("Enemy Editor", enemyEditor);
 		add(tabbedPane);
 		
 		setTitle("JFF1 Toolkit");
