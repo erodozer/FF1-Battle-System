@@ -315,6 +315,8 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		//save to file
 		try {
 			File f = new File(location+nameField.getText()+"/enemy.ini");
+			f.delete();					//deletes the old file
+			f.createNewFile();			//saves data to new file
 			Ini ini = new Ini(f);
 			
 			//saving main
