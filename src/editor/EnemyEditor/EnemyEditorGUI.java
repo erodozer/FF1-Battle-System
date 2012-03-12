@@ -292,8 +292,8 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		{
 			if (!new File(location+nameField.getText()).mkdir())
 			{
-				JOptionPane.showMessageDialog(this, null, "Could not make the directory for the enemy.\nReasons for this could be: " +
-						"1) You are running the editor on a read-only partition.\n2) There is already an enemy with that name", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Could not make the directory for the enemy.\nReasons for this could be:\n" +
+						"1) You are running the editor on a read-only partition.\n2) There is already an enemy/directory with that name", "Error", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 		}
@@ -303,10 +303,10 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 			File old = new File(location+activeEnemy.getName());
 			//if a directory already exists for the active enemy, rename it to the new name
 			if (old.exists())
-			{
+				{
 				if (!new File(location+activeEnemy.getName()).renameTo(new File(location+nameField.getText())))
 				{
-					JOptionPane.showMessageDialog(this, null, "Could not rename the enemy.  Data has not been saved.", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Could not rename the enemy.  Data has not been saved.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			}
