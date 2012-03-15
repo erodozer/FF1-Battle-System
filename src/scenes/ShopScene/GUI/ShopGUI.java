@@ -7,7 +7,9 @@ import java.awt.Graphics;
 
 import actors.Player;
 
+import scenes.GameState;
 import scenes.HUD;
+import scenes.ShopScene.System.BuyState;
 import scenes.ShopScene.System.GreetState;
 import scenes.ShopScene.System.Shop;
 import scenes.ShopScene.System.ShopSystem;
@@ -86,8 +88,6 @@ public class ShopGUI extends HUD {
 	@Override
 	public void update() {
 		index = parent.getState().getIndex();
-		if ((parent.getState() instanceof GreetState))
-			mw.update();
 	}
 
 	/**
@@ -126,10 +126,12 @@ public class ShopGUI extends HUD {
 			arrow.setX(itemSelect.getX()-8);
 			arrow.setY(itemSelect.getY()+16+(index*32));
 		}
-		else
+		
+		mw.paint(g);
+		
+		if (parent.getState() instanceof GreetState || (parent.getState() instanceof BuyState && ((BuyState)parent.getState()).isHandingOff()))
 		{
-			mw.paint(g);
-			cursorpos = mw.getArrowPos();
+			cursorpos = mw.getArrowPos(index);
 			arrow.setX(cursorpos[0]-5);
 			arrow.setY(cursorpos[1]);	
 		}
@@ -149,9 +151,10 @@ public class ShopGUI extends HUD {
 		
 		//entrance menu
 
-		int index;
 		ShopGUI parent;
 		int x, y;
+		
+		GameState currentState;
 		
 		public ModeWindow(ShopGUI p, int a, int b)
 		{
@@ -161,12 +164,7 @@ public class ShopGUI extends HUD {
 			window = new Window(x, y, 74, 80, NES.BLUE);
 		}
 		
-		public void update()
-		{
-			index = parent.index;
-		}
-		
-		public int[] getArrowPos()
+		public int[] getArrowPos(int index)
 		{
 			return new int[]{window.getX()-5, window.getY()+16+(16*index)};
 		}
@@ -174,8 +172,17 @@ public class ShopGUI extends HUD {
 		public void paint(Graphics g)
 		{
 			window.paint(g);
-			for (int i = 0; i < GreetState.commands.length; i++)
-				g.drawString(GreetState.commands[i], window.getX()+8, window.getY()+26+(16*i));
+			
+			currentState = parent.parent.getState();
+			
+			if (currentState instanceof BuyState && ((BuyState)currentState).isHandingOff())
+			{
+				for (int i = 0; i < parent.party.size(); i++)
+					g.drawString(parent.party.get(i).getName(), window.getX()+8, window.getY()+26+(16*i));
+			}
+			else
+				for (int i = 0; i < GreetState.commands.length; i++)
+					g.drawString(GreetState.commands[i], window.getX()+8, window.getY()+26+(16*i));
 		}
 	}
 }

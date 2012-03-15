@@ -1,11 +1,11 @@
 package scenes.ShopScene.System;
 
 import item.Item;
+import item.ItemDictionary;
 
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
-import engine.ItemDictionary;
 import engine.MP3;
 import engine.Sprite;
 
@@ -29,7 +29,7 @@ public class Shop {
 		
 		for (String s : node.get("items", "").split(","))
 			if (ItemDictionary.map.containsKey(s.trim()))
-				i.add(new Item(s.trim()));
+				i.add(ItemDictionary.map.get(s.trim()));
 				
 		items = i.toArray(new Item[]{});
 		
