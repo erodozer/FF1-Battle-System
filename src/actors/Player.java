@@ -689,6 +689,13 @@ public class Player extends Actor {
 	}
 
 	/**
+	 * @return	the armor that is currently being worn
+	 */
+	public Item[] getEquippedArmor(){
+		return equippedArmor.toArray(new Item[]{});
+	}
+	
+	/**
 	 * Checks to see if the player is currently wearing the piece of armor
 	 * @param item		piece of armor
 	 * @return	
