@@ -35,14 +35,7 @@ public class ArmorState extends EquipmentState
 				if (player.isWearing(armor))
 					player.takeOffArmor(armor);
 				else if (player.getWeapons()[row+col] != null)
-				{
-					//only equip the armor if there is a piece of armor of that type that is not already equipped
-					Item[] equipped = player.getEquippedArmor();
-					for (int i = 0; i < equipped.length; i++)
-						if (armor.getArmorSlot() == equipped[i].getArmorSlot())
-							return;
 					player.wearArmor(armor);
-				}
 			}
 		}
 		//exit the menu

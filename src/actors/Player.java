@@ -707,11 +707,20 @@ public class Player extends Actor {
 	/**
 	 * Equips a piece of armor
 	 * @param i
+	 * @return if the piece was able to be equipped or not
 	 */
-	public void wearArmor(Item i)
+	public boolean wearArmor(Item armor)
 	{
-		if (i.isEquipment() && i.getWeight() <= weight)
-			equippedArmor.add(i);
+		if (armor.isEquipment() && armor.getWeight() <= weight)
+		{
+			//only equip the armor if there is a piece of armor of that type that is not already equipped
+			for (int i = 0; i < equippedArmor.size(); i++)
+				if (armor.getArmorSlot() == equippedArmor.get(i).getArmorSlot())
+					return false;
+			equippedArmor.add(armor);
+			return true;
+		}
+		return false;
 	}
 	
 	/**
