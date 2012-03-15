@@ -11,6 +11,7 @@ package groups;
  */
 
 import item.Item;
+import item.ItemDictionary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,6 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-import engine.ItemDictionary;
 
 import actors.Player;
 
