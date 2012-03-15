@@ -26,6 +26,13 @@ import java.util.HashMap;
 
 public class SFont {
 
+	/*
+	 * Alignment values
+	 */
+	public static final int LEFT = 0;
+	public static final int CENTER = 1;
+	public static final int RIGHT = 2;
+	
 	private static HashMap<String, SFont> cache = new HashMap<String, SFont>();
 	
 	Font f;					//font to use for rendering
