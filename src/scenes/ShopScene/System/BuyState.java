@@ -80,6 +80,7 @@ public class BuyState extends GameState {
 				//if it's a piece of armor or an accessory, hold it in the armor inventory
 				else
 					party.get(index).holdArmor(selectedItem);
+				party.subtractGold(selectedItem.getPrice());
 				handOff = false;
 			}
 			else
