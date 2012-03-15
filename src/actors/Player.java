@@ -98,8 +98,10 @@ public class Player extends Actor {
 	 * equipped.
 	 */
 	
-	//currently equipped pieces
+	int weight = 0;				//maximum equipment weight
+								//defines the type of armor the job is able to wear
 	
+	//currently equipped pieces
 	Item weapon;
 	ArrayList<Item> equippedArmor = new ArrayList<Item>();
 	
@@ -440,11 +442,94 @@ public class Player extends Actor {
 	}
 	
 	/*
+	 * Players have overriding getter methods for stats that have
+	 * equipment stat buffs factored in.
+	 */
+	
+	/**
+	 * Retrieves current str
+	 * @return
+	 */
+	public int getStr() {
+		int i = str;
+		if (weapon != null)
+			i += weapon.getStr();
+		return i;
+	}
+
+	/**
+	 * Gets current def
+	 * @return
+	 */
+	public int getDef() {
+		int i = def;
+		for (int n = 0; n < equippedArmor.size(); n++)
+			i += equippedArmor.get(n).getDef();
+		return i;
+	}
+
+	/**
+	 * Get current spd
+	 * @return
+	 */
+	public int getSpd() {
+		int i = spd;
+		for (int n = 0; n < equippedArmor.size(); n++)
+			i += equippedArmor.get(n).getSpd();
+		return i;
+	}
+
+	/**
+	 * Get accuracy
+	 * @return
+	 */
+	public int getAcc() {
+		int i = acc;
+		for (int n = 0; n < equippedArmor.size(); n++)
+			i += equippedArmor.get(n).getAcc();
+		return i;
+	}
+	
+	/**
+	 * Get vitality
+	 * @return
+	 */
+	public int getVit() {
+		int i = vit;
+		for (int n = 0; n < equippedArmor.size(); n++)
+			i += equippedArmor.get(n).getVit();
+		return i;
+	
+	}
+	
+	/**
+	 * Get intelligence
+	 * @return
+	 */
+	public int getInt() {
+		int i = itl;
+		for (int n = 0; n < equippedArmor.size(); n++)
+			i += equippedArmor.get(n).getInt();
+		return i;
+	
+	}
+	
+	/**
+	 * Get magic def
+	 * @return
+	 */
+	public int getMDef() {
+		int i = mdef;
+		for (int n = 0; n < equippedArmor.size(); n++)
+			i += equippedArmor.get(n).getMDef();
+		return i;
+	}
+	
+	
+	/*
 	 * Jobs do not have setter methods for retrieving stat values.
 	 * This is because stat getters should be equations dependent on
-	 * the actor's level. Jobs do not have setter methods for retrieving 
-	 * stat values.  This is because stat getters should be equations 
-	 * dependent on the actor's level.  Additionally, these should only be
+	 * the actor's level.  Additionally, these should only be
 	 * called upon level up.  
 	 * @param lvl	
 	 * 				level of the actor
@@ -591,7 +676,9 @@ public class Player extends Actor {
 	 * @param w		the weapon to equip
 	 */
 	public void setWeapon(Item w) {
-		weapon = w;
+		//weight also applies to weapon weight
+		if (w.isEquipment() && w.getWeight() <= weight)
+			weapon = w;
 	}
 
 	/**
@@ -610,13 +697,62 @@ public class Player extends Actor {
 		return equippedArmor.contains(item);
 	}
 	
+	/**
+	 * Equips a piece of armor
+	 * @param i
+	 */
 	public void wearArmor(Item i)
 	{
-		equippedArmor.add(i);
+		if (i.isEquipment() && i.getWeight() <= weight)
+			equippedArmor.add(i);
 	}
 	
+	/**
+	 * Removes a piece of armor
+	 * @param i
+	 */
 	public void takeOffArmor(Item i)
 	{
 		equippedArmor.remove(i);
+	}
+	
+	/**
+	 * Adds a weapon to hold
+	 * @param i
+	 * @return if the player was able to hold the weapon
+	 */
+	public boolean holdWeapon(Item i)
+	{
+		//can't hold weapon because the item isn't a weapon
+		if (i.isEquipment())
+			return false;
+		
+		for (int n = 0; n < weapons.length; n++)
+			if (weapons[n] == null)
+			{
+				weapons[n] = i;
+				return true;
+			}
+		return false;
+	}
+	
+	/**
+	 * Adds a piece of armor to hold
+	 * @param i
+	 * @return if the player was able to hold the piece of armor
+	 */
+	public boolean holdArmor(Item i)
+	{
+		//can't hold armor because the item isn't a piece of armor
+		if (i.isEquipment())
+			return false;
+		
+		for (int n = 0; n < armor.length; n++)
+			if (armor[n] == null)
+			{
+				armor[n] = i;
+				return true;
+			}
+		return false;
 	}
 }
