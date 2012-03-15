@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 import scenes.GameState;
 
+import engine.Engine;
 import engine.MP3;
 
 /**
@@ -47,11 +48,11 @@ public class GameOverState extends GameState {
 	public void finish() {}
 
 	/**
-	 * Kill program when key is striked
+	 * Go back to the title screen when the game is over
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {
-		System.exit(-1);
+	public void handleKeyInput(int key) {
+		Engine.getInstance().startGame();
 	}
 
 }
