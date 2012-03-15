@@ -677,7 +677,7 @@ public class Player extends Actor {
 	 */
 	public void setWeapon(Item w) {
 		//weight also applies to weapon weight
-		if (w.isEquipment() && w.getWeight() <= weight)
+		if (w == null || w.isEquipment() && w.getWeight() <= weight)
 			weapon = w;
 	}
 
