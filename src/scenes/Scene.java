@@ -45,11 +45,11 @@ public class Scene{
 	
 	/**
 	 * Key pressed is the only kind of input acceptable
-	 * @param arg0
+	 * @param keyCode the key code of the key press
 	 */
-	public void keyPressed(KeyEvent evt)
+	public void keyPressed(int keyCode)
 	{
-	    system.keyPressed(evt);
+	    system.keyPressed(keyCode);
 	}
 	
 	/**

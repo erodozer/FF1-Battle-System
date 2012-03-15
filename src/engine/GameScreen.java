@@ -139,7 +139,7 @@ public class GameScreen extends JFrame implements KeyListener{
 			return;
 		}
 		if (engine.getCurrentScene() != null)
-			engine.getCurrentScene().keyPressed(arg0);
+			engine.getCurrentScene().keyPressed(arg0.getKeyCode());
 		if (arg0.getKeyCode() == Input.KEY_QUICKSTART)
 		{
 			Party p = new Party();

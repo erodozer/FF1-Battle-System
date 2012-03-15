@@ -36,10 +36,10 @@ public abstract class GameSystem
     
     /**
      * Handles key input
-     * @param evt
+     * @param keyCode	the key code of the key pressed
      */
-    public void keyPressed(KeyEvent evt) {
-        state.handleKeyInput(evt);
+    public void keyPressed(int keyCode) {
+        state.handleKeyInput(keyCode);
     }
 
 	abstract public void finish();
