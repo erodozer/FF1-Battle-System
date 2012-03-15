@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import scenes.TitleScene.System.IntroState;
+import engine.ContentPanel;
+import engine.NES;
+import engine.SFont;
 import engine.Sprite;
 
 /**
@@ -20,6 +23,8 @@ public class Intro extends Sprite {
 	private int line;
 	private int page;
 	private String[] lines;
+	
+	SFont f = SFont.loadFont("default");
 	
 	public Intro() {
 		super(null);
@@ -39,11 +44,8 @@ public class Intro extends Sprite {
 		if (lines == null)
 			return;
 		
-		g.setColor(Color.WHITE);
 		for (int i = 0; i < line; i++)
-			g.drawString(lines[i+page*10], 10, 24 + 21*i);
-		
-		g.setColor(new Color(255,255,255,alpha));
-		g.drawString(lines[line+page*10], 10, 24 + 21*line);
+			f.drawString(g, lines[i+page*10], ContentPanel.INTERNAL_RES_W/2, 24 + 21*i, SFont.CENTER, NES.WHITE);
+		f.drawString(g, lines[line+page*10], ContentPanel.INTERNAL_RES_W/2, 24 + 21*line, SFont.CENTER, new Color(255,255,255,alpha));
 	}
 }
