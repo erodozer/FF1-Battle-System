@@ -166,7 +166,7 @@ public class ShopGUI extends HUD {
 		
 		public int[] getArrowPos(int index)
 		{
-			return new int[]{window.getX()-5, window.getY()+16+(16*index)};
+			return new int[]{window.getX()-5, window.getY()+16+(14*index)};
 		}
 		
 		public void paint(Graphics g)
@@ -178,11 +178,11 @@ public class ShopGUI extends HUD {
 			if (currentState instanceof BuyState && ((BuyState)currentState).isHandingOff())
 			{
 				for (int i = 0; i < parent.party.size(); i++)
-					g.drawString(parent.party.get(i).getName(), window.getX()+8, window.getY()+26+(16*i));
+					g.drawString(parent.party.get(i).getName(), window.getX()+8, window.getY()+26+(14*i));
 			}
 			else
 				for (int i = 0; i < GreetState.commands.length; i++)
-					g.drawString(GreetState.commands[i], window.getX()+8, window.getY()+26+(16*i));
+					g.drawString(GreetState.commands[i], window.getX()+8, window.getY()+26+(14*i));
 		}
 	}
 }
