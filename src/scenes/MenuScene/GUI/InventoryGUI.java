@@ -24,7 +24,6 @@ public class InventoryGUI extends HUD
 	Window titleWindow;						//shows menu selection
 	Window messageWindow;					//little message window
 	MenuGUI parentGUI; 						//core gui for the menu system
-	int index;								//selected option index
 	
 	/**
 	 * Constructs the gui component
@@ -61,9 +60,8 @@ public class InventoryGUI extends HUD
 	 * Gets the position on screen of where the global arrow should draw
 	 * @return
 	 */
-	public int[] getArrowPosition()
+	public int[] getArrowPosition(int index)
 	{
-		index = parentGUI.state.getIndex();
 		int[] pos;
 		if (itemWindow.itemList.length > 0)
 			pos = new int[]{itemWindow.w.getX()+ 2 + 80*(index%2), itemWindow.w.getY() + 34 + 24*(index/2)};

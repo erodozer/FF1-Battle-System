@@ -29,7 +29,6 @@ public class EquipmentGUI extends HUD
 	TradeWindow tradeWindow;				//trade window
 	EquipmentWindow[] eWindows;				//equipment windows
 	MenuGUI parentGUI; 						//core gui for the menu system
-	int index;								//selected option index
 	
 	SFont f = SFont.loadFont("default");
 	
@@ -72,10 +71,10 @@ public class EquipmentGUI extends HUD
 	 * Gets the position on screen of where the global arrow should draw
 	 * @return
 	 */
-	public int[] getArrowPosition()
+	@Override
+	public int[] getArrowPosition(int index)
 	{
 		EquipmentState e = (EquipmentState)parentGUI.state;
-		index = parentGUI.state.getIndex();
 		int[] pos;
 		if (e.getMode() == 0)
 			pos = new int[]{tradeWindow.getX() + 8 + 56*index, tradeWindow.getY() + 14};
@@ -112,17 +111,11 @@ public class EquipmentGUI extends HUD
 
 		Window w;
 
-		int index;
-
 		SFont f = SFont.loadFont("default");
 		
 		public TradeWindow(int x, int y) {
 			super(x, y, 1, 1);
 			w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
-		}
-
-		public void updateIndex(int i) {
-			index = i;
 		}
 
 		public void paint(Graphics g) {
@@ -145,7 +138,6 @@ public class EquipmentGUI extends HUD
 		Window name;
 		Window items;
 
-		int index;
 		Player p;
 		HUD parent;
 		
@@ -157,10 +149,6 @@ public class EquipmentGUI extends HUD
 			this.p = p;
 			name = new Window(x, y, 66, 32, NES.BLUE);
 			items = new Window(x+56, y, 186, 48, NES.BLUE);
-		}
-
-		public void updateIndex(int i) {
-			index = i;
 		}
 
 		public void paint(Graphics g) {

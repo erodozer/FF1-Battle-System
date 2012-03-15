@@ -32,7 +32,6 @@ public class StatusGUI extends HUD
 	Window bttlWindow;						//battle stats
 	
 	MenuGUI parentGUI; 						//core gui for the menu system
-	int index;								//selected option index
 	
 	SFont f = SFont.loadFont("default");	//font
 	
@@ -112,25 +111,23 @@ public class StatusGUI extends HUD
 	}
 	
 	/**
-	 * Gets the position on screen of where the global arrow should draw
+	 * Instead of getting the arrow position, it is actually used to set the player to display
 	 * @return
 	 */
-	public int[] getArrowPosition()
+	public int[] getArrowPosition(int index)
 	{
-		return new int[]{-100, -100};
-	}
-
-	/**
-	 * Update player
-	 */
-	@Override
-	public void update(){
-		int index = parentGUI.state.getIndex();
 		p = e.getParty().get(index);
 		pSprite = p.getSprite();
 		pSprite.setX(jobWindow.getX()+4);
 		pSprite.setY(jobWindow.getY()+8);
+		return new int[]{-100, -100};
 	}
+
+	/**
+	 * Do nothing
+	 */
+	@Override
+	public void update(){}
 }
 
 

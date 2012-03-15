@@ -30,6 +30,7 @@ public class MenuGUI extends HUD
 	EquipmentGUI ag;	//armor gui
 	
 	HUD currentGUI;		//the gui that is currently supposed to be visible
+	int index;
 	
 	/**
 	 * Construct the gui
@@ -54,6 +55,7 @@ public class MenuGUI extends HUD
 	public void update()
 	{
 		state = parent.getState();
+		index = state.getIndex();
 		if (parent.getState() instanceof MenuState)
 			currentGUI = mg;
 		else if (parent.getState() instanceof InventoryState)
@@ -77,8 +79,8 @@ public class MenuGUI extends HUD
 		g.setFont(GameScreen.font);
 		g.setColor(Color.WHITE);
 		
+		pos = currentGUI.getArrowPosition(index);
 		currentGUI.paint(g);
-		pos = currentGUI.getArrowPosition();
 		
 		arrow.setX(pos[0]);
 		arrow.setY(pos[1]);
