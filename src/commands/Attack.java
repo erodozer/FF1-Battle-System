@@ -17,7 +17,6 @@ public class Attack extends Command {
 		name = "Attack";
 		invoker = a;
 		speedBonus = 25;
-		hits = (1+(invoker.getAcc()/32))*1;
 	}
 	
 	/**
