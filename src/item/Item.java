@@ -27,8 +27,8 @@ public class Item {
 	// EQUIPMENT VARIABLES
 	//=========================================================
 	
-	private int slot;			
-	/*	slot types are as follows
+	private int type;			
+	/*	types are as follows
 	 *	0 = weapon
 	 *	1 = armor
 	 *	2 = accessory
@@ -36,7 +36,7 @@ public class Item {
 	 *		equip an accessory, however, it takes up an armor slot
 	 */
 
-	private int type;			
+	private int weight;			
 	/*	equipment type by weight
 	 *	0 = cloth
 	 *	1 = medium (such as chain or scale mail)
@@ -46,6 +46,15 @@ public class Item {
 	 *	ex. 
 	 *		Fighters who can wear heavy can wear anything
 	 *		Black Belt can wear medium, cloth, but not heavy
+	 */
+	
+	private int slot;
+	/*	armor is divided into multiple slots
+	 *	0 = chest
+	 *	1 = head
+	 *	2 = feet
+	 *	You can only have one of each equipped to a person.  Accessories
+	 *	on the other hand, you can equip as many of those as you like.
 	 */
 	
 	private String[] restrict;	
@@ -99,12 +108,14 @@ public class Item {
 			if (isEquipment)
 			{
 				Preferences equip = inifile.node("equipment");
-				slot = equip.getInt("slot", 0);
-				// slot is armor or weapon
-				if (slot != 2) {
+				type = equip.getInt("type", 0);
+				// type is armor or weapon
+				if (type != 2) {
 					// get armor weight and restricted jobs
-					type = equip.getInt("type", 0);
+					weight = equip.getInt("weight", 0);
 					restrict = equip.get("restrict", "").split(",");
+					if (type == 1)
+						slot = equip.getInt("slot", 0);
 				}
 				hp = equip.getInt("hp", 1);
 				str = equip.getInt("str", 1);
@@ -148,6 +159,14 @@ public class Item {
 	 */
 	public int getEquipmentType()
 	{
+		return type;
+	}
+	
+	/**
+	 * @return	the type of armor the item is
+	 */
+	public int getArmorSlot()
+	{
 		return slot;
 	}
 	
@@ -156,7 +175,7 @@ public class Item {
 	 */
 	public int getWeight()
 	{
-		return type;
+		return weight;
 	}
 	
 	/**
