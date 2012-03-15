@@ -42,6 +42,7 @@ public class MenuSystem extends GameSystem
 		is = new InventoryState(this);
 		ss = new StatusState(this);
 		ws = new WeaponState(this);
+		as = new ArmorState(this);
 		
 		state = ms;
 		state.start();
