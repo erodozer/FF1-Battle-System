@@ -26,7 +26,7 @@ public class EquipmentGUI extends HUD
 	Party p;								//party
 	
 	Window titleWindow;						//shows menu selection
-	TradeWindow tradeWindow;				//trade window
+	ModeWindow modeWindow;					//mode window
 	EquipmentWindow[] eWindows;				//equipment windows
 	MenuGUI parentGUI; 						//core gui for the menu system
 	
@@ -42,7 +42,7 @@ public class EquipmentGUI extends HUD
 		this.parent = parentGUI.getParent();
 		p = e.getParty();
 		titleWindow = new Window(7, 1, 58, 32, NES.BLUE);
-		tradeWindow = new TradeWindow(63, 1);
+		modeWindow = new ModeWindow(63, 1);
 		eWindows = new EquipmentWindow[p.size()];
 		for (int i = 0; i < eWindows.length; i++)
 		{
@@ -62,7 +62,7 @@ public class EquipmentGUI extends HUD
 		else
 			f.drawString(g, "Armor", 0, 14, 1, titleWindow);
 			
-		tradeWindow.paint(g);
+		modeWindow.paint(g);
 		for (int i = 0; i < eWindows.length; i++)
 			eWindows[i].paint(g);
 	}
@@ -77,7 +77,7 @@ public class EquipmentGUI extends HUD
 		EquipmentState e = (EquipmentState)parentGUI.state;
 		int[] pos;
 		if (e.getMode() == 0)
-			pos = new int[]{tradeWindow.getX() + 8 + 56*index, tradeWindow.getY() + 14};
+			pos = new int[]{modeWindow.getX() + 8 + 56*index, modeWindow.getY() + 14};
 		else
 		{
 			int i = index / 4;
@@ -98,13 +98,13 @@ public class EquipmentGUI extends HUD
 	
 
 	/**
-	 * TradeWindow
+	 * ModeWindow
 	 * 
 	 * @author nhydock
 	 * 
 	 * Window that displays modes of interaction with equipment in the menu
 	 */
-	class TradeWindow extends Window
+	class ModeWindow extends Window
 	{
 		public static final int WIDTH = 186;
 		public static final int HEIGHT = 32;
@@ -113,7 +113,7 @@ public class EquipmentGUI extends HUD
 
 		SFont f = SFont.loadFont("default");
 		
-		public TradeWindow(int x, int y) {
+		public ModeWindow(int x, int y) {
 			super(x, y, 1, 1);
 			w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
 		}
