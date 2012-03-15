@@ -1,7 +1,5 @@
-package engine;
+package item;
 
-import item.Equipment;
-import item.Item;
 
 import java.io.File;
 import java.util.HashMap;
@@ -46,9 +44,9 @@ public class ItemDictionary {
 				{
 					p = new IniPreferences(new Ini(new File("data/items/" + s + "/item.ini")));
 					if (p.nodeExists("equipment"))
-						h.put(s, new Equipment(s));
+						h.put(s, new Item(s, true));
 					else
-						h.put(s, new Item(s));
+						h.put(s, new Item(s, false));
 				}
 				catch (Exception e)
 				{
@@ -58,4 +56,5 @@ public class ItemDictionary {
 		}
 		return h;
 	}
+	
 }
