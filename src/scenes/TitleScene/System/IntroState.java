@@ -91,10 +91,10 @@ public class IntroState extends GameState{
 	 * Can quicken or skip the intro
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {
-		if (arg0.getKeyCode() == Input.KEY_A)
+	public void handleKeyInput(int key) {
+		if (key == Input.KEY_A)
 			alpha = 255;
-		else if (arg0.getKeyCode() == Input.KEY_START)
+		else if (key == Input.KEY_START)
 			finish();
 	}
 	

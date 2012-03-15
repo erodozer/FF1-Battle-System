@@ -268,14 +268,6 @@ public class BattleSystem extends GameSystem{
 		Actor[] t = getTargets(actor);
 		return t[(int)(Math.random()*t.length)];
 	}
-	
-	/**
-	 * Input handling
-	 */
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		state.handleKeyInput(arg0);
-	}
 
 	/**
 	 * Advances the system to the next state

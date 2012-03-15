@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 
 import engine.Input;
 
-import scenes.GameState;
 import scenes.GameSystem;
 
 public class ArmorState extends EquipmentState
@@ -21,11 +20,9 @@ public class ArmorState extends EquipmentState
 	 * Handles input/navigating the list of items
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0)
+	public void handleKeyInput(int key)
 	{
-		super.handleKeyInput(arg0);
-		
-		int key = arg0.getKeyCode();
+		super.handleKeyInput(key);
 		
 		if (mode != 0)
 		{

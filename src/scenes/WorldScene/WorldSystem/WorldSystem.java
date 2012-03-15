@@ -94,9 +94,9 @@ public class WorldSystem extends GameSystem
      * @param evt
      */
     @Override
-	public void keyPressed(KeyEvent evt) {
+	public void keyPressed(int key) {
     	if (!leader.isWalking())
-    		state.handleKeyInput(evt);
+    		state.handleKeyInput(key);
     }
 	
 	/**

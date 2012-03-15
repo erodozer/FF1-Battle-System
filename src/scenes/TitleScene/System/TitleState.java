@@ -54,12 +54,12 @@ public class TitleState extends GameState {
 	 * Handles key input
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {
-		if (arg0.getKeyCode() == Input.KEY_A)
+	public void handleKeyInput(int key) {
+		if (key == Input.KEY_A)
 			finish();
-		if (arg0.getKeyCode() == Input.KEY_DN)
+		if (key == Input.KEY_DN)
 			index = 1;
-		else if (arg0.getKeyCode() == Input.KEY_UP)
+		else if (key == Input.KEY_UP)
 			index = 0;
 	}
 

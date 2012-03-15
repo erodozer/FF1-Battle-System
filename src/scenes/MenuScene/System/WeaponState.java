@@ -19,11 +19,9 @@ public class WeaponState extends EquipmentState
 	 * Handles input/navigating the list of items
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0)
+	public void handleKeyInput(int key)
 	{
-		super.handleKeyInput(arg0);
-		
-		int key = arg0.getKeyCode();
+		super.handleKeyInput(key);
 		
 		if (mode != 0)
 		{

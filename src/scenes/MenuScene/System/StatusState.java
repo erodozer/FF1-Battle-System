@@ -35,9 +35,8 @@ public class StatusState extends GameState
 	}
 
 	@Override
-	public void handleKeyInput(KeyEvent arg0)
+	public void handleKeyInput(int key)
 	{
-		int key = arg0.getKeyCode();
 		if (key == Input.KEY_A || key == Input.KEY_B)
 			parent.setNextState();
 	}

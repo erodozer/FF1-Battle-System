@@ -52,8 +52,8 @@ public class DialogState extends GameState {
 	 * Advances the text
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {
-		if (arg0.getKeyCode() == Input.KEY_A)
+	public void handleKeyInput(int key) {
+		if (key == Input.KEY_A)
 		{
 			index += 3;
 			if (index >= dialog.length)

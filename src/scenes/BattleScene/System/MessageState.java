@@ -78,6 +78,6 @@ public class MessageState extends GameState {
 	 * Do nothing
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {}
+	public void handleKeyInput(int key) {}
 	
 }

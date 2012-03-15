@@ -46,17 +46,17 @@ public class ChooseJobsState extends GameState {
 	}
 
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {
-		if (arg0.getKeyCode() == Input.KEY_A)
+	public void handleKeyInput(int key) {
+		if (key == Input.KEY_A)
 			finish();
-		else if (arg0.getKeyCode() == Input.KEY_B)
+		else if (key == Input.KEY_B)
 		{
 			((CreationSystem)parent).setPrevious();
 		}
-		else if (arg0.getKeyCode() == Input.KEY_DN ||
-				 arg0.getKeyCode() == Input.KEY_UP ||
-				 arg0.getKeyCode() == Input.KEY_LT ||
-				 arg0.getKeyCode() == Input.KEY_RT)
+		else if (key == Input.KEY_DN ||
+				 key == Input.KEY_UP ||
+				 key == Input.KEY_LT ||
+				 key == Input.KEY_RT)
 			index++;
 	}
 

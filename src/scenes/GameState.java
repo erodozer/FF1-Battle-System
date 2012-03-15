@@ -44,13 +44,13 @@ public abstract class GameState {
      * By default it will just assume it takes input
      * of up and down to increase or decrease the index
      * and will then call the state's update code.
-     * @param keyCode	the key code for the key pressed
+     * @param key	the key code for the key pressed
      */
-    public void handleKeyInput(int keyCode)
+    public void handleKeyInput(int key)
     {
-    	if (keyCode == Input.KEY_DN)
+    	if (key == Input.KEY_DN)
 			index++;
-		else if (keyCode == Input.KEY_UP)
+		else if (key == Input.KEY_UP)
 			index--;
     	handle();
     }

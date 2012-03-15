@@ -56,8 +56,8 @@ public class VictoryState extends GameState {
 	 * Kill program when key is striked
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {
-		if (arg0.getKeyCode() == Input.KEY_A)
+	public void handleKeyInput(int key) {
+		if (key == Input.KEY_A)
 		{
 			if (step >= 1)
 				finish();

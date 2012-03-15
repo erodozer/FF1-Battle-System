@@ -59,6 +59,6 @@ public class EngageState extends GameState {
 	 * Engage state handles no input
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {}
+	public void handleKeyInput(int key) {}
 
 }

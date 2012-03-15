@@ -96,16 +96,16 @@ public class IssueState extends GameState
 	 * @param e
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent e)
+	public void handleKeyInput(int key)
 	{
 		//Do not update while player is animating
 		if (actor.getMoving() == 0 || actor.getMoving() == 2)
 			return;
 				
-		if (e.getKeyCode() == Input.KEY_A)
+		if (key == Input.KEY_A)
 			next();
 		
-		if (e.getKeyCode() == Input.KEY_B)
+		if (key == Input.KEY_B)
 		{
 			if (targetSelecting)
 				targetSelecting = false;
@@ -120,20 +120,20 @@ public class IssueState extends GameState
 		
 		if (spellSelecting && !targetSelecting)
 		{
-			if (e.getKeyCode() == Input.KEY_DN)
+			if (key == Input.KEY_DN)
 				index+=3;
-			else if (e.getKeyCode() == Input.KEY_UP)
+			else if (key == Input.KEY_UP)
 				index-=3;
-			else if (e.getKeyCode() == Input.KEY_RT)
+			else if (key == Input.KEY_RT)
 				index++;
-			else if (e.getKeyCode() == Input.KEY_LT)
+			else if (key == Input.KEY_LT)
 				index--;
 		}
 		else
 		{
-			if (e.getKeyCode() == Input.KEY_DN)
+			if (key == Input.KEY_DN)
 				index++;
-			else if (e.getKeyCode() == Input.KEY_UP)
+			else if (key == Input.KEY_UP)
 				index--;
 		}
 		handle();

@@ -56,21 +56,21 @@ public class ExploreState extends GameState {
 	 * Handles key input
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent evt) {
+	public void handleKeyInput(int key) {
 		//move the character around
-    	if (Input.DPAD.contains("" + evt.getKeyCode())) {
-    		if (evt.getKeyCode() == Input.KEY_UP)
+    	if (Input.DPAD.contains("" + key)) {
+    		if (key == Input.KEY_UP)
     			y--;
-    		else if (evt.getKeyCode() == Input.KEY_DN)
+    		else if (key == Input.KEY_DN)
     			y++;
-    		else if (evt.getKeyCode() == Input.KEY_LT)
+    		else if (key == Input.KEY_LT)
     			x--;
-    		else if (evt.getKeyCode() == Input.KEY_RT)
+    		else if (key == Input.KEY_RT)
     			x++;
     		parent.moveTo(x, y);
 		}
     	//interact with npcs
-    	else if (evt.getKeyCode() == Input.KEY_A)
+    	else if (key == Input.KEY_A)
         {
         	int[] ahead = Map.getCoordAhead(x, y, parent.leader.getDirection());
       		
@@ -83,13 +83,13 @@ public class ExploreState extends GameState {
         		}
         }
     	//switch character sprite
-    	else if (evt.getKeyCode() == Input.KEY_SELECT)
+    	else if (key == Input.KEY_SELECT)
     	{
     		WorldSystem.leaderIndex = (WorldSystem.leaderIndex + 1) % parent.e.getParty().size();
     		parent.leader.setWalkSprite(parent.e.getParty().get(WorldSystem.leaderIndex).getMapSelf());
     	}
     	//show main menu
-    	else if (evt.getKeyCode() == Input.KEY_START)
+    	else if (key == Input.KEY_START)
     	{
     		parent.e.changeToMenu();
     	}

@@ -55,12 +55,12 @@ public class MenuState extends GameState
 	 * Handles key input
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0)
+	public void handleKeyInput(int key)
 	{
-		super.handleKeyInput(arg0);
-		if (arg0.getKeyCode() == Input.KEY_A)
+		super.handleKeyInput(key);
+		if (key == Input.KEY_A)
 			parent.setNextState();
-		else if (arg0.getKeyCode() == Input.KEY_B)
+		else if (key == Input.KEY_B)
 		{
 			if (((MenuSystem)parent).isPickingPlayer())
 			{

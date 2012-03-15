@@ -64,10 +64,8 @@ public class InventoryState extends GameState
 	 * Handles input/navigating the list of items
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0)
+	public void handleKeyInput(int key)
 	{
-		int key = arg0.getKeyCode();
-		
 		//if the party has nothing then the menu is not navigable 
 		if (!hasItems)
 		{

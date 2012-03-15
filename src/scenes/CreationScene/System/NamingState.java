@@ -75,22 +75,21 @@ public class NamingState extends GameState{
 	 * Handles the key input
 	 */
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {
-		int id = arg0.getKeyCode();
-		if (id == Input.KEY_LT)
+	public void handleKeyInput(int key) {
+		if (key == Input.KEY_LT)
 			x--;
-		if (id == Input.KEY_RT)
+		if (key == Input.KEY_RT)
 			x++;
-		if (id == Input.KEY_UP)
+		if (key == Input.KEY_UP)
 			y--;
-		if (id == Input.KEY_DN)
+		if (key == Input.KEY_DN)
 			y++;
-		if (id == Input.KEY_A)
+		if (key == Input.KEY_A)
 			if (name.length() < 4)
 				name += NamingState.letters[y][x];
 			else
 				finish();
-		if (id == Input.KEY_B)
+		if (key == Input.KEY_B)
 			name = name.substring(0, Math.max(0, name.length()-1));
 	}
 	

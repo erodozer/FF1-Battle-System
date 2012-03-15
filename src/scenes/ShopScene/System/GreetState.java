@@ -34,8 +34,7 @@ public class GreetState extends GameState {
 	}
 
 	@Override
-	public void handleKeyInput(KeyEvent arg0) {
-		int key = arg0.getKeyCode();		//key code of key pressed
+	public void handleKeyInput(int key) {
 		
 		//navigate menu
 		if (key == Input.KEY_UP)
