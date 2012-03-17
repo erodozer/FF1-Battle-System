@@ -66,6 +66,9 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, MouseLis
 	JButton AddButton;			//add new layer
 	JButton RemButton;			//remove layer
 	JButton EdtButton;			//edit layer properties
+	JButton SftUpButton;		//shifts a layer up the list
+	JButton SftDnButton;		//shifts a layer down the list
+	
 	
 	/*
 	 * Enemy switcher
@@ -94,31 +97,33 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, MouseLis
 	{
 		setLayout(null);
 		
+		JLabel l;
+		
 		/*
 		 * Initialize fields 
 		 */
-		JLabel l = new JLabel("Enemies: ");
-		l.setSize(200,16);
-		l.setLocation(10,64);
-		layerList = new JList(layers);
-		layerList.addMouseListener(this);
-		layerListPane = new JScrollPane(layerList);
-		layerListPane.setSize(200, 252);
-		layerListPane.setLocation(10, 92);
-		
-		add(l);
-		add(layerListPane);
-		refreshList();
-		
 		l = new JLabel("Name: ");
 		l.setSize(l.getPreferredSize());
 		l.setLocation(10, 10);
 		nameField = new JTextField("");
 		nameField.setSize(200, 24);
-		nameField.setLocation(10, 36);
+		nameField.setLocation(10, 32);
 		
 		add(l);
 		add(nameField);
+		
+		l = new JLabel("Layers: ");
+		l.setSize(200,16);
+		l.setLocation(10,64);
+		layerList = new JList(layers);
+		layerList.addMouseListener(this);
+		layerListPane = new JScrollPane(layerList);
+		layerListPane.setSize(200, 228);
+		layerListPane.setLocation(10, 92);
+		
+		add(l);
+		add(layerListPane);
+		refreshList();
 		
 		
 		/*
@@ -143,6 +148,20 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, MouseLis
 		add(AddButton);
 		add(RemButton);
 		add(EdtButton);
+		
+		SftUpButton = new JButton("\u2191");
+		SftUpButton.setSize(100,24);
+		SftUpButton.setLocation(10, 320);
+		
+		SftDnButton = new JButton("\u2193");
+		SftDnButton.setSize(100,24);
+		SftDnButton.setLocation(110, 320);
+		
+		SftUpButton.addActionListener(this);
+		SftDnButton.addActionListener(this);
+		
+		add(SftUpButton);
+		add(SftDnButton);
 		
 		int[] buttonSize = {230, 24};
 		newButton = new JButton("New");
@@ -176,7 +195,10 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, MouseLis
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == newButton)
+		Object source = event.getSource();		//source of the action
+		
+		//start creating a new sprite
+		if (source == newButton)
 		{
 			final JOptionPane optionPane = new JOptionPane(
 				    "There are already layers created, clicking New will wipe all these layers out." +
@@ -189,18 +211,37 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, MouseLis
 			layers.removeAllElements();
 			refreshList();
 		}
-		if (event.getSource() == AddButton)
+		//add a new layer
+		if (source == AddButton)
 		{
 			new SpriteLayerDialog(this);
 		}
-		else if (event.getSource() == EdtButton)
+		//edit the currently selected layer
+		else if (source == EdtButton)
 		{
-			new SpriteLayerDialog(this, layerList.getSelectedIndex());
+			int index = layerList.getSelectedIndex();
+			if (index == -1)
+				new SpriteLayerDialog(this);
+			else
+				new SpriteLayerDialog(this, index);
 		}
-		else if (event.getSource() == RemButton)
+		//removes the currently selected layer
+		else if (source == RemButton)
 		{
 			layers.remove(layerList.getSelectedIndex());
 			refreshList();
+		}
+		//shift the currently selected layer up one
+		else if (source == SftUpButton)
+		{
+			if (layerList.getSelectedIndex() > 0)
+				layers.add(layerList.getSelectedIndex()-1, layers.remove(layerList.getSelectedIndex()));
+		}
+		//shift the currently selected layer down one
+		else if (source == SftDnButton)
+		{
+			if (layerList.getSelectedIndex()+1 < layers.size())
+				layers.add(layerList.getSelectedIndex()+1, layers.remove(layerList.getSelectedIndex()));
 		}
 	}
 	
