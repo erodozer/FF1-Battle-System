@@ -12,12 +12,14 @@ import editor.EnemyEditor.EnemyEditorGUI;
 import editor.MapEditor.MapEditorGUI;
 import editor.MapEditor.NewMapDialog;
 import editor.PassabilityEditor.PassabilityEditor;
+import editor.SpriteCreator.SpriteCreatorGUI;
 
 public class ToolKit extends JFrame{
 	
 	MapEditorGUI mapEditor;
 	PassabilityEditor passabilityEditor;
 	EnemyEditorGUI enemyEditor;
+	SpriteCreatorGUI spriteCreator;
 	
 	/*
 	 * Dialogs
@@ -28,6 +30,8 @@ public class ToolKit extends JFrame{
 	public static final String[] tileSets = buildTileMapList();
 	public static final String[] maps = buildMapList();
 	public static final String[] terrains = buildTerrainList();
+	public static final String[] spriteCategories = buildCategoryList();
+	public static final String[][] spriteElements = buildElementList();
 	
 	
 	public ToolKit()
@@ -39,19 +43,20 @@ public class ToolKit extends JFrame{
 		mapEditor = new MapEditorGUI();
 		passabilityEditor = new PassabilityEditor();
 		enemyEditor = new EnemyEditorGUI();
+		spriteCreator = new SpriteCreatorGUI();
 		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setSize(this.getWidth(), this.getHeight());
 		tabbedPane.addTab("Map Editor", mapEditor);
 		tabbedPane.addTab("Passability Editor", passabilityEditor);
 		tabbedPane.addTab("Enemy Editor", enemyEditor);
+		tabbedPane.addTab("Sprite Creator", spriteCreator);
 		add(tabbedPane);
 		
 		setTitle("JFF1 Toolkit");
 		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		setVisible(true);
 		
-		System.out.println(Arrays.toString(maps));
 	}
 
 	/**
@@ -96,6 +101,41 @@ public class ToolKit extends JFrame{
             	return (new File("data/maps/"+s+"/map.ini").exists());
               }
             });
+		return s;
+	}
+	
+	/**
+	 * Creates a list of available sprite categories
+	 * @return
+	 */
+	private static String[] buildCategoryList()
+	{
+		String[] s = new File("data/editor/spriteCreator").list(new FilenameFilter() {
+            @Override
+			public boolean accept(File f, String s) {
+            	return (new File("data/editor/spriteCreator/"+s).isDirectory());
+              }
+            });
+		return s;
+	}
+	
+	/**
+	 * Creates a list of available sprite categories
+	 * @return
+	 */
+	private static String[][] buildElementList()
+	{
+		String[] cat = buildCategoryList();
+		String[][] s = new String[cat.length][];
+		for (int i = 0; i < s.length; i++)
+		{
+			s[i] = new File("data/editor/spriteCreator/"+cat[i]).list(new FilenameFilter() {
+            @Override
+			public boolean accept(File f, String s) {
+            	return s.endsWith(".png");
+              }
+            });
+		}
 		return s;
 	}
 	
