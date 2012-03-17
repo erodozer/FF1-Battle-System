@@ -37,6 +37,8 @@ public class Sprite{
 	protected String path;				//filepath to the image
 	protected String name;				//filename of the image
 	
+	protected int alignment;			//alignment anchor of the image
+	
 	/**
 	 * Load the sprite from file path
 	 * @param s
@@ -221,7 +223,16 @@ public class Sprite{
 			int sourceY = (int)(rect[1]+crop[1]*rect[3]);
 			int sourceWidth = (int)(sourceX + rect[2]*(crop[2]-crop[0]));
 			int sourceHeight = (int)(sourceY + rect[3]*(crop[3]-crop[1]));
-			g.drawImage(image, drawX, drawY, drawX + finalWidth, drawY + finalHeight, 
+			
+			int offset = 0;
+			//center alignment
+			if (alignment == 1)
+				offset = finalWidth/2;
+			//right aligned
+			else if (alignment == 2)
+				offset = finalWidth;
+			
+			g.drawImage(image, drawX - offset, drawY, drawX - offset + finalWidth, drawY + finalHeight, 
 							sourceX, sourceY, sourceWidth, sourceHeight, null);
 		}
 	}
