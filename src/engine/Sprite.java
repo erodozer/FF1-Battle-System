@@ -167,6 +167,13 @@ public class Sprite{
 	 */
 	public void setFrame(int x, int y)
 	{
+		//if x is -1 then show all the x frames
+		if (x == -1)
+			rect[0] = (int)width;
+		//if y is -1 show all the y frames
+		if (y == -1)
+			rect[1] = (int)height;
+		
 		//do nothing if frame values are out of bounds
 		if (x < 1 || x > xFrames || y < 1 || y > yFrames)
 			return;
