@@ -151,13 +151,17 @@ public class SpriteLayerDialog extends JDialog implements ActionListener {
 		}
 		if (event.getSource() == okButton)
 		{
+			if (elementList.getSelectedIndex() == -1 || categoryList.getSelectedIndex() == -1)
+			{
+				dispose();
+				return;
+			}
 			Layer l = new Layer(categoryList.getSelectedIndex(), elementList.getSelectedIndex());
 			if (index == -1)
 				parent.layers.add(l);
 			else
 				parent.layers.set(index, l);
-			parent.layerList.setListData(parent.layers);
-			parent.layerListPane.setViewportView(parent.layerList);
+			parent.refreshList();
 			dispose();
 		}
 	}
