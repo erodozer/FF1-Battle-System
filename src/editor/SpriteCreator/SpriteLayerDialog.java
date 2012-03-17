@@ -1,5 +1,6 @@
 package editor.SpriteCreator;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -100,7 +101,7 @@ public class SpriteLayerDialog extends JDialog implements ActionListener {
 		l.setSize(200, 24);
 		
 		previewBox = new SpritePic();
-		previewBox.setSize(150,150);
+		previewBox.setSize(120,120);
 		previewBox.setLocation(232, 32);
 		previewImage();
 		add(previewBox);
@@ -117,7 +118,8 @@ public class SpriteLayerDialog extends JDialog implements ActionListener {
 		add(l);
 		add(okButton);
 		
-		setSize(392,200);
+		setPreferredSize(new Dimension(362,200));
+		setSize(this.getPreferredSize());
 		setVisible(true);
 		setModal(true);
 		setResizable(false);
@@ -129,7 +131,8 @@ public class SpriteLayerDialog extends JDialog implements ActionListener {
 		index = i;
 		Layer l = p.layers.get(i);
 		categoryList.setSelectedIndex(l.getCategory());
-
+		updateElements();
+		elementList.setSelectedIndex(l.getElement());
 		previewImage();
 	}
 
@@ -168,7 +171,6 @@ public class SpriteLayerDialog extends JDialog implements ActionListener {
 		elementList.setModel(elements);
 		elementList.setSelectedIndex(-1);
 		previewImage();
-		repaint();
 	}
 	
 	/**
@@ -186,11 +188,6 @@ public class SpriteLayerDialog extends JDialog implements ActionListener {
 		Sprite preview;
 		Image dbImage;			//image buffer
 		
-		public SpritePic()
-		{
-			this.setSize(150, 150);
-		}
-		
 		/**
 		 * Loads a new sprite to preview
 		 * @param s		path to the sprite's file
@@ -200,22 +197,22 @@ public class SpriteLayerDialog extends JDialog implements ActionListener {
 			preview = new Sprite(s, 2, 4);
 			
 			//scale the preview to fit inside the preview area
-			/*
 			double width = preview.getWidth();
 			double height = preview.getHeight();
 			
 			if (width > height)
 			{
-				height = (height/width)*(width/this.getWidth());
-				width = width/this.getWidth();
+				height *= (height/width)*(this.getWidth()/width);
+				width *= this.getWidth()/width;
 			}
 			else
 			{
-				width = (width/height)*(height/this.getHeight());
-				height = height/this.getHeight();
+				width *= (width/height)*(this.getHeight()/height);
+				height *= this.getHeight()/height;
 			}
+			
 			preview.scale((int)width, (int)height);
-			*/
+			
 			dbImage = null;
 			repaint();
 		}
