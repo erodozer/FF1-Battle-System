@@ -35,6 +35,7 @@ public class Map {
 	public static final int WEST = 2;
 	public static final int NORTH = 3;
 	public static final int EAST = 4;
+	public static final int DIRECTIONS = 4;	//number of directions the sprite can turn
 	
 	//dimensions of the map
 	int width;

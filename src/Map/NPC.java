@@ -19,6 +19,9 @@ import engine.TileSet;
  */
 public class NPC {
 
+	public static final int WALKCYCLE = 2;	
+						//number of frames in the walk animation
+	
 	Map map;			//map the npc belongs to and wanders around in
 	Sprite walkSprite;	//sprite that symbolizes the character
 	String name;		//name of the npc
@@ -119,7 +122,7 @@ public class NPC {
 	 */
 	public void setWalkSprite(String s)
 	{
-		walkSprite = new Sprite("actors/" + s, 2, 4);
+		walkSprite = new Sprite("actors/" + s, WALKCYCLE, Map.DIRECTIONS);
 	}
 	
 	public void setWalkSprite(Sprite s) {
