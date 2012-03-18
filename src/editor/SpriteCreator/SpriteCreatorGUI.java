@@ -320,7 +320,7 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 		if (arg0.getSource() == walkCycle)
 		{
 			if (walkCycle.getValue() == 0)
-				previewBox.setStep(0);
+				previewBox.setStep(-1);
 			else
 				previewBox.setStep(walkCycle.getValue());
 		}
@@ -332,7 +332,7 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 	 *
 	 *	Shows a preview of the complete spriteset
 	 */
-	class SpritePic extends JComponent implements Scrollable
+	class SpritePic extends JComponent //implements Scrollable
 	{
 		int width = 1;
 		int height = 1;
@@ -347,6 +347,7 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 			super();
 			parent = p;
 			dbImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+			this.setSize(width, height);
 		}
 		
 		/**
@@ -355,24 +356,22 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 		 */
 		public void update()
 		{
-			System.out.println("beep");
 			if (parent.layers.size() < 1)
 				return;
 			
 			Layer l = parent.layers.get(0);
+			l.setFrame(step, dir);
 			width = (int)l.getWidth();
 			height = (int)l.getHeight();
 			
 			for (int i = 1; i < parent.layers.size(); i++)
-			{
-				System.out.println("doop");
-				
+			{				
 				l = parent.layers.get(i);
+				l.setFrame(step, dir);
 				width = Math.max(width, (int)l.getWidth());
 				height = Math.max(height, (int)l.getHeight());
 			}
 			
-			System.out.println("wubba");
 			this.setSize(width*2, height*2);
 			dbImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 			repaint();
@@ -382,13 +381,13 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 		public void setDirection(int i)
 		{
 			dir = i;
-			repaint();
+			update();
 		}
 		
 		public void setStep(int i)
 		{
 			step = i;
-			repaint();
+			update();
 		}
 		
 		/**
@@ -397,25 +396,17 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 		@Override
 		public void paint(Graphics g)
 		{
-			System.out.println("boop");
-			
 			Graphics g2 = dbImage.getGraphics();
 			
 			g2.setColor(new Color(25,155,105));
 			g2.fillRect(0, 0, dbImage.getWidth(), dbImage.getHeight());
 			
-			Layer l;
 			for (int i = 0; i < parent.layers.size(); i++)
-			{
-				System.out.println("zing");
-				l = parent.layers.get(i);
-				l.setFrame(step, dir);
-				l.paint(g2);
-			}
+				parent.layers.get(i).paint(g2);
 			
 			g.drawImage(dbImage, 0, 0, dbImage.getWidth()*2, dbImage.getHeight()*2, null);
 		}
-
+		/*
 		@Override
 		public Dimension getPreferredScrollableViewportSize() {
 			return new Dimension(width, height);
@@ -445,5 +436,6 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 			// TODO Auto-generated method stub
 			return 0;
 		}
+		*/
 	}
 }

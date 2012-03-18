@@ -169,16 +169,31 @@ public class Sprite{
 	{
 		//if x is -1 then show all the x frames
 		if (x == -1)
-			rect[0] = (int)width;
+		{
+			rect[0] = 0;
+			rect[2] = (int)width;
+			scaleW = (int)width;
+		}
+		else if (x >= 1 || x <= xFrames)
+		{
+			rect[0] = (int)(((x-1)/(double)xFrames)*width);
+			rect[2] = (int)width/xFrames;
+			scaleW = rect[2];	
+		}
+		
 		//if y is -1 show all the y frames
 		if (y == -1)
-			rect[1] = (int)height;
-		
-		//do nothing if frame values are out of bounds
-		if (x < 1 || x > xFrames || y < 1 || y > yFrames)
-			return;
-		rect[0] = (int)(((x-1)/(double)xFrames)*width);
-		rect[1] = (int)(((y-1)/(double)yFrames)*height);
+		{
+			rect[1] = 0;
+			rect[3] = (int)height;
+			scaleH = (int)height;
+		}
+		else if (y >= 1 || y <= yFrames)
+		{
+			rect[1] = (int)(((y-1)/(double)yFrames)*height);
+			rect[3] = (int)height/yFrames;
+			scaleH = rect[3];	
+		}
 	}
 	
 	/**
