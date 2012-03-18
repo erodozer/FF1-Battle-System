@@ -172,6 +172,7 @@ public class Engine{
 			currentScene = null;
 		}
 		try {
+			Sprite.clearCache();	//clear cache whenever scene is changed to prevent memory leaking
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 		}

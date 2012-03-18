@@ -21,6 +21,11 @@ public class Sprite{
 	// made, if the image has already been loaded before it adds it
 	private static HashMap<String, BufferedImage> TEXTURECACHE = new HashMap<String, BufferedImage>();
 	
+	public static void clearCache()
+	{
+		TEXTURECACHE.clear();
+	}
+	
 	protected BufferedImage image;		//image that is drawn to screen
 	protected double width  = 1;		//width of the buffered image
 	protected double height = 1;		//height of the buffered image
