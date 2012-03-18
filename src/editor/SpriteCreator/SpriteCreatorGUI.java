@@ -246,12 +246,6 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 		//start creating a new sprite
 		if (source == newButton)
 		{
-			final JOptionPane optionPane = new JOptionPane(
-				    "There are already layers created, clicking New will wipe all these layers out." +
-				    "\nAre you sure this is what you want to do?",
-				    JOptionPane.QUESTION_MESSAGE,
-				    JOptionPane.YES_NO_OPTION);
-			
 			layers.removeAllElements();
 			refreshList();
 		}

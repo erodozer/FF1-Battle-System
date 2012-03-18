@@ -24,7 +24,6 @@ public class ToolKit extends JFrame{
 	/*
 	 * Dialogs
 	 */
-	NewMapDialog newMapDialog;
 	JTabbedPane tabbedPane;
 	
 	public static final String[] tileSets = buildTileMapList();
@@ -36,6 +35,8 @@ public class ToolKit extends JFrame{
 	
 	public ToolKit()
 	{
+		setTitle("JFF1 Toolkit");
+		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		setLayout(null);
 		setSize(900, 440);
 		setResizable(false);
@@ -53,8 +54,6 @@ public class ToolKit extends JFrame{
 		tabbedPane.addTab("Sprite Creator", spriteCreator);
 		add(tabbedPane);
 		
-		setTitle("JFF1 Toolkit");
-		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		setVisible(true);
 		
 	}
