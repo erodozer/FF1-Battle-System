@@ -59,6 +59,12 @@ public class Enemy extends Actor {
 			
 			maxhp = dist.getInt("hp", 1);
 			hp = maxhp;
+			String[] m = dist.get("mp", "0/0/0/0/0/0/0/0").split("/");
+			for (int i = 0; i < m.length && i < mp.length; i++)
+			{
+				mp[i][0] = Integer.parseInt(m[i]);
+				mp[i][1] = Integer.parseInt(m[i]);
+			}
 			str = dist.getInt("str", 1);
 			def = dist.getInt("def", 1);
 			itl = dist.getInt("int", 1);
