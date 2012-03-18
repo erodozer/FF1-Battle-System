@@ -1,6 +1,10 @@
 package editor.EnemyEditor;
+import item.ItemDictionary;
+
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -16,8 +20,11 @@ import java.util.Vector;
 import java.util.prefs.Preferences;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -36,12 +43,14 @@ import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 import org.ini4j.InvalidFileFormatException;
 
+import actors.Actor;
 import actors.Enemy;
 
 import Map.Terrain;
 
 
 import editor.ToolKit;
+import engine.Sprite;
 import engine.TileSet;
 
 /**
@@ -77,6 +86,7 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 	 * Enemy Stats
 	 */
 	final String[] STATS = {"HP", "STR", "DEF", "VIT", "INT", "SPD", "LUCK", "EVADE", "RESIST", "Hit %"};
+	JSpinner[] mpSpinners;
 	JSpinner[] statSpinners;
 	
 	/*
@@ -94,15 +104,16 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 	JSpinner[] elemSpinners;
 	
 	/*
-	 * Loot spinners
+	 * Loot
 	 */
 	JSpinner expSpinner;
 	JSpinner gSpinner;
+	JComboBox items;
 	
 	/*
 	 * Enemy Sprite
 	 */
-	
+	SpritePic previewBox;
 	
 	/*
 	 * Other
@@ -147,7 +158,7 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		 */
 		l = new JLabel("Stats: ");
 		l.setSize(l.getPreferredSize());
-		l.setLocation(450, 10);
+		l.setLocation(220, 64);
 		
 		add(l);
 
@@ -157,16 +168,29 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		{
 			l = new JLabel(STATS[i] + ": ");
 			l.setSize(l.getPreferredSize());
-			l.setLocation(450, 32 + (28*i));
+			l.setLocation(230 + (i%2)*220, 88 + 30*(i/2));
 			
 			JSpinner s = new JSpinner(new SpinnerNumberModel(0, 0, 255, 1));
 			s.setSize(100, 24);
-			s.setLocation(530, 32 + (28*i));
+			s.setLocation(320 + (i%2)*220, 86 + 30*(i/2));
 			statSpinners[i] = s;
 			add(l);
 			add(s);
 		}
 		
+		mpSpinners = new JSpinner[Actor.MPLEVELS];
+		l = new JLabel("MP: ");
+		l.setSize(l.getPreferredSize());
+		l.setLocation(230, 236);
+		add(l);
+		for (int i = 0; i < mpSpinners.length; i++)
+		{
+			JSpinner s = new JSpinner(new SpinnerNumberModel(0, 0, 9, 1));
+			s.setSize(44, 24);
+			s.setLocation(260 + i*48, 236);
+			mpSpinners[i] = s;
+			add(s);	
+		}
 		
 		/*
 		 * Elemental spinners initialization
@@ -174,7 +198,7 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		
 		l = new JLabel("Elemental Resistance: ");
 		l.setSize(l.getPreferredSize());
-		l.setLocation(650, 10);
+		l.setLocation(220, 268);
 		
 		add(l);
 
@@ -184,16 +208,68 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		{
 			l = new JLabel(ELEM[i] + ": ");
 			l.setSize(l.getPreferredSize());
-			l.setLocation(650, 32 + (28*i));
+			l.setLocation(230 + 220*(i%2), 290 + 30*(i/2));
 			
 			JSpinner s = new JSpinner(new SpinnerListModel(ELEM_VALUES));
 			s.setValue(ELEM_VALUES.get(1));
 			s.setSize(100, 24);
-			s.setLocation(730, 32 + (28*i));
+			s.setLocation(320 + 220*(i%2), 290 + 30*(i/2));
 			elemSpinners[i] = s;
 			add(l);
 			add(s);
 		}
+		
+		/*
+		 * Loot rewards
+		 */
+		
+		l = new JLabel("Exp: ");
+		l.setSize(l.getPreferredSize());
+		l.setLocation(430, 10);
+		
+		expSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 255, 1));
+		expSpinner.setSize(100, 24);
+		expSpinner.setLocation(430, 32);
+		add(l);
+		add(expSpinner);
+		
+		l = new JLabel("G: ");
+		l.setSize(l.getPreferredSize());
+		l.setLocation(540, 10);
+		
+		gSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 255, 1));
+		gSpinner.setSize(100, 24);
+		gSpinner.setLocation(540, 32);
+		add(l);
+		add(gSpinner);
+		
+		l = new JLabel("Item Drop: ");
+		l.setSize(l.getPreferredSize());
+		l.setLocation(650, 224);
+		
+		items = new JComboBox(new DefaultComboBoxModel(new Vector<String>(ItemDictionary.map.keySet())));
+		items.addItem(null);
+		items.setSelectedItem(null);
+		items.setSize(230, 24);
+		items.setLocation(650, 248);
+		add(l);
+		add(items);
+		
+		/*
+		 * Enemy Sprite preview
+		 */
+		
+		l = new JLabel("Sprite Preview: ");
+		l.setSize(l.getPreferredSize());
+		l.setLocation(650, 10);
+		
+		previewBox = new SpritePic();
+		previewBox.setSize(230,230);
+		JScrollPane p = new JScrollPane(previewBox);
+		p.setSize(230, 230);
+		p.setLocation(650, 32);
+		add(l);
+		add(p);
 		
 		/*
 		 * Initialize Buttons
@@ -263,8 +339,9 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 			elemSpinners[0].setValue(ELEM_VALUES.get(e.getElementalResistance(i)));
 		
 		//load loot values
-		
 		activeEnemy = e;
+		
+		previewBox.load(e.getSprite());
 	}
 	
 	/**
@@ -334,6 +411,14 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 			ini.add("distribution", "mdef", statSpinners[7].getValue());
 			ini.add("distribution", "acc", statSpinners[8].getValue());
 			
+			String mp = "";
+			for (int i = 0; i < mpSpinners.length; i++)
+			{
+				mp += mpSpinners[i].getValue();
+				if (i < mpSpinners.length-1)
+					mp+="/";
+			}
+			ini.add("distribution", "mp", mp);
 			
 			//saving elemental distribution
 			ini.add("elemental", "fire", ELEM_VALUES.indexOf(elemSpinners[0].getValue()));
@@ -392,4 +477,69 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
+	
+	class SpritePic extends JComponent
+	{
+		Sprite preview;
+		Image dbImage;			//image buffer
+		
+		/**
+		 * Loads a new sprite to preview
+		 * @param s		path to the sprite's file
+		 */
+		public void load(String s)
+		{
+			this.load(new Sprite(s));
+		}
+		
+		public void load(Sprite s)
+		{
+			preview = s;
+			
+			//scale the preview to fit inside the preview area
+			double width = preview.getWidth();
+			double height = preview.getHeight();
+			
+			if (width > height)
+			{
+				height *= this.getWidth()/width;
+				width *= this.getWidth()/width;
+			}
+			else
+			{
+				width *= this.getHeight()/height;
+				height *= this.getHeight()/height;
+			}
+			
+			preview.scale((int)width, (int)height);
+			
+			dbImage = null;
+			repaint();
+		}
+		
+		/**
+		 * Gets the previewed sprite
+		 * @return
+		 */
+		public Sprite getSprite()
+		{
+			return preview;
+		}
+		
+		/**
+		 * Paints the sprite
+		 */
+		@Override
+		public void paint(Graphics g)
+		{
+			if (dbImage == null)
+			{
+				dbImage = createImage(getWidth(), getHeight());
+				if (preview != null)
+					preview.paint(dbImage.getGraphics());
+			}
+			
+			g.drawImage(dbImage, 0, 0, null);
+		}
+	}
 }
