@@ -10,9 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
 import javax.swing.JComponent;
@@ -253,6 +255,25 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 			layers.removeAllElements();
 			refreshList();
 		}
+		else if (source == savePNGButton)
+		{
+			BufferedImage b = previewBox.save();
+			try {
+			    // retrieve image
+			    BufferedImage bi = previewBox.save();
+			    File outputfile = new File("data/actors/npcs/"+nameField.getText()+".png");
+			    outputfile.createNewFile();
+			    ImageIO.write(bi, "png", outputfile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "The image was not able to save.\n" +
+							"Possible reasons for this could be \n" +
+							"1) The filesystem is read-only\n" +
+							"2) There is already a file with that name in the npcs folder"
+							, "An error has occurred", JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
 		//add a new layer
 		if (source == AddButton)
 		{
@@ -437,5 +458,26 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 			return 0;
 		}
 		*/
+	
+		public BufferedImage save()
+		{
+			BufferedImage b;
+			
+			b = new BufferedImage(width*NPC.WALKCYCLE, height*Map.DIRECTIONS, BufferedImage.TYPE_4BYTE_ABGR);
+			Graphics g2 = b.getGraphics();
+			
+			Layer l;
+			for (int i = 0; i < parent.layers.size(); i++)
+			{
+				l = parent.layers.get(i);
+				l.setFrame(-1, -1);
+				l.paint(g2);
+				l.setFrame(step, dir);
+			}
+			
+			return b;
+		}
 	}
+	
+	
 }
