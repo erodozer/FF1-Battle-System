@@ -206,12 +206,12 @@ public class SpriteLayerDialog extends JDialog implements ActionListener {
 			
 			if (width > height)
 			{
-				height *= (height/width)*(this.getWidth()/width);
+				height *= this.getWidth()/width;
 				width *= this.getWidth()/width;
 			}
 			else
 			{
-				width *= (width/height)*(this.getHeight()/height);
+				width *= this.getHeight()/height;
 				height *= this.getHeight()/height;
 			}
 			
