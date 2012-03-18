@@ -18,6 +18,7 @@ import engine.Sprite;
  */
 abstract public class Actor
 {
+	public final static int MPLEVELS = 8;	//the count of how many mp levels there are
 	protected final static int MAXLVL = 50;	//maximum character level
 	
 	protected String name;		//actor's name
@@ -85,7 +86,7 @@ abstract public class Actor
 			name = "";
 		hp = 5;
 		maxhp = 5;
-		int[][] m = {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}};
+		int[][] m = new int[MPLEVELS][2];
 		mp = m;
 		str = 1;
 		def = 1;
