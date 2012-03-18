@@ -375,20 +375,18 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 				return;
 			
 			Layer l = parent.layers.get(0);
-			l.setFrame(step, dir);
 			width = (int)l.getWidth();
 			height = (int)l.getHeight();
 			
 			for (int i = 1; i < parent.layers.size(); i++)
 			{				
 				l = parent.layers.get(i);
-				l.setFrame(step, dir);
 				width = Math.max(width, (int)l.getWidth());
 				height = Math.max(height, (int)l.getHeight());
 			}
 			
 			this.setSize(width*2, height*2);
-			dbImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+			dbImage = new BufferedImage(width*((step==-1)?NPC.WALKCYCLE:1), height*((dir==-1)?Map.DIRECTIONS:1), BufferedImage.TYPE_4BYTE_ABGR);
 			repaint();
 		}
 
@@ -416,8 +414,45 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 			g2.setColor(new Color(25,155,105));
 			g2.fillRect(0, 0, dbImage.getWidth(), dbImage.getHeight());
 			
+			Layer l;
 			for (int i = 0; i < parent.layers.size(); i++)
-				parent.layers.get(i).paint(g2);
+			{
+				l = parent.layers.get(i);
+				if (dir == -1)
+					for (int y = 1; y <= Map.DIRECTIONS; y++)
+					{
+						if (step == -1)
+							for (int x = 1; x <= NPC.WALKCYCLE; x++)
+							{
+								l.setFrame(x, y);
+								l.setX((x-1)*width);
+								l.setY((y-1)*height);
+								l.paint(g2);
+							}
+						else
+						{
+							l.setFrame(step, y);
+							l.setX(0);
+							l.setY((y-1)*height);
+							l.paint(g2);	
+						}
+					}
+				else if (step == -1)
+					for (int x = 1; x <= NPC.WALKCYCLE; x++)
+					{
+						l.setFrame(x, dir);
+						l.setX((x-1)*width);
+						l.setY(0);
+						l.paint(g2);
+					}
+				else
+				{
+					l.setFrame(step, dir);
+					l.setX(0);
+					l.setY(0);
+					l.paint(g2);	
+				}
+			}
 			
 			g.drawImage(dbImage, 0, 0, dbImage.getWidth()*2, dbImage.getHeight()*2, null);
 		}
@@ -464,10 +499,17 @@ public class SpriteCreatorGUI extends JPanel implements ActionListener, ChangeLi
 			for (int i = 0; i < parent.layers.size(); i++)
 			{
 				l = parent.layers.get(i);
-				l.setFrame(-1, -1);
+				for (int y = 1; y <= Map.DIRECTIONS; y++)
+					for (int x = 1; x <= NPC.WALKCYCLE; x++)
+						{
+							l.setFrame(x, y);
+							l.setX((x-1)*width);
+							l.setY((y-1)*height);
+							l.paint(g2);
+						}
 				l.paint(g2);
-				l.setFrame(step, dir);
 			}
+			repaint();
 			
 			return b;
 		}
