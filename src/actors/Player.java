@@ -641,12 +641,31 @@ public class Player extends Actor {
 		itl += getInt(level);
 		mdef += getMDef(level);
 		acc += getAcc(level);
+		luk += getLuck(level);
+		evd += getEvd();
 		
 		for (int i = 0; i < mp.length; i++)
 		{
 			mp[i][0] = magicGrowth[level-1][i];
 			mp[i][1] = magicGrowth[level-1][i];
 		}
+	}
+	
+	/**
+	 * @return a string representation of a message that shows the increase in each stat
+	 */
+	public String previewLevelUp()
+	{
+		String output = "";
+		output += getVit(level) + " vit\n";
+		output += getHP(level) + " hp\n";
+		output += getStr(level) + " str\n";
+		output += getSpd(level) + " spd\n";
+		output += getInt(level) + " int\n";
+		//output += getMDef(level) + " mdef\n";
+		//output += getAcc(level) + " hit %\n";
+		
+		return output;
 	}
 
 	/**
