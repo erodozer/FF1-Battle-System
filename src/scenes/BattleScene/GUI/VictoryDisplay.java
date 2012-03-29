@@ -74,7 +74,7 @@ public class VictoryDisplay extends Sprite{
 			windows[2].paint(g);
 			f.drawString(g, "Leveled Up!", 0, 10, windows[2]);
 			windows[0].paint(g);
-			f.drawString(g, state.getMessage(), 0, 10, windows[3]);
+			f.drawString(g, state.getMessage(), 0, 10, windows[0]);
 		}
 		
 	}
