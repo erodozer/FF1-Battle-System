@@ -100,12 +100,18 @@ public class VictoryState extends GameState {
 			//advances through players to level them up and display level up messages
 			if (step == 2)
 			{
+				if (step2 >= leveledUp.size())
+				{
+					step = 4;
+					return;
+				}
 				Player player = leveledUp.get(step2);
 				player.levelUp();
 				step = 3;
 				step3 = 0;
 				levMessage = player.previewLevelUp().split("\n");
 				message = levMessage[step3];
+				
 			}
 			//display each stat being leveled up
 			else if (step == 3)
@@ -113,13 +119,13 @@ public class VictoryState extends GameState {
 				if (step3 >= levMessage.length)
 				{
 					step = 2;
-					step3 = 0;
 					step2++;
+					step3 = 0;
 				}
 				else
 				{
-					step3++;
 					message = levMessage[step3];
+					step3++;
 				}
 			}
 			//end victory scene

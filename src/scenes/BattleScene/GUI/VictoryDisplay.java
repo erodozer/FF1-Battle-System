@@ -51,20 +51,20 @@ public class VictoryDisplay extends Sprite{
 		if (state.getStep() == 0)
 		{
 			windows[0].paint(g);
-			g.drawString("All enemies annihilated", windows[0].getX() + 10, windows[0].getY() + 20);
+			f.drawString(g, "All enemies annihilated", 0, 10, windows[0]);
 		}
 		//display get experience and gold
 		else if (state.getStep() == 1)
 		{
 			windows[1].paint(g);
-			g.drawString("Experience", windows[1].getX() + 10, windows[1].getY() + 20);
+			f.drawString(g, "Experience", 0, 10, windows[1]);
 			windows[2].paint(g);
-			g.drawString(state.getExp()+"P", windows[2].getX() + 10, windows[2].getY() + 20);
+			f.drawString(g, state.getExp()+"P", 0, 10, windows[2]);
 
 			windows[3].paint(g);
-			g.drawString("Gold", windows[3].getX() + 10, windows[3].getY() + 20);
+			f.drawString(g, "Gold", 0, 10, windows[3]);
 			windows[4].paint(g);
-			g.drawString(state.getG()+"G", windows[4].getX() + 10, windows[4].getY() + 20);
+			f.drawString(g, state.getG()+"G", 0, 10, windows[4]);
 		}
 		//display character leveling up
 		else if (state.getStep() == 3)
@@ -73,7 +73,7 @@ public class VictoryDisplay extends Sprite{
 			f.drawString(g, state.getPlayer().getName(), 0, 10, windows[1]);
 			windows[2].paint(g);
 			f.drawString(g, "Leveled Up!", 0, 10, windows[2]);
-			windows[3].paint(g);
+			windows[0].paint(g);
 			f.drawString(g, state.getMessage(), 0, 10, windows[3]);
 		}
 		

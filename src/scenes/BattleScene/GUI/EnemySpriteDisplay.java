@@ -38,7 +38,7 @@ public class EnemySpriteDisplay extends Sprite{
 		for (int i = 0; i < parent.getFormation().size(); i++)
 		{
 			Enemy e = parent.getFormation().get(i);
-			e.getSprite().setX(window.getX()+12);
+			e.getSprite().setX(window.getX()+12+(e.getSprite().getWidth()*(i/3)));
 			e.getSprite().setY(window.getY()+40+(e.getSprite().getHeight()*(i%3)));
 		}
 	}

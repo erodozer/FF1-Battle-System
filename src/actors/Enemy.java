@@ -80,7 +80,6 @@ public class Enemy extends Actor {
 			dark = elem.getInt("dark", 1);
 			
 			exp = main.getInt("exp", 1);
-			System.out.println(exp);
 			goldReward = main.getInt("g", 0);
 		}
 		catch (Exception e) {
@@ -89,7 +88,6 @@ public class Enemy extends Actor {
 		Command[] c = {new Attack(this)};
 		commands = c;
 		loadSprites();
-		System.out.println(this.getExp());
 	}
 	
 	@Override
