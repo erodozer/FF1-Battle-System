@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import scenes.HUD;
 import engine.Engine;
 import engine.NES;
+import engine.SFont;
 import engine.Sprite;
 import engine.Window;
 import groups.Party;
@@ -24,6 +25,9 @@ public class InventoryGUI extends HUD
 	Window titleWindow;						//shows menu selection
 	Window messageWindow;					//little message window
 	MenuGUI parentGUI; 						//core gui for the menu system
+	
+	SFont f = SFont.loadFont("default");	
+	//font
 	
 	/**
 	 * Constructs the gui component
@@ -48,11 +52,11 @@ public class InventoryGUI extends HUD
 	{
 		itemWindow.paint(g);
 		titleWindow.paint(g);
-		g.drawString("ITEM", titleWindow.getX() + 10, titleWindow.getY()+28);
+		f.drawString(g, "ITEM", 0, 18, titleWindow);
 		if (itemWindow.itemList.length == 0)
 		{
 			messageWindow.paint(g);
-			g.drawString("No items founds", messageWindow.getX() + 10, messageWindow.getY() + 21);
+			f.drawString(g, "You are not carrying any items", 0, 11, messageWindow);
 		}
 	}
 	
@@ -101,6 +105,9 @@ public class InventoryGUI extends HUD
 
 		int index;
 
+		SFont f = SFont.loadFont("default");	
+		//font
+		
 		public ItemWindow(Party p, int x, int y) {
 			this.p = p;
 			this.x = x;
@@ -124,7 +131,7 @@ public class InventoryGUI extends HUD
 		public void paint(Graphics g) {
 			w.paint(g);
 			for (int i = 0; i < Math.min(itemList.length, index + 16); i++)
-				g.drawString(String.format("%5s %2s", itemList[i], p.getItemCount(itemList[i])), w.getX() + 15 + 80 * (i % 2), w.getY() + 40 + 24 * (i / 2));
+				f.drawString(g, String.format("%5s %2s", itemList[i], p.getItemCount(itemList[i])), 5 + 80 * (i % 2), 30 + 24 * (i / 2), w);
 		}
 	}
 }

@@ -9,6 +9,7 @@ import scenes.MenuScene.System.MenuState;
 import scenes.MenuScene.System.MenuSystem;
 import engine.Engine;
 import engine.NES;
+import engine.SFont;
 import engine.Sprite;
 import engine.Window;
 import groups.Party;
@@ -30,6 +31,9 @@ public class MainGUI extends HUD
 	Window menuWindow;						//shows menu selection
 	
 	MenuGUI parentGUI; 						//core gui for the menu system
+	
+    SFont f = SFont.loadFont("default");	
+	//font
 	
 	/**
 	 * Constructs the gui component
@@ -57,13 +61,14 @@ public class MainGUI extends HUD
 			statWindows[i].paint(g);
 		goldWindow.paint(g);
 		String s = String.format("%6d G", p.getGold());
-		g.drawString(s, goldWindow.getX() + goldWindow.getWidth() - 10 - fm.stringWidth(s), goldWindow.getY()+24);
+		f.drawString(g, s, 0, 14, 2, goldWindow);
 
 		menuWindow.paint(g);
 		for (int i = 0; i < MenuState.commands.length; i++)
-			g.drawString(MenuState.commands[i], menuWindow.getX()+8, menuWindow.getY()+24+(16*i));
-	
+			f.drawString(g, MenuState.commands[i], -2, 16 + (16*i), menuWindow);
+
 		oWin.paint(g);
+			
 	}
 	
 	/**
@@ -107,6 +112,9 @@ private class PlayerWindow
 	Sprite s;
 	Player p;
 	
+	SFont f = SFont.loadFont("default");	
+	//font
+	
 	public PlayerWindow(Player p, int x, int y)
 	{
 		this.p = p;
@@ -134,16 +142,16 @@ private class PlayerWindow
 		s.setY(y+8);
 		s.paint(g);
 		
-		g.drawString(p.getName(), x + 10, y+20);
-		g.drawString("L " + p.getLevel(), x+10, y+36);
-		g.drawString("HP", x+10, y+56);
-		g.drawString(String.format("%3d/%3d", p.getHP(), p.getMaxHP()), x+10, y+64);
+		f.drawString(g, p.getName(), 0, 10, w);
+		f.drawString(g, "L " + p.getLevel(), 0, 26, w);
+		f.drawString(g, "HP", 0, 46, w);
+		f.drawString(g, String.format("%3d/%3d", p.getHP(), p.getMaxHP()), 0, 54, w);
 		
 		if (p.canCast())
 		{
-			g.drawString("MAGIC", x + 10, y + 84);
-			g.drawString(p.getMp(0) + "/" + p.getMp(1) + "/" + p.getMp(2) + "/" + p.getMp(3) + "/", x + 10, y + 92);
-			g.drawString(p.getMp(4) + "/" + p.getMp(5) + "/" + p.getMp(6) + "/" + p.getMp(7), x + 10, y + 100);
+			f.drawString(g, "MAGIC", 0, 74, w);
+			f.drawString(g, p.getMp(0) + "/" + p.getMp(1) + "/" + p.getMp(2) + "/" + p.getMp(3) + "/", 0, 82, w);
+			f.drawString(g, p.getMp(4) + "/" + p.getMp(5) + "/" + p.getMp(6) + "/" + p.getMp(7), 0, 90, w);
 		}
 	}
 }
@@ -161,9 +169,6 @@ private class OrbWindow
 	public static final int HEIGHT = 64;
 	public static final int LENGTH = 6;		//amount of orbs to be displayed
 	
-	int x;
-	int y;
-	
 	Window w;
 	Sprite[] orbs;
 	Party p;
@@ -171,8 +176,6 @@ private class OrbWindow
 	public OrbWindow(Party p, int x, int y)
 	{
 		this.p = p;
-		this.x = x;
-		this.y = y;
 		w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
 		
 		orbs = new Sprite[LENGTH];

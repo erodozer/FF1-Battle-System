@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import engine.GameScreen;
+import engine.SFont;
 import engine.Sprite;
 import scenes.GameState;
 import scenes.HUD;
@@ -76,8 +77,6 @@ public class MenuGUI extends HUD
 	public void paint(Graphics g)
 	{
 		int[] pos = new int[2];
-		g.setFont(GameScreen.font);
-		g.setColor(Color.WHITE);
 		
 		pos = currentGUI.getArrowPosition(index);
 		currentGUI.paint(g);
