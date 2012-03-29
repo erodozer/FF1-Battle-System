@@ -397,8 +397,8 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 			Ini ini = new Ini(f);
 			
 			//saving main
-			ini.add("main", "exp", expSpinner);
-			ini.add("main", "g", gSpinner);
+			ini.add("enemy", "exp", expSpinner);
+			ini.add("enemy", "g", gSpinner);
 			
 			//saving stat distribution
 			ini.add("distribution", "hp", statSpinners[0].getValue());

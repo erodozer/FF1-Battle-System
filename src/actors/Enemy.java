@@ -55,7 +55,7 @@ public class Enemy extends Actor {
 			Preferences p = new IniPreferences(new Ini(new File("data/actors/enemies/" + name + "/enemy.ini")));
 			Preferences dist = p.node("distribution");
 			Preferences elem = p.node("elemental");
-			Preferences main = p.node("main");
+			Preferences main = p.node("enemy");
 			
 			maxhp = dist.getInt("hp", 1);
 			hp = maxhp;
@@ -80,6 +80,7 @@ public class Enemy extends Actor {
 			dark = elem.getInt("dark", 1);
 			
 			exp = main.getInt("exp", 1);
+			System.out.p
 			goldReward = main.getInt("g", 0);
 		}
 		catch (Exception e) {
@@ -88,6 +89,7 @@ public class Enemy extends Actor {
 		Command[] c = {new Attack(this)};
 		commands = c;
 		loadSprites();
+		System.out.println(this.getExp());
 	}
 	
 	@Override
