@@ -59,12 +59,12 @@ public class VictoryDisplay extends Sprite{
 			windows[1].paint(g);
 			g.drawString("Experience", windows[1].getX() + 10, windows[1].getY() + 20);
 			windows[2].paint(g);
-			g.drawString(parent.getFormation().getExp()+"P", windows[2].getX() + 10, windows[2].getY() + 20);
+			g.drawString(state.getExp()+"P", windows[2].getX() + 10, windows[2].getY() + 20);
 
 			windows[3].paint(g);
 			g.drawString("Gold", windows[3].getX() + 10, windows[3].getY() + 20);
 			windows[4].paint(g);
-			g.drawString(parent.getFormation().getGold()+"G", windows[4].getX() + 10, windows[4].getY() + 20);
+			g.drawString(state.getG()+"G", windows[4].getX() + 10, windows[4].getY() + 20);
 		}
 		//display character leveling up
 		else if (state.getStep() == 3)

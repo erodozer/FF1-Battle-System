@@ -1,6 +1,7 @@
 package scenes.BattleScene.System;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import actors.Player;
 
@@ -32,7 +33,7 @@ public class VictoryState extends GameState {
 	Formation f;
 	Party p;
 	
-	int leveledUp = 0;
+	ArrayList<Player> leveledUp = new ArrayList<Player>();
 	
 	int step2 = 0;		//for level up, display player
 	int step3 = 0;		//for counter on displaying message for level up
@@ -47,8 +48,6 @@ public class VictoryState extends GameState {
 	 */
 	VictoryState(BattleSystem p) {
 		super(p);
-		f = p.getFormation();
-		this.p = Engine.getInstance().getParty();
 	}
 	
 	/**
@@ -60,19 +59,23 @@ public class VictoryState extends GameState {
 		new MP3("data/audio/victory.mp3").play();
 		step = 0;
 		
+		f = ((BattleSystem)parent).getFormation();
+		this.p = Engine.getInstance().getParty();
+		
 		//distribute the exp and g
+		System.out.println(f.getExp());
+		
 		exp = f.getExp()/p.getAlive();
 		g = f.getGold();
 		
-		for (Player player: p)
+		System.out.println(exp);
+		for (int i = 0; i < p.size(); i++)
 		{
-			player.setExp(player.getExp()+exp);
-			if (player.getExpToLevel() <= 0)
-				leveledUp++;
+			p.get(i).addExp(exp);
+			if (p.get(i).getExpToLevel() <= 0)
+				leveledUp.add(p.get(i));
 		}
 		p.addGold(g);
-	
-		
 	}
 
 	/**
@@ -81,12 +84,12 @@ public class VictoryState extends GameState {
 	@Override
 	public void handle() {
 		try {
-			Thread.sleep(500);
+			Thread.sleep(1500);
 			
 			//check to see if the level up messages should be shown or not
 			if (step == 1)
 			{
-				if (leveledUp > 0)
+				if (leveledUp.size() > 0)
 				{
 					step = 2;
 				}
@@ -97,7 +100,7 @@ public class VictoryState extends GameState {
 			//advances through players to level them up and display level up messages
 			if (step == 2)
 			{
-				Player player = p.get(step2);
+				Player player = leveledUp.get(step2);
 				player.levelUp();
 				step = 3;
 				step3 = 0;
@@ -128,7 +131,6 @@ public class VictoryState extends GameState {
 			{
 				step++;
 			}
-			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}		
@@ -147,12 +149,6 @@ public class VictoryState extends GameState {
 	 */
 	@Override
 	public void handleKeyInput(int key) {
-		if (key == Input.KEY_A)
-		{
-			if (step >= 1)
-				finish();
-			step++;
-		}
 	}
 
 	/**
@@ -174,5 +170,15 @@ public class VictoryState extends GameState {
 	public Player getPlayer()
 	{
 		return p.get(step2);
+	}
+	
+	public int getExp()
+	{
+		return exp;
+	}
+	
+	public int getG()
+	{
+		return g;
 	}
 }

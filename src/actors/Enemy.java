@@ -80,7 +80,7 @@ public class Enemy extends Actor {
 			dark = elem.getInt("dark", 1);
 			
 			exp = main.getInt("exp", 1);
-			System.out.p
+			System.out.println(exp);
 			goldReward = main.getInt("g", 0);
 		}
 		catch (Exception e) {

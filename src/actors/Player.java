@@ -790,4 +790,13 @@ public class Player extends Actor {
 			}
 		return false;
 	}
+
+	/**
+	 * Adds a set amount of exp to how much the player has earned
+	 * @param i
+	 */
+	public void addExp(int i)
+	{
+		exp += i;
+	}
 }
