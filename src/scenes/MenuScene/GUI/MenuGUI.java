@@ -1,14 +1,17 @@
 package scenes.MenuScene.GUI;
 
-import java.awt.Color;
+import graphics.Sprite;
+
 import java.awt.Graphics;
 
-import engine.GameScreen;
-import engine.SFont;
-import engine.Sprite;
 import scenes.GameState;
 import scenes.HUD;
-import scenes.MenuScene.System.*;
+import scenes.MenuScene.System.ArmorState;
+import scenes.MenuScene.System.InventoryState;
+import scenes.MenuScene.System.MenuState;
+import scenes.MenuScene.System.MenuSystem;
+import scenes.MenuScene.System.StatusState;
+import scenes.MenuScene.System.WeaponState;
 
 
 /**

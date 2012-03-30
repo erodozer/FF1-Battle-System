@@ -6,9 +6,9 @@ import java.awt.Graphics;
 import scenes.CreationScene.System.CreationSystem;
 import scenes.CreationScene.System.NamingState;
 
-import engine.NES;
-import engine.Sprite;
-import engine.Window;
+import graphics.NES;
+import graphics.Sprite;
+import graphics.Window;
 
 public class NamingDisplay extends Sprite {
 

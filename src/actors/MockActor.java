@@ -1,6 +1,6 @@
 package actors;
 
-import engine.Sprite;
+import graphics.Sprite;
 
 public class MockActor extends Actor{
 

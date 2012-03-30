@@ -5,8 +5,8 @@ import java.awt.Graphics;
 
 import actors.Player;
 import engine.Engine;
-import engine.Sprite;
-import engine.Window;
+import graphics.Sprite;
+import graphics.Window;
 
 /**
  * PartyStatusDisplay

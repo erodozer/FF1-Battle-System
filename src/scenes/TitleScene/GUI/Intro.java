@@ -5,9 +5,9 @@ import java.awt.Graphics;
 
 import scenes.TitleScene.System.IntroState;
 import engine.ContentPanel;
-import engine.NES;
-import engine.SFont;
-import engine.Sprite;
+import graphics.NES;
+import graphics.SFont;
+import graphics.Sprite;
 
 /**
  * Intro

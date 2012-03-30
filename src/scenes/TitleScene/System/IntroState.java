@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import engine.ContentPanel;
 import engine.GameScreen;
 import engine.Input;
-import engine.StringUtils;
+import graphics.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Scanner;

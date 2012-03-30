@@ -6,10 +6,10 @@ import actors.Player;
 
 import scenes.HUD;
 import engine.Engine;
-import engine.NES;
-import engine.SFont;
-import engine.Sprite;
-import engine.Window;
+import graphics.NES;
+import graphics.SFont;
+import graphics.Sprite;
+import graphics.Window;
 import groups.Party;
 
 /**

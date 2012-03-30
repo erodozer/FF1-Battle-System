@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import item.Item;
+import item.ItemDictionary;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -13,6 +16,7 @@ import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 import org.ini4j.InvalidFileFormatException;
 import org.junit.Test;
+
 
 
 /**
@@ -113,5 +117,30 @@ public class PlayerTest {
 		assertEquals(9, j.getSpd());
 		assertEquals(57, j.getEvd());
 		assertEquals(13, j.getAcc());
+	}
+	
+	/**
+	 * Tests putting on equipment
+	 */
+	@Test
+	public void testEquippingEquipment()
+	{
+		
+		//Red Mage is best to test with because they're capable of equipping a a medium amount of items
+		//compared to other mages who can't equip much and Fighters who can equip just about everything
+		Player j = new Player("TWIL", "Red Mage");
+		
+		Item w1 = ItemDictionary.map.get("Knife");
+		
+		//Shouldn't be able to equip items that the job can not equip
+	}
+	
+	/**
+	 * Tests how equipment affects player stats when equipped
+	 */
+	@Test
+	public void testEquipmentEffects()
+	{
+		
 	}
 }

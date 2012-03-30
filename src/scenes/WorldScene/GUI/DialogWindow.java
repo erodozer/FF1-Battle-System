@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import engine.ContentPanel;
-import engine.Sprite;
-import engine.Window;
+import graphics.Sprite;
+import graphics.Window;
 
 /**
  * DialogWindow

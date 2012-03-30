@@ -7,7 +7,7 @@ import scenes.HUD;
 import scenes.CreationScene.System.*;
 
 import engine.GameScreen;
-import engine.Sprite;
+import graphics.Sprite;
 
 /**
  * HUD.java

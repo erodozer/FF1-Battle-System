@@ -10,7 +10,7 @@ import scenes.GameSystem;
 import engine.ContentPanel;
 import engine.GameScreen;
 import engine.Input;
-import engine.StringUtils;
+import graphics.StringUtils;
 
 /**
  * DialogState

@@ -6,7 +6,7 @@ import commands.Attack;
 import commands.Command;
 import commands.Spell;
 
-import engine.Sprite;
+import graphics.Sprite;
 
 /**
  * Actor.java

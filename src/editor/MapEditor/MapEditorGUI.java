@@ -25,10 +25,10 @@ import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
 import Map.Terrain;
+import Map.TileSet;
 
 
 import editor.ToolKit;
-import engine.TileSet;
 
 /**
  * MapEditorGUI

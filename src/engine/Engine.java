@@ -14,6 +14,7 @@ import scenes.ShopScene.ShopScene;
 import scenes.ShopScene.System.Shop;
 import scenes.TitleScene.TitleScene;
 import scenes.WorldScene.WorldScene;
+import graphics.Sprite;
 import groups.*;
 
 /**

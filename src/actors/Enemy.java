@@ -16,7 +16,7 @@ import org.ini4j.IniPreferences;
 
 import commands.*;
 
-import engine.Sprite;
+import graphics.Sprite;
 
 public class Enemy extends Actor {
 

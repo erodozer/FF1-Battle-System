@@ -3,8 +3,8 @@ package scenes.BattleScene.GUI;
 import java.awt.Graphics;
 import actors.Enemy;
 
-import engine.Sprite;
-import engine.Window;
+import graphics.Sprite;
+import graphics.Window;
 
 import scenes.BattleScene.System.*;
 

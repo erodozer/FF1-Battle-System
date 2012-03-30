@@ -1,5 +1,6 @@
 package actors;
 
+import graphics.Sprite;
 import item.Item;
 
 import java.awt.Graphics;
@@ -17,7 +18,6 @@ import org.ini4j.IniPreferences;
 import scenes.BattleScene.BattleScene;
 import commands.*;
 import engine.Engine;
-import engine.Sprite;
 
 /**
  * Player.java

@@ -1,11 +1,13 @@
 package scenes.BattleScene.GUI;
 
+import graphics.SFont;
+import graphics.Sprite;
+import graphics.Window;
+
 import java.awt.Graphics;
 
-import engine.SFont;
-import engine.Sprite;
-import engine.Window;
-import scenes.BattleScene.System.*;
+import scenes.BattleScene.System.BattleSystem;
+import scenes.BattleScene.System.VictoryState;
 
 /**
  * VictoryDisplay

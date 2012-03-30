@@ -1,7 +1,7 @@
 package editor.SpriteCreator;
 
 import editor.ToolKit;
-import engine.Sprite;
+import graphics.Sprite;
 
 /**
  * Layer.java

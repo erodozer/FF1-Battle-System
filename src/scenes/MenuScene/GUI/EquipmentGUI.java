@@ -8,10 +8,10 @@ import scenes.HUD;
 import scenes.MenuScene.System.EquipmentState;
 import scenes.MenuScene.System.WeaponState;
 import engine.Engine;
-import engine.NES;
-import engine.SFont;
-import engine.Sprite;
-import engine.Window;
+import graphics.NES;
+import graphics.SFont;
+import graphics.Sprite;
+import graphics.Window;
 import groups.Party;
 
 /**

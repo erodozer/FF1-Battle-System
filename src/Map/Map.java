@@ -16,7 +16,6 @@ import org.ini4j.IniPreferences;
 
 
 import engine.ContentPanel;
-import engine.TileSet;
 
 public class Map {
 

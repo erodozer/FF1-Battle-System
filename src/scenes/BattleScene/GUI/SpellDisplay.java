@@ -5,8 +5,8 @@ import java.awt.Graphics;
 
 import actors.Actor;
 
-import engine.Sprite;
-import engine.Window;
+import graphics.Sprite;
+import graphics.Window;
 import scenes.BattleScene.System.*;
 
 /**

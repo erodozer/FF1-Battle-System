@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.Scrollable;
 
 import editor.ToolKit;
-import engine.Sprite;
+import graphics.Sprite;
 
 import actors.Enemy;
 

@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import scenes.CreationScene.System.CreationSystem;
 
-import engine.Sprite;
+import graphics.Sprite;
 import groups.Party;
 
 /**

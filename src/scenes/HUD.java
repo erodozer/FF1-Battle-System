@@ -6,7 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import engine.GameScreen;
-import engine.Sprite;
+import graphics.Sprite;
 
 /**
  * HUD

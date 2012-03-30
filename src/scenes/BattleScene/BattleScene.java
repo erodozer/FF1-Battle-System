@@ -1,6 +1,6 @@
 package scenes.BattleScene;
 
-import engine.Sprite;
+import graphics.Sprite;
 import groups.Formation;
 
 import scenes.Scene;

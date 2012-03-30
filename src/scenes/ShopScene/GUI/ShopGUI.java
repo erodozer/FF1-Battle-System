@@ -17,10 +17,10 @@ import scenes.ShopScene.System.ShopSystem;
 import engine.ContentPanel;
 import engine.Engine;
 import engine.GameScreen;
-import engine.NES;
-import engine.Sprite;
-import engine.StringUtils;
-import engine.Window;
+import graphics.NES;
+import graphics.Sprite;
+import graphics.StringUtils;
+import graphics.Window;
 import groups.Party;
 
 public class ShopGUI extends HUD {

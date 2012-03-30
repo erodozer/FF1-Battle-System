@@ -1,6 +1,6 @@
 package Map;
 
-import engine.Sprite;
+import graphics.Sprite;
 import groups.Formation;
 
 import java.util.Formatter;

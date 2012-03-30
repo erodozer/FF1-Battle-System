@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import scenes.CreationScene.CreationScene;
+import scenes.TitleScene.TitleScene;
 
 /**
  * EngineTest
@@ -14,6 +15,17 @@ import scenes.CreationScene.CreationScene;
  */
 public class EngineTest
 {
+	/**
+	 * Make sure the engine can only have a single instance
+	 */
+	@Test
+	public void testSingleton()
+	{
+		Engine e = Engine.getInstance();
+		Engine e2 = Engine.getInstance();
+		assertEquals(e, e2);
+	}
+	
 	/**
 	 * Tests initializing an engine
 	 */
@@ -27,26 +39,31 @@ public class EngineTest
 													// this should happen on startGame
 	}
 
-	/**
-	 * Tests the game's ability to change scenes
-	 */
-	public void testSceneChanging()
+	@Test
+	public void testGameStart()
 	{
 		Engine e = Engine.getInstance();
 		
 		assertEquals(null, e.getCurrentScene());	//no scene should be set on initialization,
 	
-		e.changeToCreation();
-		assertTrue(e.getCurrentScene() instanceof CreationScene);
+		e.startGame();								//after game starts it should be displaying the intro scene
+		assertTrue(e.getCurrentScene() instanceof TitleScene);
 	}
 	
 	/**
-	 * Make sure the engine can only have a single instance
+	 * Tests the game's ability to change scenes
 	 */
 	@Test
-	public void testSingleton()
+	public void testSceneChanging()
 	{
 		Engine e = Engine.getInstance();
-		assertEquals(e, Engine.getInstance());
+		
+		assertTrue(e.getCurrentScene() instanceof TitleScene);	//scene should be at the title right now, we're going to change it to Creation
+	
+		//we should also see a transition animation occuring when this happens
+		e.changeToCreation();
+		assertTrue(e.getCurrentScene() instanceof CreationScene);
+		
 	}
+	
 }

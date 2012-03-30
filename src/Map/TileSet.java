@@ -1,4 +1,6 @@
-package engine;
+package Map;
+
+import graphics.Sprite;
 
 import java.awt.Graphics;
 import java.io.FileInputStream;

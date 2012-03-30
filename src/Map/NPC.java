@@ -6,8 +6,7 @@ import java.util.prefs.Preferences;
 import scenes.ShopScene.System.Shop;
 
 import engine.Engine;
-import engine.Sprite;
-import engine.TileSet;
+import graphics.Sprite;
 
 /**
  * NPC

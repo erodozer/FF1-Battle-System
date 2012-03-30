@@ -1,4 +1,5 @@
 package editor.EnemyEditor;
+import graphics.Sprite;
 import item.ItemDictionary;
 
 import java.awt.Color;
@@ -47,11 +48,10 @@ import actors.Actor;
 import actors.Enemy;
 
 import Map.Terrain;
+import Map.TileSet;
 
 
 import editor.ToolKit;
-import engine.Sprite;
-import engine.TileSet;
 
 /**
  * EnemyEditorGUI

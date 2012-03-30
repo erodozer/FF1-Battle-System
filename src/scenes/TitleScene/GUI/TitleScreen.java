@@ -6,8 +6,8 @@ import java.awt.Graphics;
 import scenes.TitleScene.System.TitleSystem;
 import scenes.TitleScene.System.TitleState;
 
-import engine.Sprite;
-import engine.Window;
+import graphics.Sprite;
+import graphics.Window;
 
 /**
  * TitleScreen

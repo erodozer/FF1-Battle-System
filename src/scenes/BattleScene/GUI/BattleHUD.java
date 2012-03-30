@@ -8,7 +8,7 @@ import scenes.HUD;
 import scenes.BattleScene.System.*;
 
 import engine.GameScreen;
-import engine.Sprite;
+import graphics.Sprite;
 
 /**
  * HUD.java

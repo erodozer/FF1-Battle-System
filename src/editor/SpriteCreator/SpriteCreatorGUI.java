@@ -32,7 +32,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import editor.MapEditor.MapGrid;
-import engine.Sprite;
+import graphics.Sprite;
 
 
 import actors.Enemy;

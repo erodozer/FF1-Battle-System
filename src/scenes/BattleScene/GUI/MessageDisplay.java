@@ -8,8 +8,8 @@ import scenes.BattleScene.System.MessageState;
 import commands.*;
 
 
-import engine.Sprite;
-import engine.Window;
+import graphics.Sprite;
+import graphics.Window;
 
 /**
  * MessageDisplay

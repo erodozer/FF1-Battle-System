@@ -3,8 +3,8 @@ package scenes.BattleScene.GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import engine.Sprite;
-import engine.Window;
+import graphics.Sprite;
+import graphics.Window;
 
 /**
  * GameOverDisplay
