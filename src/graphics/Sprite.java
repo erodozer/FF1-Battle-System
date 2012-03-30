@@ -34,8 +34,8 @@ public class Sprite{
 	
 	protected int[] rect;				//rectangle cropping for frames
 	protected double[] crop;			//further cropping for what displays on screen
-	protected int scaleW;
-	protected int scaleH;
+	protected double scaleW;
+	protected double scaleH;
 	protected int xFrames;				//number of horizontal frames
 	protected int yFrames;				//number of vertical frames
 	
@@ -228,7 +228,7 @@ public class Sprite{
 	 * @param w
 	 * @param h
 	 */
-	public void scale(int w, int h)
+	public void scale(double w, double h)
 	{
 		scaleW = w;
 		scaleH = h;
