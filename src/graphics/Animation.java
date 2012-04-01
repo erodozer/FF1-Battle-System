@@ -29,10 +29,10 @@ public class Animation {
 	public Animation(String f)
 	{
 		try {
-			File file = new File("data/"+f);	
+			File file = new File("data/animation/"+f+".anim");	
 			Scanner s = new Scanner(file);
 			
-			sheet = new Sprite(s.next(), s.nextInt(), 1);		//first line is the name of the image file
+			sheet = new Sprite("animation/"+f+".png", s.nextInt(), 1);		//first line is the name of the image file
 																//line two
 			frames = new ArrayList<Frame[]>();
 			//each line after the first two is a line of frame information for the animation
