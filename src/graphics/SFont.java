@@ -46,16 +46,23 @@ public class SFont {
 	 */
 	public static SFont loadFont(String fontName)
 	{
+		return loadFont(fontName, 24.0f);
+	}
+	
+	public static SFont loadFont(String fontName, float size)
+	{
 		SFont s;
 		if (cache.containsKey(fontName))
 			s = cache.get(fontName);
 		else
 		{
-			s = new SFont(fontName);
+			s = new SFont(fontName, size);
 			cache.put(fontName, s);
 		}
 		return s;
 	}
+	
+	
 
 	/**
 	 * Constructs a SFont	
@@ -63,14 +70,22 @@ public class SFont {
 	 */
 	private SFont(String fontName)
 	{
+		this(fontName, 24.0f);
+	}
+	
+	/**
+	 * Constructs a SFont	
+	 * @param fontName		name of the font file
+	 */
+	private SFont(String fontName, float size)
+	{
 		try {
-			f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/"+fontName+".ttf"))).deriveFont(24.0f);
+			f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/"+fontName+".ttf"))).deriveFont(size);
 			fm = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR).getGraphics().getFontMetrics(f);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
 	/**
 	 * Draws a string to the display
 	 * @param g				Graphics buffer to draw to
