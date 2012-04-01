@@ -1,5 +1,6 @@
 package commands;
 
+import graphics.Animation;
 import actors.Actor;
 import actors.Player;
 
@@ -14,6 +15,7 @@ public class Attack extends Command {
 	 */
 	public Attack(Actor a)
 	{
+		anim = new Animation("attack");
 		name = "Attack";
 		invoker = a;
 		speedBonus = 25;

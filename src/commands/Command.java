@@ -1,5 +1,6 @@
 package commands;
 
+import graphics.Animation;
 import actors.Actor;
 
 /**
@@ -16,6 +17,8 @@ public abstract class Command {
 	protected int speedBonus = 0;				//additional time it takes to use the command
 	protected int hits = 1;						//number of times the command will damage the target
 	protected boolean targetable = false;		//false = foes, true = allies
+	
+	Animation anim;								//animation to play for the command in battle
 	
 	/**
 	 * Adds effects to the actor upon assigning the command
