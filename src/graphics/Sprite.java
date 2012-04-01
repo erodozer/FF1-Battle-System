@@ -1,6 +1,10 @@
 package graphics;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +35,7 @@ public class Sprite{
 	protected double height = 1;		//height of the buffered image
 	protected double x = 0;				//x draw position on screen
 	protected double y = 0;				//y draw position on screen
+	protected double angle = 0;			//the angle at which the image should draw
 	
 	protected int[] rect;				//rectangle cropping for frames
 	protected double[] crop;			//further cropping for what displays on screen
@@ -43,6 +48,8 @@ public class Sprite{
 	protected String name;				//filename of the image
 	
 	protected int alignment;			//alignment anchor of the image
+	
+	AffineTransform at;					//graphics transformation matrix
 	
 	/**
 	 * Load the sprite from file path
@@ -91,6 +98,7 @@ public class Sprite{
 			this.xFrames = xFrames;
 			this.yFrames = yFrames;
 			crop = new double[]{0, 0, 1, 1};
+			at = new AffineTransform();
 		} 
 	}
 	
@@ -235,6 +243,33 @@ public class Sprite{
 	}
 	
 	/**
+	 * Sets the angle of the image
+	 * @param angle
+	 */
+	public void rotate(int i)
+	{
+		angle = i;
+	}
+	
+	/**
+	 * Determines if the point is within the bounds of the image
+	 * Should only be called using mouse input.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean collides(int i, int j)
+	{
+		int drawX = (int)x;
+		int drawY = (int)y;
+		int finalWidth = (int)(drawX+scaleW*(crop[2]-crop[0]));
+		int finalHeight = (int)(drawY+scaleH*(crop[3]-crop[1]));
+		Polygon bounds = new Polygon(new int[]{drawX, finalWidth, finalWidth, drawX}, new int[]{drawY, drawY, finalHeight, finalHeight}, 4);
+		
+		return bounds.contains(i, j);
+	}
+	
+	/**
 	 * Paint the sprite to screen
 	 * @param g
 	 */
@@ -242,14 +277,15 @@ public class Sprite{
 	{
 		if (image != null && g != null)
 		{
+			//temp variables
 			int drawX = (int)x;
 			int drawY = (int)y;
 			int finalWidth = (int)(scaleW*(crop[2]-crop[0]));
 			int finalHeight = (int)(scaleH*(crop[3]-crop[1]));
 			int sourceX = (int)(rect[0]+crop[0]*rect[2]);
 			int sourceY = (int)(rect[1]+crop[1]*rect[3]);
-			int sourceWidth = (int)(sourceX + rect[2]*(crop[2]-crop[0]));
-			int sourceHeight = (int)(sourceY + rect[3]*(crop[3]-crop[1]));
+			double sourceWidth = (rect[2]*(crop[2]-crop[0]));
+			double sourceHeight = (rect[3]*(crop[3]-crop[1]));
 			
 			int offset = 0;
 			//center alignment
@@ -258,9 +294,22 @@ public class Sprite{
 			//right aligned
 			else if (alignment == 2)
 				offset = finalWidth;
-			
-			g.drawImage(image, drawX - offset, drawY, drawX - offset + finalWidth, drawY + finalHeight, 
-							sourceX, sourceY, sourceWidth, sourceHeight, null);
+
+			// crop the frame
+            BufferedImage i = image.getSubimage(sourceX, sourceY, (int)sourceWidth, (int)sourceHeight);
+
+            // scale the image
+            at.setToScale(finalWidth/sourceWidth, finalHeight/sourceHeight);
+
+            // rotation
+            at.rotate(Math.toRadians(angle), i.getWidth() / 2, i.getHeight() / 2);
+            
+            // applies the transformation to the cropped image
+            AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+            i = op.filter(i, null);
+            
+            //draw the image to the graphics buffer
+			((Graphics2D) g).drawImage(i, op, drawX-offset, drawY);
 		}
 	}
 
@@ -277,5 +326,9 @@ public class Sprite{
 	 */
 	public String getPath() {
 		return path;
+	}
+
+	public double getAngle() {
+		return angle;
 	}
 }
