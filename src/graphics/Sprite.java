@@ -246,7 +246,7 @@ public class Sprite{
 	 * Sets the angle of the image
 	 * @param angle
 	 */
-	public void rotate(int i)
+	public void rotate(double i)
 	{
 		angle = i;
 	}
@@ -298,15 +298,15 @@ public class Sprite{
 			// crop the frame
             BufferedImage i = image.getSubimage(sourceX, sourceY, (int)sourceWidth, (int)sourceHeight);
 
-            // scale the image
-            at.setToScale(finalWidth/sourceWidth, finalHeight/sourceHeight);
-
             // rotation
-            at.rotate(Math.toRadians(angle), i.getWidth() / 2, i.getHeight() / 2);
+            at.setToRotation(Math.toRadians(angle), i.getWidth() / 2, i.getHeight() / 2);
+            
+            // scale the image
+            at.scale(finalWidth/sourceWidth, finalHeight/sourceHeight);
+
             
             // applies the transformation to the cropped image
             AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-            i = op.filter(i, null);
             
             //draw the image to the graphics buffer
 			((Graphics2D) g).drawImage(i, op, drawX-offset, drawY);
