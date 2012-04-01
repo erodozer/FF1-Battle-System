@@ -56,11 +56,11 @@ public class Window {
 
 		Graphics g = window.getGraphics();
 
-		int oW = (int) image.getWidth();
-		int oH = (int) image.getHeight();
+		double oW = image.getWidth();
+		double oH = image.getHeight();
 
-		int[][] winStruct = {{0,0},{oW,oH},{w-oW,h-oH}};
-		int[][] dimensions = {{oW,oH}, {w-(oW*2), h-(oH*2)}, {oW, oH}};
+		double[][] winStruct = {{0,0},{oW,oH},{w-oW,h-oH}};
+		double[][] dimensions = {{oW,oH}, {w-(oW*2), h-(oH*2)}, {oW, oH}};
 		
 		
 		x = a;
