@@ -22,6 +22,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -62,7 +63,83 @@ public class SFont {
 		return s;
 	}
 	
-	
+	/**
+	 * Formats a string into multiple lines following the wrap mode passed
+	 * @param s		String to format
+	 * @param wrap	wrapping mode - 0 = none, 1 = crop, 2 = wrap
+	 * @return
+	 */
+	public String[] formatIntoLines(String s, int wrap, int width)
+	{
+		String[] processed;
+		
+		//no matter the wrapping mode, split lines by \n char
+		processed = s.split("\n");
+		
+		//no reason to crop or wrap if the width limit is unlimited
+		if (width < 0)
+			return processed;
+		
+		//crop the lines
+		if (wrap == 1)
+		{
+			for (int i = 0; i < processed.length; i++)
+			{
+				String line = processed[i].trim();
+				int r = line.length();
+				String cropped = line.substring(0, r);
+				while (fm.stringWidth(cropped) > width && r > 1)
+				{
+					r--;
+					cropped = line.substring(0, r);
+				}
+				//if the cropped string is smaller than the original string
+				// add elipsis to visually show the string is cropped.
+				if (r < line.length() && r > 1)
+				{
+					r -= 3;
+					//crop it some more to make sure the elipsis don't go outside the edge
+					while (fm.stringWidth(cropped+"...") > width && r > 1)
+					{
+						r--;
+						cropped = line.substring(0, r);
+					}
+					cropped = cropped+ "...";
+				}
+				processed[i] = cropped;
+			}
+		}
+		//wrap the lines
+		else if (wrap == 2)
+		{
+			ArrayList<String> lines = new ArrayList<String>();
+			for (int i = 0; i < processed.length; i++)
+			{
+				String line = processed[i].trim();
+				int r = 1;
+				int l = 0;
+				String cropped = line.substring(0, 0);
+				
+				while (r < line.length())
+				{
+					while (fm.stringWidth(cropped) < width)
+					{
+						String search = line.substring(l);
+						l = search.indexOf(" ");
+						r += l;
+						if (r > line.length())
+							break;
+						cropped = line.substring(0, r);
+					}
+					lines.add(line.substring(0, r-l));
+					line = line.substring(l);
+				}
+			}
+			processed = lines.toArray(new String[]{});
+		}
+		
+		return processed;
+	}
 
 	/**
 	 * Constructs a SFont	
