@@ -183,7 +183,7 @@ private class OrbWindow
 			orbs[i] = new Sprite("orbs.png", LENGTH, 2);
 			orbs[i].setX(w.getX() + 12 + 18*(i%(LENGTH/2)));
 			orbs[i].setY(w.getY() + 16 + 18*(i/(LENGTH/2)));
-			orbs[i].setFrame(i, 1);
+			orbs[i].setFrame(i+1, 1);
 		}
 	}
 	
