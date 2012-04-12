@@ -29,6 +29,8 @@ public class Window {
 	int x = 0;					
 	int y = 0;
 	
+	int fillOffset = 5;			//amount it needs to offset itself from the edge to fill with the fill color
+	
 	/**
 	 * Creates a window
 	 * @param a			x position
@@ -38,7 +40,12 @@ public class Window {
 	 */
 	public Window(int a, int b, int w, int h)
 	{
-		this(a, b, w, h, NES.BLACK);
+		this(a, b, w, h, null, 0);
+	}
+	
+	public Window(int a, int b, int w, int h, Color c)
+	{
+		this(a, b, w, h, c, 0);
 	}
 	
 	/**
@@ -49,19 +56,10 @@ public class Window {
 	 * @param h			height
 	 * @param c			window's background color
 	 */
-	public Window(int a, int b, int w, int h, Color c)
+	public Window(int a, int b, int w, int h, Color c, int offset)
 	{
 		window = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-		image = new Sprite("hud/window.png", 3, 3);
-
-		Graphics g = window.getGraphics();
-
-		double oW = image.getWidth();
-		double oH = image.getHeight();
-
-		double[][] winStruct = {{0,0},{oW,oH},{w-oW,h-oH}};
-		double[][] dimensions = {{oW,oH}, {w-(oW*2), h-(oH*2)}, {oW, oH}};
-		
+		image = new Sprite("hud/window.png", 3, 3);		
 		
 		x = a;
 		y = b;
@@ -69,9 +67,27 @@ public class Window {
 		height = h;
 		bg = c;
 
-		g.setColor(bg);
-		g.fillRect(0, 0, w, h);
+		genWindow();
+	}
 
+	private void genWindow()
+	{
+		Graphics g = window.getGraphics();
+
+		double oW = image.getWidth();
+		double oH = image.getHeight();
+
+		int w = width;
+		int h = height;
+		
+		double[][] winStruct = {{0,0},{oW,oH},{w-oW,h-oH}};
+		double[][] dimensions = {{oW,oH}, {w-(oW*2), h-(oH*2)}, {oW, oH}};
+	
+		if (bg != null)
+		{
+			g.setColor(bg);
+			g.fillRect(0, 0, w, h);
+		}
 		
 		for (int y = 0; y < 3; y++)
 			for (int x = 0; x < 3; x++)
@@ -82,10 +98,9 @@ public class Window {
 				image.scale(dimensions[x][0], dimensions[y][1]);
 				image.paint(g);
 			}
-
-	
+		
 	}
-
+	
 	/**
 	 * @return	x position
 	 */
