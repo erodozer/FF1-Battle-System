@@ -26,6 +26,9 @@ public class Attack extends Command {
 	 */
 	@Override
 	public void execute() {
+		//make sure the animation is in relation to the target sprite
+		anim.setRelation(invoker.getTarget().getSprite());		
+	
 	    //reset damage
 		damage = 0;
 		hits = (1+(invoker.getAcc()/32))*1;

@@ -31,12 +31,12 @@ public class EngageState extends GameState {
 			((Player)activeActor).setState(Player.WALK);
 			((Player)activeActor).setMoving(0);
 		}
+		if (activeActor.getAlive())
+			activeActor.execute();
 	}
 
 	@Override
 	public void finish() {
-	   if (activeActor.getAlive())
-	       activeActor.execute();
 	   parent.setNextState();
 	}
 
@@ -44,11 +44,12 @@ public class EngageState extends GameState {
 	public void handle() {
 	    if (activeActor instanceof Player)
 		{
-			if (((Player)activeActor).getMoving() == 0 || ((Player)activeActor).getMoving() == 2)
+	    	Player p = ((Player)activeActor);
+			if (p.getMoving() == 0 || p.getMoving() == 2)
 				return;
-			else if (((Player)activeActor).getMoving() == 1)
+			else if (p.getMoving() == 1 && p.getCommand().getAnimation().isDone())
 				((Player)activeActor).setMoving(2);
-			else if (((Player)activeActor).getMoving() == 3)
+			else if (p.getMoving() == 3)
 				finish();
 		}
 		else

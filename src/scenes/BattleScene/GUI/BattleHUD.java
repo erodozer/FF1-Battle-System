@@ -3,6 +3,12 @@ package scenes.BattleScene.GUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+
+import actors.Player;
+
+import commands.Command;
+
+import scenes.GameState;
 import scenes.GameSystem;
 import scenes.HUD;
 import scenes.BattleScene.System.*;
@@ -95,17 +101,19 @@ public class BattleHUD extends HUD{
 		pstatd.paint(g);
 		esprited.paint(g);
 		
-		if (parent.getState() instanceof GameOverState)
+		GameState gs = parent.getState();
+		
+		if (gs instanceof GameOverState)
 		{
 			gd.paint(g);
 			return;
 		}
-		if (parent.getState() instanceof VictoryState)
+		if (gs instanceof VictoryState)
 		{
 			vd.paint(g);
 			return;
 		}
-		if (parent.getState() instanceof IssueState)
+		if (gs instanceof IssueState)
 		{
 			elistd.paint(g);
 			if (!((IssueState)parent.getState()).targetSelecting)
@@ -120,18 +128,32 @@ public class BattleHUD extends HUD{
 				}
 			}
 		}
-		else if (parent.getState() instanceof MessageState)
+		else if (gs instanceof MessageState)
 		{
 			md.update((MessageState)parent.getState());
 			md.paint(g);
 		}
 		
-		if (parent.getState() instanceof IssueState && ((IssueState)parent.getState()).targetSelecting)
+		if (gs instanceof EngageState)
+		{
+			if (parent.getActiveActor() instanceof Player)
+			{
+				Player p = (Player)parent.getActiveActor();
+				Command c = p.getCommand();
+				if (c != null)
+					c.getAnimation().paint(g);
+			}
+		}
+		
+		if (gs instanceof IssueState)
 		{
 			IssueState is = ((IssueState)parent.getState());
-			arrow.setX(is.targets[is.index].getSprite().getX());
-			arrow.setY(is.targets[is.index].getSprite().getY());
-			arrow.paint(g);
+			if (is.targetSelecting)
+			{
+				arrow.setX(is.targets[is.index].getSprite().getX());
+				arrow.setY(is.targets[is.index].getSprite().getY());
+				arrow.paint(g);
+			}
 		}
 	}
 }

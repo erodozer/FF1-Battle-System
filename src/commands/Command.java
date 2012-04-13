@@ -26,7 +26,7 @@ public abstract class Command {
 	 */
 	public void start()
 	{
-		invoker.setSpd(invoker.getSpd()+speedBonus);		
+		invoker.setSpd(invoker.getSpd()+speedBonus);	
 	}
 	
 	/**
@@ -44,6 +44,8 @@ public abstract class Command {
 	public void reset()
 	{
 		invoker.setSpd(invoker.getSpd()-speedBonus);
+		if (anim != null)
+			anim.reset();
 	}
 		
 	/**
@@ -97,5 +99,14 @@ public abstract class Command {
     public void setHits(int i)
     {
         hits = i;
+    }
+    
+    /**
+     * Gets the animation for rendering
+     * @return
+     */
+    public Animation getAnimation()
+    {
+    	return anim;
     }
 }

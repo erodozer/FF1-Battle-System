@@ -81,7 +81,9 @@ public class PartySpriteDisplay extends Sprite{
 				}
 				//sprite stands still
 				else if (p.getMoving() == 1)
+				{
 					p.setX(window.getX() + 6);
+				}
 				//sprite moves back
 				else if (p.getMoving() == 2)
 				{

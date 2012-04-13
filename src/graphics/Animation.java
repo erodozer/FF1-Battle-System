@@ -90,9 +90,9 @@ public class Animation {
 	public void setRelation(Sprite s)
 	{
 		anchor = s;
-		for (Frame[] fList : frames)
-			for (Frame f : fList)
-				f.setRelation(anchor);
+		for (int i = 0; i < frames.size(); i++)
+			for (int n = 0; n < frames.get(i).length; n++)
+				frames.get(i)[n].setRelation(anchor);
 	}
 	
 	/**
@@ -123,14 +123,52 @@ public class Animation {
 		{
 			//if the current frame is greater than the amount of frames there are,
 			// roll back to 0 to repeat
-			if (currentFrame >= frames.size() && loop)
-				currentFrame = 0;
+			if (currentFrame >= frames.size())
+			{
+				if (loop)
+					reset();
+				else
+					return;
+			}
 			
 			Frame[] line = frames.get(currentFrame);
 			for (int x = 0; x < line.length; x++)
 				line[x].paint(g);
 			currentFrame++;
 		}
+	}
+	
+	/**
+	 * Resets the animation to its first frame
+	 */
+	public void reset()
+	{
+		currentFrame  = 1;
+	}
+	
+	/**
+	 * @return	the index of the current frame of animation
+	 */
+	public int getCurrentFrame()
+	{
+		return currentFrame;
+	}
+	
+	/**
+	 * @return	the number of frames in the animation
+	 */
+	public int getNumberOfFrame()
+	{
+		return frames.size();
+	}
+	
+	/**
+	 * Reports if the animation is done playing through
+	 * @return
+	 */
+	public boolean isDone()
+	{
+		return currentFrame >= frames.size();
 	}
 	
 	/**
