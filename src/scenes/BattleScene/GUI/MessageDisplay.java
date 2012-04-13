@@ -9,7 +9,7 @@ import commands.*;
 
 
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 
 /**
  * MessageDisplay
@@ -19,18 +19,18 @@ import graphics.Window;
  */
 public class MessageDisplay extends Sprite{
 	
-	Window[] windows;
+	SWindow[] windows;
 	MessageState message;
 	
 	public MessageDisplay(int x, int y)
 	{
 		super(null);
-		windows = new Window[5];
-		windows[0] = new Window(x,    y,    84,  34);
-		windows[1] = new Window(x+82, y,    90, 34);
-		windows[2] = new Window(x,    y+24, 84,  34);
-		windows[3] = new Window(x+82, y+24, 90, 34);
-		windows[4] = new Window(x, 	  y+48, 194, 34);
+		windows = new SWindow[5];
+		windows[0] = new SWindow(x,    y,    84,  34);
+		windows[1] = new SWindow(x+82, y,    90, 34);
+		windows[2] = new SWindow(x,    y+24, 84,  34);
+		windows[3] = new SWindow(x+82, y+24, 90, 34);
+		windows[4] = new SWindow(x, 	  y+48, 194, 34);
 
 	}
 	

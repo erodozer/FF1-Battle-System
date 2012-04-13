@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
  *
  *	Graphical frame that is designed to look like it's holding content
  */
-public class Window {
+public class SWindow {
 	
 	Color bg;					//background color of the window
 	
@@ -38,12 +38,12 @@ public class Window {
 	 * @param w			width
 	 * @param h			height
 	 */
-	public Window(int a, int b, int w, int h)
+	public SWindow(int a, int b, int w, int h)
 	{
 		this(a, b, w, h, null, 0);
 	}
 	
-	public Window(int a, int b, int w, int h, Color c)
+	public SWindow(int a, int b, int w, int h, Color c)
 	{
 		this(a, b, w, h, c, 0);
 	}
@@ -56,7 +56,7 @@ public class Window {
 	 * @param h			height
 	 * @param c			window's background color
 	 */
-	public Window(int a, int b, int w, int h, Color c, int offset)
+	public SWindow(int a, int b, int w, int h, Color c, int offset)
 	{
 		window = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		image = new Sprite("hud/window.png", 3, 3);		

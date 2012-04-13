@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 
 /**
  * GameOverDisplay
@@ -14,12 +14,12 @@ import graphics.Window;
  */
 public class GameOverDisplay extends Sprite{
 	
-	Window window;
+	SWindow window;
 	
 	public GameOverDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 90, 32);
+		window = new SWindow(x, y, 90, 32);
 		window.setColor(Color.red);
 
 	}

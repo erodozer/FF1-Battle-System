@@ -293,7 +293,7 @@ public class SFont {
 	 * @param y				y position
 	 * @param anchor		Window to anchor relative position to
 	 */
-	public void drawString(Graphics g, String text, int x, int y, Window anchor)
+	public void drawString(Graphics g, String text, int x, int y, SWindow anchor)
 	{
 		drawString(g, text, x, y, 0, null, anchor);
 	}
@@ -308,7 +308,7 @@ public class SFont {
 	 * @param alignment		alignment of the font - 0 = left, 1 = center, 2 = right
 	 * @param anchor		Window to anchor relative position to
 	 */
-	public void drawString(Graphics g, String text, int x, int y, int alignment, Window anchor)
+	public void drawString(Graphics g, String text, int x, int y, int alignment, SWindow anchor)
 	{
 		drawString(g, text, x, y, alignment, null, anchor);
 	}
@@ -327,7 +327,7 @@ public class SFont {
 	 * @param c				color of the font
 	 * @param anchor		Window to anchor relative position to
 	 */
-	public void drawString(Graphics g, String text, int x, int y, int alignment, Color c, Window anchor)
+	public void drawString(Graphics g, String text, int x, int y, int alignment, Color c, SWindow anchor)
 	{
 		if (anchor != null)
 		{

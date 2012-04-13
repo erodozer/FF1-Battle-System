@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import actors.Enemy;
 
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 import groups.Formation;
 
 public class EnemyListDisplay extends Sprite{
 
-	Window window;
+	SWindow window;
 	ArrayList<String> names;
 	
 	public EnemyListDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 88, 80);
+		window = new SWindow(x, y, 88, 80);
 		
 		names = new ArrayList<String>();
 	}

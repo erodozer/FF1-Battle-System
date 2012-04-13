@@ -20,16 +20,16 @@ import engine.GameScreen;
 import graphics.NES;
 import graphics.Sprite;
 import graphics.StringUtils;
-import graphics.Window;
+import graphics.SWindow;
 import groups.Party;
 
 public class ShopGUI extends HUD {
 
 	//windows
-	Window nameWindow;
-	Window greetWindow;
-	Window itemSelect;
-	Window moneyWindow;
+	SWindow nameWindow;
+	SWindow greetWindow;
+	SWindow itemSelect;
+	SWindow moneyWindow;
 	
 	ModeWindow mw;			//select shop mode
 	
@@ -50,11 +50,11 @@ public class ShopGUI extends HUD {
 		super();
 		parent = s;
 		shop = parent.getShop();
-		nameWindow = new Window(116, 30, 104, 68);
-		greetWindow = new Window(5, 25, 74, 96, NES.BLUE);
+		nameWindow = new SWindow(116, 30, 104, 68);
+		greetWindow = new SWindow(5, 25, 74, 96, NES.BLUE);
 		mw = new ModeWindow(this, 45, 137);
-		itemSelect = new Window(175, 9, 74, 176, NES.BLUE);
-		moneyWindow = new Window(143, 185, 82, 32, NES.GREEN);
+		itemSelect = new SWindow(175, 9, 74, 176, NES.BLUE);
+		moneyWindow = new SWindow(143, 185, 82, 32, NES.GREEN);
 		
 		greeting = StringUtils.wrap(parent.getShop().getGreeting(), GameScreen.fontMetrics, greetWindow.getWidth()-15).toArray(new String[]{});
 		
@@ -147,7 +147,7 @@ public class ShopGUI extends HUD {
 	 */
 	class ModeWindow
 	{
-		Window window;
+		SWindow window;
 		
 		//entrance menu
 
@@ -161,7 +161,7 @@ public class ShopGUI extends HUD {
 			parent = p;
 			x = a;
 			y = b;
-			window = new Window(x, y, 74, 80, NES.BLUE);
+			window = new SWindow(x, y, 74, 80, NES.BLUE);
 		}
 		
 		public int[] getArrowPos(int index)

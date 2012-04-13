@@ -8,13 +8,13 @@ import scenes.CreationScene.System.NamingState;
 
 import graphics.NES;
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 
 public class NamingDisplay extends Sprite {
 
 	CreationSystem parent;
-	Window nameWindow;
-	Window inputWindow;
+	SWindow nameWindow;
+	SWindow inputWindow;
 	
 	char[][] grid;
 	String name;
@@ -26,8 +26,8 @@ public class NamingDisplay extends Sprite {
 		super(null);
 		parent = p;
 
-		nameWindow = new Window(108, 15, 55, 34, Color.red);
-		inputWindow = new Window(40, 62, 183, 160, NES.BLUE);
+		nameWindow = new SWindow(108, 15, 55, 34, Color.red);
+		inputWindow = new SWindow(40, 62, 183, 160, NES.BLUE);
 		
 		grid = NamingState.letters;
 		name = "";

@@ -2,7 +2,7 @@ package scenes.BattleScene.GUI;
 
 import graphics.SFont;
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 
 import java.awt.Graphics;
 
@@ -17,7 +17,7 @@ import scenes.BattleScene.System.VictoryState;
  */
 public class VictoryDisplay extends Sprite{
 	
-	Window[] windows;
+	SWindow[] windows;
 	Sprite arrow;
 	BattleSystem parent;	
 	
@@ -27,12 +27,12 @@ public class VictoryDisplay extends Sprite{
 	public VictoryDisplay(int x, int y)
 	{
 		super(null);
-		windows = new Window[]{new Window(x, y+48, 180, 34), 		//displays message
-							   new Window(x, y, 90, 34), 			//displays "experience" or person's name
-							   new Window(x+82, y, 90, 34), 		//displays exp gained	or "leveled up!"
-							   new Window(x, y+24, 90, 34), 		//displays "g"
-							   new Window(x+82, y+24, 90, 34),		//displays g gained
-							   new Window(x, y+24, 180, 34)			//displays stat gained
+		windows = new SWindow[]{new SWindow(x, y+48, 180, 34), 		//displays message
+							   new SWindow(x, y, 90, 34), 			//displays "experience" or person's name
+							   new SWindow(x+82, y, 90, 34), 		//displays exp gained	or "leveled up!"
+							   new SWindow(x, y+24, 90, 34), 		//displays "g"
+							   new SWindow(x+82, y+24, 90, 34),		//displays g gained
+							   new SWindow(x, y+24, 180, 34)			//displays stat gained
 							};		
 	}
 

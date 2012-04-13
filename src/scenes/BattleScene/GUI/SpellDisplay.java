@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import actors.Actor;
 
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 import scenes.BattleScene.System.*;
 
 /**
@@ -17,7 +17,7 @@ import scenes.BattleScene.System.*;
  */
 public class SpellDisplay extends Sprite{
 	
-	Window window;
+	SWindow window;
 	Sprite arrow;
 	int index = 0;
 	int range = 0;
@@ -27,7 +27,7 @@ public class SpellDisplay extends Sprite{
 	public SpellDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 178, 80);
+		window = new SWindow(x, y, 178, 80);
 		arrow = new Sprite("hud/selectarrow.png");
 
 	}

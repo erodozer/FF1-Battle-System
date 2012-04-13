@@ -7,7 +7,7 @@ import engine.Engine;
 import graphics.NES;
 import graphics.SFont;
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 import groups.Party;
 
 /**
@@ -22,8 +22,8 @@ public class InventoryGUI extends HUD
 	Party p;								//party
 	
 	ItemWindow itemWindow;					//shows party's gold
-	Window titleWindow;						//shows menu selection
-	Window messageWindow;					//little message window
+	SWindow titleWindow;						//shows menu selection
+	SWindow messageWindow;					//little message window
 	MenuGUI parentGUI; 						//core gui for the menu system
 	
 	SFont f = SFont.loadFont("default");	
@@ -37,10 +37,10 @@ public class InventoryGUI extends HUD
 	{
 		parentGUI = parent;
 		p = e.getParty();
-		titleWindow = new Window(10, 5, 80, 38, NES.BLUE);
+		titleWindow = new SWindow(10, 5, 80, 38, NES.BLUE);
 		itemWindow = new ItemWindow(p, 10,22);
 		
-		messageWindow = new Window(10, 168, 232, 48, NES.BLUE);
+		messageWindow = new SWindow(10, 168, 232, 48, NES.BLUE);
 		
 	}
 	
@@ -98,7 +98,7 @@ public class InventoryGUI extends HUD
 		int x;
 		int y;
 
-		Window w;
+		SWindow w;
 		Sprite[] orbs;
 		Party p;
 		String[] itemList;
@@ -112,7 +112,7 @@ public class InventoryGUI extends HUD
 			this.p = p;
 			this.x = x;
 			this.y = y;
-			w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
+			w = new SWindow(x, y, WIDTH, HEIGHT, NES.BLUE);
 			itemList = p.getItemList();
 		}
 

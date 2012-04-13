@@ -4,13 +4,13 @@ import java.awt.Graphics;
 import actors.Enemy;
 
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 
 import scenes.BattleScene.System.*;
 
 public class EnemySpriteDisplay extends Sprite{
 
-	Window window;
+	SWindow window;
 	Sprite background;
 	
 	//distance away from the window boarder the background should be drawn
@@ -22,7 +22,7 @@ public class EnemySpriteDisplay extends Sprite{
 	public EnemySpriteDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 132, 144);
+		window = new SWindow(x, y, 132, 144);
 		background = new Sprite(null);
 		update();
 	}

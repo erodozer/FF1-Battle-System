@@ -10,7 +10,7 @@ import engine.Engine;
 import graphics.NES;
 import graphics.SFont;
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 import groups.Party;
 
 /**
@@ -26,8 +26,8 @@ public class MainGUI extends HUD
 	PlayerWindow[] statWindows;				//shows different player stats
 	OrbWindow oWin;							//shows the party's orbs collected
 	
-	Window goldWindow;						//shows party's gold
-	Window menuWindow;						//shows menu selection
+	SWindow goldWindow;						//shows party's gold
+	SWindow menuWindow;						//shows menu selection
 	
 	MenuGUI parentGUI; 						//core gui for the menu system
 	
@@ -45,9 +45,9 @@ public class MainGUI extends HUD
 		statWindows = new PlayerWindow[p.size()];
 		for (int i = 0; i < p.size(); i++)
 			statWindows[i] = new PlayerWindow(p.get(i), 90+(PlayerWindow.WIDTH-2)*(i%2), 1+(PlayerWindow.HEIGHT)*(i/2));
-		goldWindow = new Window(8, 73, 84, 40, NES.BLUE);
+		goldWindow = new SWindow(8, 73, 84, 40, NES.BLUE);
 		oWin = new OrbWindow(p, 12, 9);
-		menuWindow = new Window(17, 113, 66, 112, NES.BLUE);
+		menuWindow = new SWindow(17, 113, 66, 112, NES.BLUE);
 	}
 	
 	/**
@@ -107,7 +107,7 @@ private class PlayerWindow
 	int x;
 	int y;
 	
-	Window w;
+	SWindow w;
 	Sprite s;
 	Player p;
 	
@@ -119,7 +119,7 @@ private class PlayerWindow
 		this.p = p;
 		this.x = x;
 		this.y = y;
-		w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
+		w = new SWindow(x, y, WIDTH, HEIGHT, NES.BLUE);
 	}
 	
 	public int getX()
@@ -168,14 +168,14 @@ private class OrbWindow
 	public static final int HEIGHT = 64;
 	public static final int LENGTH = 6;		//amount of orbs to be displayed
 	
-	Window w;
+	SWindow w;
 	Sprite[] orbs;
 	Party p;
 	
 	public OrbWindow(Party p, int x, int y)
 	{
 		this.p = p;
-		w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
+		w = new SWindow(x, y, WIDTH, HEIGHT, NES.BLUE);
 		
 		orbs = new Sprite[LENGTH];
 		for (int i = 0; i < LENGTH; i++)

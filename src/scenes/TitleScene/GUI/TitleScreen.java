@@ -7,7 +7,7 @@ import scenes.TitleScene.System.TitleSystem;
 import scenes.TitleScene.System.TitleState;
 
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 
 /**
  * TitleScreen
@@ -18,7 +18,7 @@ import graphics.Window;
 public class TitleScreen extends Sprite {
 
 	Sprite background;		//title screen background image
-	Window window;			//window frame for displaying commands
+	SWindow window;			//window frame for displaying commands
 	Sprite arrow;			//arrow showing which command is chosen
 	
 	int index;				//command index
@@ -31,7 +31,7 @@ public class TitleScreen extends Sprite {
 		super(null);
 		
 		background = new Sprite("titlebackground.png");
-		window = new Window(8, 160, 90, 60);
+		window = new SWindow(8, 160, 90, 60);
 		arrow = new Sprite("hud/selectarrow.png");
 	}
 

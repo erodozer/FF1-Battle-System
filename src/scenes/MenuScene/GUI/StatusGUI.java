@@ -9,7 +9,7 @@ import engine.Engine;
 import graphics.NES;
 import graphics.SFont;
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 import groups.Party;
 
 /**
@@ -24,12 +24,12 @@ public class StatusGUI extends HUD
 	Player p;								//player
 	Sprite pSprite;							//player sprite
 	
-	Window nameWindow;						//shows name of the player
-	Window lvlWindow;						//shows the level of the player
-	Window jobWindow;						//shows sprite and job of player
-	Window expWindow;						//shows exp requirement to level
-	Window statWindow;						//stat window
-	Window bttlWindow;						//battle stats
+	SWindow nameWindow;						//shows name of the player
+	SWindow lvlWindow;						//shows the level of the player
+	SWindow jobWindow;						//shows sprite and job of player
+	SWindow expWindow;						//shows exp requirement to level
+	SWindow statWindow;						//stat window
+	SWindow bttlWindow;						//battle stats
 	
 	MenuGUI parentGUI; 						//core gui for the menu system
 	
@@ -42,15 +42,15 @@ public class StatusGUI extends HUD
 	public StatusGUI(MenuGUI parent)
 	{
 		parentGUI = parent;
-		nameWindow = new Window(7, 17, 66, 40, NES.BLUE);
+		nameWindow = new SWindow(7, 17, 66, 40, NES.BLUE);
 		
-		jobWindow = new Window(71, 5, 114, 52, NES.BLUE);
+		jobWindow = new SWindow(71, 5, 114, 52, NES.BLUE);
 		
-		lvlWindow = new Window(183, 17, 66, 40, NES.BLUE);
-		expWindow = new Window(31, 57, 186, 56, NES.BLUE);
-		statWindow = new Window(7, 113, 114, 104, NES.BLUE);
+		lvlWindow = new SWindow(183, 17, 66, 40, NES.BLUE);
+		expWindow = new SWindow(31, 57, 186, 56, NES.BLUE);
+		statWindow = new SWindow(7, 113, 114, 104, NES.BLUE);
 		
-		bttlWindow = new Window(119, 113, 130, 104, NES.BLUE);
+		bttlWindow = new SWindow(119, 113, 130, 104, NES.BLUE);
 	}
 	
 	/**

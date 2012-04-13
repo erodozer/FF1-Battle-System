@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import actors.Player;
 import engine.Engine;
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 
 /**
  * PartyStatusDisplay
@@ -18,14 +18,14 @@ public class PartyStatusDisplay extends Sprite{
 
 	//party status display consists of multiple windows, 
 	// one for each character in the party
-	Window[] windows;
+	SWindow[] windows;
 	
 	public PartyStatusDisplay(int x, int y)
 	{
 		super(null);
-		windows = new Window[Engine.getInstance().getParty().size()];
+		windows = new SWindow[Engine.getInstance().getParty().size()];
 		for (int i = 0; i < windows.length; i++)
-			windows[i] = new Window(x, y + 48*i, 50, 56);
+			windows[i] = new SWindow(x, y + 48*i, 50, 56);
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class PartyStatusDisplay extends Sprite{
 		//draws a status window for each member
 		for (int i = windows.length-1; i >= 0; i--)
 		{
-			Window w = windows[i];
+			SWindow w = windows[i];
 			Player p = Engine.getInstance().getParty().get(i);
 			w.paint(g);
 			g.drawString(p.getName(), w.getX() + 8, w.getY() + 24);

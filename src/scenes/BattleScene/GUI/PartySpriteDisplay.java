@@ -6,7 +6,7 @@ import actors.*;
 
 import engine.Engine;
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 import scenes.BattleScene.System.*;
 
 /**
@@ -17,7 +17,7 @@ import scenes.BattleScene.System.*;
  */
 public class PartySpriteDisplay extends Sprite{
 
-	Window window;
+	SWindow window;
 	Sprite background;
 	BattleSystem parent;	
 	
@@ -28,7 +28,7 @@ public class PartySpriteDisplay extends Sprite{
 	public PartySpriteDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 65, 144);
+		window = new SWindow(x, y, 65, 144);
 		background = new Sprite(null);
 		//Sets all the sprites to their initial positions
 		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)

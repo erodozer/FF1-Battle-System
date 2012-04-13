@@ -6,7 +6,7 @@ import actors.Player;
 
 import graphics.NES;
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 
 /**
  * PlayerWindow
@@ -17,7 +17,7 @@ import graphics.Window;
  */
 public class PlayerWindow extends Sprite {
 
-	Window w;
+	SWindow w;
 	Player p;
 	
 	/**
@@ -26,7 +26,7 @@ public class PlayerWindow extends Sprite {
 	public PlayerWindow(Player p, int x, int y)
 	{
 		super(null);
-		w = new Window(x, y, 86, 84, NES.BLUE);
+		w = new SWindow(x, y, 86, 84, NES.BLUE);
 		this.x = x;
 		this.y = y;
 		this.p = p;

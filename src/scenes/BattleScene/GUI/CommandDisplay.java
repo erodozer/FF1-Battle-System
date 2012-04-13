@@ -7,7 +7,7 @@ import scenes.BattleScene.System.*;
 import actors.Actor;
 
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 
 /**
  * CommandDisplay
@@ -17,7 +17,7 @@ import graphics.Window;
  */
 public class CommandDisplay extends Sprite{
 	
-	Window window;
+	SWindow window;
 	Sprite arrow;
 	int index;
 	
@@ -26,7 +26,7 @@ public class CommandDisplay extends Sprite{
 	public CommandDisplay(int x, int y)
 	{
 		super(null);
-		window = new Window(x, y, 108, 80);
+		window = new SWindow(x, y, 108, 80);
 		arrow = new Sprite("hud/selectarrow.png");
 
 	}

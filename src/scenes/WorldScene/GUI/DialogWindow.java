@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import engine.ContentPanel;
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 
 /**
  * DialogWindow
@@ -15,7 +15,7 @@ import graphics.Window;
  */
 public class DialogWindow extends Sprite {
 	
-	Window window;			//frame
+	SWindow window;			//frame
 	int index;				//range of lines to display
 	String[] dialog;		//dialog to display
 	
@@ -27,7 +27,7 @@ public class DialogWindow extends Sprite {
 	{
 		super(null);
 		
-		window = new Window(0, 0, ContentPanel.INTERNAL_RES_W, 96, Color.BLUE);
+		window = new SWindow(0, 0, ContentPanel.INTERNAL_RES_W, 96, Color.BLUE);
 		dialog = new String[0];
 	}
 	

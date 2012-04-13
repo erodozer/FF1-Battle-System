@@ -11,7 +11,7 @@ import engine.Engine;
 import graphics.NES;
 import graphics.SFont;
 import graphics.Sprite;
-import graphics.Window;
+import graphics.SWindow;
 import groups.Party;
 
 /**
@@ -25,7 +25,7 @@ public class EquipmentGUI extends HUD
 	Engine e = Engine.getInstance();		//engine
 	Party p;								//party
 	
-	Window titleWindow;						//shows menu selection
+	SWindow titleWindow;						//shows menu selection
 	ModeWindow modeWindow;					//mode window
 	EquipmentWindow[] eWindows;				//equipment windows
 	MenuGUI parentGUI; 						//core gui for the menu system
@@ -41,7 +41,7 @@ public class EquipmentGUI extends HUD
 		parentGUI = parent;
 		this.parent = parentGUI.getParent();
 		p = e.getParty();
-		titleWindow = new Window(7, 1, 58, 32, NES.BLUE);
+		titleWindow = new SWindow(7, 1, 58, 32, NES.BLUE);
 		modeWindow = new ModeWindow(63, 1);
 		eWindows = new EquipmentWindow[p.size()];
 		for (int i = 0; i < eWindows.length; i++)
@@ -104,18 +104,18 @@ public class EquipmentGUI extends HUD
 	 * 
 	 * Window that displays modes of interaction with equipment in the menu
 	 */
-	class ModeWindow extends Window
+	class ModeWindow extends SWindow
 	{
 		public static final int WIDTH = 186;
 		public static final int HEIGHT = 32;
 
-		Window w;
+		SWindow w;
 
 		SFont f = SFont.loadFont("default");
 		
 		public ModeWindow(int x, int y) {
 			super(x, y, 1, 1);
-			w = new Window(x, y, WIDTH, HEIGHT, NES.BLUE);
+			w = new SWindow(x, y, WIDTH, HEIGHT, NES.BLUE);
 		}
 
 		public void paint(Graphics g) {
@@ -133,10 +133,10 @@ public class EquipmentGUI extends HUD
 	 * 
 	 * Window the name of the player and their equipment
 	 */
-	class EquipmentWindow extends Window
+	class EquipmentWindow extends SWindow
 	{
-		Window name;
-		Window items;
+		SWindow name;
+		SWindow items;
 
 		Player p;
 		HUD parent;
@@ -147,8 +147,8 @@ public class EquipmentGUI extends HUD
 			super(x, y, 1, 1);
 			parent = parentGUI;
 			this.p = p;
-			name = new Window(x, y, 66, 32, NES.BLUE);
-			items = new Window(x+56, y, 186, 48, NES.BLUE);
+			name = new SWindow(x, y, 66, 32, NES.BLUE);
+			items = new SWindow(x+56, y, 186, 48, NES.BLUE);
 		}
 
 		public void paint(Graphics g) {
