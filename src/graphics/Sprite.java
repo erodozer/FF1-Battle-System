@@ -12,6 +12,8 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import engine.ContentPanel;
+
 /**
  * Sprite
  * @author nhydock
@@ -108,6 +110,9 @@ public class Sprite{
 	 */
 	public void setX(double i)
 	{
+		//assume position on screen is a percentage if between 0 and 1 inclusive
+		if (i >= 0 && i <= 1)
+			i *= ContentPanel.INTERNAL_RES_W;
 		x = i;
 	}
 
@@ -125,6 +130,9 @@ public class Sprite{
 	 */
 	public void setY(double i)
 	{
+		//assume position on screen is a percentage if between 0 and 1 inclusive
+		if (i >= 0 && i <= 1)
+			i *= ContentPanel.INTERNAL_RES_H;
 		y = i;
 	}
 	
@@ -238,6 +246,10 @@ public class Sprite{
 	 */
 	public void scale(double w, double h)
 	{
+		if (w >= 0 && w <= 1)
+			w *= rect[2];
+		if (h >= 0 && h <= 1)
+			h *= rect[3];
 		scaleW = w;
 		scaleH = h;
 	}

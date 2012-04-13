@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -18,6 +19,21 @@ public class Animation {
 	Sprite sheet;					//the sprite sheet to use for animation
 	ArrayList<Frame[]> frames;		//list of lines of animation
 	
+	//type of anchoring relation, 
+	// because animations were mainly designed with battle in mind,
+	// the types are relative for that kind of system
+	// 0 = screen
+	//	animation is applied in relation to the entire screen 
+	// 1 = target
+	//  animation is in relation to the actor being attacked
+	// 2 = parent
+	//  animation is in relation to the actor using the animation
+	//Don't worry, these values will be allowed to be overriden in the
+	// scripting system, these only provide defaults for use in battle
+	int relationType = 0;	
+	
+	Sprite anchor;
+	
 	int currentFrame = 0;			//current frame of animation
 	
 	
@@ -31,16 +47,30 @@ public class Animation {
 		try {
 			File file = new File("data/animation/"+f+".anim");	
 			Scanner s = new Scanner(file);
+			System.out.println(file);
+			int Frames = s.nextInt();
+			sheet = new Sprite("animation/"+f+".png", Frames, 1);	//first line is the name of the image file
+																	//line two
+			System.out.println(Frames);
 			
-			sheet = new Sprite("animation/"+f+".png", s.nextInt(), 1);		//first line is the name of the image file
-																//line two
 			frames = new ArrayList<Frame[]>();
+			s.nextLine();	//moves the cursor to the end of the line
+			
+			//figures out the relation type for anchoring
+			String r = s.nextLine();
+			if (r.equals("parent"))
+				relationType = 2;
+			else if (r.equals("target"))
+				relationType = 1;
+			else
+				relationType = 0;
+			
 			//each line after the first two is a line of frame information for the animation
 			while (s.hasNextLine())
 			{
-				String[] fList = s.nextLine().split("|");		//splits the next line into its different frames
+				String line = s.nextLine();
+				String[] fList = line.split("[|]");		//splits the next line into its different frames
 				Frame[] fR = new Frame[fList.length];			//the different frames played during the frame of animation
-				
 				//loads all the images for the line of animation
 				for (int i = 0; i < fR.length; i++)	
 					fR[i] = new Frame(sheet, fList[i]);
@@ -51,6 +81,26 @@ public class Animation {
 			
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Sets the anchoring sprite for the animation
+	 * @param s	sprite to anchor to
+	 */
+	public void setRelation(Sprite s)
+	{
+		anchor = s;
+		for (Frame[] fList : frames)
+			for (Frame f : fList)
+				f.setRelation(anchor);
+	}
+	
+	/**
+	 * @return the relation anchoring type of the animation for use in battle
+	 */
+	public int getRelationType()
+	{
+		return relationType;
 	}
 	
 	/**
@@ -79,6 +129,7 @@ public class Animation {
 			Frame[] line = frames.get(currentFrame);
 			for (int x = 0; x < line.length; x++)
 				line[x].paint(g);
+			currentFrame++;
 		}
 	}
 	
@@ -98,6 +149,8 @@ public class Animation {
 		double height;			//height of the frame
 		double angle;			//rotation angle of the frame
 		
+		Sprite parent;			//relative sprite for position anchoring
+		
 		public Frame(Sprite s, String line)
 		{
 			sheet = s;
@@ -111,12 +164,22 @@ public class Animation {
 			angle = Integer.parseInt(prop[5]);
 		}
 		
+		/**
+		 * Will set all points relative to said sprite
+		 * @param s
+		 */
+		public void setRelation(Sprite s)
+		{
+			parent = s;
+		}
+		
 		public void paint(Graphics g)
 		{
 			sheet.setFrame(frame, 1);
-			sheet.setX(xPos);
-			sheet.setY(yPos);
+			sheet.setX(((parent != null)?parent.getX():0)+xPos);
+			sheet.setY(((parent != null)?parent.getY():0)+yPos);
 			sheet.scale(width, height);
+			sheet.rotate(angle);
 			sheet.paint(g);
 		}
 	}
