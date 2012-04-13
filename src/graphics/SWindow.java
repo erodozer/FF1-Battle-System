@@ -40,7 +40,7 @@ public class SWindow {
 	 */
 	public SWindow(int a, int b, int w, int h)
 	{
-		this(a, b, w, h, null, 0);
+		this(a, b, w, h, NES.BLACK, 0);
 	}
 	
 	public SWindow(int a, int b, int w, int h, Color c)
