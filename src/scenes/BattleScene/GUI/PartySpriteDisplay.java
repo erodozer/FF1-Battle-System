@@ -89,7 +89,7 @@ public class PartySpriteDisplay extends Sprite{
 				{
 					p.setState(Player.WALK);
 					p.setX(p.getX()+2);
-					if (p.getX() > window.getX() + 16)
+					if (p.getX() >= window.getX() + 16)
 					{
 						p.setX(window.getX() + 16);
 						p.setState(Player.STAND);

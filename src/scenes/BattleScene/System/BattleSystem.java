@@ -166,7 +166,10 @@ public class BattleSystem extends GameSystem{
 			//end game if successful flee
 			if (activeActor.getCommand() instanceof Flee)
 				if (activeActor.getCommand().getHits() == 1)
+				{
 					finish();
+					return;
+				}
 				
 			//kill order when game over
 			if (party.getAlive() == 0)

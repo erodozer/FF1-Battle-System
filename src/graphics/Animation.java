@@ -47,11 +47,8 @@ public class Animation {
 		try {
 			File file = new File("data/animation/"+f+".anim");	
 			Scanner s = new Scanner(file);
-			System.out.println(file);
 			int Frames = s.nextInt();
-			sheet = new Sprite("animation/"+f+".png", Frames, 1);	//first line is the name of the image file
-																	//line two
-			System.out.println(Frames);
+			sheet = new Sprite("animation/"+f+".png", Frames, 1);
 			
 			frames = new ArrayList<Frame[]>();
 			s.nextLine();	//moves the cursor to the end of the line

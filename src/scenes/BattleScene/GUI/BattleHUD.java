@@ -141,7 +141,8 @@ public class BattleHUD extends HUD{
 				Player p = (Player)parent.getActiveActor();
 				Command c = p.getCommand();
 				if (c != null)
-					c.getAnimation().paint(g);
+					if (c.getAnimation() != null)
+						c.getAnimation().paint(g);
 			}
 		}
 		
