@@ -27,7 +27,12 @@ public class Attack extends Command {
 	@Override
 	public void execute() {
 		//make sure the animation is in relation to the target sprite
-		anim.setRelation(invoker.getTarget().getSprite());		
+		if (anim.getRelationType() == 2)
+			anim.setRelation(invoker.getSprite());
+		else if (anim.getRelationType() == 1)
+			anim.setRelation(invoker.getTarget().getSprite());
+		else
+			anim.setRelation(null);
 	
 	    //reset damage
 		damage = 0;
