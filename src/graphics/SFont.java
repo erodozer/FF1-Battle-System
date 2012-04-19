@@ -176,7 +176,7 @@ public class SFont {
 	public void drawString(Graphics g, String text, int x, int y, int alignment, Color c)
 	{
 		//don't try drawing if the font doesn't exist
-		if (f == null)
+		if (f == null || text == null)
 			return;
 		
 		//right aligned
@@ -230,7 +230,7 @@ public class SFont {
 	 */
 	public void drawString(Graphics g, String text, int x, int y, int alignment)
 	{
-		drawString(g, text, x, y, alignment, (Sprite)null);
+		drawString(g, text, x, y, alignment, (Color)null);
 	}
 	
 	/**
@@ -277,8 +277,17 @@ public class SFont {
 	{
 		if (anchor != null)
 		{
-			x += anchor.getX();
-			y += anchor.getY();
+			//right align anchors to right side
+			if (alignment == 2)
+				x = (int)(anchor.getX() + anchor.getWidth() - 10 - x);
+			//center align anchors to center of the window
+			else if (alignment == 1)
+				x = (int)(anchor.getX() + anchor.getWidth()/2 - x);
+			else
+				x = (int)(anchor.getX() + 10 + x);
+				
+			//windows have additional reserved thickness of 10 pixels
+			y += anchor.getY() + 10;	
 		}
 		
 		drawString(g, text, x, y, alignment, c);
