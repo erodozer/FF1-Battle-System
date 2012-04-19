@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
  */
 public class SWindow {
 	
+	private static final Color DEFAULT_COLOR = NES.BLACK;
+	
 	Color bg;					//background color of the window
 	
 	//image parts
@@ -40,7 +42,7 @@ public class SWindow {
 	 */
 	public SWindow(int a, int b, int w, int h)
 	{
-		this(a, b, w, h, NES.BLACK, 0);
+		this(a, b, w, h, DEFAULT_COLOR, 0);
 	}
 	
 	public SWindow(int a, int b, int w, int h, Color c)

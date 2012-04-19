@@ -34,6 +34,7 @@ public class SFont {
 	public static final int LEFT = 0;
 	public static final int CENTER = 1;
 	public static final int RIGHT = 2;
+	private static final Color DEFAULT_COLOR = NES.WHITE;
 	
 	private static HashMap<String, SFont> cache = new HashMap<String, SFont>();
 	
@@ -194,7 +195,7 @@ public class SFont {
 		if (c != null)
 			g.setColor(c);
 		else 
-			g.setColor(NES.WHITE);
+			g.setColor(DEFAULT_COLOR);
 			
 		g.setFont(f);
 		g.drawString(text, x, y);		//draws the string to screen
