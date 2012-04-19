@@ -195,7 +195,7 @@ public class Sprite{
 			rect[2] = (int)width;
 			scaleW = (int)width;
 		}
-		else if (x >= 1 || x <= xFrames)
+		else if (x >= 1 && x <= xFrames)
 		{
 			rect[0] = (int)(((x-1)/(double)xFrames)*width);
 			rect[2] = (int)width/xFrames;
@@ -209,7 +209,7 @@ public class Sprite{
 			rect[3] = (int)height;
 			scaleH = (int)height;
 		}
-		else if (y >= 1 || y <= yFrames)
+		else if (y >= 1 && y <= yFrames)
 		{
 			rect[1] = (int)(((y-1)/(double)yFrames)*height);
 			rect[3] = (int)height/yFrames;
@@ -287,7 +287,8 @@ public class Sprite{
 	 */
 	public void paint(Graphics g)
 	{
-		if (image != null && g != null)
+		//ignore if no image or if the graphics passed is null or if the cropping area leaves a surface too small to draw
+		if (image != null && g != null && crop[3]-crop[1] > 0 && crop[2]-crop[0] > 0)
 		{
 			//temp variables
 			int drawX = (int)x;
