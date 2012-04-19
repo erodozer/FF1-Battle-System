@@ -134,6 +134,18 @@ public class SWindow {
 	}
 	
 	/**
+	 * Changes the size of the window
+	 * @param w
+	 * @param h
+	 */
+	public void setSize(int w, int h)
+	{
+		width = w;
+		height = h;
+		genWindow();
+	}
+	
+	/**
 	 * Set the background color of the window
 	 * @param c
 	 */
