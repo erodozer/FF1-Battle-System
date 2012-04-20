@@ -157,6 +157,37 @@ public class Player extends Actor {
 	}
 
 	/**
+	 * Saves a player to the save data file
+	 * @param p
+	 */
+	public void savePlayer(Ini ini, String section)
+	{
+		ini.put(section, "name", name);
+		ini.put(section, "job", pathname);
+		
+		/**
+		 * loads all the stats for the player,
+		 * if the stats don't exist then just use
+		 * the job's initial stats
+		 */
+		ini.put(section, "level", level);
+		ini.put(section, "maxhp", maxhp);
+		ini.put(section, "hp", hp);
+		for (int i = 0; i < mp.length; i++)
+		{
+			ini.put(section, "maxMpLvl"+(i+1), mp[i][0]);
+			ini.put(section, "curMpLvl"+(i+1), mp[i][1]);
+		}
+		ini.put(section, "str", str);
+		ini.put(section, "int", itl);
+		ini.put(section, "spd", spd);
+		ini.put(section, "acc", acc);
+		ini.put(section, "vit", vit);
+		ini.put(section, "mdef", mdef);
+		ini.put(section, "luck", luk);
+	}
+	
+	/**
 	 * Loads the main data for a job
 	 * @param j			job name
 	 */

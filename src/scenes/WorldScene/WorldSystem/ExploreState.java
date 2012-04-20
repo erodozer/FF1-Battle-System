@@ -7,6 +7,7 @@ import Map.NPC;
 
 import scenes.GameState;
 
+import engine.Engine;
 import engine.Input;
 
 /**
@@ -17,6 +18,7 @@ import engine.Input;
  */
 public class ExploreState extends GameState {
 
+	Engine e = Engine.getInstance();
 	WorldSystem parent;
 	
 	//party's position on the map
@@ -85,13 +87,18 @@ public class ExploreState extends GameState {
     	//switch character sprite
     	else if (key == Input.KEY_SELECT)
     	{
-    		WorldSystem.leaderIndex = (WorldSystem.leaderIndex + 1) % parent.e.getParty().size();
-    		parent.leader.setWalkSprite(parent.e.getParty().get(WorldSystem.leaderIndex).getMapSelf());
+    		WorldSystem.leaderIndex = (WorldSystem.leaderIndex + 1) % e.getParty().size();
+    		parent.leader.setWalkSprite(e.getParty().get(WorldSystem.leaderIndex).getMapSelf());
     	}
     	//show main menu
     	else if (key == Input.KEY_START)
     	{
-    		parent.e.changeToMenu();
+    		e.changeToMenu();
+    	}
+    	//quick save can only be done on the map
+    	else if (key == Input.KEY_QUICKSAVE)
+    	{
+    		e.recordSave(0);
     	}
 	}
 

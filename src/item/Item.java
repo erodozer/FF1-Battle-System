@@ -89,6 +89,10 @@ public class Item {
 	
 	//=========================================================
 	
+	//Says if the item can be used in battle because a spell with
+	// the same name exists
+	boolean battleCommand;
+	
 	/**
 	 * Loads an item
 	 * @param s
@@ -127,8 +131,9 @@ public class Item {
 				mdef = equip.getInt("mdef", 1);
 			}
 			
+			battleCommand = new File("data/spells/"+name+"/spell.ini").exists();
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

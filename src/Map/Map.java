@@ -23,6 +23,8 @@ public class Map {
 	public static final int drawRowsMax = ContentPanel.INTERNAL_RES_W/TileSet.ORIGINAL_DIMENSIONS;
 	public static final int drawColsMax = ContentPanel.INTERNAL_RES_H/TileSet.ORIGINAL_DIMENSIONS;
 	
+	String name;
+	
 	//map buffer
 	Image dbImage;			//map all drawn up
 	
@@ -56,6 +58,8 @@ public class Map {
 	 */
 	public Map(String location)
 	{
+		name = location;
+		
 		terrains = new Vector<Terrain>();
 		npcMap = new HashMap<String, NPC>();
 		eventMap = new HashMap<String, Event>();
@@ -265,6 +269,11 @@ public class Map {
 
 	public void putEvent(int x, int y, Event event) {
 		eventMap.put(x + " " + y, event);		
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 
 }

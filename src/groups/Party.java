@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import org.ini4j.Ini;
+
 
 import actors.Player;
 
@@ -89,7 +91,7 @@ public class Party extends ArrayList<Player>{
 			sections = p.childrenNames();
 			for (String s : sections)
 				if (s.startsWith("player"))
-					party.add(Integer.parseInt(s.substring(6))-1, new Player(p.node(s)));
+					party.add(Integer.parseInt(s.substring(6)), new Player(p.node(s)));
 			
 			Preferences inv = p.node("inventory");
 			for (String s : inv.keys())
@@ -101,6 +103,18 @@ public class Party extends ArrayList<Player>{
 		return party;
 	}
 	
+	/**
+	 * Writes all the party's data to a save file
+	 * @param p 	Ini save file
+	 */
+	public void saveToFile(Ini ini)
+	{
+		for (int i = 0; i < this.size(); i++)
+			get(i).savePlayer(ini, String.format("player%02d", i));
+		
+		for (String s : inventory.keySet())
+			ini.put("inventory", s, (inventory.containsKey(s))?inventory.get(s):0);
+	}
 	
 	/*
 	 * Simple methods for manipulating gold and stuff

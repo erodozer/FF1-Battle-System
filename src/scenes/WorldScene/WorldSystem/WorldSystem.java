@@ -136,4 +136,8 @@ public class WorldSystem extends GameSystem
 		return leader;
 	}
 
+	public Map getMap()
+	{
+		return map;
+	}
 }

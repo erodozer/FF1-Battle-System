@@ -150,6 +150,11 @@ public class GameScreen extends JFrame implements KeyListener{
 			engine.setParty(p);
 			engine.changeToWorld("world", 3, 3);
 		}
+    	//quick load
+    	else if (arg0.getKeyCode() == Input.KEY_QUICKLOAD)
+    	{
+    		engine.loadFromSave(0);
+    	}
 		arg0.consume();
 	}
 

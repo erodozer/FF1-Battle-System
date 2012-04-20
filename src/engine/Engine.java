@@ -6,6 +6,9 @@ import java.util.prefs.Preferences;
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
+import Map.NPC;
+import actors.Enemy;
+
 import scenes.*;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;
@@ -14,6 +17,7 @@ import scenes.ShopScene.ShopScene;
 import scenes.ShopScene.System.Shop;
 import scenes.TitleScene.TitleScene;
 import scenes.WorldScene.WorldScene;
+import scenes.WorldScene.WorldSystem.WorldSystem;
 import graphics.Sprite;
 import groups.*;
 
@@ -218,7 +222,7 @@ public class Engine{
 	public void loadFromSave(int i)
 	{
 		try {
-			Preferences p = new IniPreferences(new Ini(new File("data/actors/enemies/save" + i + ".ini")));
+			Preferences p = new IniPreferences(new Ini(new File(String.format("savedata/save%03d.ini", i))));
 			Preferences map = p.node("map");
 			setParty(Party.loadFromFile(p));
 			
@@ -229,7 +233,8 @@ public class Engine{
 			//throw party to the map at which they saved
 			changeToWorld(map.get("where", "world"), map.getInt("x", 0), map.getInt("y", 0));
 		} catch (Exception e) {
-			System.out.println("Can not load file");
+			System.out.println("Can not load save file");
+			e.printStackTrace();
 		}
 	}
 	
@@ -237,9 +242,31 @@ public class Engine{
 	 * Records save data to file
 	 * @param i
 	 */
-	private void recordSave(int i)
+	public void recordSave(int i)
 	{
-		
+		//save to file
+		try {
+			File f = new File(String.format("savedata/save%03d.ini", i));
+			f.delete();					//deletes the old file
+			f.createNewFile();			//saves data to new file
+			Ini ini = new Ini(f);
+			
+			//saving map location
+			WorldSystem w = (WorldSystem)world.getSystem();
+			NPC leader = w.getLeader();
+			ini.add("map", "x", leader.getX());
+			ini.add("map", "y", leader.getY());
+			ini.add("map", "where", w.getMap().getName());
+			
+			//saving party data
+			party.saveToFile(ini);
+			
+			ini.store(f);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
 	}
 
 	/**
