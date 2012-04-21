@@ -99,7 +99,7 @@ public class Engine{
 		
 		battle.start(formation);
 		currentScene = battle;
-		
+		GameScreen.getInstance().c.evokeTransition(true);	
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public class Engine{
 		
 		battle.start(f, background);
 		currentScene = battle;	
-		
+		GameScreen.getInstance().c.evokeTransition(true);
 	}
 
 	/**
@@ -125,6 +125,7 @@ public class Engine{
 		
 		changeScene();
 		currentScene = world;
+		GameScreen.getInstance().c.evokeTransition(true);
 	}
 		
 	/**
@@ -136,6 +137,7 @@ public class Engine{
 		changeScene();
 		world.start(string, startX, startY);
 		currentScene = world;
+		GameScreen.getInstance().c.evokeTransition(true);
 	}
 	
 	/**
@@ -147,6 +149,7 @@ public class Engine{
 		CreationScene s = new CreationScene(); 
 		s.start();
 		currentScene = s;
+		GameScreen.getInstance().c.evokeTransition(true);
 		
 	}
 	
@@ -155,14 +158,16 @@ public class Engine{
 		ShopScene s = new ShopScene();
 		s.start(shop);
 		currentScene = s;	
-		
+
+		GameScreen.getInstance().c.evokeTransition(true);
 	}
 	
 	public void changeToMenu()
 	{
 		changeScene();
 		menu.start();
-		currentScene = menu;	
+		currentScene = menu;
+		GameScreen.getInstance().c.evokeTransition(true);
 	}
 	
 	/**
@@ -170,8 +175,12 @@ public class Engine{
 	 */
 	private void changeScene()
 	{
-		GameScreen.getInstance().c.evokeTransition();
-				
+		GameScreen gs = GameScreen.getInstance();
+		gs.c.evokeTransition(false);
+		
+		//pause everything except rendering while transitioning
+		while(gs.c.isTransitioning());
+		
 		if (currentScene != null) {
 			currentScene.stop();
 			currentScene = null;
@@ -179,10 +188,11 @@ public class Engine{
 		try {
 			Sprite.clearCache();	//clear cache whenever scene is changed to prevent memory leaking
 			Thread.sleep(500);
-		} catch (InterruptedException e) {
+		} 
+		catch (InterruptedException e) {
 		}
-
 	}
+	
 	public Party getParty()
 	{
 		return party;

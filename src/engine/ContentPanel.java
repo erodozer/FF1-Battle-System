@@ -29,6 +29,9 @@ public class ContentPanel extends JPanel{
 	private static final int TRANSITIONRATE = 256/GameScreen.FRAMES_PER_SECOND;
 										//rate at which transitions occur
 	private BufferedImage transFader;	//the transition fader grayscale image
+	private BufferedImage transBuffer;
+	
+	private boolean transIn = true;	//type of transition to use, false = to black, true is to screen
 	
 	public ContentPanel(int width, int height)
 	{
@@ -59,9 +62,13 @@ public class ContentPanel extends JPanel{
 	/**
 	 * Tells the panel to show the transition animation
 	 */
-	public void evokeTransition()
+	public void evokeTransition(boolean t)
 	{
-		transition = 0;
+		if (t)
+			transition = 0;
+		else
+			transition = 256;
+		transIn = t;
 	}
 	
 	/**
@@ -69,7 +76,10 @@ public class ContentPanel extends JPanel{
 	 */
 	public boolean isTransitioning()
 	{
-		return transition < 255;
+		if (transIn)
+			return transition < 256;
+		else
+			return transition > 0;
 	}
 	
 	/**
@@ -105,11 +115,12 @@ public class ContentPanel extends JPanel{
 			engine.getCurrentScene().render(dbg);	
 		
 		//draw the transition
-		if (transition < 256 && transFader != null)
+		if (transition <= 256 && transFader != null)
 		{
-			//dbg.drawImage(transFader, 0, 0, INTERNAL_RES_W, INTERNAL_RES_H, null);
-			dbg.drawImage(new BufferedImage(stepTransition(), transFader.getRaster(), false, null), 
-							   0, 0, INTERNAL_RES_W, INTERNAL_RES_H, null);
+			transBuffer = null;
+			transBuffer = new BufferedImage(stepTransition(), transFader.getRaster(), false, null);
+
+			dbg.drawImage(transBuffer, 0, 0, INTERNAL_RES_W, INTERNAL_RES_H, null);
 		}
 	}
 	
@@ -137,7 +148,7 @@ public class ContentPanel extends JPanel{
 			a[i] = 0;
 		}
 		
-		transition += TRANSITIONRATE;
+		transition += ((transIn)?1:-1)*TRANSITIONRATE;
 		return new IndexColorModel(4, 256, r, g, b, a);
 	}
 	

@@ -90,7 +90,9 @@ public class GameScreen extends JFrame implements KeyListener{
 				{
 					if (engine.getCurrentScene() != null)
 						try{
-							engine.getCurrentScene().update();
+							//pause everything except rendering while transitioning
+							if (!c.isTransitioning())
+								engine.getCurrentScene().update();
 						}
 						catch (Exception e)
 						{
