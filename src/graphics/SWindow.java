@@ -1,8 +1,10 @@
 package graphics;
 
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
@@ -14,9 +16,11 @@ import java.awt.image.BufferedImage;
  */
 public class SWindow {
 	
-	private static final Color DEFAULT_COLOR = NES.BLACK;
+	private static final Color DEFAULT_COLOR = Color.BLACK;
+	private static final Color DEFAULT_HUE = Color.WHITE;
 	
 	Color bg;					//background color of the window
+	Color hue;
 	
 	//image parts
 	Sprite image;
@@ -33,6 +37,7 @@ public class SWindow {
 	
 	int fillOffset = 5;			//amount it needs to offset itself from the edge to fill with the fill color
 	
+	
 	/**
 	 * Creates a window
 	 * @param a			x position
@@ -42,12 +47,7 @@ public class SWindow {
 	 */
 	public SWindow(int a, int b, int w, int h)
 	{
-		this(a, b, w, h, DEFAULT_COLOR, 0);
-	}
-	
-	public SWindow(int a, int b, int w, int h, Color c)
-	{
-		this(a, b, w, h, c, 0);
+		this(a, b, w, h, null, null, 0);
 	}
 	
 	/**
@@ -56,9 +56,24 @@ public class SWindow {
 	 * @param b			y position
 	 * @param w			width
 	 * @param h			height
-	 * @param c			window's background color
+	 * @param f			hue color
 	 */
-	public SWindow(int a, int b, int w, int h, Color c, int offset)
+	public SWindow(int a, int b, int w, int h, Color f)
+	{
+		this(a, b, w, h, f, null, 0);
+	}
+	
+	/**
+	 * Creates a window
+	 * @param a			x position
+	 * @param b			y position
+	 * @param w			width
+	 * @param h			height
+	 * @param c			window image hue
+	 * @param f			window's background color
+	 * @param offset	fill color offset from border
+	 */
+	public SWindow(int a, int b, int w, int h, Color c, Color f, int offset)
 	{
 		window = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		image = new Sprite("hud/window.png", 3, 3);		
@@ -72,9 +87,13 @@ public class SWindow {
 		genWindow();
 	}
 
+	/**
+	 * Generates the window as it is to be drawn to screen
+	 */
 	private void genWindow()
 	{
-		Graphics g = window.getGraphics();
+		window = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = (Graphics2D)window.getGraphics();
 
 		double oW = image.getWidth();
 		double oH = image.getHeight();
@@ -88,7 +107,7 @@ public class SWindow {
 		if (bg != null)
 		{
 			g.setColor(bg);
-			g.fillRect(0, 0, w, h);
+			g.fillRect(fillOffset, fillOffset, w, h);
 		}
 		
 		for (int y = 0; y < 3; y++)
@@ -100,7 +119,16 @@ public class SWindow {
 				image.scale(dimensions[x][0], dimensions[y][1]);
 				image.paint(g);
 			}
-		
+		if (hue != null)
+		{
+			g.setPaint(hue);	// Use this opaque color
+
+			// Get and install an AlphaComposite to do transparent drawing
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+
+			g.fillRect(0, 0, width, height);  
+		}
+		g.dispose();
 	}
 	
 	/**
@@ -142,18 +170,34 @@ public class SWindow {
 	 */
 	public void setSize(int w, int h)
 	{
-		width = w;
-		height = h;
-		genWindow();
+		if (width != w || height != h)
+		{
+			width = w;
+			height = h;
+			genWindow();
+		}
 	}
 	
 	/**
 	 * Set the background color of the window
 	 * @param c
 	 */
+	public void setFillColor(Color c)
+	{
+		if (bg == null || !bg.equals(c))
+		{
+			bg = c;
+			genWindow();
+		}
+	}
+	
 	public void setColor(Color c)
 	{
-		bg = c;
+		if (hue == null || !hue.equals(c))
+		{
+			hue = c;
+			genWindow();
+		}
 	}
 	
 	/**
