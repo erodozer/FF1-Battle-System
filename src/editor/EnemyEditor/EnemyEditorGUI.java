@@ -3,6 +3,7 @@ import graphics.Sprite;
 import item.ItemDictionary;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -28,6 +30,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -135,7 +138,7 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		enemies = new JList(AVAILABLEENEMIES);
 		enemies.addMouseListener(this);
 		enemyListPane = new JScrollPane(enemies);
-		enemyListPane.setSize(200, 340);
+		enemyListPane.setSize(200, 343);
 		enemyListPane.setLocation(10, 32);
 		
 		add(l);
@@ -152,72 +155,74 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		add(l);
 		add(nameField);
 		
-		
 		/*
 		 * Stat spinner initialization
 		 */
-		l = new JLabel("Stats: ");
-		l.setSize(l.getPreferredSize());
-		l.setLocation(220, 64);
-		
-		add(l);
 
+		JLayeredPane jlp = new JLayeredPane();
+		jlp.setSize(new Dimension(420, 210));
+		jlp.setLocation(220, 60);
+		jlp.setBorder(BorderFactory.createTitledBorder("Stats:"));
+		
 		statSpinners = new JSpinner[STATS.length];
 		
 		for (int i = 0; i < STATS.length; i++)
 		{
 			l = new JLabel(STATS[i] + ": ");
 			l.setSize(l.getPreferredSize());
-			l.setLocation(230 + (i%2)*220, 88 + 30*(i/2));
+			l.setLocation(10 + (i%2)*210, 20 + 30*(i/2));
 			
-			JSpinner s = new JSpinner(new SpinnerNumberModel(0, 0, 255, 1));
+			//hp can go up to 99999
+			JSpinner s = new JSpinner(new SpinnerNumberModel(0, 0, (i == 0)?99999:255, 1));
 			s.setSize(100, 24);
-			s.setLocation(320 + (i%2)*220, 86 + 30*(i/2));
+			s.setLocation(100 + (i%2)*210, 20 + 30*(i/2));
 			statSpinners[i] = s;
-			add(l);
-			add(s);
+			jlp.add(l);
+			jlp.add(s);
 		}
 		
 		mpSpinners = new JSpinner[Actor.MPLEVELS];
 		l = new JLabel("MP: ");
 		l.setSize(l.getPreferredSize());
-		l.setLocation(230, 236);
-		add(l);
+		l.setLocation(10, 176);
+		jlp.add(l);
 		for (int i = 0; i < mpSpinners.length; i++)
 		{
 			JSpinner s = new JSpinner(new SpinnerNumberModel(0, 0, 9, 1));
 			s.setSize(44, 24);
-			s.setLocation(260 + i*48, 236);
+			s.setLocation(44 + i*46, 176);
 			mpSpinners[i] = s;
-			add(s);	
+			jlp.add(s);	
 		}
+		add(jlp);
+		
 		
 		/*
 		 * Elemental spinners initialization
 		 */
 		
-		l = new JLabel("Elemental Resistance: ");
-		l.setSize(l.getPreferredSize());
-		l.setLocation(220, 268);
+		jlp = new JLayeredPane();
+		jlp.setSize(new Dimension(420, 108));
+		jlp.setLocation(220, 268);
+		jlp.setBorder(BorderFactory.createTitledBorder("Elemental Resistance: "));
 		
-		add(l);
-
 		elemSpinners = new JSpinner[ELEM.length];
 		
 		for (int i = 0; i < ELEM.length; i++)
 		{
 			l = new JLabel(ELEM[i] + ": ");
 			l.setSize(l.getPreferredSize());
-			l.setLocation(230 + 220*(i%2), 290 + 30*(i/2));
+			l.setLocation(10 + 210*(i%2), 20 + 30*(i/2));
 			
 			JSpinner s = new JSpinner(new SpinnerListModel(ELEM_VALUES));
 			s.setValue(ELEM_VALUES.get(1));
 			s.setSize(100, 24);
-			s.setLocation(320 + 220*(i%2), 290 + 30*(i/2));
+			s.setLocation(100 + 210*(i%2), 20 + 30*(i/2));
 			elemSpinners[i] = s;
-			add(l);
-			add(s);
+			jlp.add(l);
+			jlp.add(s);
 		}
+		add(jlp);
 		
 		/*
 		 * Loot rewards
