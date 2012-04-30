@@ -29,6 +29,8 @@ import Map.TileSet;
 
 
 import editor.ToolKit;
+import engine.Engine;
+import engine.GameScreen;
 
 /**
  * MapEditorGUI
@@ -45,6 +47,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	JButton saveButton;
 	JButton loadButton;
 	JButton restoreButton;
+	JButton testButton;
 	
 	/*
 	 * Mode switcher
@@ -90,6 +93,8 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	String name;
 	
 	Vector<Terrain> regions;
+	
+	boolean changesMade = false;		//keeps track of if changes were made to the map since last save
 	
 	public MapEditorGUI()
 	{
@@ -222,26 +227,31 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		int[] buttonSize = {230, 24};
 		newButton = new JButton("New");
 		newButton.setSize(buttonSize[0], buttonSize[1]);
-		newButton.setLocation(650, 260);
+		newButton.setLocation(650, 230);
 		saveButton = new JButton("Save");
 		saveButton.setSize(buttonSize[0], buttonSize[1]);
-		saveButton.setLocation(650, 290);
+		saveButton.setLocation(650, 260);
 		loadButton = new JButton("Load");
 		loadButton.setSize(buttonSize[0], buttonSize[1]);
-		loadButton.setLocation(650, 320);
+		loadButton.setLocation(650, 290);
 		restoreButton = new JButton("Restore");
 		restoreButton.setSize(buttonSize[0], buttonSize[1]);
-		restoreButton.setLocation(650, 350);
+		restoreButton.setLocation(650, 320);
+		testButton = new JButton("Test Map");
+		testButton.setSize(buttonSize[0], buttonSize[1]);
+		testButton.setLocation(650, 350);
 		
 		newButton.addActionListener(this);
 		saveButton.addActionListener(this);
 		loadButton.addActionListener(this);
 		restoreButton.addActionListener(this);
+		testButton.addActionListener(this);
 		
 		add(newButton);
 		add(saveButton);
 		add(loadButton);
 		add(restoreButton);
+		add(testButton);
 		
 		/*
 		 * Initialize GUI window 
@@ -286,6 +296,21 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		else if (event.getSource() == restoreButton)
 		{
 			restore();
+		}
+		else if (event.getSource() == testButton)
+		{
+			String n = nameField.getText();
+			if (new File("data/maps/" + n).exists())
+				if (JOptionPane.showConfirmDialog(this, "A map of name " + n + " already exists.  \nDo you wish to overwrite it?", "Overwrite", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
+					return;
+			save();
+			
+			GameScreen gs = GameScreen.getInstance();
+			gs.quickStart();
+			Engine e = Engine.getInstance();
+			e.changeToWorld(n, 1, 1);
+			gs.validate();
+			
 		}
 		else if (event.getSource() == rAddButton)
 		{

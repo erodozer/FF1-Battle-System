@@ -117,6 +117,7 @@ public class GameScreen extends JFrame implements KeyListener{
 		}.start();
 		
 		pack();
+		validate();
 		_instance = this;
 		
 	}
@@ -144,12 +145,7 @@ public class GameScreen extends JFrame implements KeyListener{
 			engine.getCurrentScene().keyPressed(arg0.getKeyCode());
 		if (arg0.getKeyCode() == Input.KEY_QUICKSTART)
 		{
-			Party p = new Party();
-			p.add("APPL", "Fighter");
-			p.add("TWIL", "Red Mage");
-			p.add("RNBW", "Black Belt");
-			p.add("FLUT", "White Mage");
-			engine.setParty(p);
+			quickStart();
 			engine.changeToWorld("world", 3, 3);
 		}
     	//quick load
@@ -165,4 +161,14 @@ public class GameScreen extends JFrame implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
+	
+	public void quickStart()
+	{
+		Party p = new Party();
+		p.add("APPL", "Fighter");
+		p.add("TWIL", "Red Mage");
+		p.add("RNBW", "Black Belt");
+		p.add("FLUT", "White Mage");
+		engine.setParty(p);
+	}
 }
