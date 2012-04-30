@@ -116,7 +116,7 @@ public class SWindow {
 				image.setFrame(x+1, y+1);
 				image.setX(winStruct[x][0]);
 				image.setY(winStruct[y][1]);
-				image.scale(dimensions[x][0], dimensions[y][1]);
+				image.scale((int)dimensions[x][0], (int)dimensions[y][1]);
 				image.paint(g);
 			}
 		if (hue != null)

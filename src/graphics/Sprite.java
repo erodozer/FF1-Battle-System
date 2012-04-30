@@ -52,6 +52,7 @@ public class Sprite{
 	protected int alignment;			//alignment anchor of the image
 	
 	AffineTransform at;					//graphics transformation matrix
+	boolean filtered;					//tell it to bilinear filter from scaling or not
 	
 	/**
 	 * Load the sprite from file path
@@ -172,6 +173,22 @@ public class Sprite{
 	}
 	
 	/**
+	 * @return the width of the image after scaling
+	 */
+	public double getScaledWidth()
+	{
+		return scaleW;
+	}
+	
+	/**
+	 * @return the height of the image after scaling
+	 */
+	public double getScaledHeight()
+	{
+		return scaleH;
+	}
+	
+	/**
 	 * Retrieves the image in case of requiring more complex rendering
 	 * than basic drawing to screen
 	 * @return
@@ -190,7 +207,7 @@ public class Sprite{
 	{
 		//if x is -1 then show all the x frames
 		if (x == -1)
-		{
+		{	
 			rect[0] = 0;
 			rect[2] = (int)width;
 			scaleW = (int)width;
@@ -240,18 +257,44 @@ public class Sprite{
 	}
 	
 	/**
-	 * Scales the width and height of the image
-	 * @param w
-	 * @param h
+	 * Scales the width and height of the image by percentage
 	 */
 	public void scale(double w, double h)
 	{
-		if (w >= 0 && w <= 1)
-			w *= rect[2];
-		if (h >= 0 && h <= 1)
-			h *= rect[3];
+		scale(w, h, false);
+	}
+	
+	/**
+	 * Scales the width and height of the image by percentage
+	 * @param filter	bilinear filter or not
+	 */
+	public void scale(double w, double h, boolean filter)
+	{
+		w *= rect[2];
+		h *= rect[3];
+		scale((int)w, (int)h, filter);
+	}
+
+	/**
+	 * Scales the width and height of the image to the specified pixel size
+	 * @param w
+	 * @param h
+	 */
+	public void scale(int w, int h)
+	{
+		scale(w, h, false);
+	}
+	
+	/**
+	 * Scales the width and height of the image to the specified pixel size
+	 * @param w
+	 * @param h
+	 */
+	public void scale(int w, int h, boolean filter)
+	{
 		scaleW = w;
 		scaleH = h;
+		filtered = filtered;
 	}
 	
 	/**
@@ -319,7 +362,7 @@ public class Sprite{
 
             
             // applies the transformation to the cropped image
-            AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+            AffineTransformOp op = new AffineTransformOp(at, (filtered)?AffineTransformOp.TYPE_BILINEAR:AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
             
             //draw the image to the graphics buffer
 			((Graphics2D) g).drawImage(i, op, drawX-offset, drawY);
