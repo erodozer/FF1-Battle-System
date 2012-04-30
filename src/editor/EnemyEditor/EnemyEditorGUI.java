@@ -245,13 +245,13 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		
 		l = new JLabel("Item Drop: ");
 		l.setSize(l.getPreferredSize());
-		l.setLocation(650, 224);
+		l.setLocation(650, 232);
 		
 		items = new JComboBox(new DefaultComboBoxModel(new Vector<String>(ItemDictionary.map.keySet())));
 		items.addItem(null);
 		items.setSelectedItem(null);
 		items.setSize(230, 24);
-		items.setLocation(650, 248);
+		items.setLocation(650, 250);
 		add(l);
 		add(items);
 		
@@ -264,9 +264,9 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		l.setLocation(650, 10);
 		
 		previewBox = new SpritePic();
-		previewBox.setSize(230,230);
+		previewBox.setSize(230,200);
 		JScrollPane p = new JScrollPane(previewBox);
-		p.setSize(230, 230);
+		p.setSize(230, 200);
 		p.setLocation(650, 32);
 		add(l);
 		add(p);
@@ -495,24 +495,29 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		public void load(Sprite s)
 		{
 			preview = s;
+			preview.scale(2.0, 2.0);	//auto scale 2x
 			
-			//scale the preview to fit inside the preview area
-			double width = preview.getWidth();
-			double height = preview.getHeight();
-			
-			if (width > height)
+			//ONLY RESCALE IF LARGER THAN THE PREVIEW AREA
+			if (preview.getScaledWidth() > this.getWidth() ||
+				preview.getScaledHeight() > this.getHeight())
 			{
-				height *= this.getWidth()/width;
-				width *= this.getWidth()/width;
+				//scale the preview to fit inside the preview area
+				double width = preview.getWidth();
+				double height = preview.getHeight();
+				
+				if (width > height)
+				{
+					height *= this.getWidth()/width;
+					width *= this.getWidth()/width;
+				}
+				else
+				{
+					width *= this.getHeight()/height;
+					height *= this.getHeight()/height;
+				}
+				
+				preview.scale((int)width, (int)height);
 			}
-			else
-			{
-				width *= this.getHeight()/height;
-				height *= this.getHeight()/height;
-			}
-			
-			preview.scale((int)width, (int)height);
-			
 			dbImage = null;
 			repaint();
 		}
