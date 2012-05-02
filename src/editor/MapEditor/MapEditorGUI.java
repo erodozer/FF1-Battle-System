@@ -1,5 +1,6 @@
 package editor.MapEditor;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,10 +11,12 @@ import java.io.PrintWriter;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -155,36 +158,37 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		regionPane.setLocation(10, 125);
 		regionPane.setVisible(false);
 		
-		l = new JLabel("Editor Mode");
-		l.setSize(l.getPreferredSize());
-		l.setLocation(650, 10);
+		JLayeredPane jlp = new JLayeredPane();
+		jlp.setSize(new Dimension(230, 170));
+		jlp.setLocation(650, 10);
+		jlp.setBorder(BorderFactory.createTitledBorder("Editor Mode"));
 		
 		mapButton = new JRadioButton("Map Editor");
 		mapButton.setSize(mapButton.getPreferredSize());
-		mapButton.setLocation(650, 40);
+		mapButton.setLocation(10, 30);
 		mapButton.setSelected(true);
 		mapButton.addActionListener(this);
 		
 		regionButton = new JRadioButton("Region Editor");
 		regionButton.setSize(regionButton.getPreferredSize());
-		regionButton.setLocation(650, 70);
+		regionButton.setLocation(10, 60);
 		regionButton.addActionListener(this);
 		
 		passButton = new JRadioButton("Override Passability Editor");
 		passButton.setSize(passButton.getPreferredSize());
-		passButton.setLocation(650, 100);
+		passButton.setLocation(10, 90);
 		passButton.addActionListener(this);
 		
 		spriteButton = new JRadioButton("Sprite Editor");
 		spriteButton.setSize(spriteButton.getPreferredSize());
-		spriteButton.setLocation(650, 130);
+		spriteButton.setLocation(10, 120);
 		spriteButton.addActionListener(this);
 		
-		add(l);
-		add(mapButton);
-		add(regionButton);
-		add(passButton);
-		add(spriteButton);
+		jlp.add(mapButton);
+		jlp.add(regionButton);
+		jlp.add(passButton);
+		jlp.add(spriteButton);
+		add(jlp);
 		
 		modeGroup = new ButtonGroup();
 		modeGroup.add(mapButton);
