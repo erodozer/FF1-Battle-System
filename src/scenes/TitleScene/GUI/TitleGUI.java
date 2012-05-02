@@ -19,7 +19,6 @@ public class TitleGUI extends HUD {
 	private Intro intro;
 	private TitleScreen ts;
 	private TitleSystem parent;
-	Font font = GameScreen.font;
 	
 	public TitleGUI(TitleSystem t)
 	{
@@ -40,7 +39,6 @@ public class TitleGUI extends HUD {
 	@Override
 	public void paint(Graphics g)
 	{
-		g.setFont(font);
 		if (parent.getState() instanceof IntroState)
 		{
 			clearColor = NES.BLUE;

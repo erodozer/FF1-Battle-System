@@ -139,6 +139,7 @@ public class VictoryState extends GameState {
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			finish();
 		}		
 	}
 

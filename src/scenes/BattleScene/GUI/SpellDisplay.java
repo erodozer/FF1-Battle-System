@@ -3,8 +3,11 @@ package scenes.BattleScene.GUI;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
+import engine.GameScreen;
+
 import actors.Actor;
 
+import graphics.SFont;
 import graphics.Sprite;
 import graphics.SWindow;
 import scenes.BattleScene.System.*;
@@ -18,6 +21,7 @@ import scenes.BattleScene.System.*;
 public class SpellDisplay extends Sprite{
 	
 	SWindow window;
+	SFont font = GameScreen.font;
 	Sprite arrow;
 	int index = 0;
 	int range = 0;
@@ -58,16 +62,13 @@ public class SpellDisplay extends Sprite{
 		Actor a = parent.getActiveActor();
 		for (int i = range; i < range+4; i++)
 		{
-			g.drawString("L"+(i+1), window.getX() + 10,
-							window.getY() + 24 + 16 * (i-range));
+			font.drawString(g, "L"+(i+1), 0, 14+16*(i-range), window);
 			if (a.getSpells(i) != null)
 				for (int n = 0; n < a.getSpells(i).length; n++)
 					if (a.getSpells(i)[n] != null)
-						g.drawString(a.getSpells(i)[n].toString().toUpperCase(), window.getX() + 35 + 40*n,
-							window.getY() + 24 + 16 * (i-range));
+						font.drawString(g, a.getSpells(i)[n].toString().toUpperCase(), 25+40*n, 14+16*(i-range), window);
 			FontMetrics m = g.getFontMetrics();
-			g.drawString(a.getMp(i)+"", window.getX() + window.getWidth()-15-m.stringWidth(a.getMp(i)+""),
-					window.getY() + 24 + 16 * (i-range));
+			font.drawString(g, a.getMp(i)+"", 5, 14+16*(i-range), SFont.RIGHT, window);
 					
 		}
 		

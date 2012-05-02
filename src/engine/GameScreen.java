@@ -12,6 +12,8 @@ import java.io.FileInputStream;
 
 import javax.swing.JFrame;
 
+import graphics.SFont;
+
 /**
  * GameScreen
  * @author nhydock
@@ -30,8 +32,7 @@ public class GameScreen extends JFrame implements KeyListener{
 	Engine engine;
 	
 	//There's only 1 font used in the game
-	public static Font font;
-	public static FontMetrics fontMetrics; 
+	public static SFont font;
 	
 	//frame limiting
     final static int FRAMES_PER_SECOND = 30;					
@@ -66,12 +67,7 @@ public class GameScreen extends JFrame implements KeyListener{
 		c = new ContentPanel(FRAME_WIDTH, FRAME_HEIGHT);
 		c.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		
-		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);
-		} 	catch (Exception e){
-			font = new Font("serif", Font.PLAIN, 10);
-		}
-		fontMetrics = c.getFontMetrics(font);
+		font = SFont.loadFont("default", 24.0f);
 		
 		setLayout(null);
 		setContentPane(c);

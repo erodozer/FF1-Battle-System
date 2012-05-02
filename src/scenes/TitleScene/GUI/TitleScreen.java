@@ -3,9 +3,12 @@ package scenes.TitleScene.GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import engine.GameScreen;
+
 import scenes.TitleScene.System.TitleSystem;
 import scenes.TitleScene.System.TitleState;
 
+import graphics.SFont;
 import graphics.Sprite;
 import graphics.SWindow;
 
@@ -17,6 +20,7 @@ import graphics.SWindow;
  */
 public class TitleScreen extends Sprite {
 
+	SFont font = GameScreen.font;
 	Sprite background;		//title screen background image
 	SWindow window;			//window frame for displaying commands
 	Sprite arrow;			//arrow showing which command is chosen
@@ -53,9 +57,8 @@ public class TitleScreen extends Sprite {
 	public void paint(Graphics g)
 	{
 		window.paint(g);
-		g.setColor(Color.WHITE);
-		g.drawString("New Game", window.getX()+12, window.getY()+26);
-		g.drawString("Continue", window.getX()+12, window.getY()+44);
+		font.drawString(g, "New Game", 2, 16, window);
+		font.drawString(g, "Continue", 2, 34, window);
 		arrow.paint(g);
 	}
 	

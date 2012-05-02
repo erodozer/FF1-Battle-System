@@ -10,7 +10,7 @@ import scenes.GameSystem;
 import engine.ContentPanel;
 import engine.GameScreen;
 import engine.Input;
-import graphics.StringUtils;
+import graphics.SFont;
 
 /**
  * DialogState
@@ -20,6 +20,7 @@ import graphics.StringUtils;
  */
 public class DialogState extends GameState {
 
+	SFont font = GameScreen.font;
 	String[] dialog;		//lines of dialog
 	int index;				//index of line to show (+2 more)
 
@@ -68,7 +69,7 @@ public class DialogState extends GameState {
 	@Override
 	public void start() {
 		NPC n = ((WorldSystem)parent).activeNPC;
-		dialog = StringUtils.wrap(n.getDialog(), GameScreen.fontMetrics, ContentPanel.INTERNAL_RES_W - 10).toArray(new String[]{});
+		dialog = font.formatIntoLines(n.getDialog(), ContentPanel.INTERNAL_RES_W - 10, SFont.WRAP);
 		index = 0;
 	}
 

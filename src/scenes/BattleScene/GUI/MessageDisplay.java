@@ -6,8 +6,10 @@ import java.awt.Graphics;
 import scenes.BattleScene.System.MessageState;
 
 import commands.*;
+import engine.GameScreen;
 
 
+import graphics.SFont;
 import graphics.Sprite;
 import graphics.SWindow;
 
@@ -19,6 +21,7 @@ import graphics.SWindow;
  */
 public class MessageDisplay extends Sprite{
 	
+	SFont font = GameScreen.font;
 	SWindow[] windows;
 	MessageState message;
 	
@@ -50,45 +53,39 @@ public class MessageDisplay extends Sprite{
 	@Override
 	public void paint(Graphics g)
 	{
-		g.setColor(Color.white);
-		
 		Command c = message.activeActor.getCommand();
 		
 		if (!message.activeActor.getCommand().toString().equals("") && !(c instanceof Flee))
 		{
 			windows[1].paint(g);
-			g.setColor(Color.white);
-			g.drawString(message.activeActor.getCommand().toString(), 
-				 windows[1].getX() + 10, windows[1].getY() + 20);
+			font.drawString(g, message.activeActor.getCommand().toString(), 0, 10, windows[1]);
 		}
 		windows[0].paint(g);
-		g.drawString(message.activeActor.getName(), 
-					 windows[0].getX() + 10, windows[0].getY() + 20);
-
+		font.drawString(g, message.activeActor.getName(), 0, 10, windows[0]);
 		
 		if (!(c instanceof Flee))
 		{
 			//shows actor name and command
 			windows[3].paint(g);
-			g.drawString("" + message.getMessage(), windows[3].getX() + 10, windows[3].getY() + 20);
+			font.drawString(g, "" + message.getMessage(), 0, 10, windows[3]);
 			windows[2].paint(g);
-			g.drawString(message.activeActor.getTarget().getName(), windows[2].getX() + 10, windows[2].getY() + 20);
+			font.drawString(g, message.activeActor.getTarget().getName(), 0, 10, windows[2]);
 		}
 		
 		if (c instanceof Flee)
 		{
 			windows[4].paint(g);
-			g.drawString(message.activeActor.getCommand().toString(), windows[4].getX() + 10, windows[4].getY() + 20);
+			font.drawString(g, message.activeActor.getCommand().toString(), 0, 10, windows[4]);
 		}
 		else if (!message.activeActor.getTarget().getAlive() && c.getDamage() > 0)
 		{
 			windows[4].paint(g);
-			g.drawString("Terminated!", windows[4].getX() + 10, windows[4].getY() + 20);
+			font.drawString(g, "Terminated!", 0, 10, windows[4]);
 		}
 		else if ((c.getDamage() == 0 && c.getHits() != 0)|| (c instanceof Spell && ((Spell)c).resist() > 0))
 		{
 			windows[4].paint(g);
-			g.drawString("Ineffective", windows[4].getX() + 10, windows[4].getY() + 20);
+			font.drawString(g, "Ineffective", 0, 10, windows[4]);
 		}	
 
 	}

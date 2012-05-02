@@ -18,8 +18,8 @@ import engine.ContentPanel;
 import engine.Engine;
 import engine.GameScreen;
 import graphics.NES;
+import graphics.SFont;
 import graphics.Sprite;
-import graphics.StringUtils;
 import graphics.SWindow;
 import groups.Party;
 
@@ -56,7 +56,7 @@ public class ShopGUI extends HUD {
 		itemSelect = new SWindow(175, 9, 74, 176, NES.BLUE);
 		moneyWindow = new SWindow(143, 185, 82, 32, NES.GREEN);
 		
-		greeting = StringUtils.wrap(parent.getShop().getGreeting(), GameScreen.fontMetrics, greetWindow.getWidth()-15).toArray(new String[]{});
+		greeting = font.formatIntoLines(parent.getShop().getGreeting(), SFont.WRAP, greetWindow.getWidth()-15);
 		
 		arrow = new Sprite("hud/selectarrow.png");
 		party = Engine.getInstance().getParty();
@@ -100,17 +100,14 @@ public class ShopGUI extends HUD {
 		for (Player p : party)
 			p.draw(g);
 			
-		g.setFont(font);
-		g.setColor(Color.WHITE);
 		
 		greetWindow.paint(g);
 		for (int i = 0; i < greeting.length && i < 5; i++)
-			g.drawString(greeting[i], greetWindow.getX()+8, greetWindow.getY()+20+16*i);
-		
+			font.drawString(g, greeting[i], 8, 16*i, greetWindow);
 		
 		moneyWindow.paint(g);
 		String s = party.getGold() + " G";
-		g.drawString(s, moneyWindow.getX() + moneyWindow.getWidth()-10 - GameScreen.fontMetrics.stringWidth(s), moneyWindow.getY()+20);
+		font.drawString(g, s, 0, 10, SFont.RIGHT, moneyWindow);
 		
 		int[] cursorpos;
 		
@@ -119,9 +116,8 @@ public class ShopGUI extends HUD {
 			itemSelect.paint(g);
 			for (int i = 0; i < items.length; i++)
 			{
-				g.drawString(items[i].getName(), itemSelect.getX()+10, itemSelect.getY()+24+(i*32));
-				String price = items[i].getPrice() + " G";
-				g.drawString(price, itemSelect.getX()+itemSelect.getWidth()-10-GameScreen.fontMetrics.stringWidth(price), itemSelect.getY()+34+(i*32));
+				font.drawString(g, items[i].getName(), 0, 14+(i*32), itemSelect);
+				font.drawString(g, items[i].getPrice() + " G", 0, 24+(i*32), SFont.RIGHT, itemSelect);
 			}
 			arrow.setX(itemSelect.getX()-8);
 			arrow.setY(itemSelect.getY()+16+(index*32));
@@ -176,13 +172,11 @@ public class ShopGUI extends HUD {
 			currentState = parent.parent.getState();
 			
 			if (currentState instanceof BuyState && ((BuyState)currentState).isHandingOff())
-			{
 				for (int i = 0; i < parent.party.size(); i++)
-					g.drawString(parent.party.get(i).getName(), window.getX()+8, window.getY()+26+(14*i));
-			}
+					font.drawString(g, parent.party.get(i).getName(), 0, 18+(14*i), window);
 			else
 				for (int i = 0; i < GreetState.commands.length; i++)
-					g.drawString(GreetState.commands[i], window.getX()+8, window.getY()+26+(14*i));
+					font.drawString(g, GreetState.commands[i], 0, 18+(14*i), window);
 		}
 	}
 }

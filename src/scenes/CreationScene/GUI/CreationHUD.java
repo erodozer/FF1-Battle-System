@@ -7,6 +7,7 @@ import scenes.HUD;
 import scenes.CreationScene.System.*;
 
 import engine.GameScreen;
+import graphics.SFont;
 import graphics.Sprite;
 
 /**
@@ -19,8 +20,6 @@ public class CreationHUD extends HUD{
 
 	public PartyDisplay partyd;
 	public NamingDisplay namingd;
-	
-	private Font font = GameScreen.font;
 	
 	Sprite arrow;
 	
@@ -54,8 +53,6 @@ public class CreationHUD extends HUD{
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		g.setFont(font);
-		g.setColor(Color.white);
 		
 		int[] ap;		//current arrow position
 		

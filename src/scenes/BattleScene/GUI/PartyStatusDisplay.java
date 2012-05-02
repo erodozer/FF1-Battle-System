@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 import actors.Player;
 import engine.Engine;
+import engine.GameScreen;
+import graphics.SFont;
 import graphics.Sprite;
 import graphics.SWindow;
 
@@ -19,6 +21,7 @@ public class PartyStatusDisplay extends Sprite{
 	//party status display consists of multiple windows, 
 	// one for each character in the party
 	SWindow[] windows;
+	SFont font = GameScreen.font;
 	
 	public PartyStatusDisplay(int x, int y)
 	{
@@ -40,14 +43,12 @@ public class PartyStatusDisplay extends Sprite{
 			SWindow w = windows[i];
 			Player p = Engine.getInstance().getParty().get(i);
 			w.paint(g);
-			g.drawString(p.getName(), w.getX() + 8, w.getY() + 24);
-			g.drawString("HP", w.getX() + 8, w.getY() + 40);
+			font.drawString(g, p.getName(), -2, 14, w);
+			font.drawString(g, "HP", -2, 30, w);
 			
 			//gets the width of the numbers so it can be right aligned
-			FontMetrics fm = g.getFontMetrics(g.getFont());
-			int width = fm.stringWidth(""+p.getHP());
 
-			g.drawString(""+p.getHP(), w.getX() + 40 - width, w.getY() + 46);
+			font.drawString(g, ""+p.getHP(), 0, 36, SFont.RIGHT, w);
 		}
 	}
 }

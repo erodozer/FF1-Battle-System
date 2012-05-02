@@ -2,9 +2,12 @@ package scenes.CreationScene.GUI;
 
 import java.awt.Graphics;
 
+import engine.GameScreen;
+
 import actors.Player;
 
 import graphics.NES;
+import graphics.SFont;
 import graphics.Sprite;
 import graphics.SWindow;
 
@@ -17,6 +20,7 @@ import graphics.SWindow;
  */
 public class PlayerWindow extends Sprite {
 
+	SFont font = GameScreen.font;
 	SWindow w;
 	Player p;
 	
@@ -51,8 +55,8 @@ public class PlayerWindow extends Sprite {
 		if (p == null)
 			return;
 		
-		g.drawString(p.getName(), w.getX() + 28, w.getY() + w.getHeight() - 10);
-		g.drawString(p.getJobName(), w.getX() + 12,  w.getY() + 22);
+		font.drawString(g, p.getName(), 18, w.getHeight()-20, w);
+		font.drawString(g, p.getJobName(), 2, 12, w);
 	
 		p.getSprite().setX(w.getX() + w.getWidth()/2 - p.getSprite().getWidth()/2-10);
 		p.getSprite().setY(w.getY() + w.getHeight()/2 - p.getSprite().getHeight()/2+5);

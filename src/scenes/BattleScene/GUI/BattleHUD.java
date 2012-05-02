@@ -14,6 +14,7 @@ import scenes.HUD;
 import scenes.BattleScene.System.*;
 
 import engine.GameScreen;
+import graphics.SFont;
 import graphics.Sprite;
 
 /**
@@ -36,7 +37,7 @@ public class BattleHUD extends HUD{
 	
 	private BattleSystem parent;
 	
-	private Font font = GameScreen.font;
+	private SFont font = GameScreen.font;
 	
 	Sprite arrow;
 	
@@ -95,8 +96,6 @@ public class BattleHUD extends HUD{
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		g.setFont(font);
-		g.setColor(Color.white);
 		psprited.paint(g);
 		pstatd.paint(g);
 		esprited.paint(g);

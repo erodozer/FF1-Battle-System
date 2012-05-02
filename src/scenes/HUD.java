@@ -6,6 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import engine.GameScreen;
+import graphics.SFont;
 import graphics.Sprite;
 
 /**
@@ -20,9 +21,8 @@ public abstract class HUD extends Sprite
     protected GameSystem parent;	//parent scene
     protected Color clearColor;		//color the background of the scene clears to
     
-    protected Font font = GameScreen.font;
-    protected FontMetrics fm = GameScreen.fontMetrics;
-	
+    protected SFont font = GameScreen.font;
+    
     /**
      * Constructs a hud
      */

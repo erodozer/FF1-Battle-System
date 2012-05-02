@@ -3,15 +3,20 @@ package scenes.CreationScene.GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import engine.GameScreen;
+
 import scenes.CreationScene.System.CreationSystem;
 import scenes.CreationScene.System.NamingState;
 
 import graphics.NES;
+import graphics.SFont;
 import graphics.Sprite;
 import graphics.SWindow;
 
 public class NamingDisplay extends Sprite {
 
+	private SFont font = GameScreen.font;
+	
 	CreationSystem parent;
 	SWindow nameWindow;
 	SWindow inputWindow;
@@ -51,12 +56,11 @@ public class NamingDisplay extends Sprite {
 		nameWindow.paint(g);
 		inputWindow.paint(g);
 		
-		g.drawString(name, nameWindow.getX() + 12, nameWindow.getY()+24);
+		font.drawString(g, name, 2, 14, nameWindow);
 		for (int i = 0; i < grid.length; i++)
 			for (int n = 0; n < grid[i].length; n++)
-				g.drawString(""+grid[i][n], inputWindow.getX() + 16 + 16*n, inputWindow.getY() + 22 + 16*i);
+				font.drawString(g, ""+grid[i][n], 6+16*n, 12+16*i, inputWindow);
 		
-		g.drawString("SELECT  NAME",  inputWindow.getX() + 42, inputWindow.getY() + inputWindow.getHeight() - 10);
-
+		font.drawString(g, "SELECT  NAME", 32, inputWindow.getHeight() - 20, inputWindow);
 	}
 }

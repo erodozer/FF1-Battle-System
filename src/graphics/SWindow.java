@@ -19,7 +19,7 @@ public class SWindow {
 	private static final Color DEFAULT_COLOR = Color.BLACK;
 	private static final Color DEFAULT_HUE = Color.WHITE;
 	
-	Color bg = DEFAULT_COLOR;	//background color of the window
+	Color bg;	//background color of the window
 	Color hue;
 	
 	//image parts
@@ -47,7 +47,7 @@ public class SWindow {
 	 */
 	public SWindow(int a, int b, int w, int h)
 	{
-		this(a, b, w, h, null, null, 0);
+		this(a, b, w, h, DEFAULT_COLOR, null, 0);
 	}
 	
 	/**

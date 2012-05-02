@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import engine.ContentPanel;
 import engine.GameScreen;
 import engine.Input;
-import graphics.StringUtils;
+import graphics.SFont;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,6 +14,7 @@ import scenes.GameState;
 
 public class IntroState extends GameState{
 
+	SFont font = GameScreen.font;
 	String[] lines;
 	int line;
 	int page;
@@ -34,7 +35,7 @@ public class IntroState extends GameState{
 				l.add(s.nextLine());
 			
 			for (String line : l)
-				for (String line2 : StringUtils.wrap(line, GameScreen.fontMetrics, ContentPanel.INTERNAL_RES_W - 20))
+				for (String line2 : font.formatIntoLines(line, SFont.WRAP, ContentPanel.INTERNAL_RES_W - 20))
 					finalI.add(line2);
 			
 			lines = finalI.toArray(new String[]{});

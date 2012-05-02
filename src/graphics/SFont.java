@@ -36,7 +36,15 @@ public class SFont {
 	public static final int LEFT = 0;
 	public static final int CENTER = 1;
 	public static final int RIGHT = 2;
-	private static final Color DEFAULT_COLOR = NES.WHITE;
+	
+	/*
+	 * format modes
+	 */
+	public static final int NONE = 0;
+	public static final int CROP = 1;
+	public static final int WRAP = 2;
+	
+	private static final Color DEFAULT_COLOR = Color.WHITE;
 	
 	private static HashMap<String, SFont> cache = new HashMap<String, SFont>();
 	
@@ -50,20 +58,30 @@ public class SFont {
 	 */
 	public static SFont loadFont(String fontName)
 	{
-		return loadFont(fontName, 24.0f);
+		return loadFont(fontName, 24.0f, true);
 	}
 	
 	public static SFont loadFont(String fontName, float size)
 	{
-		SFont s;
-		if (cache.containsKey(fontName))
-			s = cache.get(fontName);
-		else
-		{
-			s = new SFont(fontName, size);
-			cache.put(fontName, s);
-		}
-		return s;
+	    return loadFont(fontName, size, true);
+	}
+	
+	public static SFont loadFont(String fontName, float size, boolean doCache)
+	{
+        SFont s;
+        if (doCache){
+            if (cache.containsKey(fontName))
+                s = cache.get(fontName);
+            else
+            {
+                s = new SFont(fontName, size);
+                cache.put(fontName, s);
+            }
+        }
+        else
+            s = new SFont(fontName, size);
+            
+        return s;	    
 	}
 	
 	/**
@@ -116,28 +134,31 @@ public class SFont {
 		else if (wrap == 2)
 		{
 			ArrayList<String> lines = new ArrayList<String>();
-			for (int i = 0; i < processed.length; i++)
-			{
-				String line = processed[i].trim();
-				int r = 1;
-				int l = 0;
-				String cropped = line.substring(0, 0);
-				
-				while (r < line.length())
-				{
-					while (fm.stringWidth(cropped) < width)
-					{
-						String search = line.substring(l);
-						l = search.indexOf(" ");
-						r += l;
-						if (r > line.length())
-							break;
-						cropped = line.substring(0, r);
-					}
-					lines.add(line.substring(0, r-l));
-					line = line.substring(l);
-				}
-			}
+
+	        int curX = 0;
+
+	        String[] words = s.split("\\s+");
+	        String line = "";
+	        for (String word : words)
+	        {
+	        	// Find out the width of the word.
+	            int wordWidth = fm.stringWidth(word + " ");
+
+                // If text exceeds the width, then move to next line.
+                if (curX + wordWidth >= width)
+                {
+                    lines.add(line);    
+                    line = word + " ";
+                    curX = wordWidth;
+                }
+                else
+                {
+                	line += word + " ";
+                	curX += wordWidth;
+                }
+	        }
+	        lines.add(line);
+
 			processed = lines.toArray(new String[]{});
 		}
 		
