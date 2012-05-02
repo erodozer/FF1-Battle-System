@@ -63,7 +63,7 @@ public class WorldSystem extends GameSystem
 		//player is handled like npc so then npcs can see it in collision
 		leader.setMap(map);
 		leader.move(startX, startY);
-		
+		map.playMusic();
 	}
 	
 	/**

@@ -16,6 +16,7 @@ import org.ini4j.IniPreferences;
 
 
 import engine.ContentPanel;
+import engine.MP3;
 
 public class Map {
 
@@ -23,6 +24,7 @@ public class Map {
 	public static final int drawRowsMax = ContentPanel.INTERNAL_RES_W/TileSet.ORIGINAL_DIMENSIONS;
 	public static final int drawColsMax = ContentPanel.INTERNAL_RES_H/TileSet.ORIGINAL_DIMENSIONS;
 	
+	MP3 bgm;				//maps can have their own background music
 	String name;
 	
 	//map buffer
@@ -87,6 +89,7 @@ public class Map {
 					new Event(this, pref.node(section));
 			clearColor = Color.decode(pref.node("map").get("clearColor", "#000000"));
 			tileSet = new TileSet(pref.node("map").get("tileset", "world") + ".png");
+			bgm = new MP3("data/audio/"+pref.node("map").get("bgm", "world")+".mp3");
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			System.err.println("can not find file: " + "data/" + path + "map.ini");
@@ -274,6 +277,14 @@ public class Map {
 	public String getName()
 	{
 		return name;
+	}
+
+	/**
+	 * Plays the maps background music
+	 */
+	public void playMusic() {
+		if (bgm != null)
+			bgm.play();
 	}
 
 }

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import engine.ContentPanel;
 import engine.GameScreen;
 import engine.Input;
+import engine.MP3;
 import graphics.SFont;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import scenes.GameState;
 
 public class IntroState extends GameState{
 
+	MP3 music;
 	SFont font = GameScreen.font;
 	String[] lines;
 	int line;
@@ -39,6 +41,8 @@ public class IntroState extends GameState{
 					finalI.add(line2);
 			
 			lines = finalI.toArray(new String[]{});
+			music = new MP3("data/audio/intro.mp3");
+			music.play();
 		}
 		//if no intro file, then just skip to the title screen
 		catch (Exception e) {
