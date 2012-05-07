@@ -1,5 +1,7 @@
 package graphics;
 
+import engine.Engine;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
@@ -83,7 +85,7 @@ public class Sprite{
 			{
 				try
 				{
-					image = ImageIO.read(new File("data/" + s));
+					image = (Engine.isRscLoading)?ImageIO.read(getClass().getResourceAsStream("data/"+s)):ImageIO.read(new File("data/" + s));
 				}
 				catch (IOException e) {
 					System.err.println("can not read or find: data/" + s);

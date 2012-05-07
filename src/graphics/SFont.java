@@ -15,6 +15,8 @@ package graphics;
  *  	Font caching
  */
 
+import engine.Engine;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -158,12 +160,13 @@ public class SFont {
 	private SFont(String fontName, float size)
 	{
 		try {
-			f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/"+fontName+".ttf"))).deriveFont(size);
+			f = Font.createFont(Font.TRUETYPE_FONT, (Engine.isRscLoading)?getClass().getResourceAsStream("data/font/"+fontName+".ttf"):new FileInputStream(new File("data/font/"+fontName+".ttf"))).deriveFont(size);
 			fm = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR).getGraphics().getFontMetrics(f);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
 	/**
 	 * Draws a string to the display
 	 * @param g				Graphics buffer to draw to

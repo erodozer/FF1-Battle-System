@@ -29,6 +29,10 @@ import groups.*;
  */
 public class Engine{
 
+	//this variable should keep track if the code should load resources from
+	//inside the jar after packaging, or from the data folder.
+	public static final boolean isRscLoading = false;
+	
 	private static Engine _instance;	//singleton instance
 	
 	private BattleScene battle;			//battle scene
