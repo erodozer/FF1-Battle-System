@@ -21,13 +21,16 @@ package engine;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.InputStream;
 
-import javazoom.jl.player.Player;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.advanced.*;
 
 
-public class MP3 {
+public class MP3 extends PlaybackListener {
+	
     private String filename;
-    private static Player player; 
+    private static AdvancedPlayer player; 
 
     // constructor that takes the name of an MP3 file
     public MP3(String filename) {
@@ -46,53 +49,35 @@ public class MP3 {
     // play the MP3 file to the sound card
     public void play() {
         try {
-            FileInputStream fis     = new FileInputStream(filename);
+            InputStream fis = ((Engine.isRscLoading)?getClass().getResourceAsStream("data/"+filename):new FileInputStream("data/"+filename));
             BufferedInputStream bis = new BufferedInputStream(fis);
-            player = new Player(bis);
+            player = new AdvancedPlayer(bis);
+            player.setPlayBackListener(this);
         }
         catch (Exception e) {
-            System.out.println("Problem playing file " + filename);
+            System.out.println("Problem playing file " + "data/"+filename);
             System.out.println(e);
+            return;
         }
 
-        // run in new thread to play in background
-        new Thread() {
-            @Override
-			public void run() {
-                try { player.play(); }
-                catch (Exception e) { System.out.println(e); }
-            }
+        new Thread(){
+        	public void run()
+        	{
+        	    try {
+					player.play();
+				} catch (JavaLayerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
         }.start();
-
-
-
-
     }
 
-
-    // test client
-    public static void main(String[] args) {
-        String filename = args[0];
-        MP3 mp3 = new MP3(filename);
-        mp3.play();
-
-        // do whatever computation you like, while music plays
-        int N = 4000;
-        double sum = 0.0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                sum += Math.sin(i + j);
-            }
-        }
-        System.out.println(sum);
-
-        // when the computation is done, stop playing it
-        mp3.close();
-
-        // play from the beginning
-        mp3 = new MP3(filename);
-        mp3.play();
-
+    @Override
+    public void playbackFinished(PlaybackEvent evt)
+    {
+    	MP3.stop(); 
+    	play();
     }
 
 }
