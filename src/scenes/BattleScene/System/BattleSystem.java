@@ -63,7 +63,7 @@ public class BattleSystem extends GameSystem{
 		
 		populateActorList();
 		
-		bgm = new MP3("data/audio/battle.mp3");
+		bgm = new MP3("battle.mp3");
 		bgm.play();
 		
 		is = new IssueState(this);

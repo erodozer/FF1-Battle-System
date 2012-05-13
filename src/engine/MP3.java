@@ -49,13 +49,16 @@ public class MP3 extends PlaybackListener {
     // play the MP3 file to the sound card
     public void play() {
         try {
-            InputStream fis = ((Engine.isRscLoading)?getClass().getResourceAsStream("data/"+filename):new FileInputStream("data/"+filename));
+            InputStream fis = ((Engine.isRscLoading)?getClass().getResourceAsStream("data/audio/"+filename):new FileInputStream("data/audio/"+filename));
             BufferedInputStream bis = new BufferedInputStream(fis);
-            player = new AdvancedPlayer(bis);
-            player.setPlayBackListener(this);
+            AdvancedPlayer a = new AdvancedPlayer(bis);
+            a.setPlayBackListener(this);
+            
+            player = null;
+            player = a;
         }
         catch (Exception e) {
-            System.out.println("Problem playing file " + "data/"+filename);
+            System.out.println("Problem playing file " + "data/audio/"+filename);
             System.out.println(e);
             return;
         }
