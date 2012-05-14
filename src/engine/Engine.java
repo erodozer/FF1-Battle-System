@@ -319,4 +319,20 @@ public class Engine{
 		return currentMap;
 	}
 
+	/**
+	 * Quick starting testing method
+	 * Generates a default party and places the group on the world map
+	 */
+	public void quickStart()
+	{
+		Party p = new Party();
+		p.add("APPL", "Fighter");
+		p.add("TWIL", "Red Mage");
+		p.add("RNBW", "Black Belt");
+		p.add("FLUT", "White Mage");
+		p.add("RRTY", "Black Mage");
+		p.add("PNKE", "Thief");
+		setParty(p);
+		changeToWorld("world", 3, 3);
+	}
 }
