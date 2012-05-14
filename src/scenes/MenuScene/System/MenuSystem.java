@@ -32,6 +32,7 @@ public class MenuSystem extends GameSystem
 	OrderState os;
 	
 	boolean pickPlayer;
+	int lastPlayerPicked = 0;
 	
 	/**
 	 * Constructs the menu core
@@ -53,7 +54,7 @@ public class MenuSystem extends GameSystem
 		 * Do not include OrderState in menu listing of states,
 		 * OrderState is accessed from the map by pressing select
 		 */
-		states = new GameState[]{ms, is, null, ws, as, ss};
+		states = new GameState[]{is, null, ws, as, ss};
 	}
 	
 	/**
@@ -73,21 +74,27 @@ public class MenuSystem extends GameSystem
 	{
 		if (state == ms)
 		{
-			if (states[ms.getIndex()+1] == ss && !pickPlayer)
-			{
-				pickPlayer = true;
-				ms.setIndex(0);
-				return;
-			}
-			
 			if (pickPlayer)
 			{
 				ss.setIndex(ms.getIndex());
 				state = ss;
+				pickPlayer = false;
+				lastPlayerPicked = ms.getIndex();
 			}
 			else
-				//null checks only temp in here to prevent menu crashing
-				state = (states[ms.getIndex()+1] != null)?states[ms.getIndex()+1]:ms;
+			{
+				if (states[ms.getIndex()] == ss)
+				{
+					ms.setIndex(lastPlayerPicked);
+					pickPlayer = true;
+					return;
+				}
+				else
+				{
+					//null checks only temp in here to prevent menu crashing
+					state = (states[ms.getIndex()] != null)?states[ms.getIndex()]:ms;
+				}
+			}
 		}
 		else
 		{

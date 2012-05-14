@@ -35,7 +35,7 @@ public class Party extends ArrayList<Player>{
 	 * When using methods in battle such as getAlive, it should only
 	 * look at the number of members who are in the main party.
 	 */
-	private static final int GROUP_SIZE = 4;
+	public static final int GROUP_SIZE = 4;
 	
 	HashMap<String, Integer> inventory = genInventory();
 	int gold = 500;		//party starts off with 500 g

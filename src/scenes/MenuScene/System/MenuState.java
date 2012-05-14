@@ -35,14 +35,6 @@ public class MenuState extends GameState
 	@Override
 	public void handle()
 	{
-		if (index < 0)
-			index = commands.length-1;
-		if (((MenuSystem)parent).isPickingPlayer())
-			if (index >= e.getParty().size())
-				index = 0;
-		else
-			if (index >= commands.length)
-				index = 0;
 	}
 
 	@Override
@@ -57,7 +49,21 @@ public class MenuState extends GameState
 	@Override
 	public void handleKeyInput(int key)
 	{
-		super.handleKeyInput(key);
+		//if picking a player, jump around the grid by col and rows
+		if (((MenuSystem)parent).isPickingPlayer())
+		{
+			if (key == Input.KEY_UP)
+				index -= 2;
+			else if (key == Input.KEY_DN)
+				index += 2;
+			else if (key == Input.KEY_LT)
+				index--;
+			else if (key == Input.KEY_RT)
+				index++;
+		}
+		else
+			super.handleKeyInput(key);
+		
 		if (key == Input.KEY_A)
 			parent.setNextState();
 		else if (key == Input.KEY_B)
@@ -69,6 +75,24 @@ public class MenuState extends GameState
 			}
 			else
 				parent.finish();
+		}
+		
+		if (((MenuSystem)parent).isPickingPlayer())
+		{
+			if (index >= e.getParty().size())
+				index %= e.getParty().size();
+			else if (index < 0)
+			{
+				index %= e.getParty().size();
+				index += e.getParty().size();
+			}
+		}
+		else
+		{
+			if (index >= commands.length)
+				index = 0;
+			else if (index < 0)
+				index = commands.length-1;
 		}
 	}
 }

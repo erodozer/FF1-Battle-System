@@ -33,6 +33,8 @@ public class MainGUI extends HUD
 	
     SFont f = SFont.loadFont("default");	
 	//font
+    
+    int range = 0;
 	
 	/**
 	 * Constructs the gui component
@@ -42,9 +44,9 @@ public class MainGUI extends HUD
 	{
 		parentGUI = parent;
 		p = e.getParty();
-		statWindows = new PlayerWindow[p.size()];
-		for (int i = 0; i < p.size(); i++)
-			statWindows[i] = new PlayerWindow(p.get(i), 90+(PlayerWindow.WIDTH-2)*(i%2), 1+(PlayerWindow.HEIGHT)*(i/2));
+		statWindows = new PlayerWindow[4];
+		for (int i = 0; i < 4; i++)
+			statWindows[i] = new PlayerWindow(null, 90+(PlayerWindow.WIDTH-2)*(i%2), 1+(PlayerWindow.HEIGHT)*(i/2));
 		goldWindow = new SWindow(8, 73, 84, 40, NES.BLUE);
 		oWin = new OrbWindow(p, 12, 9);
 		menuWindow = new SWindow(17, 113, 66, 112, NES.BLUE);
@@ -56,8 +58,18 @@ public class MainGUI extends HUD
 	@Override
 	public void paint(Graphics g)
 	{
-		for (int i = 0; i < statWindows.length; i++)
-			statWindows[i].paint(g);
+		for (int i = range; i < range+4; i++)
+		{
+			try
+			{
+				statWindows[i-range].setPlayer(p.get(i));
+			}
+			catch (Exception e)
+			{
+				statWindows[i-range].setPlayer(null);
+			}
+			statWindows[i-range].paint(g);
+		}
 		goldWindow.paint(g);
 		String s = String.format("%6d G", p.getGold());
 		f.drawString(g, s, 0, 14, 2, goldWindow);
@@ -80,7 +92,7 @@ public class MainGUI extends HUD
 		int[] pos;
 		
 		if (((MenuSystem)(parentGUI.getParent())).isPickingPlayer())
-			pos = new int[]{(int)statWindows[index].getX()-15,  (int)statWindows[index].getY()+20};
+			pos = new int[]{(int)statWindows[index-range].getX()-15,  (int)statWindows[index-range].getY()+20};
 		else
 			pos = new int[]{menuWindow.getX()-8,  menuWindow.getY()+16+(16*index)};
 		return pos;
@@ -90,7 +102,17 @@ public class MainGUI extends HUD
 	 * Do nothing
 	 */
 	@Override
-	public void update(){}
+	public void update(){
+		MenuSystem ms = (MenuSystem)(parentGUI.getParent());
+		if (ms.isPickingPlayer())
+		{
+			MenuState m = (MenuState)ms.getState();
+			if (range + 4 <= m.getIndex())
+				range = (int)(m.getIndex()/2-1)*2;
+			else if (m.getIndex() < range)
+				range = (int)(m.getIndex()/2);
+		}
+	}
 	
 
 /**
@@ -119,7 +141,12 @@ private class PlayerWindow
 		this.p = p;
 		this.x = x;
 		this.y = y;
-		w = new SWindow(x, y, WIDTH, HEIGHT, NES.BLUE);
+		w = new SWindow(x, y, WIDTH, HEIGHT);
+	}
+	
+	public void setPlayer(Player p)
+	{
+		this.p = p;
 	}
 	
 	public int getX()
@@ -134,6 +161,10 @@ private class PlayerWindow
 	
 	public void paint(Graphics g)
 	{
+		if (p == null)
+			return;
+		
+		w.setFillColor((Engine.getInstance().getParty().indexOf(p) < Party.GROUP_SIZE)?NES.BLUE:NES.BLACK);
 		w.paint(g);
 		
 		s = p.getSprite();

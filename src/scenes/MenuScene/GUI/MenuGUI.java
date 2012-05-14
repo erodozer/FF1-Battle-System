@@ -55,19 +55,19 @@ public class MenuGUI extends HUD
 	public void update()
 	{
 		state = parent.getState();
-		index = state.getIndex();
-		if (parent.getState() instanceof MenuState)
+		if (state instanceof MenuState)
 			currentGUI = mg;
-		else if (parent.getState() instanceof InventoryState)
+		else if (state instanceof InventoryState)
 			currentGUI = ig;
-		else if (parent.getState() instanceof StatusState)
+		else if (state instanceof StatusState)
 			currentGUI = sg;
-		else if (parent.getState() instanceof WeaponState)
+		else if (state instanceof WeaponState)
 			currentGUI = wg;
-		else if (parent.getState() instanceof ArmorState)
+		else if (state instanceof ArmorState)
 			currentGUI = ag;
-		else if (parent.getState() instanceof OrderState)
+		else if (state instanceof OrderState)
 			currentGUI = og;
+		index = state.getIndex();
 		currentGUI.update();
 	}
 
