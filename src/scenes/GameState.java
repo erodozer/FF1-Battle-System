@@ -14,6 +14,8 @@ public abstract class GameState {
 
     protected GameSystem parent;
     protected int index;
+    protected int minIndex = 0;
+    protected int maxIndex = Integer.MAX_VALUE;
     
     /**
      * Creates a game state
@@ -49,9 +51,9 @@ public abstract class GameState {
     public void handleKeyInput(int key)
     {
     	if (key == Input.KEY_DN)
-			index++;
+			setIndex(index + 1);
 		else if (key == Input.KEY_UP)
-			index--;
+			setIndex(index - 1);
     	handle();
     }
     
@@ -81,6 +83,6 @@ public abstract class GameState {
      */
     public void setIndex(int i)
     {
-    	index = i;
+    	index = Math.min(maxIndex, Math.max(i, minIndex));
     }
 }
