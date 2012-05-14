@@ -12,8 +12,6 @@ import groups.Formation;
 
 public class WorldSystem extends GameSystem
 {
-	static int leaderIndex = 0;
-	
 	Engine e;
 	Map map;
 	
@@ -42,7 +40,7 @@ public class WorldSystem extends GameSystem
 		e = Engine.getInstance();
 		encounterNum = 0;
 		leader = new NPC();
-		leader.setWalkSprite(e.getParty().get(leaderIndex).getMapSelf());
+		leader.setWalkSprite(e.getParty().get(0).getMapSelf());
 		currentTerrain = null;
 		activeNPC = null;
 		setNextState();

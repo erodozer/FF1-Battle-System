@@ -29,6 +29,7 @@ public class MenuSystem extends GameSystem
 	WeaponState ws;
 	ArmorState as;
 	StatusState ss;
+	OrderState os;
 	
 	boolean pickPlayer;
 	
@@ -43,10 +44,25 @@ public class MenuSystem extends GameSystem
 		ss = new StatusState(this);
 		ws = new WeaponState(this);
 		as = new ArmorState(this);
+		os = new OrderState(this);
 		
 		state = ms;
 		state.start();
+		
+		/*
+		 * Do not include OrderState in menu listing of states,
+		 * OrderState is accessed from the map by pressing select
+		 */
 		states = new GameState[]{ms, is, null, ws, as, ss};
+	}
+	
+	/**
+	 * Show the order menu instead of the normal menu
+	 */
+	public void showOrderMenu()
+	{
+		state = os;
+		state.start();
 	}
 	
 	/**

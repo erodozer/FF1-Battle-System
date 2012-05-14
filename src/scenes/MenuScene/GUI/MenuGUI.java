@@ -6,13 +6,7 @@ import java.awt.Graphics;
 
 import scenes.GameState;
 import scenes.HUD;
-import scenes.MenuScene.System.ArmorState;
-import scenes.MenuScene.System.InventoryState;
-import scenes.MenuScene.System.MenuState;
-import scenes.MenuScene.System.MenuSystem;
-import scenes.MenuScene.System.StatusState;
-import scenes.MenuScene.System.WeaponState;
-
+import scenes.MenuScene.System.*;
 
 /**
  * MenuGUI
@@ -32,6 +26,7 @@ public class MenuGUI extends HUD
 	StatusGUI sg;		//status gui
 	EquipmentGUI wg;	//weapon gui
 	EquipmentGUI ag;	//armor gui
+	OrderGUI og;		//party order gui
 	
 	HUD currentGUI;		//the gui that is currently supposed to be visible
 	int index;
@@ -48,6 +43,7 @@ public class MenuGUI extends HUD
 		sg = new StatusGUI(this);
 		wg = new EquipmentGUI(this);
 		ag = new EquipmentGUI(this);
+		og = new OrderGUI(this);
 		
 		currentGUI = mg;
 	}
@@ -70,6 +66,8 @@ public class MenuGUI extends HUD
 			currentGUI = wg;
 		else if (parent.getState() instanceof ArmorState)
 			currentGUI = ag;
+		else if (parent.getState() instanceof OrderState)
+			currentGUI = og;
 		currentGUI.update();
 	}
 
@@ -81,11 +79,28 @@ public class MenuGUI extends HUD
 	{
 		int[] pos = new int[2];
 		
-		pos = currentGUI.getArrowPosition(index);
 		currentGUI.paint(g);
 		
+		pos = currentGUI.getArrowPosition(index);
 		arrow.setX(pos[0]);
 		arrow.setY(pos[1]);
 		arrow.paint(g);
+		
+		/*
+		 * Draw another arrow when a member is selected for swapping in the order
+		 * scene and the party member is not outside the view range of party
+		 * members.
+		 */
+		if (currentGUI == og)
+		{
+			OrderState s = (OrderState)parent.getState();
+			if (s.getSelectedIndex() != -1 && !og.showSelectedWin)
+			{
+				pos = currentGUI.getArrowPosition(s.getSelectedIndex()-og.partyWindow.range);
+				arrow.setX(pos[0]);
+				arrow.setY(pos[1]);
+				arrow.paint(g);
+			}
+		}
 	}
 }

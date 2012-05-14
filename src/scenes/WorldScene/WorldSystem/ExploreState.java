@@ -87,8 +87,7 @@ public class ExploreState extends GameState {
     	//switch character sprite
     	else if (key == Input.KEY_SELECT)
     	{
-    		WorldSystem.leaderIndex = (WorldSystem.leaderIndex + 1) % e.getParty().size();
-    		parent.leader.setWalkSprite(e.getParty().get(WorldSystem.leaderIndex).getMapSelf());
+    		e.changeToOrder();
     	}
     	//show main menu
     	else if (key == Input.KEY_START)

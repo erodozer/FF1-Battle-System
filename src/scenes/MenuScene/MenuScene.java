@@ -23,6 +23,14 @@ public class MenuScene extends Scene{
 		this.display = display;
 	}
 	
+	/**
+	 * Shows the order menu instead of the normal menu
+	 */
+	public void startWithOrder(){
+	    start();
+	    ((MenuSystem)this.system).showOrderMenu();
+	}
+	
 	@Override
 	public void stop()
 	{

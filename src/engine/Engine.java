@@ -95,7 +95,7 @@ public class Engine{
 	
 	/**
 	 * Changes the game into the battle scene
-	 * @param formation
+	 * @param formation	the formation you will be battling
 	 */
 	public void changeToBattle(Formation formation)
 	{
@@ -108,8 +108,8 @@ public class Engine{
 	
 	/**
 	 * Changes the game into the battle scene with a specified backdrop
-	 * @param f
-	 * @param t
+	 * @param f				the formation you will be battling
+	 * @param background	the background image to use for the battle terrain
 	 */
 	public void changeToBattle(Formation f, Sprite background) {
 		changeScene();
@@ -134,12 +134,14 @@ public class Engine{
 		
 	/**
 	 * Switches the game's state to the world scene on a different map
-	 * @param string 
+	 * @param mapName	the name of the map to change to
+	 * @param startX	the x position of where your party will spawn on the map
+	 * @param startY 	the y position of your party
 	 */
-	public void changeToWorld(String string, int startX, int startY)
+	public void changeToWorld(String mapName, int startX, int startY)
 	{
 		changeScene();
-		world.start(string, startX, startY);
+		world.start(mapName, startX, startY);
 		currentScene = world;
 		GameScreen.getInstance().c.evokeTransition(true);
 	}
@@ -157,6 +159,10 @@ public class Engine{
 		
 	}
 	
+	/**
+	 * Shows the shop interaction scene
+	 * @param shop	the npc shop for buying stuff
+	 */
 	public void changeToShop(Shop shop) {
 		changeScene();
 		ShopScene s = new ShopScene();
@@ -166,6 +172,9 @@ public class Engine{
 		GameScreen.getInstance().c.evokeTransition(true);
 	}
 	
+	/**
+	 * Shows the main menu
+	 */
 	public void changeToMenu()
 	{
 		changeScene();
@@ -173,6 +182,19 @@ public class Engine{
 		currentScene = menu;
 		GameScreen.getInstance().c.evokeTransition(true);
 	}
+	
+	/**
+	 * Changes the view to show the party order swapping screen
+	 */
+	public void changeToOrder()
+	{
+		changeScene();
+		menu.startWithOrder();
+		currentScene = menu;
+		GameScreen.getInstance().c.evokeTransition(true);
+	}
+	
+	
 	
 	/**
 	 * Standard procedure executed when changing a scene
