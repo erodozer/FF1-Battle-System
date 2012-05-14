@@ -128,8 +128,8 @@ public class OrderGUI extends HUD
 			 * this number keeps track of the index range of
 			 * which to characters should be shown
 			 */
-			if (index > 3)
-				range = 4-index;
+			if (index > range+3)
+				range = index-3;
 			else if (index < range)
 				range = index;
 		}

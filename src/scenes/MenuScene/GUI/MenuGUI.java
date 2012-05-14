@@ -96,7 +96,7 @@ public class MenuGUI extends HUD
 			OrderState s = (OrderState)parent.getState();
 			if (s.getSelectedIndex() != -1 && !og.showSelectedWin)
 			{
-				pos = currentGUI.getArrowPosition(s.getSelectedIndex()-og.partyWindow.range);
+				pos = currentGUI.getArrowPosition(s.getSelectedIndex());
 				arrow.setX(pos[0]);
 				arrow.setY(pos[1]);
 				arrow.paint(g);
