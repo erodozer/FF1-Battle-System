@@ -26,6 +26,17 @@ import actors.Player;
 
 public class Party extends ArrayList<Player>{
 	
+	/*
+	 * This size defines the size of your main representative party
+	 * for battle, in shops, pretty much everything you see by default.
+	 * Members with an index higher than this are considered in the
+	 * off/reserve party.
+	 * 
+	 * When using methods in battle such as getAlive, it should only
+	 * look at the number of members who are in the main party.
+	 */
+	private static final int GROUP_SIZE = 4;
+	
 	HashMap<String, Integer> inventory = genInventory();
 	int gold = 500;		//party starts off with 500 g
 	
@@ -36,9 +47,12 @@ public class Party extends ArrayList<Player>{
 	public Player[] getAliveMembers() 
 	{
 		List<Player> alive = new ArrayList<Player>();
-		for (Player p: this)
+		Player p = this.get(0);
+		for (int i = 0; i < Math.min(this.size(), GROUP_SIZE); i++, p = this.get(i))
+		{	
 			if (p.getAlive())
 				alive.add(p);
+		}
 		return alive.toArray(new Player[alive.size()]);
 	}
 
@@ -65,15 +79,17 @@ public class Party extends ArrayList<Player>{
 	}
 	
 	/**
-	 * Returns the number of players in the party that are alive
-	 * @return
+	 * @return	the number of players in the party that are alive
 	 */
 	public int getAlive()
 	{
 		int counter = 0;
-		for (Player p: this)
+		Player p = this.get(0);
+		for (int i = 0; i < Math.min(this.size(), GROUP_SIZE); i++, p = this.get(i))
+		{	
 			if (p.getAlive())
 				counter++;
+		}
 		return counter;
 	}	
 	
