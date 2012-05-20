@@ -1,6 +1,7 @@
 package commands;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
@@ -136,6 +137,19 @@ public class Spell extends Command {
 	 */
 	public int getLevel() {
 		return lvl;
+	}
+
+	public boolean getElementalEffectiveness(String string) {
+		try
+		{
+			Field f = this.getClass().getDeclaredField(string.toLowerCase());
+			return f.getBoolean(f);
+		}
+		catch (Exception e)
+		{
+			System.err.println(string + " is not a valid element name");
+			return false;
+		}
 	}
 
 }

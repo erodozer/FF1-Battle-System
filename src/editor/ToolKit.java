@@ -2,7 +2,6 @@ package editor;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -10,8 +9,8 @@ import javax.swing.WindowConstants;
 
 import editor.EnemyEditor.EnemyEditorGUI;
 import editor.MapEditor.MapEditorGUI;
-import editor.MapEditor.NewMapDialog;
 import editor.PassabilityEditor.PassabilityEditor;
+import editor.SpellEditor.SpellEditorGUI;
 import editor.SpriteCreator.SpriteCreatorGUI;
 
 public class ToolKit extends JFrame{
@@ -20,6 +19,7 @@ public class ToolKit extends JFrame{
 	PassabilityEditor passabilityEditor;
 	EnemyEditorGUI enemyEditor;
 	SpriteCreatorGUI spriteCreator;
+	SpellEditorGUI spellEditor;
 	
 	/*
 	 * Dialogs
@@ -31,6 +31,8 @@ public class ToolKit extends JFrame{
 	public static final String[] terrains = buildTerrainList();
 	public static final String[] spriteCategories = buildCategoryList();
 	public static final String[][] spriteElements = buildElementList();
+	public static final String[] spells = buildSpellList();
+	public static final String[] animations = buildAnimationList();
 	
 	
 	public ToolKit()
@@ -43,6 +45,7 @@ public class ToolKit extends JFrame{
 
 		mapEditor = new MapEditorGUI();
 		passabilityEditor = new PassabilityEditor();
+		spellEditor = new SpellEditorGUI();
 		enemyEditor = new EnemyEditorGUI();
 		spriteCreator = new SpriteCreatorGUI();
 		
@@ -50,6 +53,7 @@ public class ToolKit extends JFrame{
 		tabbedPane.setSize(this.getWidth(), this.getHeight());
 		tabbedPane.addTab("Map Editor", mapEditor);
 		tabbedPane.addTab("Passability Editor", passabilityEditor);
+		tabbedPane.addTab("Spell Editor", spellEditor);
 		tabbedPane.addTab("Enemy Editor", enemyEditor);
 		tabbedPane.addTab("Sprite Creator", spriteCreator);
 		add(tabbedPane);
@@ -135,6 +139,37 @@ public class ToolKit extends JFrame{
               }
             });
 		}
+		return s;
+	}
+	
+	/**
+	 * Creates a list of available animations to edit and use
+	 * @return
+	 */
+	private static String[] buildAnimationList()
+	{
+		String[] s = new File("data/animation").list(new FilenameFilter() {
+            @Override
+			public boolean accept(File f, String s) {
+            	return s.endsWith(".anim");
+              }
+            });
+		return s;
+	}
+	
+	
+	/**
+	 * Creates a list of available spells to edit and use
+	 * @return
+	 */
+	private static String[] buildSpellList()
+	{
+		String[] s = new File("data/spells").list(new FilenameFilter() {
+            @Override
+			public boolean accept(File f, String s) {
+            	return (new File("data/spells/"+s+"/spell.ini").exists());
+              }
+            });
 		return s;
 	}
 	

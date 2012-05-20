@@ -310,8 +310,8 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 			save();
 			
 			GameScreen gs = GameScreen.getInstance();
-			gs.quickStart();
 			Engine e = Engine.getInstance();
+			e.quickStart();
 			e.changeToWorld(n, 1, 1);
 			gs.validate();
 			
