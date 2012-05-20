@@ -403,6 +403,18 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			else
 				g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION*(tileSelected.length), TileSet.TILE_DIMENSION*(tileSelected[0].length));
 		}
+		
+		//show x & y coordinate of the mouse when the mouse is inside the frame
+		if (updating)
+		{
+			String loc = (x+1) + " x " + (y+1);
+			int w = Math.max(48, g.getFontMetrics().stringWidth(loc)+10);
+			Rectangle vis = this.getVisibleRect();
+			g.setColor(Color.GRAY);
+			g.fillRect(vis.x, vis.y, w, 16);
+			g.setColor(Color.BLACK);
+			g.drawString(loc, vis.x + 5, vis.y + 12);
+		}
 	}
 
 	@Override
