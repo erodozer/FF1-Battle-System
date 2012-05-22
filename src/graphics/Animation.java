@@ -169,7 +169,7 @@ public class Animation {
 	}
 	
 	/**
-	 * Sprite
+	 * Frame
 	 * @author nhydock
 	 *
 	 *	Sub class for handling parsing and rendering of each frame of animation

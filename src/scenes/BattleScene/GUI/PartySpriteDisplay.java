@@ -7,6 +7,7 @@ import actors.*;
 import engine.Engine;
 import graphics.Sprite;
 import graphics.SWindow;
+import groups.Party;
 import scenes.BattleScene.System.*;
 
 /**
@@ -20,6 +21,7 @@ public class PartySpriteDisplay extends Sprite{
 	SWindow window;
 	Sprite background;
 	BattleSystem parent;	
+	Party party;
 	
 	//distance away from the window boarder the background should be drawn
 	final int BKGVERTOFFSET = 7;
@@ -30,19 +32,21 @@ public class PartySpriteDisplay extends Sprite{
 		super(null);
 		window = new SWindow(x, y, 65, 144);
 		background = new Sprite(null);
+		party = new Party();
+	}
+	
+	public void setParentScene(BattleSystem bs)
+	{
+		parent = bs;
+		party = parent.getParty();
 		//Sets all the sprites to their initial positions
-		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
+		for (int i = 0; i < party.size(); i++)
 		{
-			Player p = Engine.getInstance().getParty().get(i);
+			Player p = party.get(i);
 			p.setMoving(0);
 			p.setState(Player.STAND);
 			p.setPosition(window.getX() + 16, window.getY()+32+(p.getSprite().getHeight()-6)*i);
 		}
-	}
-
-	public void setParentScene(BattleSystem bs)
-	{
-		parent = bs;
 	}
 	
 	/**
@@ -61,9 +65,10 @@ public class PartySpriteDisplay extends Sprite{
 			g.drawImage(background.getImage(), window.getX() + window.getWidth() - BKGHORZOFFSET - background.getImage().getWidth(), window.getY() + BKGVERTOFFSET, null);
 		}
 		
-		for (int i = 0; i < Engine.getInstance().getParty().size(); i++)
+		for (int i = 0; i < party.size(); i++)
 		{
-			Player p = Engine.getInstance().getParty().get(i);
+			Player p = party.get(i);
+			System.out.println("Player " + i + ": " + p.getState());
 			//Move the player in a walking animation
 			if (p == parent.getActiveActor() && p.getAlive())
 			{

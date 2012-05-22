@@ -208,4 +208,17 @@ public class Party extends ArrayList<Player>{
 		}
 		return items.toArray(new String[]{});
 	}
+
+	/**
+	 * The battle party is the first 4 members of the party.
+	 * This generates a new party object of just those members to work with
+	 *  in the battle scenarios
+	 * @return
+	 */
+	public Party getBattleParty() {
+		Party p = new Party();
+		for (int i = 0; i < Math.min(this.size(), GROUP_SIZE); i++)
+			p.add(this.get(i));
+		return p;
+	}
 }

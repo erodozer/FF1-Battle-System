@@ -57,9 +57,10 @@ public class BattleSystem extends GameSystem{
 	public BattleSystem()
 	{
 		engine = Engine.getInstance();
-		party = engine.getParty();
 		formation = new Formation();
-		
+		//battle party formation must be made
+		party = engine.getParty().getBattleParty();
+				
 		playerIndex = -1;
 		
 		populateActorList();
@@ -139,6 +140,7 @@ public class BattleSystem extends GameSystem{
 	 */
 	public void start()
 	{
+		
 		genEnemyCommands();
 		populateActorList();
 		turnOrder = getTurnOrder();
@@ -369,4 +371,7 @@ public class BattleSystem extends GameSystem{
 		Engine.getInstance().changeToWorld();
 	}
 	
+	public Party getParty() {
+		return party;
+	}
 }

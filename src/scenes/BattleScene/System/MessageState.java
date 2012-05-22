@@ -94,7 +94,7 @@ public class MessageState extends GameState {
 				m.add("Ineffective");
 		}
 			
-		message = m.toArray(message);
+		message = m.toArray(new String[]{});
 	}
 
 	/**

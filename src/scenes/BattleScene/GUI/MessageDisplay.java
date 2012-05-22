@@ -77,9 +77,9 @@ public class MessageDisplay extends Sprite{
 		{
 			//shows actor name and command
 			windows[3].paint(g);
-			font.drawString(g, "" + message[1], 0, 10, windows[3]);
+			font.drawString(g, "" + message[3], 0, 10, windows[3]);
 			windows[2].paint(g);
-			font.drawString(g, message[0], 0, 10, windows[2]);
+			font.drawString(g, message[2], 0, 10, windows[2]);
 			
 			if (message.length == 5)
 			{

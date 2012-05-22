@@ -62,7 +62,9 @@ public class BattleHUD extends HUD{
 	}
 	
 	@Override
-	public void update(){}
+	public void update(){
+		elistd.update(parent.getFormation());
+	}
 	
 	/**
 	 * Sets the background for the battle scene
