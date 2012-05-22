@@ -341,7 +341,7 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		
 		//load elemental resistance
 		for (int i = 0; i < ELEM_VALUES.size(); i++)
-			elemSpinners[0].setValue(ELEM_VALUES.get(e.getElementalResistance(i)));
+			elemSpinners[i].setValue(ELEM_VALUES.get(e.getElementalResistance(i)));
 		
 		//load loot values
 		activeEnemy = e;
