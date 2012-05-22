@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import commands.AttackCommand;
+
+import actors.Actor;
 import actors.Player;
 
 import engine.Engine;
@@ -40,7 +43,7 @@ public class EngageStateTest {
 		BattleSystem bs = new BattleSystem();
 		bs.setFormation(f);
 		
-		a.setCommand(a.getCommands()[0]);	//set command to attack
+		a.setCommand(new AttackCommand(a, new Actor[]{f.get(0)}));	//set command to attack
 		
 		EngageState state = new EngageState(bs);
 		state.start();

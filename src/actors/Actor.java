@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import spell.Spell;
 
-import commands.Attack;
+import commands.AttackCommand;
 import commands.Command;
 import commands.SpellCommand;
 
@@ -66,9 +66,6 @@ abstract public class Actor
 	protected int elec;			//electricity
 	protected int lght;			//light
 	protected int dark;			//dark
-	
-	//Battle target
-	protected Actor target;
 	
 	/**
 	 * Constructs a basic actor
@@ -421,22 +418,6 @@ abstract public class Actor
 			return spells[i];
 		else
 			return new Spell[3];
-	}
-
-	/**
-	 * Sets the actor that this actor is targeting in combat
-	 * @return
-	 */
-	public void setTarget(Actor t) {
-		target = t;
-	}
-	
-	/**
-	 * Retrieves the actor that this actor is targeting in combat
-	 * @return
-	 */
-	public Actor getTarget() {
-		return target;
 	}
 
 	/**

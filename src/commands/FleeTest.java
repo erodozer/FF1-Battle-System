@@ -27,19 +27,15 @@ public class FleeTest
     @Test
     public void testFleeing()
     {
-        Engine e = Engine.getInstance();
         Party party = new Party();
         party.add("Jack", "Red Mage");
         Player p = party.get(0);
         p.setLuck(100);             //best luck ever!!!
-        Flee c = new Flee(p);
-        
-        e.setParty(party);
         
         Formation formation = new Formation();
         formation.add("Gel");
         
-        e.changeToBattle(formation);
+        FleeCommand c = new FleeCommand(p, formation.getAliveMembers());
         
         assertTrue(formation.getEscapable());
         
@@ -55,7 +51,6 @@ public class FleeTest
     
         formation.setEscapable(false);
         assertFalse(formation.getEscapable());
-        assertFalse(((BattleSystem)((BattleScene)e.getCurrentScene()).getSystem()).getFormation().getEscapable());
         
         //now it should always be failure where before it was always success
         for (int i = 0; i < 100; i++)

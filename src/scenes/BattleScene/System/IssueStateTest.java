@@ -7,8 +7,8 @@ import groups.Party;
 
 import org.junit.Test;
 
-import commands.ChooseSpell;
-import commands.Spell;
+import commands.AttackCommand;
+import commands.SpellCommand;
 
 /**
  * IssueStateTest
@@ -68,8 +68,7 @@ public class IssueStateTest {
 		
 		i.next();
 		
-		assertEquals(p.get(0).getCommands()[0], p.get(0).getCommand());
-		assertEquals(f.get(0), p.get(0).getTarget());
+		assertTrue(p.get(0).getCommand() instanceof AttackCommand);
 	}
 
 	/**
@@ -102,16 +101,16 @@ public class IssueStateTest {
 		
 		assertTrue(i.spellSelecting);
 		assertFalse(i.targetSelecting);
-		assertTrue(p.get(0).getCommand() instanceof ChooseSpell);
 		assertEquals(0, i.getIndex());
 		
-		//when there the player has no mp nothing should happen
 		i.next();
 		
-		assertFalse(i.spellSelecting);
+		assertTrue(i.spellSelecting);
 		assertTrue(i.targetSelecting);
-		assertTrue(p.get(0).getCommand() instanceof Spell);
-		assertEquals(p.get(0).getSpells(0)[0], p.get(0).getCommand());
+		
+		i.next();
+		
+		assertTrue(p.get(0).getCommand() instanceof SpellCommand);
 	}
 	
 	/**
@@ -143,14 +142,12 @@ public class IssueStateTest {
 		
 		assertTrue(i.spellSelecting);
 		assertFalse(i.targetSelecting);
-		assertTrue(p.get(0).getCommand() instanceof ChooseSpell);
 		
 		//when there is no spell selected nothing should happen
 		i.next();
 		
 		assertTrue(i.spellSelecting);
 		assertFalse(i.targetSelecting);
-		assertTrue(p.get(0).getCommand() instanceof ChooseSpell);
 	}
 	
 	/**
@@ -184,13 +181,11 @@ public class IssueStateTest {
 		
 		assertTrue(i.spellSelecting);
 		assertFalse(i.targetSelecting);
-		assertTrue(p.get(0).getCommand() instanceof ChooseSpell);
 		
 		//when there the player has no mp nothing should happen
 		i.next();
 		
 		assertTrue(i.spellSelecting);
 		assertFalse(i.targetSelecting);
-		assertTrue(p.get(0).getCommand() instanceof ChooseSpell);
 	}
 }

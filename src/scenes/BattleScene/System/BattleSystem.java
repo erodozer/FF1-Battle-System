@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import scenes.GameSystem;
+import spell.Spell;
 
 import commands.*;
 
@@ -164,7 +165,7 @@ public class BattleSystem extends GameSystem{
 		if (state instanceof MessageState)
 		{
 			//end game if successful flee
-			if (activeActor.getCommand() instanceof Flee)
+			if (activeActor.getCommand() instanceof FleeCommand)
 				if (activeActor.getCommand().getHits() == 1)
 				{
 					finish();
@@ -185,10 +186,19 @@ public class BattleSystem extends GameSystem{
 				state.start();
 				return;
 			}
+			//if there are more foes damage to process, go back to engage state
+			if (!activeActor.getCommand().isDone())
+			{
+				state = es;
+				state.start();
+				return;
+			}
 			
 			//make active actor the next actor in the queue
 			if (turnOrder.size() > 0)
 			{
+				activeActor.setCommand(null);		//clear the command for garbage collection
+
 				activeActor = turnOrder.poll();
 				//if the actor isn't alive skip ahead
 				if (!activeActor.getAlive())
@@ -235,30 +245,59 @@ public class BattleSystem extends GameSystem{
 		{
 			if (e.getAlive())
 			{
-				Command c = e.getCommands()[(int)(Math.random()*e.getCommands().length)];
+				String s = e.getCommands()[(int)(Math.random()*e.getCommands().length)];
+				Command c;
+				if (s.equals("Attack"))
+					c = new AttackCommand(e, getRandomTarget(e));
+				else if (s.equals("Flee"))
+					c = new FleeCommand(e, party.getAliveMembers());
+				//if the command is not attack or flee, assume it's a spell
+				else
+					c = new SpellCommand(Spell.getSpell(s), e, getRandomTarget(e));
 				e.setCommand(c);
-				e.setTarget(getRandomTarget(e));
 			}
 		}
 	}
 
 	/**
+	 * Generates array of selectable targets for the battle dependent on the spell's target preference
+	 * @param actor	actor attacking
+	 * @param spell	spell to be cast
+	 * @return	list of valid targets
+	 */
+	public Actor[] getTargets(Actor actor, Spell spell)
+	{
+		Actor[] targets;
+		if (spell.getTargetType())
+		{
+			if (actor instanceof Player)
+				targets = party.getAliveMembers();
+			else
+				targets = formation.getAliveMembers();
+		}
+		else
+		{
+			if (actor instanceof Player)
+				targets = formation.getAliveMembers();
+			else
+				targets = party.getAliveMembers();
+		}
+		return targets;
+	}
+	
+	/**
 	 * Generates array of selectable targets for the battle 
-	 * @param actor
-	 * @return
+	 * @param actor	actor attacking
+	 * @return	list of valid targets
 	 */
 	public Actor[] getTargets(Actor actor)
 	{
-		if (actor.getCommand().getTargetable())
-			if (actor instanceof Player)
-				return party.getAliveMembers();
-			else
-				return formation.getAliveMembers();
+		Actor[] targets;
 		if (actor instanceof Player)
-			return formation.getAliveMembers();
+			targets = formation.getAliveMembers();
 		else
-			return party.getAliveMembers();
-	
+			targets = party.getAliveMembers();
+		return targets;
 	}
 
 	/**
@@ -266,10 +305,10 @@ public class BattleSystem extends GameSystem{
 	 * @param actor
 	 * @return
 	 */
-	public Actor getRandomTarget(Actor actor)
+	public Actor[] getRandomTarget(Actor actor)
 	{
 		Actor[] t = getTargets(actor);
-		return t[(int)(Math.random()*t.length)];
+		return new Actor[]{t[(int)(Math.random()*t.length)]};
 	}
 
 	/**

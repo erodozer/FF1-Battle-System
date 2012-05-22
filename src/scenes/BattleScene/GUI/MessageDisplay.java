@@ -3,6 +3,8 @@ package scenes.BattleScene.GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import actors.Actor;
+
 import scenes.BattleScene.System.MessageState;
 
 import commands.*;
@@ -23,7 +25,8 @@ public class MessageDisplay extends Sprite{
 	
 	SFont font = GameScreen.font;
 	SWindow[] windows;
-	MessageState message;
+	String[] message;
+	MessageState mState;
 	
 	public MessageDisplay(int x, int y)
 	{
@@ -44,7 +47,8 @@ public class MessageDisplay extends Sprite{
 	 */
 	public void update(MessageState m)
 	{
-		message = m;
+		mState = m;
+		message = mState.getMessage();
 	}
 	
 	/**
@@ -53,40 +57,36 @@ public class MessageDisplay extends Sprite{
 	@Override
 	public void paint(Graphics g)
 	{
-		Command c = message.activeActor.getCommand();
+		Command c = mState.activeActor.getCommand();
 		
-		if (!message.activeActor.getCommand().toString().equals("") && !(c instanceof Flee))
+		if (!message[1].equals("") && !(c instanceof FleeCommand))
 		{
 			windows[1].paint(g);
-			font.drawString(g, message.activeActor.getCommand().toString(), 0, 10, windows[1]);
+			font.drawString(g, message[1], 0, 10, windows[1]);
 		}
-		windows[0].paint(g);
-		font.drawString(g, message.activeActor.getName(), 0, 10, windows[0]);
 		
-		if (!(c instanceof Flee))
+		windows[0].paint(g);
+		font.drawString(g, message[0], 0, 10, windows[0]);
+		
+		if (c instanceof FleeCommand)
+		{
+			windows[4].paint(g);
+			font.drawString(g, message[2], 0, 10, windows[4]);
+		}
+		else
 		{
 			//shows actor name and command
 			windows[3].paint(g);
-			font.drawString(g, "" + message.getMessage(), 0, 10, windows[3]);
+			font.drawString(g, "" + message[1], 0, 10, windows[3]);
 			windows[2].paint(g);
-			font.drawString(g, message.activeActor.getTarget().getName(), 0, 10, windows[2]);
+			font.drawString(g, message[0], 0, 10, windows[2]);
+			
+			if (message.length == 5)
+			{
+				windows[4].paint(g);
+				font.drawString(g, message[4], 0, 10, windows[4]);
+			}
 		}
-		
-		if (c instanceof Flee)
-		{
-			windows[4].paint(g);
-			font.drawString(g, message.activeActor.getCommand().toString(), 0, 10, windows[4]);
-		}
-		else if (!message.activeActor.getTarget().getAlive() && c.getDamage() > 0)
-		{
-			windows[4].paint(g);
-			font.drawString(g, "Terminated!", 0, 10, windows[4]);
-		}
-		else if ((c.getDamage() == 0 && c.getHits() != 0)|| (c instanceof Spell && ((Spell)c).resist() > 0))
-		{
-			windows[4].paint(g);
-			font.drawString(g, "Ineffective", 0, 10, windows[4]);
-		}	
 
 	}
 }

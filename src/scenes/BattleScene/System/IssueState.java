@@ -3,6 +3,7 @@ package scenes.BattleScene.System;
 import java.awt.event.KeyEvent;
 
 import scenes.GameState;
+import spell.Spell;
 
 import commands.*;
 import engine.Input;
@@ -22,6 +23,7 @@ public class IssueState extends GameState
 	Actor target;			//target selected
 	public Actor[] targets;	//targets that can be selected
 	Command c;				//command selected
+	Spell s;				//selected spell
 	
 	public int index = 0;	//index in the list of commands (current on highlighted)
 	public boolean targetSelecting;
@@ -147,8 +149,12 @@ public class IssueState extends GameState
 		if (targetSelecting)
 		{
 			target = targets[index];
-			actor.setTarget(target);
+			if (spellSelecting)
+				actor.setCommand(new SpellCommand(s, actor, new Actor[]{target}));
+			else
+				actor.setCommand(new AttackCommand(actor, new Actor[]{target}));
 			actor.setMoving(2);
+			finish();
 		}
 		else if (spellSelecting)
 		{
@@ -157,8 +163,9 @@ public class IssueState extends GameState
 			{
 				if (actor.getMp(index/3) > 0)
 				{
-					actor.setCommand(actor.getSpells(index / 3)[index % 3]);
-					targets = ((BattleSystem)parent).getTargets(actor);
+					s = actor.getSpells(index / 3)[index % 3];
+					targets = ((BattleSystem)parent).getTargets(actor, s);
+						
 					index = 0;
 					targetSelecting = true;
 				}
@@ -166,8 +173,8 @@ public class IssueState extends GameState
 		}
 		else
 		{
-			actor.setCommand(actor.getCommands()[index]);
-			if (actor.getCommand() instanceof ChooseSpell)
+			String command = actor.getCommands()[index];
+			if (command.equals("Magic"))
 			{
 				spellSelecting = true;
 				index = 0;
@@ -182,11 +189,12 @@ public class IssueState extends GameState
 			}
 			 */
 			
-			else if (actor.getCommand() instanceof Flee)
+			else if (command.equals("Run"))
 			{
+				actor.setCommand(new FleeCommand(actor, ((BattleSystem)parent).getTargets(actor)));
 				finish();
 			}
-			else if (actor.getCommand() instanceof Attack)
+			else if (command.equals("Attack"))
 			{
 				targets = ((BattleSystem)parent).getTargets(actor);
 				index = 0;

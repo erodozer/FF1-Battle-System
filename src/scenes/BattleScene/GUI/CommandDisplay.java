@@ -54,7 +54,7 @@ public class CommandDisplay{
 		
 		Actor a = parent.getActiveActor();
 		for (int i = 0; i < a.getCommands().length; i++)
-			font.drawString(g, a.getCommands()[i].toString(), 10 + 60*(i/4), 
+			font.drawString(g, a.getCommands()[i], 10 + 60*(i/4), 
 							16 + 16 * (i % 4), window);
 		
 		arrow.setX(window.getX() + 1 + 60*(index/4));

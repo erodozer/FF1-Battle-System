@@ -26,12 +26,17 @@ public class Drink extends Command {
 	 * Do nothing as of now
 	 */
 	@Override
-	public boolean execute() {return false;}
+	public void execute() {}
 
 	/**
 	 * Do nothing as of now
 	 */
 	@Override
 	protected int calculateDamage(boolean critical) {return 0;}
+
+	@Override
+	public boolean isDone() {
+		return true;
+	}
 
 }

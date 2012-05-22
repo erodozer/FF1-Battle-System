@@ -25,7 +25,7 @@ public class AttackTest {
 		a1.setStr(10);
 		a2.setDef(0);
 		a1.setSpd(5);
-		Command c = new Attack(a1, new Actor[]{a2});
+		Command c = new AttackCommand(a1, new Actor[]{a2});
 		
 		//make sure actors are in default conditions
 		assertEquals(null, a1.getCommand());
@@ -35,9 +35,6 @@ public class AttackTest {
 		//test speed boost
 		a1.setCommand(c);
 		assertEquals(30, a1.getSpd());
-		
-		//actor needs target set first
-		a1.setTarget(a2);
 		
 		//test execution
 		while (a2.getHP() == 10) a1.execute();  //makes sure attack is capable of taking away hp
@@ -67,9 +64,8 @@ public class AttackTest {
         a1.setLevel(10);
         a2.setDef(0);
         a1.setSpd(5);
-        Command c = new Attack(a1, new Actor[]{a2});
-        a1.setTarget(a2);
-        
+        Command c = new AttackCommand(a1, new Actor[]{a2});
+
         //make sure actors are in default conditions
         assertEquals(20, c.calculateDamage(false));
     }

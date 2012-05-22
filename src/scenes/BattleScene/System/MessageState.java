@@ -1,10 +1,13 @@
 package scenes.BattleScene.System;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import scenes.GameState;
 
-import commands.Flee;
+import commands.Command;
+import commands.FleeCommand;
+import commands.SpellCommand;
 
 
 import actors.Actor;
@@ -17,7 +20,8 @@ import actors.Actor;
  */
 public class MessageState extends GameState {
 
-	String message;				//message to display
+	String[] message;				//message to display
+	Command command;
 	public Actor activeActor;
 
 	/**
@@ -60,16 +64,44 @@ public class MessageState extends GameState {
 	@Override
 	public void start() {
 		activeActor = ((BattleSystem)parent).getActiveActor();
-		message = activeActor.getCommand().getDamage() + " DMG";
-		if (activeActor.getCommand().getHits() == 0 && !(activeActor.getCommand() instanceof Flee)) 
-		    message = "Miss!";
+		Actor target = activeActor.getCommand().getTarget();
+		command = activeActor.getCommand();
+		ArrayList<String> m = new ArrayList<String>();
+		m.add(activeActor.getName());
+		m.add(command.getName());
+		
+		if (command instanceof FleeCommand)
+			if (command.getHits() == 1)
+				m.add("Ran away to safety");
+			else
+				m.add("Could not run away!");
+		else
+		{
+			m.add(target.getName());
+			//show miss if no hit is made, else show the amount of damage
+			if (command.getHits() == 0)
+				m.add("Miss");
+			else
+				m.add(command.getDamage() + " DMG");
+			
+			//show a notice when a foe is killed
+			if (command.getDamage() > 0 && !target.getAlive())
+				m.add("Terminated!");
+			//if a hit can land but does no damage, it's labeled as ineffective
+			else if ((command.getDamage() == 0 && command.getHits() != 0) || 
+				//also label as ineffective if the enemy was weak against an elemental attack
+				(command instanceof SpellCommand && ((SpellCommand)command).getSpell().getElementalEffectiveness(target) == 0))
+				m.add("Ineffective");
+		}
+			
+		message = m.toArray(message);
 	}
 
 	/**
 	 * Retrieves the message to be displayed
 	 * @return
 	 */
-	public String getMessage()
+	public String[] getMessage()
 	{
 		return message;
 	}

@@ -172,4 +172,13 @@ public class Spell {
 	public String getName() {
 		return name;
 	}
+
+	public boolean getTargetType() {
+		return targetAlly;
+	}
+	
+	public int getTargetRange()
+	{
+		return targetRange;
+	}
 }

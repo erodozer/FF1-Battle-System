@@ -53,9 +53,7 @@ public class SpellCommand extends Command {
 	 * Executes the spell
 	 */
 	@Override
-	public boolean execute() {
-		if (currentTargetIndex >= targets.length)
-			return true;
+	public void execute() {
 		
 		currentTarget = targets[currentTargetIndex];
 		int hit = (int)(Math.random()*200);
@@ -69,7 +67,6 @@ public class SpellCommand extends Command {
 		invoker.setMp(spell.getLevel()-1, invoker.getMp(spell.getLevel()-1)-1);
 		
 		currentTargetIndex++;
-		return false;
 	}
 
 	@Override
@@ -111,4 +108,13 @@ public class SpellCommand extends Command {
 		return D;
 	}
 
+	@Override
+	public boolean isDone() {
+		return currentTargetIndex >= targets.length;
+	}
+
+	public Spell getSpell()
+	{
+		return spell;
+	}
 }

@@ -14,9 +14,9 @@ public class SpellTest {
 	public void testLoading() {
 		Spell s = Spell.getSpell("FIRE");
 		
-		assertEquals(s.getLevel(), 1);			//fire level should be 1
-		assertEquals(s.getValueType(), false);	//fire should be a constant cast		
-		assertEquals(s.getValue(), "10");		//fire should not be strong
+		assertEquals(1, s.getLevel());		//fire level should be 1
+		assertFalse(s.getValueType());		//fire should be a constant cast		
+		assertEquals("10", s.getValue());	//fire should not be strong
 		
 		//fire should only be aligned to fire
 		assertTrue(s.getElementalAlignment(0));

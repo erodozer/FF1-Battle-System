@@ -48,8 +48,9 @@ public class Party extends ArrayList<Player>{
 	{
 		List<Player> alive = new ArrayList<Player>();
 		Player p = this.get(0);
-		for (int i = 0; i < Math.min(this.size(), GROUP_SIZE); i++, p = this.get(i))
+		for (int i = 0; i < Math.min(this.size(), GROUP_SIZE); i++)
 		{	
+			p = this.get(i);
 			if (p.getAlive())
 				alive.add(p);
 		}
@@ -85,8 +86,9 @@ public class Party extends ArrayList<Player>{
 	{
 		int counter = 0;
 		Player p = this.get(0);
-		for (int i = 0; i < Math.min(this.size(), GROUP_SIZE); i++, p = this.get(i))
+		for (int i = 0; i < Math.min(this.size(), GROUP_SIZE); i++)
 		{	
+			p = this.get(i);
 			if (p.getAlive())
 				counter++;
 		}

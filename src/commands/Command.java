@@ -47,7 +47,7 @@ public abstract class Command {
 	 * @param target
 	 * @return true if the command is done executing
 	 */
-	abstract public boolean execute();
+	abstract public void execute();
 	
 	/**
 	 * In the event of the command having a function/condition that
@@ -116,4 +116,10 @@ public abstract class Command {
     {
     	return anim;
     }
+    
+    abstract public boolean isDone();
+
+	public Actor getTarget() {
+		return currentTarget;
+	}
 }
