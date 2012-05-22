@@ -18,15 +18,15 @@ public class Drink extends Command {
 	 */
 	public Drink(Actor a)
 	{
+		super(a, null);
 		name = "Drink";
-		invoker = a;
 	}
 	
 	/**
 	 * Do nothing as of now
 	 */
 	@Override
-	public void execute() {}
+	public boolean execute() {return false;}
 
 	/**
 	 * Do nothing as of now

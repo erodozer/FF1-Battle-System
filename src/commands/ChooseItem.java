@@ -18,6 +18,7 @@ public class ChooseItem extends Command {
 	 */
 	public ChooseItem(Actor a)
 	{
+		super(a, null);
 		name = "Item";
 	}
 	
@@ -30,7 +31,7 @@ public class ChooseItem extends Command {
 	 * Do Nothing
 	 */
 	@Override
-	public void execute() {}
+	public boolean execute() {return false;}
 
 	/**
 	 * Do Nothing

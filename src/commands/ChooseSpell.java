@@ -16,8 +16,10 @@ public class ChooseSpell extends Command {
 	 * Do nothing
 	 */
 	public ChooseSpell(Actor a){
+		super(a, null);
 		name = "Magic";
 	}
+	
 	@Override
 	public void start(){}
 	@Override
@@ -27,7 +29,7 @@ public class ChooseSpell extends Command {
 	 * Do nothing
 	 */
 	@Override
-	public void execute() {}
+	public boolean execute() {return false;}
 
 	/**
 	 * Do Nothing

@@ -16,6 +16,7 @@ import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
 import scenes.BattleScene.BattleScene;
+import spell.Spell;
 import commands.*;
 import engine.Engine;
 
@@ -119,7 +120,7 @@ public class Player extends Actor {
 		name = name.substring(0,Math.min(name.length(), 4));	//char limit of 4
 		level = 1;
 		exp = 0;
-		commands = new Command[]{new Attack(this), new ChooseSpell(this), new Drink(this), new ChooseItem(this), new Flee(this)};
+		commands = new String[]{"Attack", "Magic", "Drink", "Item", "Flee"};
 		level = 1;
 		
 		loadJob(j);
@@ -258,7 +259,7 @@ public class Player extends Actor {
 			{
 				String spellName = s.next();
 				if (new File("data/spells/" + spellName + "/spell.ini").exists())
-					new Spell(this, spellName);
+					addSpell(Spell.getSpell(spellName));
 			}
 		} catch (Exception e) {
 			canCast = false;

@@ -2,9 +2,11 @@ package actors;
 
 import java.awt.Graphics;
 
+import spell.Spell;
+
 import commands.Attack;
 import commands.Command;
-import commands.Spell;
+import commands.SpellCommand;
 
 import graphics.Sprite;
 
@@ -37,7 +39,9 @@ abstract public class Actor
 	protected int luk;			//luck, determines how often critical hits are made and how easy it is to flee
 	
 	protected Command command;	//battle command
-	protected Command[] commands;
+	protected String[] commands = {"Attack"};
+								//id of different battle commands
+	
 	//spells are divided into lists of levels
 	protected Spell[][] spells;
 								//choice of commands
@@ -104,7 +108,6 @@ abstract public class Actor
 		lght = 1;
 		dark = 1;
 		
-		commands = new Command[]{new Attack(this)};
 		spells = new Spell[8][3];
 	}
 	
@@ -377,7 +380,7 @@ abstract public class Actor
 	 * Gets all the names of commands the actor can execute
 	 * @return
 	 */
-	public Command[] getCommands() {
+	public String[] getCommands() {
 		return commands;
 	}
 

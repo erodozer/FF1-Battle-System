@@ -5,11 +5,14 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import actors.Actor;
+import actors.Enemy;
 import actors.Player;
 import engine.Engine;
 import groups.Formation;
 import groups.Party;
 import scenes.BattleScene.System.*;
+import spell.Spell;
 
 /**
  * SpellTest
@@ -18,51 +21,6 @@ import scenes.BattleScene.System.*;
  *	JUnit test for spells
  */
 public class SpellTest {
-
-	/**
-	 * Test initialization of a basic spell
-	 */
-	@Test
-	public void test() {
-		Player p = new Player("Jack", "Red Mage");
-		Spell s = new Spell(p, "FIRE");
-
-		assertTrue(s.fire);
-		assertEquals(-5, s.speedBonus);
-		assertEquals(24, s.accuracy);
-		assertEquals(10, s.effectivity);
-		
-		//make sure spell was added to the player's list of spells
-		assertEquals(s, p.getSpells(0)[1]);		//needs to be 1 because Red Mages already have 1 spell for now
-	}
-
-	/**
-	 * Tests to make sure the battle system will provide the right targets
-	 * when a spell is set up to have allies as targets
-	 */
-	@Test
-	public void testGettingTargets()
-	{
-		Engine e = Engine.getInstance();
-		Party party = new Party();
-		party.add("Jack", "Red Mage");
-		Player p = party.get(0);
-		Spell s = new Spell(p, "CURE");
-		
-		e.setParty(party);
-		
-		assertTrue(s.targetable);		//targets should be allies
-		
-		Formation formation = new Formation();
-		formation.add("Gel");
-		
-		BattleSystem bs = new BattleSystem();
-		bs.setFormation(formation);
-		
-		p.setCommand(s);
-		
-		assertEquals(party.get(0), bs.getTargets(p)[0]);
-	}
 	
 	/**
 	 * Tests to make sure that elemental settings actually
@@ -70,29 +28,32 @@ public class SpellTest {
 	 * In this case, the enemy will be strong against fire,
 	 * weak against elec, and neutral against frez
 	 */
-	//@Test
+	@Test
 	/*
 	 * Not yet completely implemented enough to properly test
 	 */
 	public void testElementalDamage()
 	{
-		Engine e = Engine.getInstance();
 		Party party = new Party();
 		party.add("Jack", "Red Mage");
 		Player p = party.get(0);
-		Spell s1 = new Spell(p, "FIRE");
-		Spell s2 = new Spell(p, "BLIZ");
-		Spell s3 = new Spell(p, "ELEC");
-		
-		e.setParty(party);
 		
 		Formation formation = new Formation();
-		formation.add("Gel");
+		formation.add("Gel");			//gels should be weak against fire
+		formation.add("Y. Gel");		//same stats as Gel, but weak against Elec instead of Fire.  Normal damage should be dealt instead
 		
-		BattleSystem bs = new BattleSystem();
-		bs.setFormation(formation);
+		SpellCommand s = new SpellCommand(Spell.getSpell("FIRE"), p, new Actor[]{formation.get(0)});
 		
-		p.setCommand(s1);
+		s.execute();
+		int dmg1 = s.getDamage();		//should be about 2 as much as what the Y. Gel receives
 		
+		s = new SpellCommand(Spell.getSpell("FIRE"), p, new Actor[]{formation.get(1)});
+		
+		s.execute();
+		int dmg2 = s.getDamage();		//Y. Gel shouldn't receive nearly as much because he isn't weak against receives
+		
+		System.out.println("dmg " + dmg1 + "\ndmg2 " + dmg2);
+		//about 5 point variance should be allowed, but dmg1 should still be greater than dmg2
+		assertTrue(dmg1 > dmg2 + 2);
 	}
 }

@@ -14,8 +14,9 @@ import actors.Actor;
 
 public class Flee extends Command {
     
-	public Flee(Actor a)
+	public Flee(Actor a, Actor[] t)
 	{
+		super(a, t);
 	    invoker = a;
 		name = "Run";
 	}
@@ -26,9 +27,8 @@ public class Flee extends Command {
 	 * 1, if it's unsuccessful, it sets it to 0
 	 */
 	@Override
-	public void execute() {
-	    if (invoker.getLuck() > Math.random()*(invoker.getLevel()*15) &&
-	        ((BattleSystem)((BattleScene)Engine.getInstance().getCurrentScene()).getSystem()).getFormation().getEscapable())
+	public boolean execute() {
+	    if (invoker.getLuck() > Math.random()*(invoker.getLevel()*15))
 	        //^ omg that has to be the messiest line of code I've ever written
 	        hits = 1;
 	    else
@@ -37,10 +37,11 @@ public class Flee extends Command {
             name = "Ran away to safety";
         else
             name = "Could not run away!";
+        return true;
 	}
 
 	/**
-	 * Do nothing
+	 * Use calculate damage to calculate the chance of escaping from the targets
 	 */
 	@Override
 	protected int calculateDamage(boolean critical) {

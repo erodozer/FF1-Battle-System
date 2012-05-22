@@ -85,8 +85,7 @@ public class Enemy extends Actor {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		Command[] c = {new Attack(this)};
-		commands = c;
+		commands = new String[]{"Attack"};
 		loadSprites();
 	}
 	

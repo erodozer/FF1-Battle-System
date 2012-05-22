@@ -13,11 +13,11 @@ public class Attack extends Command {
 	 * @param a
 	 * @param t
 	 */
-	public Attack(Actor a)
+	public Attack(Actor a, Actor[] t)
 	{
+		super(a, t);
 		anim = new Animation("attack");
 		name = "Attack";
-		invoker = a;
 		speedBonus = 25;
 	}
 	
@@ -25,7 +25,12 @@ public class Attack extends Command {
 	 * Executes the attack
 	 */
 	@Override
-	public void execute() {
+	public boolean execute() {
+		if (currentTargetIndex >= targets.length)
+			return true;
+		
+		currentTarget = targets[currentTargetIndex];
+		
 		//make sure the animation is in relation to the target sprite
 		if (anim.getRelationType() == 2)
 			anim.setRelation(invoker.getSprite());
@@ -37,8 +42,10 @@ public class Attack extends Command {
 	    //reset damage
 		damage = 0;
 		hits = (1+(invoker.getAcc()/32))*1;
-		if (!invoker.getTarget().getAlive())
-			return;
+		if (!invoker.getTarget().getAlive()){
+			currentTargetIndex++;
+			execute();
+		}
 		
 		/*
 		 * Calculate the chance of hitting
@@ -71,6 +78,9 @@ public class Attack extends Command {
 		name = "";
 		if (hits > 1)
 			name = hits + " hits";
+		
+		currentTargetIndex++;
+		return false;
 	}
 	
 	

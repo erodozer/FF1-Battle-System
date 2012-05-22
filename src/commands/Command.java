@@ -13,6 +13,9 @@ public abstract class Command {
 
 	protected String name;						//name of the command
 	protected Actor invoker;					//actor using the command
+	protected Actor[] targets;					//the targets for the attack
+	protected Actor currentTarget;				//if there are multiple targets, this is the one it's currently calculating for
+	protected int currentTargetIndex;			// index of the currently calculated target
 	protected int damage;						//damage the command will deal to the target
 	protected int speedBonus = 0;				//additional time it takes to use the command
 	protected int hits = 1;						//number of times the command will damage the target
@@ -20,20 +23,31 @@ public abstract class Command {
 	
 	Animation anim;								//animation to play for the command in battle
 	
+	public Command(Actor i, Actor[] t)
+	{
+		invoker = i;
+		targets = t;
+		currentTargetIndex = 0;
+		currentTarget = targets[currentTargetIndex];
+	}
+	
 	/**
 	 * Adds effects to the actor upon assigning the command
 	 * Default is just adding the speed bonus
 	 */
 	public void start()
 	{
-		invoker.setSpd(invoker.getSpd()+speedBonus);	
+		invoker.setSpd(invoker.getSpd()+speedBonus);
+		currentTargetIndex = 0;
+		currentTarget = targets[currentTargetIndex];
 	}
 	
 	/**
 	 * Executes the command
 	 * @param target
+	 * @return true if the command is done executing
 	 */
-	abstract public void execute();
+	abstract public boolean execute();
 	
 	/**
 	 * In the event of the command having a function/condition that
@@ -83,13 +97,6 @@ public abstract class Command {
 	 */
 	public int getHits() {
 		return hits;
-	}
-
-	/**
-	 * @return Gets whether the target should be allies or foes
-	 */
-	public boolean getTargetable() {
-		return targetable;
 	}
 
 	/**

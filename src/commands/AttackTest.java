@@ -25,7 +25,7 @@ public class AttackTest {
 		a1.setStr(10);
 		a2.setDef(0);
 		a1.setSpd(5);
-		Command c = new Attack(a1);
+		Command c = new Attack(a1, new Actor[]{a2});
 		
 		//make sure actors are in default conditions
 		assertEquals(null, a1.getCommand());
@@ -67,7 +67,7 @@ public class AttackTest {
         a1.setLevel(10);
         a2.setDef(0);
         a1.setSpd(5);
-        Command c = new Attack(a1);
+        Command c = new Attack(a1, new Actor[]{a2});
         a1.setTarget(a2);
         
         //make sure actors are in default conditions
