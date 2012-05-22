@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Vector;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -26,7 +28,9 @@ import javax.swing.SpinnerNumberModel;
 
 import org.ini4j.Ini;
 
-import commands.Spell;
+import spell.Spell;
+
+import commands.SpellCommand;
 
 import editor.ToolKit;
 
@@ -63,7 +67,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 	JButton testButton;
 	
 	/*
-	 * Enemy switcher
+	 * Spell switcher
 	 */
 	JList spellList;
 	JScrollPane spellListPane;
@@ -75,12 +79,28 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 	JComboBox animation;		//list of animations that can be used for the spell
 	JTextField value;			//Holds either an equation or a constant value for determining the effects of the spell
 	
+	/*
+	 * Type Switcher
+	 */
+	ButtonGroup types;
+	JRadioButton constantType;
+	JRadioButton variableType;
+	
+	/*
+	 * Enemy Group Switcher
+	 */
+	final static String[] TARGETS = {"Enemy", "Ally"};
+	final static String[] RANGES = {"Single", "Group", "All"};
+	ButtonGroup target;
+	ButtonGroup targetRange;
+	JRadioButton[] targetButtons = new JRadioButton[TARGETS.length];
+	JRadioButton[] targetRangeButtons = new JRadioButton[RANGES.length];
 	
 	/*
 	 * EQUATION EDITOR
 	 */
-	final String[] STATS = {"STR", "DEF", "VIT", "INT", "SPD", "LUCK", "EVADE", "RESIST", "Hit %"};
-	final String[] MATH = {"+", "-", "*", "/", "%"};
+	final static String[] STATS = {"STR", "DEF", "VIT", "INT", "SPD", "LUCK", "EVADE", "RESIST", "Hit %"};
+	final static String[] MATH = {"+", "-", "*", "/", "%", "^", "(", ")"};
 	JSpinner mpSpinner;
 	JSpinner lvlSpinner;
 	JButton[] statButtons;
@@ -89,7 +109,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 	/*
 	 * Enemy elemental properties
 	 */
-	final String[] ELEM = {"FIRE", "FREZ", "ELEC", "DEMI", "LGHT"};	
+	final static String[] ELEM = {"FIRE", "FREZ", "ELEC", "DEMI", "LGHT"};	
 	JCheckBox[] elemEnablers;
 	
 	Font font = new Font("Arial", 1, 32);
@@ -147,6 +167,66 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		add(animation);
 		
 		/*
+		 * Value Type button group
+		 */
+		jlp = new JLayeredPane();
+		jlp.setSize(new Dimension(120, 80));
+		jlp.setLocation(220, 64);
+		jlp.setBorder(BorderFactory.createTitledBorder("Damage Type: "));
+		types = new ButtonGroup();
+		constantType = new JRadioButton("Constant");
+		constantType.setLocation(10, 20);
+		constantType.setSize(constantType.getPreferredSize());
+		constantType.setSelected(true);
+		types.add(constantType);
+		variableType = new JRadioButton("Variable");
+		variableType.setLocation(10, 48);
+		variableType.setSize(variableType.getPreferredSize());
+		types.add(variableType);
+		jlp.add(constantType);
+		jlp.add(variableType);
+		add(jlp);
+		
+		/*
+		 * Target Type button groups
+		 */
+		jlp = new JLayeredPane();
+		jlp.setSize(new Dimension(300, 40));
+		jlp.setLocation(340, 64);
+		jlp.setBorder(BorderFactory.createTitledBorder("Target: "));
+		target = new ButtonGroup();
+		
+		for (int i = 0; i < TARGETS.length; i++)
+		{
+			JRadioButton b = new JRadioButton(TARGETS[i]);
+			b.setLocation(80 + i*80, 18);
+			b.setSize(78, 16);
+			jlp.add(b);
+			target.add(b);
+			targetButtons[i] = b;
+		}
+		add(jlp);
+		
+		jlp = new JLayeredPane();
+		jlp.setSize(new Dimension(300, 40));
+		jlp.setLocation(340, 104);
+		jlp.setBorder(BorderFactory.createTitledBorder("Target Range: "));
+		targetRange = new ButtonGroup();
+		
+		
+		for (int i = 0; i < RANGES.length; i++)
+		{
+			JRadioButton b = new JRadioButton(RANGES[i]);
+			b.setLocation(40 + i*80, 18);
+			b.setSize(78, 16);
+			jlp.add(b);
+			targetRange.add(b);
+			targetRangeButtons[i] = b;
+		}
+		add(jlp);
+		
+		
+		/*
 		 * Elemental checkbox initialization
 		 */
 		jlp = new JLayeredPane();
@@ -191,7 +271,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		{
 			JButton s = new JButton(STATS[i]);
 			s.setSize(90, 24);
-			s.setLocation(110 + (i%3)*100, 20 + 30*(i/3));
+			s.setLocation(15 + (i%4)*100, 20 + 30*(i/4));
 			statButtons[i] = s;
 			jlp.add(s);
 		}
@@ -202,7 +282,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		{
 			JButton s = new JButton(MATH[i]);
 			s.setSize(48, 24);
-			s.setLocation(125 + i*54, 115);
+			s.setLocation(125+(80*(int)(i/4)) + (i%4)*54, 115+(30*(int)(i/4)));
 			mathButtons[i] = s;
 			jlp.add(s);
 		}
@@ -269,7 +349,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		
 		//load elemental resistance
 		for (int i = 0; i < ELEM.length; i++)
-			elemEnablers[0].setSelected(s.getElementalEffectiveness(ELEM[i]));
+			elemEnablers[i].setSelected(s.getElementalAlignment(i));
 	}
 	
 	/**
@@ -309,7 +389,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 			ini.store(f);
 			
 			//refresh the list of names after saving
-			loadSpell(new Spell(null, nameField.getText()));
+			loadSpell(Spell.getSpell(nameField.getText()));
 			refreshList();	
 			
 		} catch (Exception e) {
@@ -341,7 +421,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getSource() == spellList)
-			loadSpell(new Spell(null, (String)spellList.getSelectedValue()));
+			loadSpell(Spell.getSpell((String)spellList.getSelectedValue()));
 	}
 
 
