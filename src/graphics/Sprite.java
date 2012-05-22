@@ -34,7 +34,9 @@ public class Sprite{
 		TEXTURECACHE.clear();
 	}
 	
-	protected BufferedImage image;		//image that is drawn to screen
+	protected BufferedImage image;		//original image data
+	protected BufferedImage subimage;	//image that is drawn to screen
+	
 	protected double width  = 1;		//width of the buffered image
 	protected double height = 1;		//height of the buffered image
 	protected double x = 0;				//x draw position on screen
@@ -47,6 +49,8 @@ public class Sprite{
 	protected double scaleH;
 	protected int xFrames;				//number of horizontal frames
 	protected int yFrames;				//number of vertical frames
+	protected int currentXFrame;		//the currently selected x frame
+	protected int currentYFrame;		//the currently selected y frame
 	
 	protected String path;				//filepath to the image
 	protected String name;				//filename of the image
@@ -97,12 +101,12 @@ public class Sprite{
 		{
 			width = image.getWidth();
 			height = image.getHeight();
-			rect = new int[]{0, 0, (int)width/xFrames, (int)height/yFrames};
-			scaleW = rect[2];
-			scaleH = rect[3];
 			this.xFrames = xFrames;
 			this.yFrames = yFrames;
 			crop = new double[]{0, 0, 1, 1};
+			currentXFrame = 0;
+			currentYFrame = 0;
+			setFrame(1, 1);
 			at = new AffineTransform();
 		} 
 	}
@@ -207,6 +211,9 @@ public class Sprite{
 	 */
 	public void setFrame(int x, int y)
 	{
+		if (x == currentXFrame && y == currentYFrame)
+			return;
+		
 		//if x is -1 then show all the x frames
 		if (x == -1)
 		{	
@@ -234,6 +241,11 @@ public class Sprite{
 			rect[3] = (int)height/yFrames;
 			scaleH = rect[3];	
 		}
+		
+		currentXFrame = x;
+		currentYFrame = y;
+		
+		updateFrame();
 	}
 	
 	/**
@@ -242,8 +254,7 @@ public class Sprite{
 	 */
 	public int[] getFrame()
 	{
-		return new int[]{(int)(((rect[0]/width)*xFrames)+1),
-						 (int)(((rect[1]/height)*yFrames)+1)};
+		return new int[]{currentXFrame+1, currentYFrame+1};
 	}
 	
 	/**
@@ -326,6 +337,17 @@ public class Sprite{
 		return bounds.contains(i, j);
 	}
 	
+	private void updateFrame()
+	{
+		int sourceX = (int)(rect[0]+crop[0]*rect[2]);
+		int sourceY = (int)(rect[1]+crop[1]*rect[3]);
+		double sourceWidth = (rect[2]*(crop[2]-crop[0]));
+		double sourceHeight = (rect[3]*(crop[3]-crop[1]));
+		
+		// crop the frame
+		subimage = image.getSubimage(sourceX, sourceY, (int)sourceWidth, (int)sourceHeight);
+	}
+	
 	/**
 	 * Paint the sprite to screen
 	 * @param g
@@ -340,10 +362,6 @@ public class Sprite{
 			int drawY = (int)y;
 			int finalWidth = (int)(scaleW*(crop[2]-crop[0]));
 			int finalHeight = (int)(scaleH*(crop[3]-crop[1]));
-			int sourceX = (int)(rect[0]+crop[0]*rect[2]);
-			int sourceY = (int)(rect[1]+crop[1]*rect[3]);
-			double sourceWidth = (rect[2]*(crop[2]-crop[0]));
-			double sourceHeight = (rect[3]*(crop[3]-crop[1]));
 			
 			int offset = 0;
 			//center alignment
@@ -353,21 +371,19 @@ public class Sprite{
 			else if (alignment == 2)
 				offset = finalWidth;
 
-			// crop the frame
-            BufferedImage i = image.getSubimage(sourceX, sourceY, (int)sourceWidth, (int)sourceHeight);
-
             // rotation
-            at.setToRotation(Math.toRadians(angle), i.getWidth() / 2, i.getHeight() / 2);
+            at.setToRotation(Math.toRadians(angle), subimage.getWidth() / 2.0, subimage.getHeight() / 2.0);
             
             // scale the image
-            at.scale(finalWidth/sourceWidth, finalHeight/sourceHeight);
-
+            at.scale(finalWidth/(double)subimage.getWidth(), finalHeight/(double)subimage.getHeight());
             
             // applies the transformation to the cropped image
             AffineTransformOp op = new AffineTransformOp(at, (filtered)?AffineTransformOp.TYPE_BILINEAR:AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
             
             //draw the image to the graphics buffer
-			((Graphics2D) g).drawImage(i, op, drawX-offset, drawY);
+			((Graphics2D) g).drawImage(subimage, op, drawX-offset, drawY);
+			
+			op = null;
 		}
 	}
 
