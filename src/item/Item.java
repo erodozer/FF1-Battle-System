@@ -6,6 +6,8 @@ import java.util.prefs.Preferences;
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
+import spell.Spell;
+
 /**
  * Item.java
  * @author nhydock
@@ -89,9 +91,8 @@ public class Item {
 	
 	//=========================================================
 	
-	//Says if the item can be used in battle because a spell with
-	// the same name exists
-	boolean battleCommand;
+	//The spell which is invoked when used in battle
+	Spell battleCommand;
 	
 	/**
 	 * Loads an item
@@ -131,7 +132,9 @@ public class Item {
 				mdef = equip.getInt("mdef", 1);
 			}
 			
-			battleCommand = new File("data/spells/"+name+"/spell.ini").exists();
+			String command = main.get("command", null);
+			if (s != null)
+				battleCommand = Spell.getSpell(command);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -244,5 +247,9 @@ public class Item {
 	 */
 	public int getMDef() {
 		return mdef;
+	}
+
+	public Spell getBattleCommand() {
+		return battleCommand;
 	}
 }

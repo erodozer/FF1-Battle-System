@@ -1,11 +1,5 @@
 package commands;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.util.prefs.Preferences;
-
-import org.ini4j.Ini;
-import org.ini4j.IniPreferences;
 import org.nfunk.jep.JEP;
 import org.nfunk.jep.ParseException;
 
@@ -63,9 +57,6 @@ public class SpellCommand extends Command {
 			damage *= -1;
 		currentTarget.setHP(currentTarget.getHP()-damage);
 		
-		//decrease the invoker's mp after casting
-		invoker.setMp(spell.getLevel()-1, invoker.getMp(spell.getLevel()-1)-1);
-		
 		currentTargetIndex++;
 	}
 
@@ -116,5 +107,17 @@ public class SpellCommand extends Command {
 	public Spell getSpell()
 	{
 		return spell;
+	}
+	
+	/**
+	 * Lower the invoker's mp after casting
+	 */
+	@Override
+	public void reset()
+	{
+		super.reset();
+
+		//decrease the invoker's mp after casting
+		invoker.setMp(spell.getLevel()-1, invoker.getMp(spell.getLevel()-1)-1);
 	}
 }
