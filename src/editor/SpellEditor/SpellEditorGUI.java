@@ -22,6 +22,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -99,12 +100,14 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 	/*
 	 * EQUATION EDITOR
 	 */
+	JLayeredPane EQEditor;
 	final static String[] STATS = {"STR", "DEF", "VIT", "INT", "SPD", "LUCK", "EVADE", "RESIST", "Hit %"};
 	final static String[] MATH = {"+", "-", "*", "/", "%", "^", "(", ")"};
 	JSpinner mpSpinner;
 	JSpinner lvlSpinner;
 	JButton[] statButtons;
 	JButton[] mathButtons;
+	JSlider targetSlider;
 	
 	/*
 	 * Enemy elemental properties
@@ -178,10 +181,12 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		constantType.setLocation(10, 20);
 		constantType.setSize(constantType.getPreferredSize());
 		constantType.setSelected(true);
+		constantType.addActionListener(this);
 		types.add(constantType);
 		variableType = new JRadioButton("Variable");
 		variableType.setLocation(10, 48);
 		variableType.setSize(variableType.getPreferredSize());
+		variableType.addActionListener(this);
 		types.add(variableType);
 		jlp.add(constantType);
 		jlp.add(variableType);
@@ -201,6 +206,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 			JRadioButton b = new JRadioButton(TARGETS[i]);
 			b.setLocation(80 + i*80, 18);
 			b.setSize(78, 16);
+			b.addActionListener(this);
 			jlp.add(b);
 			target.add(b);
 			targetButtons[i] = b;
@@ -219,6 +225,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 			JRadioButton b = new JRadioButton(RANGES[i]);
 			b.setLocation(40 + i*80, 18);
 			b.setSize(78, 16);
+			b.addActionListener(this);
 			jlp.add(b);
 			targetRange.add(b);
 			targetRangeButtons[i] = b;
@@ -260,20 +267,20 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		value.setSize(420, 24);
 		add(value);
 		
-		jlp = new JLayeredPane();
-		jlp.setSize(new Dimension(420, 176));
-		jlp.setLocation(220, 200);
-		jlp.setBorder(BorderFactory.createTitledBorder("EQUATION EDITOR:"));
+		EQEditor = new JLayeredPane();
+		EQEditor.setSize(new Dimension(420, 176));
+		EQEditor.setLocation(220, 200);
+		EQEditor.setBorder(BorderFactory.createTitledBorder("EQUATION EDITOR:"));
 		
 		statButtons = new JButton[STATS.length];
 		
 		for (int i = 0; i < STATS.length; i++)
 		{
 			JButton s = new JButton(STATS[i]);
-			s.setSize(90, 24);
-			s.setLocation(15 + (i%4)*100, 20 + 30*(i/4));
+			s.setSize(84, 24);
+			s.setLocation(135 + (i%3)*90, 20 + 30*(i/3));
 			statButtons[i] = s;
-			jlp.add(s);
+			EQEditor.add(s);
 		}
 		
 		mathButtons = new JButton[MATH.length];
@@ -282,15 +289,29 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		{
 			JButton s = new JButton(MATH[i]);
 			s.setSize(48, 24);
-			s.setLocation(125+(80*(int)(i/4)) + (i%4)*54, 115+(30*(int)(i/4)));
+			s.setLocation(165 + (i%4)*54, 112+(30*(int)(i/4)));
 			mathButtons[i] = s;
-			jlp.add(s);
+			EQEditor.add(s);
 		}
 		
-		for (Component j : jlp.getComponents())
-			j.setEnabled(false);
+		targetSlider = new JSlider(JSlider.VERTICAL, 1, 2, 2);
+		targetSlider.setSize(50, 115);
+		targetSlider.setLocation(50, 38);
+		EQEditor.add(targetSlider);
 		
-		add(jlp);
+		l = new JLabel("Invoker");
+		l.setLocation(45, 20);
+		l.setSize(l.getPreferredSize());
+		EQEditor.add(l);
+		
+		l = new JLabel("Target");
+		l.setLocation(45, 150);
+		l.setSize(l.getPreferredSize());
+		EQEditor.add(l);
+		
+		lockEditor(true);
+		
+		add(EQEditor);
 		
 		/*
 		 * Initialize Buttons
@@ -335,6 +356,16 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		{
 			saveSpell();
 		}
+		else if (constantType.isSelected())
+			lockEditor(true);
+		else if (variableType.isSelected())
+			lockEditor(false);
+	}
+	
+	public void lockEditor(boolean t)
+	{
+		for (Component j : EQEditor.getComponents())
+			j.setEnabled(!t);
 	}
 
 	/**
