@@ -205,7 +205,12 @@ public class Engine{
 		gs.c.evokeTransition(false);
 		
 		//pause everything except rendering while transitioning
-		while(gs.c.isTransitioning());
+		while(gs.c.isTransitioning())
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 		
 		if (currentScene != null) {
 			currentScene.stop();
