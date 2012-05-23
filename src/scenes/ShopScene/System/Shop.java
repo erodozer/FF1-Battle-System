@@ -3,7 +3,6 @@ package scenes.ShopScene.System;
 import engine.MP3;
 import graphics.Sprite;
 import item.Item;
-import item.ItemDictionary;
 
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
@@ -29,14 +28,16 @@ public class Shop {
 		ArrayList<Item> i = new ArrayList<Item>();
 		
 		for (String s : node.get("items", "").split(","))
-			if (ItemDictionary.map.containsKey(s.trim()))
-				i.add(ItemDictionary.map.get(s.trim()));
-				
+		{
+			Item it = Item.loadItem(s.trim());
+			if (it != null)
+				i.add(it);
+		}
 		items = i.toArray(new Item[]{});
 		
 		shopKeeper = new Sprite("actors/shopkeepers/"+node.get("shopkeeper", "default.png"));
 		greeting = node.get("greeting", "hello");
-		bgm = new MP3("data/audio/" + node.get("music", "shop.mp3"));
+		bgm = new MP3(node.get("music", "shop.mp3"));
 	}
 
 	public String getGreeting() {
