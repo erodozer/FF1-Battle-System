@@ -31,6 +31,8 @@ public class BattleHUD extends HUD{
 	public EnemyListDisplay elistd;
 	public CommandDisplay cd;
 	public SpellDisplay sd;
+	public DrinkDisplay dd;
+	public ItemDisplay id;
 	public MessageDisplay md;
 	public GameOverDisplay gd;
 	public VictoryDisplay vd;
@@ -54,6 +56,8 @@ public class BattleHUD extends HUD{
 		elistd = new EnemyListDisplay(6, 136);
 		cd = new CommandDisplay(92,136);
 		sd = new SpellDisplay(14, 144);
+		id = new ItemDisplay(14, 144);
+		dd = new DrinkDisplay(21, 144);
 		md = new MessageDisplay(6, 144);
 		gd = new GameOverDisplay(6, 144);
 		vd = new VictoryDisplay(6, 144);
@@ -104,22 +108,24 @@ public class BattleHUD extends HUD{
 		
 		GameState gs = parent.getState();
 		
+		int[] cursorPos;
+		
 		if (gs instanceof GameOverState)
 		{
 			gd.paint(g);
 			return;
 		}
-		if (gs instanceof VictoryState)
+		else if (gs instanceof VictoryState)
 		{
 			vd.paint(g);
 			return;
 		}
-		if (gs instanceof IssueState)
+		else if (gs instanceof IssueState)
 		{
 			elistd.paint(g);
 			if (!((IssueState)parent.getState()).targetSelecting)
 			{
-				cd.update((IssueState)parent.getState());
+				cd.update();
 				cd.paint(g);
 
 				if (((IssueState)parent.getState()).spellSelecting)
@@ -135,6 +141,9 @@ public class BattleHUD extends HUD{
 			md.paint(g);
 		}
 		
+		/*
+		 * During the engage state, the animation of the attack needs to be drawn
+		 */
 		if (gs instanceof EngageState)
 		{
 			if (parent.getActiveActor() instanceof Player)
@@ -147,15 +156,33 @@ public class BattleHUD extends HUD{
 			}
 		}
 		
+		/*
+		 * Handles drawing of the cursor during the IssueState
+		 */
 		if (gs instanceof IssueState)
 		{
 			IssueState is = ((IssueState)parent.getState());
 			if (is.targetSelecting)
 			{
-				arrow.setX(is.targets[is.index].getSprite().getX());
-				arrow.setY(is.targets[is.index].getSprite().getY());
-				arrow.paint(g);
+				cursorPos = esprited.getArrowPosition(is.index);
 			}
+			else if (is.itemSelecting)
+			{
+				cursorPos = id.getArrowPosition(is.index);	
+			}
+			else if (is.drinkSelecting)
+			{
+				cursorPos = dd.getArrowPosition(is.index);
+			}
+			else 
+			{
+				cursorPos = cd.getArrowPosition(is.index);
+			}
+			
+			arrow.setX(cursorPos[0]);
+			arrow.setY(cursorPos[1]);
+			
+			arrow.paint(g);
 		}
 	}
 }

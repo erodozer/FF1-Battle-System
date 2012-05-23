@@ -6,9 +6,10 @@ import actors.Enemy;
 import graphics.Sprite;
 import graphics.SWindow;
 
+import scenes.HUD;
 import scenes.BattleScene.System.*;
 
-public class EnemySpriteDisplay extends Sprite{
+public class EnemySpriteDisplay extends HUD{
 
 	SWindow window;
 	Sprite background;
@@ -21,7 +22,6 @@ public class EnemySpriteDisplay extends Sprite{
 	
 	public EnemySpriteDisplay(int x, int y)
 	{
-		super(null);
 		window = new SWindow(x, y, 132, 144);
 		background = new Sprite(null);
 		update();
@@ -30,6 +30,7 @@ public class EnemySpriteDisplay extends Sprite{
 	/**
 	 * Main render method
 	 */
+	@Override
 	public void update()
 	{
 		if (parent == null)
@@ -71,4 +72,9 @@ public class EnemySpriteDisplay extends Sprite{
 		background = s;
 	}
 	
+	public int[] getArrowPosition(int index)
+	{
+		Sprite s = parent.getFormation().get(index).getSprite();
+		return new int[]{(int)s.getX(), (int)s.getY()};
+	}
 }

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import engine.GameScreen;
 
+import scenes.HUD;
 import scenes.BattleScene.System.*;
 
 import actors.Actor;
@@ -18,30 +19,21 @@ import graphics.SWindow;
  *
  *	Shows list of commands that the player can select and execute
  */
-public class CommandDisplay{
+public class CommandDisplay extends HUD{
 	
 	SFont font = GameScreen.font;
 	SWindow window;
-	Sprite arrow;
-	int index;
 	
 	BattleSystem parent;
 	
 	public CommandDisplay(int x, int y)
 	{
 		window = new SWindow(x, y, 108, 80);
-		arrow = new Sprite("hud/selectarrow.png");
 	}
 	
 	public void setParentScene(BattleSystem bs)
 	{
 		parent = bs;
-	}
-	
-	public void update(IssueState state)
-	{
-		if (!state.spellSelecting)
-			this.index = state.getIndex();
 	}
 	
 	/**
@@ -56,9 +48,14 @@ public class CommandDisplay{
 		for (int i = 0; i < a.getCommands().length; i++)
 			font.drawString(g, a.getCommands()[i], 10 + 60*(i/4), 
 							16 + 16 * (i % 4), window);
-		
-		arrow.setX(window.getX() + 1 + 60*(index/4));
-		arrow.setY(window.getY() + 24 + 16 * (index % 4) - arrow.getHeight()/2);
-		arrow.paint(g);
+	}
+
+	@Override
+	public void update() {
+	}
+	
+	public int[] getArrowPosition(int index)
+	{
+		return new int[]{window.getX() + 1 + 60*(index/4), window.getY() + 24 + 16 * (index % 4) - 12};
 	}
 }
