@@ -21,8 +21,6 @@ public class WeaponState extends EquipmentState
 	@Override
 	public void handleKeyInput(int key)
 	{
-		super.handleKeyInput(key);
-		
 		if (mode != 0)
 		{
 			if (key == Input.KEY_A)
@@ -33,8 +31,7 @@ public class WeaponState extends EquipmentState
 					player.setWeapon(player.getWeapons()[row+col]);
 			}
 		}
-		//exit the menu
-		if (key == Input.KEY_B)
-			finish();
+		
+		super.handleKeyInput(key);
 	}
 }
