@@ -90,7 +90,10 @@ public class BuyState extends GameState {
 				{
 					//if the item is a piece of equipment, switch to handoff mode
 					if (selectedItem.isEquipment())
+					{
 						handOff = true;
+						index = 0;
+					}
 					//else, add it to the party's inventory
 					else
 					{
