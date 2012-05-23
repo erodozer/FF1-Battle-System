@@ -1,11 +1,16 @@
 package scenes.BattleScene.System;
 
+import item.Item;
+import item.ItemDictionary;
+
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import scenes.GameState;
 import spell.Spell;
 
 import commands.*;
+import engine.Engine;
 import engine.Input;
 
 import actors.Actor;
@@ -24,16 +29,23 @@ public class IssueState extends GameState
 	public Actor[] targets;	//targets that can be selected
 	Command c;				//command selected
 	Spell s;				//selected spell
+	ArrayList<Item> items;	//the actor's item list
+	String[] drinks;		//the party's list of battle usable items
+	Item it;				//selected item
 	
 	public int index = 0;	//index in the list of commands (current on highlighted)
 	public boolean targetSelecting;
-	public boolean spellSelecting;
 							//is the actor selecting a target or command
+	public boolean spellSelecting;
+	public boolean itemSelecting;
+	public boolean drinkSelecting;
+	
 	private boolean goBack = false;
 							//state knows to go to previous actor if possible
 	
 	public IssueState(BattleSystem p){
 		super(p);
+		drinks = Engine.getInstance().getParty().getBattleItems();
 	}
 	
 	/**
@@ -51,6 +63,14 @@ public class IssueState extends GameState
 		goBack = false;
 		index = 0;	
 		actor.setMoving(0);
+		
+		items = new ArrayList<Item>();
+		for (Item i : actor.getWeapons())
+			if (i != null)
+				items.add(i);
+		for (Item i : actor.getArmor())
+			if (i != null)
+				items.add(i);
 	}
 	
 	/**
@@ -84,6 +104,13 @@ public class IssueState extends GameState
 			if (index > 23)
 				index = 23;
 		}
+		else if (itemSelecting)
+		{
+			if (index < 0)
+				index = 0;
+			if (index > 7)
+				index = 8;
+		}
 		else
 		{	
 			if (index >= actor.getCommands().length)
@@ -111,9 +138,13 @@ public class IssueState extends GameState
 		{
 			if (targetSelecting)
 				targetSelecting = false;
-			else if (spellSelecting)
+			else if (spellSelecting || drinkSelecting || itemSelecting)
+			{
 				spellSelecting = false;
-			else
+				drinkSelecting = false;
+				itemSelecting = false;
+			}
+			else 
 			{
 				actor.setMoving(2);
 				goBack = true;
@@ -151,6 +182,8 @@ public class IssueState extends GameState
 			target = targets[index];
 			if (spellSelecting)
 				actor.setCommand(new SpellCommand(s, actor, new Actor[]{target}));
+			else if (itemSelecting || drinkSelecting)
+				actor.setCommand(new ItemCommand(it, actor, new Actor[]{target}));
 			else
 				actor.setCommand(new AttackCommand(actor, new Actor[]{target}));
 			actor.setMoving(2);
@@ -171,29 +204,67 @@ public class IssueState extends GameState
 				}
 			}
 		}
+		/*
+		 * Item selecting is the list of items that belong to the character instead of the party.
+		 * In here are their equipment, which usually don't have special attacks, and their accessories.
+		 */
+		else if (itemSelecting)
+		{
+			if (index < items.size())
+			{
+				//allow choosing if the item is usable in battle
+				it = items.get(index);
+				s = it.getBattleCommand();
+				targets = ((BattleSystem)parent).getTargets(actor, s);
+					
+				index = 0;
+				targetSelecting = true;
+			}
+		}
+		/*
+		 * Drink selecting is more or less using potions and things that belong to the party.
+		 * When you think of item menus in most rpgs, you think of a list of battle usable items 
+		 * that belong to the party.  That's what this is as opposed to the option labeled Item.
+		 * This is what happens when you style your game after D&D
+		 */
+		else if (drinkSelecting)
+		{
+			//allow choosing if the item is usable in battle
+			it = ItemDictionary.map.get(drinks[index]);
+			s = it.getBattleCommand();
+			targets = ((BattleSystem)parent).getTargets(actor, s);
+					
+			index = 0;
+			targetSelecting = true;
+		}
 		else
 		{
 			String command = actor.getCommands()[index];
+			//select a spell for your character
 			if (command.equals("Magic"))
 			{
 				spellSelecting = true;
 				index = 0;
 			}
-			/*
-			 * Items not yet implemented 
-			 * 
-			else if (actor.getCommand() instanceof Drink)
+			//select a potion to drink
+			else if (command.equals("Drink"))
 			{	
-				actor.setTarget(actor);
-				finish();
+				drinkSelecting = true;
+				index = 0;
 			}
-			 */
-			
+			//select an item to use
+			else if (command.equals("Items"))
+			{	
+				itemSelecting = true;
+				index = 0;	
+			}
+			//flee from battle
 			else if (command.equals("Run"))
 			{
 				actor.setCommand(new FleeCommand(actor, ((BattleSystem)parent).getTargets(actor)));
 				finish();
 			}
+			//attack the enemy
 			else if (command.equals("Attack"))
 			{
 				targets = ((BattleSystem)parent).getTargets(actor);
