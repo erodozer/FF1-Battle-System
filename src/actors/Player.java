@@ -755,6 +755,10 @@ public class Player extends Actor {
 	 * @return	
 	 */
 	public boolean isWearing(Item item) {
+		//ignore null items
+		if (item == null)
+			return false;
+		
 		return equippedArmor.contains(item);
 	}
 	
