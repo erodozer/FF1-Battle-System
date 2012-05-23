@@ -67,7 +67,7 @@ public class ShopGUI extends HUD {
 		
 		int x;
 		int y;
-		for (int i = 0; i < Math.min(party.size(), 4); i++)
+		for (int i = 0; i < Math.min(party.size(), Party.GROUP_SIZE); i++)
 		{
 			Sprite sp = party.get(i).getSprite();
 			x = ContentPanel.INTERNAL_RES_W/2;
@@ -97,9 +97,8 @@ public class ShopGUI extends HUD {
 	public void paint(Graphics g)
 	{
 		shopKeeper.paint(g);
-		for (Player p : party)
-			p.draw(g);
-			
+		for (int i = 0; i < Math.min(party.size(), Party.GROUP_SIZE); i++)
+			party.get(i).draw(g);
 		
 		greetWindow.paint(g);
 		for (int i = 0; i < greeting.length && i < 5; i++)
