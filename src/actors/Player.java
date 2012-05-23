@@ -107,8 +107,8 @@ public class Player extends Actor {
 	ArrayList<Item> equippedArmor = new ArrayList<Item>();
 	
 	//currently held pieces
-	Item[] armor = new Item[4];
-	Item[] weapons = new Item[4];
+	Item[] armor;
+	Item[] weapons;
 	
 	/**
 	 * Constructs a basic player
@@ -122,6 +122,9 @@ public class Player extends Actor {
 		exp = 0;
 		commands = new String[]{"Attack", "Magic", "Drink", "Item", "Flee"};
 		level = 1;
+		
+		weapons = new Item[4];
+		armor = new Item[4];
 		
 		loadJob(j);
 		loadSprites();
@@ -791,15 +794,17 @@ public class Player extends Actor {
 	public boolean holdWeapon(Item i)
 	{
 		//can't hold weapon because the item isn't a weapon
-		if (i.isEquipment())
+		if (!i.isEquipment() && i.getEquipmentType() == Item.WEAPON_TYPE)
 			return false;
-		
+	
+		System.out.println("brrrg");
 		for (int n = 0; n < weapons.length; n++)
 			if (weapons[n] == null)
 			{
 				weapons[n] = i;
 				return true;
 			}
+		System.out.println("doop");
 		return false;
 	}
 	
@@ -811,7 +816,7 @@ public class Player extends Actor {
 	public boolean holdArmor(Item i)
 	{
 		//can't hold armor because the item isn't a piece of armor
-		if (i.isEquipment())
+		if (!i.isEquipment())
 			return false;
 		
 		for (int n = 0; n < armor.length; n++)
