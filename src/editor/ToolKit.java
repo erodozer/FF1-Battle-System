@@ -8,6 +8,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
 import editor.EnemyEditor.EnemyEditorGUI;
+import editor.ItemEditor.ItemEditorGUI;
 import editor.MapEditor.MapEditorGUI;
 import editor.PassabilityEditor.PassabilityEditor;
 import editor.SpellEditor.SpellEditorGUI;
@@ -20,6 +21,7 @@ public class ToolKit extends JFrame{
 	EnemyEditorGUI enemyEditor;
 	SpriteCreatorGUI spriteCreator;
 	SpellEditorGUI spellEditor;
+	ItemEditorGUI itemEditor;
 	
 	/*
 	 * Dialogs
@@ -34,7 +36,6 @@ public class ToolKit extends JFrame{
 	public static final String[] spells = buildSpellList();
 	public static final String[] animations = buildAnimationList();
 	
-	
 	public ToolKit()
 	{
 		setTitle("JFF1 Toolkit");
@@ -45,6 +46,7 @@ public class ToolKit extends JFrame{
 
 		mapEditor = new MapEditorGUI();
 		passabilityEditor = new PassabilityEditor();
+		itemEditor = new ItemEditorGUI();
 		spellEditor = new SpellEditorGUI();
 		enemyEditor = new EnemyEditorGUI();
 		spriteCreator = new SpriteCreatorGUI();
@@ -53,6 +55,7 @@ public class ToolKit extends JFrame{
 		tabbedPane.setSize(this.getWidth(), this.getHeight());
 		tabbedPane.addTab("Map Editor", mapEditor);
 		tabbedPane.addTab("Passability Editor", passabilityEditor);
+		tabbedPane.addTab("Item Editor", itemEditor);
 		tabbedPane.addTab("Spell Editor", spellEditor);
 		tabbedPane.addTab("Enemy Editor", enemyEditor);
 		tabbedPane.addTab("Sprite Creator", spriteCreator);
