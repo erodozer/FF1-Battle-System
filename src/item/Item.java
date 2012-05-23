@@ -249,7 +249,18 @@ public class Item {
 		return mdef;
 	}
 
+	/**
+	 * @return	the spell that gets executed by the item in battle
+	 */
 	public Spell getBattleCommand() {
 		return battleCommand;
+	}
+	
+	/**
+	 * @return	if the item is usable in a battle situation
+	 */
+	public boolean usableInBattle()
+	{
+		return (battleCommand != null);
 	}
 }
