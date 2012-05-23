@@ -1,8 +1,8 @@
 package editor.EnemyEditor;
 import graphics.Sprite;
-import item.ItemDictionary;
 
-import java.awt.Color;
+import item.Item;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -12,49 +12,29 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Vector;
-import java.util.prefs.Preferences;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import org.ini4j.Ini;
-import org.ini4j.IniPreferences;
-import org.ini4j.InvalidFileFormatException;
 
 import actors.Actor;
 import actors.Enemy;
-
-import Map.Terrain;
-import Map.TileSet;
-
-
-import editor.ToolKit;
 
 /**
  * EnemyEditorGUI
@@ -96,7 +76,7 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 	 * Enemy elemental properties
 	 */
 	final String[] ELEM = {"FIRE", "FREZ", "ELEC", "DEMI", "LGHT"};
-	final Vector<String> ELEM_VALUES = new Vector(){
+	final Vector<String> ELEM_VALUES = new Vector<String>(){
 		{
 			this.add("Weak");
 			this.add("Neutral");
@@ -252,7 +232,7 @@ public class EnemyEditorGUI extends JPanel implements ActionListener, MouseListe
 		l.setSize(l.getPreferredSize());
 		l.setLocation(650, 232);
 		
-		items = new JComboBox(new DefaultComboBoxModel(new Vector<String>(ItemDictionary.map.keySet())));
+		items = new JComboBox(new DefaultComboBoxModel(Item.Dictionary.toArray(new Object[]{})));
 		items.addItem(null);
 		items.setSelectedItem(null);
 		items.setSize(230, 24);

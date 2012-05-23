@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import item.Item;
-import item.ItemDictionary;
 
 import java.io.File;
 import java.io.IOException;
@@ -130,7 +129,7 @@ public class PlayerTest {
 		//compared to other mages who can't equip much and Fighters who can equip just about everything
 		Player j = new Player("TWIL", "Red Mage");
 		
-		Item w1 = ItemDictionary.map.get("Knife");
+		Item w1 = Item.loadItem("Knife");
 		
 		//Shouldn't be able to equip items that the job can not equip
 	}

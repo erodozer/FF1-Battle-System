@@ -1,6 +1,10 @@
 package item;
 
 import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
@@ -17,6 +21,54 @@ import spell.Spell;
  */
 public class Item {
 
+	/*
+	 *	Stores a hashmap of all items in the game
+	 *	By generating this at startup and using references to this
+	 *	map it can save memory due to not having to always create
+	 *	new item objects, but at the same time can be a little
+	 *	resource heavy when there are a lot of items to load and keep
+	 *	in memory.
+	 *
+	 *	There are two different lists here.  There is the name list which
+	 *	knows of all the different items, then there is the HashMap cache
+	 *	of items that have been referenced and needed loading some point in
+	 *	the game.
+	 */
+	public final static ArrayList<String> Dictionary = new ArrayList<String>(){
+		{
+			for (String s : new File("data/items").list(new FilenameFilter() {
+	            @Override
+				public boolean accept(File f, String s) {
+	            	return (new File("data/items/"+s+"/item.ini").exists());
+	              }
+	            }))
+				add(s);
+		}
+	};
+	
+	private static HashMap<String, Item> cache = new HashMap<String, Item>();
+	
+	/**
+	 * Loads an item using cache first
+	 * @param s	item name
+	 * @return	the loaded item
+	 */
+	public static Item loadItem(String s)
+	{
+		Item i = null;
+		//compare first against the dictionary since it knows which item names are valid
+		if (Dictionary.contains(s))
+			if (cache.containsKey(s))
+				i = cache.get(s);
+			else
+				i = new Item(s);
+		else
+			System.err.println("There is no such item by the name of " + s);
+		return i;
+	}
+	
+	private static String[] EQUIPMENTSECTIONS = {"weapon", "armor", "accessory"};	//sections in an ini that identify an item as a piece of equipment
+	
 	protected String name;			//name of the item
 	protected Preferences inifile;	//data file
 
@@ -98,7 +150,7 @@ public class Item {
 	 * Loads an item
 	 * @param s
 	 */
-	public Item(String s, boolean isEquipment)
+	public Item(String s)
 	{
 		name = s;
 		this.isEquipment = isEquipment;
@@ -110,10 +162,19 @@ public class Item {
 
 			worth = main.getInt("price", 0);
 			
+			String eqSec = null;		//equipment section label
+			isEquipment = false;
+			for (int i = 0; i < EQUIPMENTSECTIONS.length && !isEquipment; i++)
+				if (inifile.nodeExists(EQUIPMENTSECTIONS[i]))
+				{
+					isEquipment = true;
+					eqSec = EQUIPMENTSECTIONS[i];
+					type = i;
+				}
+			
 			if (isEquipment)
 			{
-				Preferences equip = inifile.node("equipment");
-				type = equip.getInt("type", 0);
+				Preferences equip = inifile.node(eqSec);
 				// type is armor or weapon
 				if (type != 2) {
 					// get armor weight and restricted jobs
@@ -136,6 +197,7 @@ public class Item {
 			if (s != null)
 				battleCommand = Spell.getSpell(command);
 			
+			cache.put(name, this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

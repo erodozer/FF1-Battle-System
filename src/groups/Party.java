@@ -11,7 +11,6 @@ package groups;
  */
 
 import item.Item;
-import item.ItemDictionary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +63,7 @@ public class Party extends ArrayList<Player>{
 	private HashMap<String, Integer> genInventory() {
 		
 		HashMap<String, Integer> h = new HashMap<String, Integer>();
-		for (String s : ItemDictionary.map.keySet())
+		for (String s : Item.Dictionary)
 			h.put(s, 0);
 		return h;
 	}
@@ -232,7 +231,7 @@ public class Party extends ArrayList<Player>{
 		List<String> items = new ArrayList<String>();
 		for (int i = 0; i < keys.length; i++)
 		{
-			if (inventory.get(keys[i]).intValue() <= 0 || !(ItemDictionary.map.get(keys[i]).usableInBattle()))
+			if (inventory.get(keys[i]).intValue() <= 0 || !(Item.loadItem(keys[i]).usableInBattle()))
 				continue;
 					
 			items.add(""+keys[i]);
