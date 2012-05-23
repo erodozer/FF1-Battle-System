@@ -126,7 +126,7 @@ public class ItemEditorGUI extends JPanel implements ActionListener, MouseListen
 		add(l);
 		add(nameField);
 				
-		l = new JLabel("Battle Animation: ");
+		l = new JLabel("Battle Command: ");
 		l.setSize(l.getPreferredSize());
 		l.setLocation(650, 10);
 		
@@ -140,25 +140,27 @@ public class ItemEditorGUI extends JPanel implements ActionListener, MouseListen
 		 * Value Type button group
 		 */
 		typePane = new JLayeredPane();
-		typePane.setSize(new Dimension(350, 64));
+		typePane.setSize(new Dimension(400, 64));
 		typePane.setLocation(220, 64);
 		typePane.setBorder(BorderFactory.createTitledBorder("Equipment Type: "));
 		types = new ButtonGroup();
+		equipmentTypeButtons = new JRadioButton[EQUIPMENTTYPES.length];
 		for (int i = 0; i < EQUIPMENTTYPES.length; i++)
 		{
 			JRadioButton jb = new JRadioButton(EQUIPMENTLABELS[i]);
 			jb.setSize(jb.getPreferredSize());
-			jb.setLocation(20+(100*i), 24);
-
+			jb.setLocation(40+(100*i), 24);
+			equipmentTypeButtons[i] = jb;
 			types.add(jb);
 			typePane.add(jb);
 		}
+		equipmentTypeButtons[0].setSelected(true);
 		
 		add(typePane);
 		
 		equippable = new JCheckBox("Is Equippable");
 		equippable.setSize(equippable.getPreferredSize());
-		equippable.setLocation(typePane.getX() + 150, typePane.getY());
+		equippable.setLocation(typePane.getX() + 150, typePane.getY()-3);
 		equippable.addActionListener(this);
 		enablePane(typePane, equippable.isSelected());
 		add(equippable);
@@ -191,6 +193,7 @@ public class ItemEditorGUI extends JPanel implements ActionListener, MouseListen
 		add(saveButton);
 		add(restoreButton);
 
+		validate();
 	}
 
 	
@@ -225,13 +228,22 @@ public class ItemEditorGUI extends JPanel implements ActionListener, MouseListen
 	}
 	
 	/**
-	 * Loads an enemies values into the editor's fields and makes it the active enemy
+	 * Loads an item's values into the editor's fields and makes it the active item
 	 * @param e
 	 */
-	public void loadItem(Item i)
+	public void loadItem(Item item)
 	{
 		//load name
-		nameField.setText(i.getName());
+		nameField.setText(item.getName());
+		equippable.setSelected(item.isEquipment());
+		enablePane(typePane, equippable.isSelected());
+		for (int i = 0; i < EQUIPMENTTYPES.length; i++)
+		{
+			boolean selected = false;
+			if (i == item.getEquipmentType())
+				selected = true;
+			equipmentTypeButtons[i].setSelected(selected);
+		}
 	}
 	
 	/**
