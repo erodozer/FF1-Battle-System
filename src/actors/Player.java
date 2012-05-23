@@ -797,14 +797,12 @@ public class Player extends Actor {
 		if (!i.isEquipment() && i.getEquipmentType() == Item.WEAPON_TYPE)
 			return false;
 	
-		System.out.println("brrrg");
 		for (int n = 0; n < weapons.length; n++)
 			if (weapons[n] == null)
 			{
 				weapons[n] = i;
 				return true;
 			}
-		System.out.println("doop");
 		return false;
 	}
 	
