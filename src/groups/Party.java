@@ -221,4 +221,22 @@ public class Party extends ArrayList<Player>{
 			p.add(this.get(i));
 		return p;
 	}
+	
+	/**
+	 * This generates a list of all the items that the party possesses that 
+	 * can be used in battle situations.
+	 * @return	a list of item names for battle items in possession
+	 */
+	public String[] getBattleItems(){
+		String[] keys = inventory.keySet().toArray(new String[]{});
+		List<String> items = new ArrayList<String>();
+		for (int i = 0; i < keys.length; i++)
+		{
+			if (inventory.get(keys[i]).intValue() <= 0 || !(ItemDictionary.map.get(keys[i]).usableInBattle()))
+				continue;
+					
+			items.add(""+keys[i]);
+		}
+		return items.toArray(new String[]{});
+	}
 }
