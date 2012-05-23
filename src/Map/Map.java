@@ -89,7 +89,7 @@ public class Map {
 					new Event(this, pref.node(section));
 			clearColor = Color.decode(pref.node("map").get("clearColor", "#000000"));
 			tileSet = new TileSet(pref.node("map").get("tileset", "world") + ".png");
-			bgm = new MP3("data/audio/"+pref.node("map").get("bgm", "world")+".mp3");
+			bgm = new MP3(pref.node("map").get("bgm", "world")+".mp3");
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			System.err.println("can not find file: " + "data/" + path + "map.ini");

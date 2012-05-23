@@ -41,7 +41,7 @@ public class IntroState extends GameState{
 					finalI.add(line2);
 			
 			lines = finalI.toArray(new String[]{});
-			music = new MP3("data/audio/intro.mp3");
+			music = new MP3("intro.mp3");
 			music.play();
 		}
 		//if no intro file, then just skip to the title screen
