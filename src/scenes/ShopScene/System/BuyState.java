@@ -74,7 +74,7 @@ public class BuyState extends GameState {
 			if (handOff)
 			{
 				//if a weapon, add to weapon inventory
-				if (selectedItem.getEquipmentType() == 0)
+				if (selectedItem.getEquipmentType() == Item.WEAPON_TYPE)
 					party.get(index).holdWeapon(selectedItem);
 				//if it's a piece of armor or an accessory, hold it in the armor inventory
 				else
