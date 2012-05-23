@@ -8,6 +8,7 @@ import engine.Engine;
 import graphics.Sprite;
 import graphics.SWindow;
 import groups.Party;
+import scenes.HUD;
 import scenes.BattleScene.System.*;
 
 /**
@@ -16,7 +17,7 @@ import scenes.BattleScene.System.*;
  *
  *	Displays the party's sprites during battle
  */
-public class PartySpriteDisplay extends Sprite{
+public class PartySpriteDisplay extends HUD{
 
 	SWindow window;
 	Sprite background;
@@ -29,7 +30,6 @@ public class PartySpriteDisplay extends Sprite{
 	
 	public PartySpriteDisplay(int x, int y)
 	{
-		super(null);
 		window = new SWindow(x, y, 65, 144);
 		background = new Sprite(null);
 		party = new Party();
@@ -68,7 +68,6 @@ public class PartySpriteDisplay extends Sprite{
 		for (int i = 0; i < party.size(); i++)
 		{
 			Player p = party.get(i);
-			System.out.println("Player " + i + ": " + p.getState());
 			//Move the player in a walking animation
 			if (p == parent.getActiveActor() && p.getAlive())
 			{
@@ -116,5 +115,14 @@ public class PartySpriteDisplay extends Sprite{
 
 	public void setBackground(Sprite s) {
 		background = s;
+	}
+
+	@Override
+	public void update() {}
+	
+	public int[] getArrowPosition(int index)
+	{
+		Sprite s = party.get(index).getSprite();
+		return new int[]{(int)s.getX()-10, (int)s.getY()-3};
 	}
 }

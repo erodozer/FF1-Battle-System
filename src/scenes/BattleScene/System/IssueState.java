@@ -1,7 +1,6 @@
 package scenes.BattleScene.System;
 
 import item.Item;
-import item.ItemDictionary;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -24,13 +23,17 @@ import actors.Player;
  */
 public class IssueState extends GameState 
 {
+	//the party's list of battle usable items
+	// this is static because it belongs to the party instead of one actor
+	public static String[] drinks;
+
 	Player actor;			//actor it is dealing with, only players deal with issue command
 	Actor target;			//target selected
 	public Actor[] targets;	//targets that can be selected
 	Command c;				//command selected
 	Spell s;				//selected spell
-	ArrayList<Item> items;	//the actor's item list
-	String[] drinks;		//the party's list of battle usable items
+	public ArrayList<Item> items;	
+							//the actor's item list
 	Item it;				//selected item
 	
 	public int index = 0;	//index in the list of commands (current on highlighted)
@@ -230,7 +233,7 @@ public class IssueState extends GameState
 		else if (drinkSelecting)
 		{
 			//allow choosing if the item is usable in battle
-			it = ItemDictionary.map.get(drinks[index]);
+			it = Item.loadItem(drinks[index]);
 			s = it.getBattleCommand();
 			targets = ((BattleSystem)parent).getTargets(actor, s);
 					
@@ -249,14 +252,20 @@ public class IssueState extends GameState
 			//select a potion to drink
 			else if (command.equals("Drink"))
 			{	
-				drinkSelecting = true;
-				index = 0;
+				if (drinks.length > 0)
+				{
+					drinkSelecting = true;
+					index = 0;
+				}
 			}
 			//select an item to use
-			else if (command.equals("Items"))
+			else if (command.equals("Item"))
 			{	
-				itemSelecting = true;
-				index = 0;	
+				//if (items.size() > 0)
+				//{
+					itemSelecting = true;
+					index = 0;	
+				//}
 			}
 			//flee from battle
 			else if (command.equals("Run"))

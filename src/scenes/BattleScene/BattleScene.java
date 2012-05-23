@@ -16,7 +16,6 @@ public class BattleScene extends Scene {
 	public void start() {
 		BattleSystem system = new BattleSystem();
 		BattleHUD hud = new BattleHUD();
-		hud = new BattleHUD();
 		hud.setBackground(new Sprite("terrains/grass.png"));
 		hud.setParent(system);
 
@@ -33,7 +32,6 @@ public class BattleScene extends Scene {
 		system.setFormation(f);
 		
 		BattleHUD hud = new BattleHUD();
-		hud = new BattleHUD();
 		hud.setBackground(new Sprite("terrains/grass.png"));
 		hud.setParent(system);
 
@@ -52,7 +50,6 @@ public class BattleScene extends Scene {
 		system.setFormation(f);
 
 		BattleHUD hud = new BattleHUD();
-		hud = new BattleHUD();
 		hud.setBackground(background);
 		hud.setParent(system);
 

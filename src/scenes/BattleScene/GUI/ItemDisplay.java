@@ -29,13 +29,13 @@ public class ItemDisplay extends HUD{
 	SFont font = GameScreen.font;
 	
 	BattleSystem parent;
-	Player actor;
 	
 	ArrayList<Item> items;
 	
 	public ItemDisplay(int x, int y)
 	{
 		window = new SWindow(x, y, 178, 80);
+		items = new ArrayList<Item>();
 	}
 	
 	public void setParentScene(BattleSystem bs)
@@ -53,26 +53,16 @@ public class ItemDisplay extends HUD{
 		window.paint(g);
 		
 		for (int i = 0; i < Math.min(8, items.size()); i++)
-			font.drawString(g, items.get(i).getName(), 8+40*(i%2), 12+16*(i/2), window);
+			font.drawString(g, items.get(i).getName(), 8+80*(i%2), 12+16*(i/2), window);
 	}
 
 	@Override
 	public void update() {
-		if (actor != parent.getActiveActor())
-		{
-			actor = (Player)parent.getActiveActor();
-			items = new ArrayList<Item>();
-			for (Item i : actor.getWeapons())
-				if (i != null)
-					items.add(i);
-			for (Item i : actor.getArmor())
-				if (i != null)
-					items.add(i);
-		}
+		items = ((IssueState)parent.getState()).items;
 	}
 
 	public int[] getArrowPosition(int index)
 	{
-		return new int[]{window.getX() + 15 + 40*(index%3), window.getY() + 34 + 16 * (index/3)};
+		return new int[]{window.getX() + 8 + 80*(index%2), window.getY() + 16 + 16 * (index/2)};
 	}
 }

@@ -66,9 +66,7 @@ public class BattleHUD extends HUD{
 	}
 	
 	@Override
-	public void update(){
-		elistd.update(parent.getFormation());
-	}
+	public void update(){}
 	
 	/**
 	 * Sets the background for the battle scene
@@ -90,9 +88,12 @@ public class BattleHUD extends HUD{
 		parent = (BattleSystem)bs;
 		psprited.setParentScene(parent);
 		esprited.setParentScene(parent);
+		elistd.setParent(parent);
+		pstatd.setParentScene(parent);
 		cd.setParentScene(parent);
 		sd.setParentScene(parent);
 		vd.setParentScene(parent);
+		id.setParentScene(parent);
 	}
 	
 	/**
@@ -120,51 +121,54 @@ public class BattleHUD extends HUD{
 			vd.paint(g);
 			return;
 		}
-		else if (gs instanceof IssueState)
-		{
-			elistd.paint(g);
-			if (!((IssueState)parent.getState()).targetSelecting)
-			{
-				cd.update();
-				cd.paint(g);
-
-				if (((IssueState)parent.getState()).spellSelecting)
-				{	
-					sd.update((IssueState)parent.getState());
-					sd.paint(g);
-				}
-			}
-		}
 		else if (gs instanceof MessageState)
 		{
 			md.update((MessageState)parent.getState());
 			md.paint(g);
 		}
-		
-		/*
-		 * During the engage state, the animation of the attack needs to be drawn
-		 */
-		if (gs instanceof EngageState)
-		{
-			if (parent.getActiveActor() instanceof Player)
-			{
-				Player p = (Player)parent.getActiveActor();
-				Command c = p.getCommand();
-				if (c != null)
-					if (c.getAnimation() != null)
-						c.getAnimation().paint(g);
-			}
-		}
-		
 		/*
 		 * Handles drawing of the cursor during the IssueState
 		 */
-		if (gs instanceof IssueState)
+		else if (gs instanceof IssueState)
 		{
 			IssueState is = ((IssueState)parent.getState());
+			
+			elistd.update();
+			elistd.paint(g);
+			cd.update();
+			cd.paint(g);
+
+			if (!is.targetSelecting)
+			{
+
+				if (is.spellSelecting)
+				{	
+					sd.update((IssueState)parent.getState());
+					sd.paint(g);
+				}
+				else if (is.drinkSelecting)
+				{
+					dd.update();
+					dd.paint(g);
+				}
+				else if (is.itemSelecting)
+				{
+					id.update();
+					id.paint(g);
+				}
+			}
+			
 			if (is.targetSelecting)
 			{
-				cursorPos = esprited.getArrowPosition(is.index);
+				//match the cursor to the right window depending on the target actor type
+				if (is.targets[is.index] instanceof Player)
+					cursorPos = psprited.getArrowPosition(is.index);
+				else
+					cursorPos = esprited.getArrowPosition(is.index);
+			}
+			else if (is.spellSelecting)
+			{
+				cursorPos = sd.getArrowPosition(is.index);
 			}
 			else if (is.itemSelecting)
 			{
@@ -183,6 +187,23 @@ public class BattleHUD extends HUD{
 			arrow.setY(cursorPos[1]);
 			
 			arrow.paint(g);
+		}
+		
+		cursorPos = null;
+		
+		/*
+		 * During the engage state, the animation of the attack needs to be drawn
+		 */
+		if (gs instanceof EngageState)
+		{
+			if (parent.getActiveActor() instanceof Player)
+			{
+				Player p = (Player)parent.getActiveActor();
+				Command c = p.getCommand();
+				if (c != null)
+					if (c.getAnimation() != null)
+						c.getAnimation().paint(g);
+			}
 		}
 	}
 }

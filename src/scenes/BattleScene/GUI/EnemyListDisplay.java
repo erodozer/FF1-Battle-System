@@ -3,6 +3,9 @@ package scenes.BattleScene.GUI;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import scenes.HUD;
+import scenes.BattleScene.System.BattleSystem;
+
 import engine.GameScreen;
 
 import actors.Enemy;
@@ -12,24 +15,18 @@ import graphics.Sprite;
 import graphics.SWindow;
 import groups.Formation;
 
-public class EnemyListDisplay{
+public class EnemyListDisplay extends HUD{
 
 	SFont font = GameScreen.font;
 	SWindow window;
+	
+	Formation f;
 	ArrayList<String> names;
 	
 	public EnemyListDisplay(int x, int y)
 	{
 		window = new SWindow(x, y, 88, 80);
 		names = new ArrayList<String>();
-	}
-
-	public void update(Formation f)
-	{
-		names = new ArrayList<String>(); 
-		for (Enemy e : f)
-			if (e.getAlive() && !names.contains(e.getName()))
-				names.add(e.getName());
 	}
 	
 	/**
@@ -40,8 +37,24 @@ public class EnemyListDisplay{
 		//window is first sprite
 		window.paint(g);
 		
+		if (parent == null)
+			return;
+		
 		for (int i = 0; i < names.size(); i++)
 			font.drawString(g, names.get(i), 2, 14+i*16, window);
+	}
+
+	@Override
+	public void update() {
+		
+		if (parent == null)
+			return;
+		
+		f = ((BattleSystem)parent).getFormation();
+		
+		for (Enemy e : f)
+			if (!names.contains(e.getName()))
+				names.add(e.getName());
 	}
 	
 }

@@ -30,8 +30,8 @@ public class DrinkDisplay extends HUD{
 	
 	public DrinkDisplay(int x, int y)
 	{
-		window = new SWindow(x, y, 101, 51);
 		itemList = Engine.getInstance().getParty().getBattleItems();
+		window = new SWindow(x, y, 101, 32 + 18*itemList.length);	
 	}
 	
 	public void update(){}
@@ -45,13 +45,13 @@ public class DrinkDisplay extends HUD{
 		//window is first sprite
 		window.paint(g);
 		
-		for (int i = range; i < range+4; i++)
+		for (int i = range; i < Math.min(itemList.length, range+4); i++)
 			font.drawString(g, itemList[i], 8, 12+16*(i%4), window);
 	}
 	
 	public int[] getArrowPosition(int index)
 	{
 		range = (index/4)*4;
-		return new int[]{window.getX() + 1, window.getY() + 30 + 16 * (index % 4)};
+		return new int[]{window.getX() + 1, window.getY() + 16 + 16 * (index % 4)};
 	}
 }

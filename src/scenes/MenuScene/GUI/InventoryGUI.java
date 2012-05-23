@@ -131,7 +131,10 @@ public class InventoryGUI extends HUD
 		public void paint(Graphics g) {
 			w.paint(g);
 			for (int i = 0; i < Math.min(itemList.length, index + 16); i++)
-				f.drawString(g, String.format("%5s %2s", itemList[i], p.getItemCount(itemList[i])), 5 + 80 * (i % 2), 30 + 24 * (i / 2), w);
+			{
+				f.drawString(g, itemList[i], 5 + 100 * (i % 2), 30 + 24 * (i / 2), w);
+				f.drawString(g, ""+p.getItemCount(itemList[i]), 90 + 100 * (i % 2), 30 + 24 * (i / 2), 2, w);
+			}
 		}
 	}
 }
