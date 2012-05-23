@@ -45,6 +45,9 @@ public class Item {
 				add(s);
 		}
 	};
+	public static final int WEAPON_TYPE = 0;
+	public static final int ARMOR_TYPE = 1;
+	public static final int ACCESSORY_TYPE = 2;
 	
 	private static HashMap<String, Item> cache = new HashMap<String, Item>();
 	
@@ -153,7 +156,6 @@ public class Item {
 	public Item(String s)
 	{
 		name = s;
-		this.isEquipment = isEquipment;
 		
 		Preferences p;
 		try {
