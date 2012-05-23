@@ -160,9 +160,9 @@ public class EquipmentGUI extends HUD
 			{
 				String t;
 				if (parent.getParent().getState() instanceof WeaponState)
-					t = ((p.getWeapon() != null)?"E-":"") + ((p.getWeapons()[i] != null)?p.getWeapons()[i]:"");
+					t = ((p.getWeapon() == p.getWeapons()[i] && p.getWeapon() != null)?"E-":"") + ((p.getWeapons()[i] != null)?p.getWeapons()[i].getName():"");
 				else
-					t = ((p.isWearing(p.getArmor()[i])?"E-":"") + ((p.getArmor()[i] != null)?p.getArmor()[i]:""));
+					t = ((p.isWearing(p.getArmor()[i])?"E-":"") + ((p.getArmor()[i] != null)?p.getArmor()[i].getName():""));
 				f.drawString(g, t, 20+(items.getWidth()/2*(i%2)), 14+(items.getHeight()/2*(i/2)), items);
 			}
 		}
