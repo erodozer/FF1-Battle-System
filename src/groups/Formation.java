@@ -11,8 +11,13 @@ package groups;
  * 				at a time using an array of names.
  */
 
+import graphics.Sprite;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import actors.Enemy;
 
@@ -90,13 +95,64 @@ public class Formation extends ArrayList<Enemy>{
 		return sum;
 	}
 
+	/**
+	 * @return if a party can escape from a battle against this formation
+	 */
     public boolean getEscapable()
     {
         return escapable;
     }
     
+    /**
+     * Set whether the party can escape from the battle or not
+     * This is usually used when defining boss or story based battles that you
+     *  can't run from.
+     * @param e
+     */
     public void setEscapable(boolean e)
     {
         escapable = e;
+    }
+    
+    /**
+     * Will load a formation from a .txt file
+     * @param f	file that holds the formation data
+     * @return the formation loaded
+     */
+    public static Formation loadFromFile(File file)
+    {
+    	try {
+			Scanner s = new Scanner(file);
+			
+			Formation f = new Formation();
+			
+			/*
+			 *	Load coordinates and battle scale 
+			 */
+			
+			while (s.hasNextLine())
+			{
+				String line = s.nextLine();
+				String[] l = line.split("|");
+				
+				Enemy e = new Enemy(l[0].trim());		//new enemy created from first value
+				Sprite sp = e.getSprite();				//sprite of the enemy
+				//now we set the sprite position and scale from the other values
+				// position is simple x y as either pixels or screen percentage
+				sp.setX(Double.parseDouble(l[1]));
+				sp.setY(Double.parseDouble(l[2]));
+				// scale is a one number percentage
+				sp.scale(Double.parseDouble(l[3]), Double.parseDouble(l[3]));
+				
+				//now we add the enemy to the formation
+				f.add(e);
+			}
+			
+			return f;
+		} catch (FileNotFoundException e) {
+			System.err.println("Could not load formation from file");
+			e.printStackTrace();
+			return null;
+		}
     }
 }
