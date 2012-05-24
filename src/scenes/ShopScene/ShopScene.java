@@ -7,6 +7,10 @@ import scenes.ShopScene.System.ShopSystem;
 
 public class ShopScene extends Scene {
 	
+	/**
+	 * Since the shops are spontaneously created and depend on NPCs, 
+	 * the system and display can be set to null for garbage collection
+	 */
 	@Override
 	public void stop()
 	{
