@@ -53,11 +53,11 @@ public class MP3{
     }
 
     /**
-     * Pauses the song currently playing
+     * Stops the song currently playing
      */
     public static void stop()
     {
-    	playerThread.interrupt();
+    	playerThread.setMP3(null);
     }
     
     @Deprecated
@@ -78,7 +78,7 @@ public class MP3{
     public void play(boolean loop)
     {
         playerThread.setLoop(loop);
-        playerThread.setMP3(this);
+       	playerThread.setMP3(this);
     }
     
     /**
@@ -122,7 +122,6 @@ public class MP3{
     	    		{
     	    			while (hold)
 							try {
-								System.out.println("waiting");
 								wait();
 							} catch (InterruptedException e) {
 								e.printStackTrace();
@@ -182,7 +181,7 @@ public class MP3{
     	public void interrupt()
     	{
     		if (player != null)
-    			player.stop();
+    			player.close();
     		super.interrupt();
     	}
     	
@@ -208,7 +207,7 @@ public class MP3{
     	m1.play();
     	long time = System.currentTimeMillis();
     	while (System.currentTimeMillis() - time < 2000);
-    	m2.play();
+    	m2.play();	
     }
 }
 
