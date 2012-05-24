@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -89,7 +90,7 @@ public class Sprite{
 			{
 				try
 				{
-					image = (Engine.isRscLoading)?ImageIO.read(getClass().getResourceAsStream("data/"+s)):ImageIO.read(new File("data/" + s));
+					image = ImageIO.read((Engine.isRscLoading)?getClass().getResourceAsStream("data/"+s):new FileInputStream("data/" + s));
 				}
 				catch (IOException e) {
 					System.err.println("can not read or find: data/" + s);
