@@ -47,7 +47,7 @@ public class MP3{
 	    }
 	    catch (Exception e) {
 	        System.out.println("Problem playing file " + "data/audio/"+filename);
-	        e.printStackTrace();
+	        //e.printStackTrace();
 	        return;
 	    }
     }
@@ -159,7 +159,8 @@ public class MP3{
     			this.player = null;
     			this.mp3 = mp3;
     	    	this.player = mp3.player;
-    	    	this.player.setPlayBackListener(pl);
+    	    	if (this.player != null)
+    	    		this.player.setPlayBackListener(pl);
     	    	
     	    	//resume thread
     	    	synchronized (this)
