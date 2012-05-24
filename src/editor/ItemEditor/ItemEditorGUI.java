@@ -47,15 +47,6 @@ import editor.ToolKit;
  */
 public class ItemEditorGUI extends JPanel implements ActionListener, MouseListener{
 	
-	public static Vector<String> AVAILABLESPELLS = new Vector(){
-		{
-			for (String s : ToolKit.spells)
-				add(s);
-			add("");	//throw blank on here to make sure you can have items without functions
-		}
-	};
-	
-	
 	/*
 	 * Buttons
 	 */
@@ -65,7 +56,7 @@ public class ItemEditorGUI extends JPanel implements ActionListener, MouseListen
 	JButton testButton;
 	
 	/*
-	 * Spell switcher
+	 * Item switcher
 	 */
 	JList itemList;
 	JScrollPane itemListPane;
@@ -130,9 +121,11 @@ public class ItemEditorGUI extends JPanel implements ActionListener, MouseListen
 		l.setSize(l.getPreferredSize());
 		l.setLocation(650, 10);
 		
-		spell = new JComboBox(AVAILABLESPELLS);
+		spell = new JComboBox<String>(Spell.AVAILABLESPELLS);
 		spell.setSize(230, 24);
 		spell.setLocation(650, 32);
+		spell.addItem("");
+		spell.setSelectedItem("");
 		add(l);
 		add(spell);
 		

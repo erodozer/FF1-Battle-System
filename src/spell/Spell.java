@@ -2,10 +2,13 @@ package spell;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Vector;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
+
+import editor.ToolKit;
 
 import actors.Actor;
 
@@ -22,6 +25,16 @@ import actors.Actor;
  */
 public class Spell {
 
+	/**
+	 * List of all spells available for loading
+	 */
+	public static final Vector<String> AVAILABLESPELLS = new Vector(){
+		{
+			for (String s : ToolKit.spells)
+				add(s);
+		}
+	};
+	
 	//caches all the spells loaded into the system so far
 	private static HashMap<String, Spell> spellCache = new HashMap<String, Spell>();
 	
@@ -32,11 +45,12 @@ public class Spell {
 	 */
 	public static Spell getSpell(String name)
 	{
-		Spell s;
-		if (spellCache.containsKey(name))
-			s = spellCache.get(name);
-		else
-			s = new Spell(name);
+		Spell s = null;
+		if (AVAILABLESPELLS.contains(name))
+			if (spellCache.containsKey(name))
+				s = spellCache.get(name);
+			else
+				s = new Spell(name);
 		return s;
 	}
 	
