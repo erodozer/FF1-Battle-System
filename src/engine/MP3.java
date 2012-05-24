@@ -19,7 +19,7 @@ import javazoom.jl.player.advanced.*;
 public class MP3{
 	//main thread for playing the song.  Only allow one so then multiple songs don't play
 	//at the same time.
-	private static PlayThread playerThread = new PlayThread();
+	private static PlayThread playerThread;
 	
     private String filename;			//name of the file
 
@@ -33,6 +33,12 @@ public class MP3{
      */
     public MP3(String filename) {
         this.filename = filename;
+        
+        if (playerThread == null)
+        {
+        	playerThread = new PlayThread();
+        	playerThread.start();
+        }
         
         try {
 	    	fis = ((Engine.isRscLoading)?getClass().getResourceAsStream("data/audio/"+filename):new FileInputStream("data/audio/"+filename));
@@ -71,10 +77,8 @@ public class MP3{
      */
     public void play(boolean loop)
     {
-        playerThread.interrupt();
         playerThread.setLoop(loop);
         playerThread.setMP3(this);
-        playerThread.run();
     }
     
     /**
@@ -86,9 +90,11 @@ public class MP3{
      */
     private static class PlayThread extends Thread
     {
-    	MP3 mp3;
-    	AdvancedPlayer player;
+    	private MP3 mp3;
+    	private AdvancedPlayer player;
     	boolean loop;
+    	
+    	boolean hold;	//know whether or not to pause the thread
     	
     	/*
     	 * Playback listener to know when to repeat the song
@@ -110,9 +116,20 @@ public class MP3{
     	public void run()
     	{
     	    try {
-    	    	while (!isInterrupted())
+    	    	while (true)
     	    	{
-    	    		player.play();
+    	    		synchronized (this)
+    	    		{
+    	    			while (hold)
+							try {
+								System.out.println("waiting");
+								wait();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+    	    		}
+    	    		if (this.player != null)
+    	    			this.player.play();
     	    	}
 			} catch (JavaLayerException e) {
 				e.printStackTrace();
@@ -125,9 +142,38 @@ public class MP3{
     	 */
     	public void setMP3(MP3 mp3)
     	{
-    		this.mp3 = mp3;
-    		player = mp3.player;
-    		player.setPlayBackListener(pl);
+    		try {
+    			//make the thread wait
+    			synchronized (this)
+    			{
+    				hold = true;
+    			}	
+    			
+    			//stop the current player first
+    			if (this.player != null)
+    			{
+    				this.player.setPlayBackListener(null);
+    				this.player.close();
+    			}
+
+    			//swap the players
+    			this.player = null;
+    			this.mp3 = mp3;
+    	    	this.player = mp3.player;
+    	    	this.player.setPlayBackListener(pl);
+    	    	
+    	    	//resume thread
+    	    	synchronized (this)
+    	    	{
+    	    		hold = false;
+    	    		notify();
+    			}
+    	    	
+    		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
     	}
     	
     	/**
@@ -157,7 +203,12 @@ public class MP3{
      */
     public static void main(String[] args)
     {
-    	new MP3("intro.mp3").play();
+    	MP3 m1 = new MP3("intro.mp3");
+    	MP3 m2 = new MP3("battle.mp3");
+    	m1.play();
+    	long time = System.currentTimeMillis();
+    	while (System.currentTimeMillis() - time < 2000);
+    	m2.play();
     }
 }
 
