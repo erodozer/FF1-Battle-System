@@ -18,7 +18,7 @@ import graphics.Sprite;
  * 				for combatants.  Actors are comparable on terms of their speed
  * 				to determine turn order.
  */
-abstract public class Actor
+abstract public class Actor implements Comparable<Actor>
 {
 	public final static int MPLEVELS = 8;	//the count of how many mp levels there are
 	protected final static int MAXLVL = 50;	//maximum character level
@@ -468,5 +468,18 @@ abstract public class Actor
     public void setLuck(int i)
     {
         luk = i;
+    }
+    
+    /**
+     * Compares two actors together by speed to determine turn order
+     */
+    public int compareTo(Actor a)
+    {
+    	int i = 0;
+    	if (this.spd < a.spd)
+    		i = 1;
+    	else if (this.spd > a.spd)
+    		i = -1;
+    	return i;
     }
 }

@@ -2,6 +2,7 @@ package scenes.BattleScene.System;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,8 +34,7 @@ public class BattleSystem extends GameSystem{
 
 	private Engine engine;
 	
-	private Actor[] allActors;						//all the actors capable of executing commands
-	private List<Actor> turnOrder;					//order of when the turns execute
+	private List<Actor> allActors;					//all the actors capable of executing commands
 	private Iterator<Actor> turnIterator;			//iterator to get current actor through the turn order
 	
 	private Party party;							//player party
@@ -85,61 +85,27 @@ public class BattleSystem extends GameSystem{
 	 */
 	private void populateActorList()
 	{
-	    ArrayList<Actor> actors = new ArrayList<Actor>();
+	    allActors = new ArrayList<Actor>();
 	    
-		allActors = new Actor[party.getAlive() + formation.getAlive()];
-		
 	    //only alive actors should be in the list
 		for (Actor a: party.getAliveMembers())
-			actors.add(a);
+			allActors.add(a);
 		for (Actor a: formation.getAliveMembers())
-			actors.add(a);
-				
-		allActors = actors.toArray(allActors);
-		
-		actors = null;
+			allActors.add(a);
 	}
 	
 	/**		
-	 * Generates the turn order of all the actors using a radix sort
+	 * Generates the turn order of all the alive actors
 	 * THIS NEEDS TO BE EXECUTED *AFTER* COMMANDS ARE CHOSEN
 	 * COMMANDS WILL ALTER THE ACTOR'S SPEED SO THAT CAN CHANGE
 	 *   UP TURN ORDER WITH EVERY PHASE
 	 */
 	public void getTurnOrder()
 	{
-		ArrayList<ArrayList<Actor>> actors = new ArrayList<ArrayList<Actor>>();
-		ArrayList<Actor> sorted = new ArrayList<Actor>();
-		for (int x = 0; x <= 9; x++)
-			actors.add(new ArrayList<Actor>());
-
-		for (int x = 0; x < allActors.length; x++)
-			sorted.add(allActors[x]);
-		
-		//digit
-		for (int i = 1; i <= 3; i++)
-		{
-			//radix sort has to search in reverse so then the stack is made
-			//in proper descending order
-			//number in list
-			for (int n = sorted.size()-1; n >= 0; n--)
-				actors.get(sorted.get(n).getSpd() % (10*i) / 10).add(sorted.get(n));
-					
-			//smoosh
-			sorted = new ArrayList<Actor>();
-			for (ArrayList<Actor> l : actors)
-				for (Actor a : l)
-					sorted.add(a);
-			
-			actors = new ArrayList<ArrayList<Actor>>();
-			for (int x = 0; x <= 9; x++)
-				actors.add(new ArrayList<Actor>());
-		}
-		turnOrder = new LinkedList<Actor>(sorted);
-		turnIterator = turnOrder.iterator();
-		
-		actors = null;
-		sorted = null;
+		Collections.sort(allActors);
+		for (Actor a : allActors)
+			System.out.println(a.getName() + ": " + a.getSpd());
+		turnIterator = allActors.iterator();
 	}
 	
 	/**
@@ -220,7 +186,6 @@ public class BattleSystem extends GameSystem{
 			else
 			{
 				state = null;
-				turnOrder = null;
 				turnIterator = null;
 				next();
 			}
