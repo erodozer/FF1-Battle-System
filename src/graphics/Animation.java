@@ -169,6 +169,14 @@ public class Animation {
 	}
 	
 	/**
+	 * Jumps frame to end to quickly finish it
+	 */
+	public void stop()
+	{
+		currentFrame = frames.size();
+	}
+	
+	/**
 	 * Frame
 	 * @author nhydock
 	 *
