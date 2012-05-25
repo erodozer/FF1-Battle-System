@@ -35,7 +35,6 @@ public class Player extends Actor {
 			for (String s : new File("data/actors/jobs").list())
 				if (new File("data/actors/jobs/" + s + "/job.ini").exists())
 					this.add(s);
-			System.out.println(this);
 		}
 	};
 	
@@ -689,14 +688,14 @@ public class Player extends Actor {
 	/**
 	 * @return a string representation of a message that shows the increase in each stat
 	 */
-	public String previewLevelUp()
+	public List<String> previewLevelUp()
 	{
-		String output = "";
-		output += getVit(level) + " vit\n";
-		output += getHP(level) + " hp\n";
-		output += getStr(level) + " str\n";
-		output += getSpd(level) + " spd\n";
-		output += getInt(level) + " int\n";
+		List<String> output = new ArrayList<String>();
+		output.add(getVit(level) + " vit");
+		output.add(getHP(level) + " hp");
+		output.add(getStr(level) + " str");
+		output.add(getSpd(level) + " spd");
+		output.add(getInt(level) + " int");
 		//output += getMDef(level) + " mdef\n";
 		//output += getAcc(level) + " hit %\n";
 		
