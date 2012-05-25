@@ -46,7 +46,7 @@ public class MP3{
 	        player = new AdvancedPlayer(bis);
 	    }
 	    catch (Exception e) {
-	        System.out.println("Problem playing file " + "data/audio/"+filename);
+	        System.err.println("Problem playing file " + "data/audio/"+filename);
 	        //e.printStackTrace();
 	        return;
 	    }
@@ -129,6 +129,12 @@ public class MP3{
     	    		}
     	    		if (this.player != null)
     	    			this.player.play();
+    	    		try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     	    	}
 			} catch (JavaLayerException e) {
 				e.printStackTrace();
