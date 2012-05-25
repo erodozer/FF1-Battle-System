@@ -94,8 +94,6 @@ public class GameScreen extends JFrame implements KeyListener{
 						{
 							e.printStackTrace();
 						}
-					else
-						continue;
 					
 					c.paint();
 					

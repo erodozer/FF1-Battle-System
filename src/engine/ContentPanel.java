@@ -15,6 +15,10 @@ import javax.swing.JPanel;
 public class ContentPanel extends JPanel{
 
 	private static final Color DEFAULT_CLEAR_COLOR = Color.BLACK;
+
+	//256 because of bit limit for raster
+	private static final int TRANSITIONLIMIT = 256;	
+
 	//NES Native resolution
 	public static final int INTERNAL_RES_W = 256;
 	public static final int INTERNAL_RES_H = 224;
@@ -25,8 +29,8 @@ public class ContentPanel extends JPanel{
 	
 	private Color clearColor;			//color the background clears to
 	
-	private int transition = 256;		//transition timer
-	private static final int TRANSITIONRATE = 256/GameScreen.FRAMES_PER_SECOND;
+	int transition = TRANSITIONLIMIT;	//transition timer
+	private static int TRANSITIONRATE = TRANSITIONLIMIT/GameScreen.FRAMES_PER_SECOND;
 										//rate at which transitions occur
 	private BufferedImage transFader;	//the transition fader grayscale image
 	private BufferedImage transBuffer;
@@ -67,7 +71,7 @@ public class ContentPanel extends JPanel{
 		if (t)
 			transition = 0;
 		else
-			transition = 256;
+			transition = TRANSITIONLIMIT;
 		transIn = t;
 	}
 	
@@ -77,7 +81,7 @@ public class ContentPanel extends JPanel{
 	public boolean isTransitioning()
 	{
 		if (transIn)
-			return transition < 256;
+			return transition < TRANSITIONLIMIT;
 		else
 			return transition > 0;
 	}
@@ -107,20 +111,24 @@ public class ContentPanel extends JPanel{
 				setClearColor(engine.getCurrentScene().getDisplay().getClearColor());
 		
 		//clear the buffer
-		dbg.setColor(clearColor);
-		dbg.fillRect(0, 0, INTERNAL_RES_W, INTERNAL_RES_H);
+		//but not when transitioing
+		if (!isTransitioning())
+		{
+			dbg.setColor(clearColor);
+			dbg.fillRect(0, 0, INTERNAL_RES_W, INTERNAL_RES_H);
+		}
 		
 		//draw the current scene
 		if (engine.getCurrentScene() != null)
 			engine.getCurrentScene().render(dbg);	
 		
 		//draw the transition
-		if (transition <= 256 && transFader != null)
+		if (transition <= TRANSITIONLIMIT && transFader != null)
 		{
-			transBuffer = null;
 			transBuffer = new BufferedImage(stepTransition(), transFader.getRaster(), false, null);
 
 			dbg.drawImage(transBuffer, 0, 0, INTERNAL_RES_W, INTERNAL_RES_H, null);
+			transBuffer = null;
 		}
 	}
 	
@@ -131,14 +139,14 @@ public class ContentPanel extends JPanel{
 	private IndexColorModel stepTransition()
 	{
 		//bytes are 256 because of 32-bit png
-		byte[] r = new byte[256];
-		byte[] g = new byte[256];
-		byte[] b = new byte[256];
-		byte[] a = new byte[256];
+		byte[] r = new byte[TRANSITIONLIMIT];
+		byte[] g = new byte[TRANSITIONLIMIT];
+		byte[] b = new byte[TRANSITIONLIMIT];
+		byte[] a = new byte[TRANSITIONLIMIT];
 		Arrays.fill(r, (byte)clearColor.getRed());
 		Arrays.fill(g, (byte)clearColor.getGreen());
 		Arrays.fill(b, (byte)clearColor.getBlue());
-		Arrays.fill(a, (byte)255);
+		Arrays.fill(a, (byte)(TRANSITIONLIMIT-1));
 		
 		for (int i = 0; i < transition; i++)
 		{
@@ -149,7 +157,7 @@ public class ContentPanel extends JPanel{
 		}
 		
 		transition += ((transIn)?1:-1)*TRANSITIONRATE;
-		return new IndexColorModel(4, 256, r, g, b, a);
+		return new IndexColorModel(4, TRANSITIONLIMIT, r, g, b, a);
 	}
 	
 	/**

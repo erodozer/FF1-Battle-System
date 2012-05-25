@@ -76,10 +76,7 @@ public class Engine{
 	 */
 	public void startGame()
 	{
-		//changeScene();
-		TitleScene s = new TitleScene();
-		s.start();
-		currentScene = s;
+		changeToTitle();
 	}
 	
 	/**
@@ -125,7 +122,10 @@ public class Engine{
 	public void changeToWorld() {
 		//can't switch to the map when one has not been set yet
 		if (currentMap == null)
+		{
+			System.err.println("no map");
 			return;
+		}
 		
 		changeScene();
 		currentScene = world;
@@ -194,7 +194,21 @@ public class Engine{
 		GameScreen.getInstance().c.evokeTransition(true);
 	}
 	
-	
+	/**
+	 * Changes to the title screen
+	 * This should only be used at the beginning of the game and after game over
+	 */
+	public void changeToTitle() {
+		//only transition if changing from game over
+		boolean transition = (currentScene != null);
+		if (transition)
+			changeScene();
+		TitleScene t = new TitleScene();
+		t.start();
+		if (transition)
+			GameScreen.getInstance().c.evokeTransition(true);
+		currentScene = t;
+	}
 	
 	/**
 	 * Standard procedure executed when changing a scene
@@ -204,21 +218,13 @@ public class Engine{
 		GameScreen gs = GameScreen.getInstance();
 		gs.c.evokeTransition(false);
 		
-		//pause everything except rendering while transitioning
-		while(gs.c.isTransitioning())
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-		
 		if (currentScene != null) {
 			currentScene.stop();
 			currentScene = null;
 		}
 		try {
 			Sprite.clearCache();	//clear cache whenever scene is changed to prevent memory leaking
-			Thread.sleep(500);
+			while (gs.c.isTransitioning()) Thread.sleep(100);
 		} 
 		catch (InterruptedException e) {
 		}
@@ -274,7 +280,7 @@ public class Engine{
 			//throw party to the map at which they saved
 			changeToWorld(map.get("where", "world"), map.getInt("x", 0), map.getInt("y", 0));
 		} catch (Exception e) {
-			System.out.println("Can not load save file");
+			System.err.println("Can not load save file");
 			e.printStackTrace();
 		}
 	}
@@ -330,6 +336,7 @@ public class Engine{
 	 */
 	public void quickStart()
 	{
+		setParty(null);
 		Party p = new Party();
 		p.add("APPL", "Fighter");
 		p.add("TWIL", "Red Mage");
@@ -340,4 +347,5 @@ public class Engine{
 		setParty(p);
 		changeToWorld("world", 3, 3);
 	}
+
 }
