@@ -157,11 +157,17 @@ public class MP3{
 
     			//swap the players
     			this.player = null;
-    			this.mp3 = mp3;
-    	    	this.player = mp3.player;
-    	    	if (this.player != null)
+    			try{
+    				this.mp3 = mp3;
+    				this.player = mp3.player;
     	    		this.player.setPlayBackListener(pl);
-    	    	
+    			}
+    			catch (NullPointerException e)
+    			{
+    				this.mp3 = null;
+    				this.player = null;
+    			}
+    			
     	    	//resume thread
     	    	synchronized (this)
     	    	{
