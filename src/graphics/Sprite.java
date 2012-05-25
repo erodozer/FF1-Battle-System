@@ -62,19 +62,44 @@ public class Sprite{
 	boolean filtered;					//tell it to bilinear filter from scaling or not
 	
 	/**
-	 * Load the sprite from file path
-	 * @param s
+	 * Load the sprite
+	 * @param s			name of the file
 	 */
 	public Sprite(String s)
 	{
-		this(s, 1, 1);
+		this(s, 1, 1, true);
+	}
+	
+	
+	/**
+	 * Load the sprite
+	 * @param s			name of the file
+	 * @param caching	load from/into cache
+	 */
+	public Sprite(String s, boolean caching)
+	{
+		this(s, 1, 1, caching);
 	}
 	
 	/**
-	 * Load the sprite and specify how many frames of animation it has
-	 * @param s
+	 * Load the sprite
+	 * @param s			name of the file
+	 * @param xFrames	x frames of the sheet
+	 * @param yFrames	y frames of the sheet
 	 */
 	public Sprite(String s, int xFrames, int yFrames)
+	{
+		this(s, xFrames, yFrames, true);
+	}
+	
+	/**
+	 * Load the sprite
+	 * @param s			name of the file
+	 * @param xFrames	x frames of the sheet
+	 * @param yFrames	y frames of the sheet
+	 * @param caching	load from/into cache
+	 */
+	public Sprite(String s, int xFrames, int yFrames, boolean caching)
 	{
 		rect = new int[4];
 		crop = new double[4];
@@ -82,21 +107,32 @@ public class Sprite{
 		{
 			path = s;
 			name = path.substring(path.lastIndexOf('/')+1);
-			if (TEXTURECACHE.containsKey(s))
+			if (caching)
 			{
-				image = TEXTURECACHE.get(s);
+				if (TEXTURECACHE.containsKey(s))
+				{
+					image = TEXTURECACHE.get(s);
+				}
+				else
+				{
+					try
+					{
+						image = ImageIO.read((Engine.isRscLoading)?getClass().getResourceAsStream("data/"+s):new FileInputStream("data/" + s));
+					}
+					catch (IOException e) {
+						System.err.println("can not read or find: data/" + s);
+					}
+					TEXTURECACHE.put(s, image);
+				}
 			}
 			else
-			{
 				try
 				{
 					image = ImageIO.read((Engine.isRscLoading)?getClass().getResourceAsStream("data/"+s):new FileInputStream("data/" + s));
 				}
 				catch (IOException e) {
 					System.err.println("can not read or find: data/" + s);
-				}
-				TEXTURECACHE.put(s, image);
-			}
+				}				
 		}
 		if (image != null)
 		{
