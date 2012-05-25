@@ -46,14 +46,16 @@ public class GameOverState extends GameState {
 	 * Do nothing
 	 */
 	@Override
-	public void finish() {}
+	public void finish() {
+		parent.finish();
+	}
 
 	/**
 	 * Go back to the title screen when the game is over
 	 */
 	@Override
 	public void handleKeyInput(int key) {
-		Engine.getInstance().startGame();
+		finish();
 	}
 
 }

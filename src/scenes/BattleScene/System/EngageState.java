@@ -45,8 +45,7 @@ public class EngageState extends GameState {
 	    if (activeActor instanceof Player)
 		{
 	    	Player p = ((Player)activeActor);
-	    	System.out.println(p.getMoving());
-			if (p.getMoving() == 0 || p.getMoving() == 2)
+	    	if (p.getMoving() == 0 || p.getMoving() == 2)
 				return;
 			else if (p.getMoving() == 1){
 				if (p.getCommand().getAnimation() == null || (p.getCommand().getAnimation().isDone()))

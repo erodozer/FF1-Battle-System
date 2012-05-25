@@ -31,6 +31,14 @@ public class AttackCommand extends Command {
 		
 		currentTarget = targets[currentTargetIndex];
 		
+		if (!currentTarget.getAlive())
+		{
+			damage = 0;
+			hits = 0;
+			currentTargetIndex++;
+			return;
+		}
+		
 		//make sure the animation is in relation to the target sprite
 		if (anim.getRelationType() == 2)
 			anim.setRelation(invoker.getSprite());

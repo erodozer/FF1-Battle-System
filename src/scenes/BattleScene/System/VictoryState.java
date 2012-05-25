@@ -2,6 +2,8 @@ package scenes.BattleScene.System;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import actors.Player;
 
@@ -23,7 +25,7 @@ import groups.Party;
  */
 public class VictoryState extends GameState {
 
-	int step = 0;		//step 0 = show "all enemies eliminated"
+	int step = -1;		//step 0 = show "all enemies eliminated"
 						//step 1 = show exp and g gained
 						//step 2 = show level up messages
 
@@ -33,13 +35,15 @@ public class VictoryState extends GameState {
 	Formation f;
 	Party p;
 	
-	ArrayList<Player> leveledUp = new ArrayList<Player>();
+	ArrayList<Player> leveledUp;
+	Iterator<Player> levIterator;	
+	Player player;
+						//for level up, display player
 	
-	int step2 = 0;		//for level up, display player
-	int step3 = 0;		//for counter on displaying message for level up
-	
-	String[] levMessage = new String[0];
+	List<String> levMessage;
 						//message for level up
+	Iterator<String> messageIterator;	
+						//for counter on displaying message for level up
 	String message;
 	
 	/**
@@ -56,25 +60,25 @@ public class VictoryState extends GameState {
 	@Override
 	public void start() {
 		MP3.stop();
-		new MP3("data/audio/victory.mp3").play();
-		step = 0;
+		new MP3("victory.mp3").play();
+		step = -1;
 		
 		f = ((BattleSystem)parent).getFormation();
 		this.p = Engine.getInstance().getParty();
 		
 		//distribute the exp and g
-		System.out.println(f.getExp());
-		
 		exp = f.getExp()/p.getAlive();
 		g = f.getGold();
 		
-		System.out.println(exp);
+		leveledUp = new ArrayList<Player>();
 		for (int i = 0; i < p.size(); i++)
 		{
 			p.get(i).addExp(exp);
 			if (p.get(i).getExpToLevel() <= 0)
 				leveledUp.add(p.get(i));
 		}
+		levIterator = leveledUp.iterator();
+		
 		p.addGold(g);
 	}
 
@@ -90,48 +94,44 @@ public class VictoryState extends GameState {
 			if (step == 1)
 			{
 				if (leveledUp.size() > 0)
-				{
 					step = 2;
-				}
 				else
 					step = 4;
 			}
-			
 			//advances through players to level them up and display level up messages
-			if (step == 2)
+			else if (step == 2)
 			{
-				if (step2 >= leveledUp.size())
+				if (!levIterator.hasNext())
 				{
 					step = 4;
-					return;
 				}
-				Player player = leveledUp.get(step2);
+				player = levIterator.next();
 				player.levelUp();
 				step = 3;
-				step3 = 0;
-				levMessage = player.previewLevelUp().split("\n");
-				message = levMessage[step3];
-				
+				levMessage = player.previewLevelUp();
+				messageIterator = levMessage.iterator();
+				message = messageIterator.next();
 			}
 			//display each stat being leveled up
 			else if (step == 3)
 			{
-				if (step3 >= levMessage.length)
+				if (messageIterator.hasNext())
 				{
-					step = 2;
-					step2++;
-					step3 = 0;
+					message = messageIterator.next();
 				}
 				else
 				{
-					message = levMessage[step3];
-					step3++;
+					step = 2;
+					message = null;
+					levMessage = null;
+					messageIterator = null;
 				}
 			}
 			//end victory scene
 			else if (step >= 4)
 			{
 				finish();
+				return;
 			}
 			else
 			{
@@ -176,7 +176,7 @@ public class VictoryState extends GameState {
 	
 	public Player getPlayer()
 	{
-		return p.get(step2);
+		return player;
 	}
 	
 	public int getExp()

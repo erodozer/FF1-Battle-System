@@ -79,16 +79,18 @@ public class MessageState extends GameState {
 		{
 			m.add(target.getName());
 			//show miss if no hit is made, else show the amount of damage
-			if (command.getHits() == 0)
+			if (command.getHits() == 0 && command.getTarget().getAlive())
 				m.add("Miss");
-			else
+			else if (command.getHits() > 0)
 				m.add(command.getDamage() + " DMG");
+			else if (command.getHits() == 0 && !command.getTarget().getAlive())
+				m.add("");
 			
 			//show a notice when a foe is killed
 			if (command.getDamage() > 0 && !target.getAlive())
 				m.add("Terminated!");
 			//if a hit can land but does no damage, it's labeled as ineffective
-			else if ((command.getDamage() == 0 && command.getHits() != 0) || 
+			else if ((command.getDamage() == 0 && (command.getHits() != 0 || !command.getTarget().getAlive())) || 
 				//also label as ineffective if the enemy was weak against an elemental attack
 				(command instanceof SpellCommand && ((SpellCommand)command).getSpell().getElementalEffectiveness(target) == 0))
 				m.add("Ineffective");

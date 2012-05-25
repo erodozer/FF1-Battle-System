@@ -57,6 +57,9 @@ public class MessageDisplay extends Sprite{
 	@Override
 	public void paint(Graphics g)
 	{
+		if (message == null)
+			return;
+		
 		Command c = mState.activeActor.getCommand();
 		
 		if (!message[1].equals("") && !(c instanceof FleeCommand))
@@ -73,11 +76,14 @@ public class MessageDisplay extends Sprite{
 			windows[4].paint(g);
 			font.drawString(g, message[2], 0, 10, windows[4]);
 		}
+		//shows actor name and command
 		else
 		{
-			//shows actor name and command
-			windows[3].paint(g);
-			font.drawString(g, "" + message[3], 0, 10, windows[3]);
+			if (!message[3].equals(""))
+			{
+				windows[3].paint(g);
+				font.drawString(g, message[3], 0, 10, windows[3]);
+			}
 			windows[2].paint(g);
 			font.drawString(g, message[2], 0, 10, windows[2]);
 			

@@ -109,6 +109,12 @@ public class SpellCommand extends Command {
 		return spell;
 	}
 	
+	@Override
+	public String getName()
+	{
+		return spell.getName();
+	}
+	
 	/**
 	 * Lower the invoker's mp after casting
 	 */

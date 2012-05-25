@@ -103,8 +103,6 @@ public class BattleSystem extends GameSystem{
 	public void getTurnOrder()
 	{
 		Collections.sort(allActors);
-		for (Actor a : allActors)
-			System.out.println(a.getName() + ": " + a.getSpd());
 		turnIterator = allActors.iterator();
 	}
 	
@@ -168,27 +166,24 @@ public class BattleSystem extends GameSystem{
 				return;
 			}
 			
-			//make active actor the next actor in the queue
-			if (turnIterator.hasNext())
+			while (turnIterator.hasNext())
 			{
 				activeActor.setCommand(null);		//clear the command for garbage collection
-
 				activeActor = turnIterator.next();
-				//if the actor isn't alive skip ahead
+				
 				if (!activeActor.getAlive())
+					continue;
+				else
 				{
-					next();
+					state = es;
+					state.start();
 					return;
 				}
-				state = es;
-				state.start();
 			}
-			else
-			{
-				state = null;
-				turnIterator = null;
-				next();
-			}
+			
+			state = null;
+			turnIterator = null;
+			next();
 		}
 		else
 		{
@@ -340,8 +335,11 @@ public class BattleSystem extends GameSystem{
 
 	@Override
 	public void finish() {
-	    MP3.stop();
-		Engine.getInstance().changeToWorld();
+		MP3.stop();
+		if (state == vs)
+			engine.changeToWorld();
+		else
+			engine.changeToTitle();
 	}
 	
 	public Party getParty() {

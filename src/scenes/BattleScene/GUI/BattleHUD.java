@@ -162,9 +162,9 @@ public class BattleHUD extends HUD{
 			{
 				//match the cursor to the right window depending on the target actor type
 				if (is.targets[is.index] instanceof Player)
-					cursorPos = psprited.getArrowPosition(is.index);
+					cursorPos = psprited.getArrowPosition(parent.getParty().indexOf(is.targets[is.index]));
 				else
-					cursorPos = esprited.getArrowPosition(is.index);
+					cursorPos = esprited.getArrowPosition(parent.getFormation().indexOf(is.targets[is.index]));
 			}
 			else if (is.spellSelecting)
 			{
@@ -202,7 +202,10 @@ public class BattleHUD extends HUD{
 				Command c = p.getCommand();
 				if (c != null)
 					if (c.getAnimation() != null)
-						c.getAnimation().paint(g);
+						if (c.getHits() > 0)	//only show animation if attack hit
+							c.getAnimation().paint(g);
+						else
+							c.getAnimation().stop();
 			}
 		}
 	}

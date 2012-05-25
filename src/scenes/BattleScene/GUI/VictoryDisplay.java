@@ -32,7 +32,7 @@ public class VictoryDisplay extends Sprite{
 							   new SWindow(x+82, y, 90, 34), 		//displays exp gained	or "leveled up!"
 							   new SWindow(x, y+24, 90, 34), 		//displays "g"
 							   new SWindow(x+82, y+24, 90, 34),		//displays g gained
-							   new SWindow(x, y+24, 180, 34)			//displays stat gained
+							   new SWindow(x, y+24, 180, 34)		//displays stat gained
 							};		
 	}
 
