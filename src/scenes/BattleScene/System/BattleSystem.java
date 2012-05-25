@@ -2,7 +2,9 @@ package scenes.BattleScene.System;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import scenes.GameSystem;
@@ -32,7 +34,8 @@ public class BattleSystem extends GameSystem{
 	private Engine engine;
 	
 	private Actor[] allActors;						//all the actors capable of executing commands
-	private Queue<Actor> turnOrder;					//order of when the turns execute
+	private List<Actor> turnOrder;					//order of when the turns execute
+	private Iterator<Actor> turnIterator;			//iterator to get current actor through the turn order
 	
 	private Party party;							//player party
 	private Formation formation;					//enemy formation that the party is fighting
@@ -92,7 +95,9 @@ public class BattleSystem extends GameSystem{
 		for (Actor a: formation.getAliveMembers())
 			actors.add(a);
 				
-		allActors = actors.toArray(new Actor[0]);
+		allActors = actors.toArray(allActors);
+		
+		actors = null;
 	}
 	
 	/**		
@@ -101,7 +106,7 @@ public class BattleSystem extends GameSystem{
 	 * COMMANDS WILL ALTER THE ACTOR'S SPEED SO THAT CAN CHANGE
 	 *   UP TURN ORDER WITH EVERY PHASE
 	 */
-	public Queue<Actor> getTurnOrder()
+	public void getTurnOrder()
 	{
 		ArrayList<ArrayList<Actor>> actors = new ArrayList<ArrayList<Actor>>();
 		ArrayList<Actor> sorted = new ArrayList<Actor>();
@@ -130,9 +135,11 @@ public class BattleSystem extends GameSystem{
 			for (int x = 0; x <= 9; x++)
 				actors.add(new ArrayList<Actor>());
 		}
-		Queue<Actor> q = new LinkedList<Actor>();
-		q.addAll(sorted);
-		return q;
+		turnOrder = new LinkedList<Actor>(sorted);
+		turnIterator = turnOrder.iterator();
+		
+		actors = null;
+		sorted = null;
 	}
 	
 	/**
@@ -140,11 +147,10 @@ public class BattleSystem extends GameSystem{
 	 */
 	public void start()
 	{
-		
 		genEnemyCommands();
 		populateActorList();
-		turnOrder = getTurnOrder();
-		activeActor = turnOrder.poll();
+		getTurnOrder();
+		activeActor = turnIterator.next();
 		state = es;
 		state.start();
 		playerIndex = -1;		
@@ -197,11 +203,11 @@ public class BattleSystem extends GameSystem{
 			}
 			
 			//make active actor the next actor in the queue
-			if (turnOrder.size() > 0)
+			if (turnIterator.hasNext())
 			{
 				activeActor.setCommand(null);		//clear the command for garbage collection
 
-				activeActor = turnOrder.poll();
+				activeActor = turnIterator.next();
 				//if the actor isn't alive skip ahead
 				if (!activeActor.getAlive())
 				{
@@ -214,6 +220,8 @@ public class BattleSystem extends GameSystem{
 			else
 			{
 				state = null;
+				turnOrder = null;
+				turnIterator = null;
 				next();
 			}
 		}
