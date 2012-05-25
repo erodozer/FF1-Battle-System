@@ -22,8 +22,8 @@ public class Enemy extends Actor {
 
 	public static final String[] AVAILABLEENEMIES = new ArrayList<String>(){
 		{
-			for (String s : new File("data/actors/enemies").list())
-				if (new File("data/actors/enemies/" + s + "/enemy.ini").exists())
+			for (String s : new File("data/actors/enemies/info").list())
+				if (s.endsWith(".ini"))
 					this.add(s);
 		}
 	}.toArray(new String[]{});
@@ -38,8 +38,14 @@ public class Enemy extends Actor {
 	int size;			//enemy sprite size type
 						//spacing of enemy sprites in the gui are spaced by the type of sprite they are
 						// even though sprites have no limit dimensions, the spacing on screen is limited, so
-						// placing of sprites can't be 100% dynamic.  Since there is not limit to actual picture
+						// placing of sprites can't be 100% dynamic.  Since there is no limit to actual picture
 						// dimensions, the sprite can be larger than the defined size to produce artistic overlap
+	
+	String displayName;	//name to show in battle for the enemy
+	
+	String spriteName;	//by having the sprite defined in the ini, it allows multiple enemies
+						//to use the same sprite without having to duplicate the file.  This
+						//helps cut down on project file size as well as loading into memory
 	
 	/**
 	 * Creates an enemy instance
@@ -52,7 +58,7 @@ public class Enemy extends Actor {
 		{
 			name = n;
 			
-			Preferences p = new IniPreferences(new Ini(new File("data/actors/enemies/" + name + "/enemy.ini")));
+			Preferences p = new IniPreferences(new Ini(new File("data/actors/enemies/info/" + name + ".ini")));
 			Preferences dist = p.node("distribution");
 			Preferences elem = p.node("elemental");
 			Preferences main = p.node("enemy");
@@ -81,6 +87,8 @@ public class Enemy extends Actor {
 			
 			exp = main.getInt("exp", 1);
 			goldReward = main.getInt("g", 0);
+			
+			spriteName = main.get("sprite", "");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -92,7 +100,7 @@ public class Enemy extends Actor {
 	@Override
 	protected void loadSprites() {
 		sprites = new Sprite[1];
-		sprites[0] = new Sprite("actors/enemies/" + name + "/normal.png");
+		sprites[0] = new Sprite("actors/enemies/sprites/" + spriteName + ".png");
 	}
 
 	@Override
