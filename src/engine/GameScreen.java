@@ -5,6 +5,7 @@ import groups.Party;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -20,7 +21,7 @@ import graphics.SFont;
  *
  *	Main GUI frontend to the engine
  */
-public class GameScreen extends JFrame implements KeyListener{
+public class GameScreen extends JFrame implements KeyListener, Runnable{
 
 	private static GameScreen _instance;	//singleton instance
 	
@@ -31,9 +32,6 @@ public class GameScreen extends JFrame implements KeyListener{
 	ContentPanel c;
 	Engine engine;
 	
-	//There's only 1 font used in the game
-	public static SFont font;
-	
 	//frame limiting
     final static int FRAMES_PER_SECOND = 30;					
     final static int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
@@ -43,6 +41,9 @@ public class GameScreen extends JFrame implements KeyListener{
     // the current number of milliseconds
     // that have elapsed since the system was started
 
+	private boolean execute = true;
+	private Thread runner;
+	
 	
 	/**
 	 * Get the singleton instance
@@ -64,10 +65,9 @@ public class GameScreen extends JFrame implements KeyListener{
 		engine = Engine.getInstance();
 		
 		setTitle("FF1 Battle System");
-		c = new ContentPanel(FRAME_WIDTH, FRAME_HEIGHT);
+		c = ContentPanel.getInstance();
+		c.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		c.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-		
-		font = SFont.loadFont("default", 24.0f);
 		
 		setLayout(null);
 		setContentPane(c);
@@ -82,31 +82,7 @@ public class GameScreen extends JFrame implements KeyListener{
 			@Override
 			public void run()
 			{
-				while (!isInterrupted())
-				{
-					if (engine.getCurrentScene() != null)
-						try{
-							//pause everything except rendering while transitioning
-							if (!c.isTransitioning())
-								engine.getCurrentScene().update();
-						}
-						catch (Exception e)
-						{
-							e.printStackTrace();
-						}
-					
-					c.paint();
-					
-			        next_game_tick += SKIP_TICKS;
-			        sleep_time = (int) (next_game_tick - System.currentTimeMillis());
-			        if( sleep_time >= 0 ) {
-			            try {
-							sleep( sleep_time );
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-			        }
-				}
+
 			}
 		}.start();
 		
@@ -120,21 +96,13 @@ public class GameScreen extends JFrame implements KeyListener{
 	public void testClient()
 	{
 		engine.startGame();
+		runner = new Thread(this);
+		runner.start();
     }
-
-	public static void main(String[] args)
-	{
-		GameScreen gs = new GameScreen();
-		gs.testClient();
-	}
 
 	@Override
 	public synchronized void keyPressed(KeyEvent arg0) {
-		if (Thread.currentThread().isInterrupted())
-		{
-			arg0.consume();
-			return;
-		}
+
 		if (engine.getCurrentScene() != null)
 			engine.getCurrentScene().keyPressed(arg0.getKeyCode());
 		if (arg0.getKeyCode() == Input.KEY_QUICKSTART)
@@ -154,5 +122,44 @@ public class GameScreen extends JFrame implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
+
+	@Override
+	public void run() {
+		try{
+			
+			while (execute)
+			{
+				if (engine.getCurrentScene() != null)
+					if (!c.isTransitioning())
+						engine.getCurrentScene().update();
+				
+				Thread.sleep(20);
+				
+				c.paint(c.getGraphics());
+				
+				next_game_tick += SKIP_TICKS;
+		        sleep_time = (int) (next_game_tick - System.currentTimeMillis());
+		        if( sleep_time >= 0 ) {
+		            try {
+						Thread.sleep( sleep_time );
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+		        }
+			}
+			System.exit(0);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	}
+	
+	public static void main(String[] args)
+	{
+		GameScreen gs = new GameScreen();
+		gs.testClient();
+	}
 	
 }
