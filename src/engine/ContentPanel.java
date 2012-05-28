@@ -29,6 +29,20 @@ import javax.swing.JPanel;
  */
 public class ContentPanel extends JPanel{
 
+	//Singleton instance of the ContentPanel
+	private static ContentPanel instance;
+	
+	/**
+	 * Gets an instance of a content panel
+	 */
+	public static ContentPanel getInstance() {
+		ContentPanel c;
+		if (instance != null)
+			c = instance;
+		else
+			c = new ContentPanel();
+		return c;
+	}
 	
 	//default clear color for the buffer
 	private static final Color DEFAULT_CLEAR_COLOR = Color.BLACK;
@@ -67,7 +81,7 @@ public class ContentPanel extends JPanel{
 	private byte[] alpha;
 	private byte[][] data;	//all the channels together for the lookup table
 	
-	public ContentPanel()
+	private ContentPanel()
 	{
 		engine = Engine.getInstance();
 		clearColor = DEFAULT_CLEAR_COLOR;
