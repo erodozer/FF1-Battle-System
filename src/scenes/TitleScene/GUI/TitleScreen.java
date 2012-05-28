@@ -3,12 +3,12 @@ package scenes.TitleScene.GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import engine.ContentPanel;
 
 import scenes.HUD;
 import scenes.TitleScene.System.TitleSystem;
 import scenes.TitleScene.System.TitleState;
 
+import graphics.ContentPanel;
 import graphics.SFont;
 import graphics.Sprite;
 import graphics.SWindow;

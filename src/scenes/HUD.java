@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
-import engine.ContentPanel;
+import graphics.ContentPanel;
 import graphics.SFont;
 import graphics.Sprite;
 

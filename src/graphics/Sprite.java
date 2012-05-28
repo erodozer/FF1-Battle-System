@@ -15,7 +15,6 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import engine.ContentPanel;
 
 /**
  * Sprite

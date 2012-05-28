@@ -3,7 +3,7 @@ package scenes.WorldScene.GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import engine.ContentPanel;
+import graphics.ContentPanel;
 import graphics.Sprite;
 import graphics.SWindow;
 

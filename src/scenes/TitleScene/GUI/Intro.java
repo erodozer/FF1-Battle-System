@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import scenes.HUD;
 import scenes.TitleScene.System.IntroState;
-import engine.ContentPanel;
+import graphics.ContentPanel;
 import graphics.NES;
 import graphics.SFont;
 import graphics.Sprite;

@@ -14,8 +14,8 @@ import scenes.ShopScene.System.GreetState;
 import scenes.ShopScene.System.Shop;
 import scenes.ShopScene.System.ShopSystem;
 
-import engine.ContentPanel;
 import engine.Engine;
+import graphics.ContentPanel;
 import graphics.NES;
 import graphics.SFont;
 import graphics.Sprite;

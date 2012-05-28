@@ -7,8 +7,8 @@ import Map.NPC;
 import scenes.GameState;
 import scenes.GameSystem;
 
-import engine.ContentPanel;
 import engine.Input;
+import graphics.ContentPanel;
 import graphics.SFont;
 
 /**

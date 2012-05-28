@@ -1,10 +1,14 @@
-package engine;
+package graphics;
 
-import graphics.SFont;
+
+import engine.Engine;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.ByteLookupTable;
 import java.awt.image.IndexColorModel;
@@ -18,6 +22,8 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import core.GameRunner;
+
 import scenes.Scene;
 
 /**
@@ -29,7 +35,7 @@ import scenes.Scene;
  *	the game's resolution into the window's resolution and fade
  *	transitioning.
  */
-public class ContentPanel extends JPanel{
+public class ContentPanel{
 
 	//Singleton instance of the ContentPanel
 	private static ContentPanel instance;
@@ -38,12 +44,9 @@ public class ContentPanel extends JPanel{
 	 * Gets an instance of a content panel
 	 */
 	public static ContentPanel getInstance() {
-		ContentPanel c;
-		if (instance != null)
-			c = instance;
-		else
-			c = new ContentPanel();
-		return c;
+		if (instance == null)
+			instance = new ContentPanel();
+		return instance;
 	}
 	
 	//default clear color for the buffer
@@ -70,7 +73,7 @@ public class ContentPanel extends JPanel{
 	
 	//TRANSITION VARIABLES
 	int transition = TRANSITIONLIMIT;	//transition timer
-	private static int TRANSITIONRATE = 1;
+	private static int TRANSITIONRATE = 255/GameRunner.FPS;
 									//rate at which transitions occur
 	
 	private BufferedImage transFader;	//the transition fader grayscale image
@@ -84,11 +87,13 @@ public class ContentPanel extends JPanel{
 	private byte[] blue;
 	private byte[] alpha;
 	private byte[][] data;	//all the channels together for the lookup table
+
+	private GameRunner parent;
+	
 	private Scene currentScene;		//keeps track of the current scene so it knows when to show the transition animation
 	
 	private ContentPanel()
 	{
-		engine = Engine.getInstance();
 		clearColor = DEFAULT_CLEAR_COLOR;
 		try {
 			transFader = ImageIO.read(new File("data/transitions/slide.png"));
@@ -100,10 +105,15 @@ public class ContentPanel extends JPanel{
 		green = new byte[256];
 		blue  = new byte[256];
 		alpha = new byte[256];
-		
-		font = SFont.loadFont("default", 24.0f);
 	}
 		
+	public void setParent(GameRunner p)
+	{
+		this.parent = p;
+		engine = parent.getEngine();
+		currentScene = engine.getCurrentScene();
+	}
+	
 	/**
 	 * Sets the color that the panel's buffer clears to
 	 * @param c
@@ -267,11 +277,10 @@ public class ContentPanel extends JPanel{
 		if (isTransitioning())
 		{
 			stepTransition();
-			System.out.println(transition);
 			if (tBuffer != null)
 			{
-				g.drawImage(tBuffer, 0, 0, getWidth(), getHeight(), null);
-				g.drawImage(transBuffer, 0, 0, getWidth(), getHeight(), null);
+				g.drawImage(tBuffer, 0, 0, parent.getWidth(), parent.getHeight(), null);			
+				g.drawImage(transBuffer, 0, 0, parent.getWidth(), parent.getHeight(), null);
 			}
 		}
 		else
@@ -279,7 +288,7 @@ public class ContentPanel extends JPanel{
 			tBuffer = null;
 			render();
 			if (dbImage != null)
-				g.drawImage(dbImage, 0, 0, getWidth(), getHeight(), null);
+				g.drawImage(dbImage, 0, 0, parent.getWidth(), parent.getHeight(), null);
 		}
 	}	
 }

@@ -1,14 +1,18 @@
 package scenes.TitleScene.System;
 
+
 import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
-import engine.ContentPanel;
+
 import engine.Input;
 import engine.MP3;
+import graphics.ContentPanel;
 import graphics.SFont;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import core.GameRunner;
 
 import scenes.GameState;
 
@@ -72,14 +76,8 @@ public class IntroState extends GameState{
 			}
 		}
 		else {
-			alpha += 25;
+			alpha += 255/(GameRunner.FPS);
 			alpha = Math.min(255, alpha);
-			try {
-				Thread.sleep(75);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
