@@ -44,8 +44,6 @@ public class Engine{
 	private String currentMap;			//current map the party is on
 	
 	private Party party;				//main party
-	
-	Thread transition;
 
 	/**
 	 * Get the singleton instance
@@ -97,10 +95,8 @@ public class Engine{
 	 */
 	public void changeToBattle(Formation formation)
 	{
-		endScene();
 		battle.start(formation);
-		currentScene = battle;
-		startScene();
+		changeScene(battle);
 	}
 	
 	/**
@@ -109,10 +105,8 @@ public class Engine{
 	 * @param background	the background image to use for the battle terrain
 	 */
 	public void changeToBattle(Formation f, Sprite background) {
-		endScene();
 		battle.start(f, background);
-		currentScene = battle;	
-		startScene();
+		changeScene(battle);
 	}
 
 	/**
@@ -125,10 +119,7 @@ public class Engine{
 			System.err.println("no map");
 			return;
 		}
-		
-		endScene();
-		currentScene = world;
-		startScene();
+		changeScene(world);
 	}
 		
 	/**
@@ -139,10 +130,8 @@ public class Engine{
 	 */
 	public void changeToWorld(String mapName, int startX, int startY)
 	{
-		endScene();
 		world.start(mapName, startX, startY);
-		currentScene = world;
-		startScene();
+		changeScene(world);
 	}
 	
 	/**
@@ -150,11 +139,9 @@ public class Engine{
 	 */
 	public void changeToCreation()
 	{
-		endScene();
 		CreationScene s = new CreationScene(); 
 		s.start();
-		currentScene = s;
-		startScene();
+		changeScene(s);
 	}
 	
 	/**
@@ -162,11 +149,9 @@ public class Engine{
 	 * @param shop	the npc shop for buying stuff
 	 */
 	public void changeToShop(Shop shop) {
-		endScene();
 		ShopScene s = new ShopScene();
 		s.start(shop);
-		currentScene = s;	
-		startScene();
+		changeScene(s);
 	}
 	
 	/**
@@ -174,10 +159,8 @@ public class Engine{
 	 */
 	public void changeToMenu()
 	{
-		endScene();
 		menu.start();
-		currentScene = menu;
-		startScene();
+		changeScene(menu);
 	}
 	
 	/**
@@ -185,10 +168,8 @@ public class Engine{
 	 */
 	public void changeToOrder()
 	{
-		endScene();
 		menu.startWithOrder();
-		currentScene = menu;
-		startScene();
+		changeScene(menu);
 	}
 	
 	/**
@@ -196,41 +177,27 @@ public class Engine{
 	 * This should only be used at the beginning of the game and after game over
 	 */
 	public void changeToTitle() {
-		//only transition if changing from game over
-		boolean transition = (currentScene != null);
-		if (transition)
-			endScene();
 		TitleScene t = new TitleScene();
 		t.start();
-		currentScene = t;
-		if (transition)
-			startScene();
-	}
-	
-	/**
-	 * Standard procedure executed when changing a scene
-	 */
-	private void endScene()
-	{
-		ContentPanel c = ContentPanel.getInstance();
-		c.evokeTransition(false);
-		
-		oldScene = currentScene;
-		
-		Sprite.clearCache();	//clear cache whenever scene is changed to prevent memory leaking
-		//while(c.isTransitioning()) System.out.print("");
+		changeScene(t);
 	}
 	
 	/**
 	 * Standard procedure executed when going into a new scene
 	 */
-	private void startScene()
+	private void changeScene(Scene s)
 	{
-		oldScene.stop();
+		
+		oldScene = currentScene;
+		currentScene = s;
+		if (oldScene != null)
+		{
+			Sprite.clearCache();
+			oldScene.stop();
+		}
 		oldScene = null;
 		
-		ContentPanel c = ContentPanel.getInstance();
-		c.evokeTransition(true);
+		
 	}
 	
 	public Party getParty()

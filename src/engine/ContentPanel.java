@@ -199,6 +199,13 @@ public class ContentPanel extends JPanel{
 		}
 		dbg = dbImage.getGraphics();
 		
+		if (engine.getCurrentScene() != currentScene)
+		{
+			evokeTransition(false);
+			currentScene = engine.getCurrentScene();
+			return;
+		}
+		
 		//use current scene's clear color if it exists
 		if (engine.getCurrentScene() != null)
 			if (engine.getCurrentScene().getDisplay() != null)
@@ -221,11 +228,16 @@ public class ContentPanel extends JPanel{
 	{
 		//when transitioning in, we're turning black to clear
 		if (transIn)
-			alpha[transition] = 0;
+		{
+			for (int i = Math.max(0, transition-TRANSITIONRATE); i <= transition; i++)
+				alpha[i] = 0;
+		}
 		//when transitioning out we're having the black crawl in
 		else
-			alpha[transition] = (byte)255;
-		
+		{
+			for (int i = Math.min(transition+TRANSITIONRATE, 255); i >= transition; i--)
+				alpha[i] = (byte)255;
+		}
 		//create the lookupop and apply it to the fader to create the transBuffer
 		// this transbuffer is then drawn on top of the saved screen
 		LookupTable lookupTable = new ByteLookupTable(0, data);
@@ -234,6 +246,12 @@ public class ContentPanel extends JPanel{
 		
 		//advance the transition point to continue the fader
 		transition += ((transIn)?1:-1)*TRANSITIONRATE;
+		
+		if (!transIn && transition <= 0)
+		{
+			render();
+			evokeTransition(true);
+		}
 	}
 	
 	/**
