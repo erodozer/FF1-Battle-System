@@ -18,6 +18,8 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import scenes.Scene;
+
 /**
  * ContentPanel
  * @author nhydock
@@ -82,6 +84,7 @@ public class ContentPanel extends JPanel{
 	private byte[] blue;
 	private byte[] alpha;
 	private byte[][] data;	//all the channels together for the lookup table
+	private Scene currentScene;		//keeps track of the current scene so it knows when to show the transition animation
 	
 	private ContentPanel()
 	{
@@ -115,6 +118,8 @@ public class ContentPanel extends JPanel{
 	
 	/**
 	 * Tells the panel to show the transition animation
+	 * 	false = transition to black
+	 * 	true = transition to next scene
 	 */
 	public void evokeTransition(boolean t)
 	{
@@ -261,13 +266,13 @@ public class ContentPanel extends JPanel{
 	{
 		if (isTransitioning())
 		{
+			stepTransition();
 			System.out.println(transition);
 			if (tBuffer != null)
 			{
 				g.drawImage(tBuffer, 0, 0, getWidth(), getHeight(), null);
 				g.drawImage(transBuffer, 0, 0, getWidth(), getHeight(), null);
 			}
-			stepTransition();
 		}
 		else
 		{
