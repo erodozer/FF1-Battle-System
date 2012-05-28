@@ -8,7 +8,6 @@ import scenes.GameState;
 import scenes.GameSystem;
 
 import engine.ContentPanel;
-import engine.GameScreen;
 import engine.Input;
 import graphics.SFont;
 
@@ -20,7 +19,7 @@ import graphics.SFont;
  */
 public class DialogState extends GameState {
 
-	SFont font = GameScreen.font;
+	SFont font = ContentPanel.font;
 	String[] dialog;		//lines of dialog
 	int index;				//index of line to show (+2 more)
 

@@ -6,18 +6,20 @@ import java.util.ArrayList;
 import scenes.HUD;
 import scenes.BattleScene.System.BattleSystem;
 
-import engine.GameScreen;
-
 import actors.Enemy;
 
-import graphics.SFont;
-import graphics.Sprite;
 import graphics.SWindow;
 import groups.Formation;
 
+/**
+ * EnemyListDisplay
+ * @author nhydock
+ *
+ *	Small window that displays a list of all the different enemy groups the
+ *	party is currently fighting.
+ */
 public class EnemyListDisplay extends HUD{
 
-	SFont font = GameScreen.font;
 	SWindow window;
 	
 	Formation f;

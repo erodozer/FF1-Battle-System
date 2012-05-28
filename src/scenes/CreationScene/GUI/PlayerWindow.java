@@ -2,7 +2,7 @@ package scenes.CreationScene.GUI;
 
 import java.awt.Graphics;
 
-import engine.GameScreen;
+import scenes.HUD;
 
 import actors.Player;
 
@@ -18,9 +18,8 @@ import graphics.SWindow;
  *	Simple window for the creation scene that shows the players,
  *  their names, and the sprites for their jobs.
  */
-public class PlayerWindow extends Sprite {
+public class PlayerWindow extends HUD {
 
-	SFont font = GameScreen.font;
 	SWindow w;
 	Player p;
 	
@@ -29,7 +28,6 @@ public class PlayerWindow extends Sprite {
 	 */
 	public PlayerWindow(Player p, int x, int y)
 	{
-		super(null);
 		w = new SWindow(x, y, 86, 84, NES.BLUE);
 		this.x = x;
 		this.y = y;
@@ -62,5 +60,9 @@ public class PlayerWindow extends Sprite {
 		p.getSprite().setY(w.getY() + w.getHeight()/2 - p.getSprite().getHeight()/2+5);
 		p.draw(g);
 		
+	}
+
+	@Override
+	public void update() {
 	}
 }

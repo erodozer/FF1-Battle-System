@@ -3,8 +3,9 @@ package scenes.TitleScene.GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import engine.GameScreen;
+import engine.ContentPanel;
 
+import scenes.HUD;
 import scenes.TitleScene.System.TitleSystem;
 import scenes.TitleScene.System.TitleState;
 
@@ -18,36 +19,19 @@ import graphics.SWindow;
  *
  *	Main title screen
  */
-public class TitleScreen extends Sprite {
+public class TitleScreen extends HUD {
 
-	SFont font = GameScreen.font;
 	Sprite background;		//title screen background image
 	SWindow window;			//window frame for displaying commands
-	Sprite arrow;			//arrow showing which command is chosen
 	
 	int index;				//command index
-	TitleSystem parent;		//parent system
 	
 	/**
 	 * Constructs a title screen element
 	 */
 	public TitleScreen() {
-		super(null);
-		
 		background = new Sprite("titlebackground.png");
 		window = new SWindow(8, 160, 90, 60);
-		arrow = new Sprite("hud/selectarrow.png");
-	}
-
-	/**
-	 * Updates the display
-	 * @param titleState 
-	 */
-	public void update(TitleState t)
-	{
-		index = t.getIndex();
-		arrow.setX(window.getX()-4);
-		arrow.setY(window.getY()+16+(index*18));
 	}
 	
 	/**
@@ -59,8 +43,17 @@ public class TitleScreen extends Sprite {
 		window.paint(g);
 		font.drawString(g, "New Game", 2, 16, window);
 		font.drawString(g, "Continue", 2, 34, window);
-		arrow.paint(g);
+	}
+
+	/**
+	 * Updates the display
+	 */
+	@Override
+	public void update() {
 	}
 	
-	
+	public int[] getArrowPosition(int index)
+	{
+		return new int[]{window.getX()-4, window.getY()+16+(index*18)};
+	}
 }

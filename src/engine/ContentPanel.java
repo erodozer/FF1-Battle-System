@@ -54,6 +54,8 @@ public class ContentPanel extends JPanel{
 	public static final int INTERNAL_RES_W = 256;
 	public static final int INTERNAL_RES_H = 224;
 	
+	//There's only 1 font used in the game
+	public static SFont font;
 	
 	private Image dbImage;				//image to draw to
 	private Graphics dbg;				//graphics context of the component

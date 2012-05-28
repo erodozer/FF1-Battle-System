@@ -2,8 +2,6 @@ package scenes.BattleScene.GUI;
 
 import java.awt.Graphics;
 
-import engine.GameScreen;
-
 import scenes.HUD;
 import scenes.BattleScene.System.*;
 
@@ -21,19 +19,11 @@ import graphics.SWindow;
  */
 public class CommandDisplay extends HUD{
 	
-	SFont font = GameScreen.font;
 	SWindow window;
-	
-	BattleSystem parent;
 	
 	public CommandDisplay(int x, int y)
 	{
 		window = new SWindow(x, y, 108, 80);
-	}
-	
-	public void setParentScene(BattleSystem bs)
-	{
-		parent = bs;
 	}
 	
 	/**
@@ -44,7 +34,7 @@ public class CommandDisplay extends HUD{
 		//window is first sprite
 		window.paint(g);
 		
-		Actor a = parent.getActiveActor();
+		Actor a = ((BattleSystem)parent).getActiveActor();
 		for (int i = 0; i < a.getCommands().length; i++)
 			font.drawString(g, a.getCommands()[i], 10 + 60*(i/4), 
 							16 + 16 * (i % 4), window);

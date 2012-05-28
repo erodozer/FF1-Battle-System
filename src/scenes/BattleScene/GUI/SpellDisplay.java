@@ -1,14 +1,10 @@
 package scenes.BattleScene.GUI;
 
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-
-import engine.GameScreen;
 
 import actors.Actor;
 
 import graphics.SFont;
-import graphics.Sprite;
 import graphics.SWindow;
 import scenes.HUD;
 import scenes.BattleScene.System.*;
@@ -22,7 +18,6 @@ import scenes.BattleScene.System.*;
 public class SpellDisplay extends HUD{
 	
 	SWindow window;
-	SFont font = GameScreen.font;
 	int index = 0;
 	int range = 0;
 	
@@ -64,7 +59,6 @@ public class SpellDisplay extends HUD{
 				for (int n = 0; n < a.getSpells(i).length; n++)
 					if (a.getSpells(i)[n] != null)
 						font.drawString(g, a.getSpells(i)[n].getName().toUpperCase(), 25+40*n, 14+16*(i-range), window);
-			FontMetrics m = g.getFontMetrics();
 			font.drawString(g, a.getMp(i)+"", 5, 14+16*(i-range), SFont.RIGHT, window);
 					
 		}

@@ -4,8 +4,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import engine.GameScreen;
-
 import actors.Actor;
 import actors.Player;
 
@@ -18,15 +16,14 @@ import scenes.BattleScene.System.*;
 import item.Item;
 
 /**
- * SpellDisplay
+ * ItemDisplay
  * @author nhydock
  *
- *	Displays a list of the player's spells
+ *	Displays a list of the player's weapons/armor/accessories being carries
  */
 public class ItemDisplay extends HUD{
 	
 	SWindow window;
-	SFont font = GameScreen.font;
 	
 	BattleSystem parent;
 	

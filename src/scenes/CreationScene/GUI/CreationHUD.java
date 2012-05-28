@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import scenes.HUD;
 import scenes.CreationScene.System.*;
 
-import engine.GameScreen;
 import graphics.SFont;
 import graphics.Sprite;
 
@@ -41,7 +40,7 @@ public class CreationHUD extends HUD{
 	public void update()
 	{
 		if (parent.getState() instanceof NamingState)
-			namingd.update((NamingState)parent.getState());
+			namingd.update();
 		else
 			partyd.update();
 	}

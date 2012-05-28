@@ -4,7 +4,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import engine.Engine;
-import engine.GameScreen;
 
 import actors.Actor;
 
@@ -15,16 +14,15 @@ import scenes.HUD;
 import scenes.BattleScene.System.*;
 
 /**
- * SpellDisplay
+ * DrinkDisplay
  * @author nhydock
  *
- *	Displays a list of the player's spells
+ *	Displays a list of the party's drinkables
  */
 public class DrinkDisplay extends HUD{
 	
 	SWindow window;
-	SFont font = GameScreen.font;
-	
+
 	int range = 0;
 	String[] itemList = new String[0];
 	

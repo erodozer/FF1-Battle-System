@@ -3,8 +3,7 @@ package scenes.CreationScene.GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import engine.GameScreen;
-
+import scenes.HUD;
 import scenes.CreationScene.System.CreationSystem;
 import scenes.CreationScene.System.NamingState;
 
@@ -13,10 +12,8 @@ import graphics.SFont;
 import graphics.Sprite;
 import graphics.SWindow;
 
-public class NamingDisplay extends Sprite {
+public class NamingDisplay extends HUD {
 
-	private SFont font = GameScreen.font;
-	
 	CreationSystem parent;
 	SWindow nameWindow;
 	SWindow inputWindow;
@@ -28,7 +25,6 @@ public class NamingDisplay extends Sprite {
 	
 	public NamingDisplay(CreationSystem p)
 	{
-		super(null);
 		parent = p;
 
 		nameWindow = new SWindow(108, 15, 55, 34, Color.red);
@@ -36,13 +32,6 @@ public class NamingDisplay extends Sprite {
 		
 		grid = NamingState.letters;
 		name = "";
-	}
-	
-	public void update(NamingState s)
-	{
-		x = s.getX();
-		y = s.getY();
-		name = s.getName();
 	}
 	
 	public int[] getArrowPosition()
@@ -62,5 +51,13 @@ public class NamingDisplay extends Sprite {
 				font.drawString(g, ""+grid[i][n], 6+16*n, 12+16*i, inputWindow);
 		
 		font.drawString(g, "SELECT  NAME", 32, inputWindow.getHeight() - 20, inputWindow);
+	}
+
+	@Override
+	public void update() {
+		NamingState s = (NamingState)parent.getState();
+		x = s.getX();
+		y = s.getY();
+		name = s.getName();
 	}
 }

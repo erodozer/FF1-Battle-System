@@ -13,7 +13,6 @@ import scenes.GameSystem;
 import scenes.HUD;
 import scenes.BattleScene.System.*;
 
-import engine.GameScreen;
 import graphics.SFont;
 import graphics.Sprite;
 
@@ -38,8 +37,6 @@ public class BattleHUD extends HUD{
 	public VictoryDisplay vd;
 	
 	private BattleSystem parent;
-	
-	private SFont font = GameScreen.font;
 	
 	Sprite arrow;
 	
@@ -89,11 +86,12 @@ public class BattleHUD extends HUD{
 		psprited.setParentScene(parent);
 		esprited.setParentScene(parent);
 		elistd.setParent(parent);
-		pstatd.setParentScene(parent);
-		cd.setParentScene(parent);
-		sd.setParentScene(parent);
-		vd.setParentScene(parent);
-		id.setParentScene(parent);
+		pstatd.setParent(parent);
+		cd.setParent(parent);
+		sd.setParent(parent);
+		vd.setParent(parent);
+		id.setParent(parent);
+		md.setParent(parent);
 	}
 	
 	/**
@@ -123,7 +121,7 @@ public class BattleHUD extends HUD{
 		}
 		else if (gs instanceof MessageState)
 		{
-			md.update((MessageState)parent.getState());
+			md.update();
 			md.paint(g);
 		}
 		/*

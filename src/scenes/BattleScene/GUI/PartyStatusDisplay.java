@@ -1,16 +1,12 @@
 package scenes.BattleScene.GUI;
 
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import scenes.HUD;
 import scenes.BattleScene.System.BattleSystem;
 
 import actors.Player;
-import engine.Engine;
-import engine.GameScreen;
 import graphics.SFont;
-import graphics.Sprite;
 import graphics.SWindow;
 
 /**
@@ -24,7 +20,6 @@ public class PartyStatusDisplay extends HUD{
 	//party status display consists of multiple windows, 
 	// one for each character in the party
 	SWindow[] windows;
-	SFont font = GameScreen.font;
 	BattleSystem parent;
 	
 	int x;
@@ -37,7 +32,7 @@ public class PartyStatusDisplay extends HUD{
 		windows = new SWindow[0];
 	}
 
-	public void setParentScene(BattleSystem bs)
+	public void setParent(BattleSystem bs)
 	{
 		parent = bs;
 		windows = new SWindow[bs.getParty().size()];

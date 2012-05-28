@@ -1,18 +1,11 @@
 package scenes.BattleScene.GUI;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
-import actors.Actor;
-
+import scenes.HUD;
 import scenes.BattleScene.System.MessageState;
 
 import commands.*;
-import engine.GameScreen;
-
-
-import graphics.SFont;
-import graphics.Sprite;
 import graphics.SWindow;
 
 /**
@@ -21,16 +14,14 @@ import graphics.SWindow;
  *
  *	Displays results of turn
  */
-public class MessageDisplay extends Sprite{
+public class MessageDisplay extends HUD{
 	
-	SFont font = GameScreen.font;
 	SWindow[] windows;
 	String[] message;
 	MessageState mState;
 	
 	public MessageDisplay(int x, int y)
 	{
-		super(null);
 		windows = new SWindow[5];
 		windows[0] = new SWindow(x,    y,    84,  34);
 		windows[1] = new SWindow(x+82, y,    90, 34);
@@ -38,17 +29,6 @@ public class MessageDisplay extends Sprite{
 		windows[3] = new SWindow(x+82, y+24, 90, 34);
 		windows[4] = new SWindow(x, 	  y+48, 194, 34);
 
-	}
-	
-	/**
-	 * Changes the message that is supposed to be displayed by passing
-	 * the current message state of the battle
-	 * @param m
-	 */
-	public void update(MessageState m)
-	{
-		mState = m;
-		message = mState.getMessage();
 	}
 	
 	/**
@@ -94,5 +74,15 @@ public class MessageDisplay extends Sprite{
 			}
 		}
 
+	}
+
+	/**
+	 * Changes the message that is supposed to be displayed by passing
+	 * the current message state of the battle
+	 */
+	@Override
+	public void update() {
+		mState = (MessageState)parent.getState();
+		message = mState.getMessage();
 	}
 }

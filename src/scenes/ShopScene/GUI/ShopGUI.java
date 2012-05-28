@@ -16,13 +16,18 @@ import scenes.ShopScene.System.ShopSystem;
 
 import engine.ContentPanel;
 import engine.Engine;
-import engine.GameScreen;
 import graphics.NES;
 import graphics.SFont;
 import graphics.Sprite;
 import graphics.SWindow;
 import groups.Party;
 
+/**
+ * ShopGUI
+ * @author nhydock
+ *
+ *	The main GUI for displaying all the contents and interactions with the shop
+ */
 public class ShopGUI extends HUD {
 
 	//windows
@@ -140,7 +145,7 @@ public class ShopGUI extends HUD {
 	 *
 	 *	Little Window that displays buy/sell/exit choice
 	 */
-	class ModeWindow
+	class ModeWindow extends HUD
 	{
 		SWindow window;
 		
@@ -177,5 +182,8 @@ public class ShopGUI extends HUD {
 				for (int i = 0; i < GreetState.commands.length; i++)
 					font.drawString(g, GreetState.commands[i], 0, 18+(14*i), window);
 		}
+
+		@Override
+		public void update() {}
 	}
 }
