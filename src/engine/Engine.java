@@ -39,6 +39,7 @@ public class Engine{
 	private MenuScene menu;				//menu interface
 	private WorldScene world;			//wandering the world
 	
+	private Scene oldScene;				//previous scene, used for stopping and discarding the previous scene so the screen can transition
 	private Scene currentScene;			//current scene being rendered
 	private String currentMap;			//current map the party is on
 	
@@ -96,11 +97,10 @@ public class Engine{
 	 */
 	public void changeToBattle(Formation formation)
 	{
-		changeScene();
-		
+		endScene();
 		battle.start(formation);
 		currentScene = battle;
-		GameScreen.getInstance().c.evokeTransition(true);	
+		startScene();
 	}
 	
 	/**
@@ -109,11 +109,10 @@ public class Engine{
 	 * @param background	the background image to use for the battle terrain
 	 */
 	public void changeToBattle(Formation f, Sprite background) {
-		changeScene();
-		
+		endScene();
 		battle.start(f, background);
 		currentScene = battle;	
-		GameScreen.getInstance().c.evokeTransition(true);
+		startScene();
 	}
 
 	/**
@@ -127,9 +126,9 @@ public class Engine{
 			return;
 		}
 		
-		changeScene();
+		endScene();
 		currentScene = world;
-		GameScreen.getInstance().c.evokeTransition(true);
+		startScene();
 	}
 		
 	/**
@@ -140,10 +139,10 @@ public class Engine{
 	 */
 	public void changeToWorld(String mapName, int startX, int startY)
 	{
-		changeScene();
+		endScene();
 		world.start(mapName, startX, startY);
 		currentScene = world;
-		GameScreen.getInstance().c.evokeTransition(true);
+		startScene();
 	}
 	
 	/**
@@ -151,12 +150,11 @@ public class Engine{
 	 */
 	public void changeToCreation()
 	{
-		changeScene();
+		endScene();
 		CreationScene s = new CreationScene(); 
 		s.start();
 		currentScene = s;
-		GameScreen.getInstance().c.evokeTransition(true);
-		
+		startScene();
 	}
 	
 	/**
@@ -164,12 +162,11 @@ public class Engine{
 	 * @param shop	the npc shop for buying stuff
 	 */
 	public void changeToShop(Shop shop) {
-		changeScene();
+		endScene();
 		ShopScene s = new ShopScene();
 		s.start(shop);
 		currentScene = s;	
-
-		GameScreen.getInstance().c.evokeTransition(true);
+		startScene();
 	}
 	
 	/**
@@ -177,10 +174,10 @@ public class Engine{
 	 */
 	public void changeToMenu()
 	{
-		changeScene();
+		endScene();
 		menu.start();
 		currentScene = menu;
-		GameScreen.getInstance().c.evokeTransition(true);
+		startScene();
 	}
 	
 	/**
@@ -188,10 +185,10 @@ public class Engine{
 	 */
 	public void changeToOrder()
 	{
-		changeScene();
+		endScene();
 		menu.startWithOrder();
 		currentScene = menu;
-		GameScreen.getInstance().c.evokeTransition(true);
+		startScene();
 	}
 	
 	/**
@@ -202,32 +199,38 @@ public class Engine{
 		//only transition if changing from game over
 		boolean transition = (currentScene != null);
 		if (transition)
-			changeScene();
+			endScene();
 		TitleScene t = new TitleScene();
 		t.start();
-		if (transition)
-			GameScreen.getInstance().c.evokeTransition(true);
 		currentScene = t;
+		if (transition)
+			startScene();
 	}
 	
 	/**
 	 * Standard procedure executed when changing a scene
 	 */
-	private void changeScene()
+	private void endScene()
 	{
-		GameScreen gs = GameScreen.getInstance();
-		gs.c.evokeTransition(false);
+		ContentPanel c = ContentPanel.getInstance();
+		c.evokeTransition(false);
 		
-		if (currentScene != null) {
-			currentScene.stop();
-			currentScene = null;
-		}
-		try {
-			Sprite.clearCache();	//clear cache whenever scene is changed to prevent memory leaking
-			while (gs.c.isTransitioning()) Thread.sleep(100);
-		} 
-		catch (InterruptedException e) {
-		}
+		oldScene = currentScene;
+		
+		Sprite.clearCache();	//clear cache whenever scene is changed to prevent memory leaking
+		//while(c.isTransitioning()) System.out.print("");
+	}
+	
+	/**
+	 * Standard procedure executed when going into a new scene
+	 */
+	private void startScene()
+	{
+		oldScene.stop();
+		oldScene = null;
+		
+		ContentPanel c = ContentPanel.getInstance();
+		c.evokeTransition(true);
 	}
 	
 	public Party getParty()
