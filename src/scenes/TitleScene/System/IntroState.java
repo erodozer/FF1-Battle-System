@@ -76,8 +76,7 @@ public class IntroState extends GameState{
 			}
 		}
 		else {
-			alpha += 255/(GameRunner.getInstance().getCurrFPS());
-			alpha = Math.min(255, alpha);
+			alpha = Math.max(0, Math.min(255, alpha + 255/GameRunner.getInstance().getCurrFPS()));
 		}
 	}
 
@@ -105,11 +104,6 @@ public class IntroState extends GameState{
 	 */
 	public void advancePage()
 	{
-		try {
-			Thread.sleep(750);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		page++;
 		line = 0;
 	}

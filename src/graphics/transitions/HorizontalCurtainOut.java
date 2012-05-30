@@ -15,7 +15,6 @@ public class HorizontalCurtainOut extends HorizontalCurtain {
 	
 	@Override
 	public void paint(Graphics g) {
-		System.out.println(rHeight);
 		rHeight = (int)((HEIGHT/2.0)-((HEIGHT/2.0)*(currTime/(double)length)));
 		
 		g.setClip(0, rHeight, WIDTH, (HEIGHT-rHeight*2));
