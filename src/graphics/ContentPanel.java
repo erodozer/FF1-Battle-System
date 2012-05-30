@@ -2,6 +2,10 @@ package graphics;
 
 
 import engine.Engine;
+import graphics.transitions.HorizontalCurtain;
+import graphics.transitions.HorizontalCurtainIn;
+import graphics.transitions.HorizontalCurtainOut;
+import graphics.transitions.Transition;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -52,9 +56,6 @@ public class ContentPanel{
 	//default clear color for the buffer
 	private static final Color DEFAULT_CLEAR_COLOR = Color.BLACK;
 
-	//255 because of bit limit for raster
-	private static final int TRANSITIONLIMIT = 255;	
-
 	//NES Native resolution
 	public static final int INTERNAL_RES_W = 256;
 	public static final int INTERNAL_RES_H = 224;
@@ -62,31 +63,15 @@ public class ContentPanel{
 	//There's only 1 font used in the game
 	public static SFont font = SFont.loadFont("default", 24.0f);
 	
-	private Image dbImage;				//image to draw to
+	private BufferedImage dbImage;		//image to draw to
 	private Graphics dbg;				//graphics context of the component
-	private Image tBuffer;				//transition saved buffer
-	private Graphics tGraphics;			//transition saved graphics component
 	private Engine engine;				//engine instance for getting current scene for drawing
 	
 	private Color clearColor;			//color the background clears to
 	
 	
 	//TRANSITION VARIABLES
-	private int transition = TRANSITIONLIMIT;	//transition timer
-	private int transitionRate = 255/GameRunner.FPS;
-									//rate at which transitions occur
-	
-	private BufferedImage transFader;	//the transition fader grayscale image
-	private BufferedImage transBuffer;	//the current transition fader buffer after applying a LookupOp
-	
-	private boolean transIn = true;	//type of transition to use, false = to black, true is to screen
-	
-	//these are different channel values for the transition fader to perform the LookupOp
-	private byte[] red;
-	private byte[] green;
-	private byte[] blue;
-	private byte[] alpha;
-	private byte[][] data;	//all the channels together for the lookup table
+	private Transition trans;
 
 	private GameRunner parent;
 	
@@ -95,16 +80,6 @@ public class ContentPanel{
 	private ContentPanel()
 	{
 		clearColor = DEFAULT_CLEAR_COLOR;
-		try {
-			transFader = ImageIO.read(new File("data/transitions/slide.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		red   = new byte[256];
-		green = new byte[256];
-		blue  = new byte[256];
-		alpha = new byte[256];
 	}
 		
 	public void setParent(GameRunner p)
@@ -133,67 +108,25 @@ public class ContentPanel{
 	 */
 	public void evokeTransition(boolean t)
 	{
-		//create the buffer if it hasn't been yet
-		if (tBuffer == null)
-		{
-			tBuffer = new BufferedImage(INTERNAL_RES_W, INTERNAL_RES_H, BufferedImage.TYPE_4BYTE_ABGR);
-			if (tBuffer == null) {
-				System.out.println("transitioning buffer is null");
-				return;
-			}
-			else
-				tGraphics = tBuffer.getGraphics();
-		}
-		//get a copy of what was last drawn to screen
-		tBuffer.getGraphics().drawImage(dbImage, 0, 0, null);
-		
-		//true if fading into scene
 		if (t)
-		{
-			//transition starts at 0 so the whole buffer will be black
-			transition = 0;
-			for (int i = 0; i < 256; i++)
-			{
-				//all colors are set to black for drawing
-				red[i] = green[i] = blue[i] = (byte)0;
-				//whole thing is opaque
-				alpha[i] = (byte) 255;
-			}
-		}
-		//false if fading out
+			trans = new HorizontalCurtainIn();
 		else
-		{
-			//transition starts at 255 so it transitions from white to black on the image for the fader
-			transition = TRANSITIONLIMIT;
-			for (int i = 0; i < 256; i++)
-			{
-				//make everything black, but it hasn't started to fade yet
-				red[i] = green[i] = blue[i] = (byte)0;
-				alpha[i] = (byte)0;	
-			}
-		}
-		
-		//make the data array
-		//buffered image is loaded as argb, so it needs to be in that order
-		data = new byte[][]{alpha, red, green, blue};
-		
-		//set the transition direction variable
-		transIn = t;
+			trans = new HorizontalCurtainOut();
+		trans.setTime(200);
+		trans.setBuffer(getScreenCopy());
 	}
 	
 	/**
-	 * @return whether or not the panel is drawing the transition animation
+	 * Gets a copy of the game screen
+	 * @return	a buffered image of the game screen scaled up to the frame size
 	 */
-	public boolean isTransitioning()
+	public BufferedImage getScreenCopy()
 	{
-		boolean t;
-		//if transitioning it, it goes from 0 to 255
-		if (transIn)
-			t = transition < TRANSITIONLIMIT;
-		//transitioning out is 255 to 0
-		else
-			t = transition > 0;
-		return t;
+		BufferedImage b = new BufferedImage(parent.getWidth(), parent.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+		Graphics g = b.getGraphics();
+		g.drawImage(dbImage, 0, 0, parent.getWidth(), parent.getHeight(), null);
+		g.dispose();
+		return b;
 	}
 	
 	/**
@@ -212,11 +145,10 @@ public class ContentPanel{
 			else
 				dbg = dbImage.getGraphics();
 		}
-		dbg = dbImage.getGraphics();
 		
 		if (engine.getCurrentScene() != currentScene)
 		{
-			evokeTransition(false);
+			evokeTransition(true);
 			currentScene = engine.getCurrentScene();
 			return;
 		}
@@ -232,42 +164,7 @@ public class ContentPanel{
 		
 		//draw the current scene
 		if (engine.getCurrentScene() != null)
-			engine.getCurrentScene().render(dbg);	
-	}
-	
-	/**
-	 * Updates the transition
-	 * @return
-	 */
-	private void stepTransition()
-	{
-		//when transitioning in, we're turning black to clear
-		if (transIn)
-		{
-			for (int i = Math.max(0, transition-transitionRate); i <= transition; i++)
-				alpha[i] = 0;
-		}
-		//when transitioning out we're having the black crawl in
-		else
-		{
-			for (int i = Math.min(transition+transitionRate, 255); i >= transition; i--)
-				alpha[i] = (byte)255;
-		}
-		//create the lookupop and apply it to the fader to create the transBuffer
-		// this transbuffer is then drawn on top of the saved screen
-		LookupTable lookupTable = new ByteLookupTable(0, data);
-		LookupOp op = new LookupOp(lookupTable, null);
-		transBuffer = op.filter(transFader, transBuffer);
-		
-		//advance the transition point to continue the fader
-		transitionRate = 255/parent.getCurrFPS();
-		transition += ((transIn)?1:-1)*transitionRate;
-		
-		if (!transIn && transition <= 0)
-		{
-			render();
-			evokeTransition(true);
-		}
+			engine.getCurrentScene().render(dbg);
 	}
 	
 	/**
@@ -275,19 +172,18 @@ public class ContentPanel{
 	 */
 	public void paint(Graphics g)
 	{
-		if (isTransitioning())
+		render();
+		if (trans != null)
 		{
-			stepTransition();
-			if (tBuffer != null)
-			{
-				g.drawImage(tBuffer, 0, 0, parent.getWidth(), parent.getHeight(), null);			
-				g.drawImage(transBuffer, 0, 0, parent.getWidth(), parent.getHeight(), null);
-			}
-		}
+			trans.paint(g);
+			if (trans.isDone())
+				if (trans instanceof HorizontalCurtainIn)
+					evokeTransition(false);
+				else
+					trans = null;
+		}		
 		else
 		{
-			tBuffer = null;
-			render();
 			if (dbImage != null)
 				g.drawImage(dbImage, 0, 0, parent.getWidth(), parent.getHeight(), null);
 		}
