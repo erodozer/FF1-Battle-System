@@ -76,7 +76,7 @@ public class IntroState extends GameState{
 			}
 		}
 		else {
-			alpha += 255/(GameRunner.FPS);
+			alpha += 255/(GameRunner.getInstance().getCurrFPS());
 			alpha = Math.min(255, alpha);
 		}
 	}

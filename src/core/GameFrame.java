@@ -1,4 +1,3 @@
-package core;
 //==============================================================================
 // Date Created:		19 December 2011
 // Last Updated:		26 May 2012
@@ -16,6 +15,7 @@ package core;
 import javax.swing.*;
 import java.awt.image.*;
 import java.awt.event.*;
+import java.awt.Canvas;
 import java.awt.*;
 
 public abstract class GameFrame extends JFrame implements WindowListener, Runnable
@@ -23,6 +23,11 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 //==============================================================================
 // Constants and regulators.
 //==============================================================================
+	private static final long nanoPerSec	= 1000000000L;
+	private static final int nanoPerMSec	= 1000000;
+	private static final int msecPerSec	= 1000;
+	// Because I keep losing track of zeros in frame rate calculations.
+	
 	private static final int NUM_DELAYS_PER_YIELD = 16;
 	// Number of frames with a delay of 0 ms before the animation thread yields
 	// to other running threads.
@@ -35,6 +40,12 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 	// i.e the games state is updated but not rendered
 	
 	private long period;                			// Period between drawing, in nanosecs.
+	private long timeDiff;							// Time between frames, for FPS calculation.
+
+	private int lastFPS = -1;						// Last average frames per second.
+	private int currFPS = 0;						// Current accumulated frames per (NUM_SAMPLES) seconds.
+	private int currSamples = 0;					// Current number of samples.
+	private int NUM_SAMPLES = 10;					// Number of samples to use for averaging.
 //==============================================================================
 
 
@@ -70,8 +81,11 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 	public GameFrame(String name, int fps, boolean windowed)
 	{
 		super(name);
+
 		ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		gd = ge.getDefaultScreenDevice();
+
+//		setLayout(null);
 
 		isWindowed = windowed;
 
@@ -92,11 +106,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		else
 			initWindowed();
 		
-		// Time per frame, in nanosecs.
-		if (fps >= 0)
-			period = (long)1000000000/fps;
-		else
-			period = (long)1000000000/DEFAULT_FPS;
+		setFPS(fps);
 
 		setBufferStrategy();
 
@@ -112,8 +122,6 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		add(canvas);
 		
 		addWindowListener(this);
-//		pack();
-//		setSize(640,480);
 		setIgnoreRepaint(true);					// Turn off all paint events.
 		setResizable(false);					// Prevent frame resizing.
 		setVisible(true);
@@ -219,7 +227,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 	// The frames of the animation are drawn inside the while loop.
 	{
 		// Initialize the timers and counters.
-		long beforeTime, afterTime, timeDiff, sleepTime;
+		long beforeTime, afterTime, sleepTime;
 		long overSleepTime = 0L;
 		int noDelays = 0;
 		long excess = 0L;
@@ -261,7 +269,9 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 					noDelays = 0;
 				}
 			}
-			
+
+			calcSampleFPS();
+
 			beforeTime = System.nanoTime();
 
 			// If frame animation is taking too long, update the game state
@@ -319,6 +329,106 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 
 
 //==============================================================================
+// Getters and setters. Some override JFrame methods, some don't.
+//==============================================================================
+	public void setSize(int w, int h)
+	// Set the size of the drawing area (canvas if windowed, frame if not).
+	{
+		if (isWindowed)
+		{
+			canvas.setPreferredSize(new Dimension(w,h));
+			pack();
+		}
+		else
+			super.setSize(w,h);
+	}
+
+	public void setWidth(int w)
+	// Set the width of the drawing area (canvas if windowed, frame if not).
+
+	{
+		if (isWindowed)
+		{
+			canvas.setPreferredSize(new Dimension(w,canvas.getHeight()));
+			pack();
+		}
+		else
+			super.setSize(w,super.getHeight());
+	}
+
+	public int getWidth()
+	// Get the width of the drawing area (canvas if windowed, frame if not).
+	{
+		if (isWindowed)
+			return canvas.getWidth();
+
+		return this.WIDTH;
+	}
+
+	public void setHeight(int h)
+	// Set the height of the drawing area (canvas if windowed, frame if not).
+	{
+		if (isWindowed)
+		{
+			canvas.setPreferredSize(new Dimension(canvas.getWidth(),h));
+			pack();
+		}
+		else
+		{
+			super.setSize(super.getWidth(),h);
+		}
+	}
+
+	public int getHeight()
+	// Get the height of the drawing area (canvas if windowed, frame if not).
+	{
+		if (isWindowed)
+			return canvas.getHeight();
+
+		return this.HEIGHT;
+	}
+
+	public void setFPS(int fps)
+	{
+		// Time per frame, in nanosecs.
+		if (fps >= 0)
+			period = nanoPerSec/fps;
+		else
+			period = nanoPerSec/DEFAULT_FPS;
+	}
+
+	public void calcSampleFPS()
+	// Take samples and calculate the current frames per second.
+	{
+		if (timeDiff == 0)
+			return;
+			
+		double msecsPerFrame = timeDiff/(double)nanoPerMSec;
+		double secsPerFrame = msecsPerFrame/(double)msecPerSec;
+		currFPS += (int)(1/secsPerFrame);
+
+		currSamples++;
+
+		if (lastFPS == -1)
+			lastFPS = currFPS;
+		if (currSamples >= NUM_SAMPLES)
+		{
+			currFPS /= NUM_SAMPLES;
+			lastFPS = currFPS;
+			currFPS = 0;
+			currSamples = 0;
+		}
+	}
+
+	public int getCurrFPS()
+	// Return the current frames per second.
+	{
+		return lastFPS;
+	}
+//==============================================================================
+
+
+//==============================================================================
 // Window listener methods.
 //==============================================================================
 	public void windowActivated(WindowEvent e)
@@ -359,5 +469,4 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 	public void windowClosed(WindowEvent e) {}
 	public void windowOpened(WindowEvent e) {}
 //==============================================================================
-
 }

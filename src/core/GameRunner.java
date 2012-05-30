@@ -63,8 +63,7 @@ public class GameRunner extends GameFrame implements KeyListener{
 	 */
 	private GameRunner(String name, int fps, boolean windowed) {
 		super(name, fps, windowed);
-		canvas.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-		pack();
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		engine = Engine.getInstance();
 		engine.startGame();
 		panel = ContentPanel.getInstance();
@@ -141,31 +140,9 @@ public class GameRunner extends GameFrame implements KeyListener{
 	public void keyTyped(KeyEvent arg0) {}
 	
 	/**
-	 * Gets the width of the frame.
-	 * In windowed mode it returns the canvas's width,
-	 * in fullscreen it returns the frame's width
+	 * Gets the engine linked with this game runner
+	 * @return
 	 */
-	public int getWidth()
-	{
-		if (isWindowed)
-			return canvas.getWidth();
-		else
-			return this.WIDTH;
-	}
-	
-	/**
-	 * Gets the height of the frame.
-	 * In windowed mode it returns the canvas's height,
-	 * in fullscreen it returns the frame's height
-	 */
-	public int getHeight()
-	{
-		if (isWindowed)
-			return canvas.getHeight();
-		else
-			return this.HEIGHT;
-	}
-	
 	public Engine getEngine()
 	{
 		return engine;

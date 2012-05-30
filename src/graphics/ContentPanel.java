@@ -72,8 +72,8 @@ public class ContentPanel{
 	
 	
 	//TRANSITION VARIABLES
-	int transition = TRANSITIONLIMIT;	//transition timer
-	private static int TRANSITIONRATE = 255/GameRunner.FPS;
+	private int transition = TRANSITIONLIMIT;	//transition timer
+	private int transitionRate = 255/GameRunner.FPS;
 									//rate at which transitions occur
 	
 	private BufferedImage transFader;	//the transition fader grayscale image
@@ -244,13 +244,13 @@ public class ContentPanel{
 		//when transitioning in, we're turning black to clear
 		if (transIn)
 		{
-			for (int i = Math.max(0, transition-TRANSITIONRATE); i <= transition; i++)
+			for (int i = Math.max(0, transition-transitionRate); i <= transition; i++)
 				alpha[i] = 0;
 		}
 		//when transitioning out we're having the black crawl in
 		else
 		{
-			for (int i = Math.min(transition+TRANSITIONRATE, 255); i >= transition; i--)
+			for (int i = Math.min(transition+transitionRate, 255); i >= transition; i--)
 				alpha[i] = (byte)255;
 		}
 		//create the lookupop and apply it to the fader to create the transBuffer
@@ -260,7 +260,8 @@ public class ContentPanel{
 		transBuffer = op.filter(transFader, transBuffer);
 		
 		//advance the transition point to continue the fader
-		transition += ((transIn)?1:-1)*TRANSITIONRATE;
+		transitionRate = 255/parent.getCurrFPS();
+		transition += ((transIn)?1:-1)*transitionRate;
 		
 		if (!transIn && transition <= 0)
 		{
