@@ -17,6 +17,7 @@ import org.ini4j.IniPreferences;
 
 import engine.MP3;
 import graphics.ContentPanel;
+import audio.SoundEffect;
 
 public class Map {
 
@@ -90,6 +91,9 @@ public class Map {
 			clearColor = Color.decode(pref.node("map").get("clearColor", "#000000"));
 			tileSet = new TileSet(pref.node("map").get("tileset", "world") + ".png");
 			bgm = new MP3(pref.node("map").get("bgm", "world")+".mp3");
+			ambient = new SoundEffect("nature.wav");
+			ambient.setLoop(true);
+			ambient.play();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			System.err.println("can not find file: " + "data/" + path + "map.ini");
@@ -287,4 +291,18 @@ public class Map {
 			bgm.play();
 	}
 
+	/**
+	 * Forces all sounds to stop
+	 */
+	public void pause()
+	{
+		ambient.stop();
+		bgm.stop();
+	}
+	
+	public void unpause()
+	{
+		ambient.play();
+		bgm.play();
+	}
 }

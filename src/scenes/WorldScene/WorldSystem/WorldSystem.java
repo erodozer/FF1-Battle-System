@@ -72,6 +72,7 @@ public class WorldSystem extends GameSystem
 	public void update()
 	{
 		state.handle();
+		map.unpause();
 	}
 
 	@Override
@@ -123,11 +124,11 @@ public class WorldSystem extends GameSystem
 	}
 
 	/**
-	 * Do nothing
+	 * Stop all sounds
 	 */
 	@Override
 	public void finish() {
-
+		map.pause();
 	}
 
 	public NPC getLeader() {

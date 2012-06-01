@@ -25,4 +25,8 @@ public class WorldScene extends Scene{
 		display = new WorldHUD((WorldSystem)system, map);
 	}
 	
+	public void stop()
+	{
+		system.finish();
+	}
 }
