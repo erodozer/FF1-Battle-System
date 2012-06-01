@@ -8,9 +8,8 @@ import java.util.prefs.Preferences;
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
-import editor.ToolKit;
-
 import actors.Actor;
+import editor.ToolKit;
 
 /**
  * Spell.java

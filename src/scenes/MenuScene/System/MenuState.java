@@ -1,11 +1,8 @@
 package scenes.MenuScene.System;
 
-import java.awt.event.KeyEvent;
-
+import scenes.GameState;
 import engine.Engine;
 import engine.Input;
-
-import scenes.GameState;
 
 /**
  * MenuState

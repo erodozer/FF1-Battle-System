@@ -14,11 +14,18 @@ package core;
 //						classes to implement.
 //==============================================================================
 
-import javax.swing.*;
-import java.awt.image.*;
-import java.awt.event.*;
 import java.awt.Canvas;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.image.BufferStrategy;
+
+import javax.swing.JFrame;
 
 public abstract class GameFrame extends JFrame implements WindowListener, Runnable
 {

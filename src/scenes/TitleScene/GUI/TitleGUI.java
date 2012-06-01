@@ -1,12 +1,13 @@
 package scenes.TitleScene.GUI;
 
-import java.awt.Font;
+import graphics.NES;
+import graphics.Sprite;
+
 import java.awt.Graphics;
 
 import scenes.HUD;
-import scenes.TitleScene.System.*;
-import graphics.NES;
-import graphics.Sprite;
+import scenes.TitleScene.System.IntroState;
+import scenes.TitleScene.System.TitleSystem;
 
 /**
  * TitleGGUI

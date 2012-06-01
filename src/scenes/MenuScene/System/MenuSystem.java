@@ -1,10 +1,9 @@
 package scenes.MenuScene.System;
 
-import engine.Engine;
-import groups.Party;
-
 import scenes.GameState;
 import scenes.GameSystem;
+import engine.Engine;
+import groups.Party;
 
 /**
  * MenuSystem

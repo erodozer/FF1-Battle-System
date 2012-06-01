@@ -2,15 +2,13 @@ package scenes.MenuScene.GUI;
 
 import java.awt.Graphics;
 
-import actors.Player;
-
 import scenes.HUD;
+import actors.Player;
 import engine.Engine;
 import graphics.NES;
 import graphics.SFont;
-import graphics.Sprite;
 import graphics.SWindow;
-import groups.Party;
+import graphics.Sprite;
 
 /**
  * StatusGUI

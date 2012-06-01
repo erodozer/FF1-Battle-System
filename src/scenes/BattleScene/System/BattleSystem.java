@@ -1,23 +1,25 @@
 package scenes.BattleScene.System;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 import scenes.GameSystem;
 import spell.Spell;
+import actors.Actor;
+import actors.Enemy;
+import actors.Player;
+import audio.MP3;
 
-import commands.*;
+import commands.AttackCommand;
+import commands.Command;
+import commands.FleeCommand;
+import commands.SpellCommand;
 
 import engine.Engine;
-import engine.MP3;
-import groups.*;
-
-import actors.*;
+import groups.Formation;
+import groups.Party;
 
 /**
  * BattleSystem.java

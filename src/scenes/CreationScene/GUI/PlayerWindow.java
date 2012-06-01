@@ -1,15 +1,12 @@
 package scenes.CreationScene.GUI;
 
+import graphics.NES;
+import graphics.SWindow;
+
 import java.awt.Graphics;
 
 import scenes.HUD;
-
 import actors.Player;
-
-import graphics.NES;
-import graphics.SFont;
-import graphics.Sprite;
-import graphics.SWindow;
 
 /**
  * PlayerWindow

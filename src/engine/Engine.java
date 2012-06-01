@@ -1,15 +1,16 @@
 package engine;
 
+import graphics.Sprite;
+import groups.Formation;
+import groups.Party;
+
 import java.io.File;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
-import Map.NPC;
-import actors.Enemy;
-
-import scenes.*;
+import scenes.Scene;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;
 import scenes.MenuScene.MenuScene;
@@ -18,8 +19,7 @@ import scenes.ShopScene.System.Shop;
 import scenes.TitleScene.TitleScene;
 import scenes.WorldScene.WorldScene;
 import scenes.WorldScene.WorldSystem.WorldSystem;
-import graphics.Sprite;
-import groups.*;
+import Map.NPC;
 
 /**
  * Engine

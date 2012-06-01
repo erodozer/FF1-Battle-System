@@ -1,13 +1,13 @@
 package scenes.BattleScene.System;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import commands.AttackCommand;
-
 import actors.Actor;
 import actors.Player;
+
+import commands.AttackCommand;
 
 import engine.Engine;
 import groups.Formation;

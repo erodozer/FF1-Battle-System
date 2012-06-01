@@ -1,14 +1,14 @@
 package scenes.TitleScene.GUI;
 
+import graphics.ContentPanel;
+import graphics.NES;
+import graphics.SFont;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
 import scenes.HUD;
 import scenes.TitleScene.System.IntroState;
-import graphics.ContentPanel;
-import graphics.NES;
-import graphics.SFont;
-import graphics.Sprite;
 
 /**
  * Intro

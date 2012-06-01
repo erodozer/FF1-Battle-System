@@ -1,15 +1,12 @@
 package scenes.BattleScene.GUI;
 
+import graphics.SWindow;
+
 import java.awt.Graphics;
 
 import scenes.HUD;
-import scenes.BattleScene.System.*;
-
+import scenes.BattleScene.System.BattleSystem;
 import actors.Actor;
-
-import graphics.SFont;
-import graphics.Sprite;
-import graphics.SWindow;
 
 /**
  * CommandDisplay

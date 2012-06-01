@@ -1,10 +1,7 @@
 package scenes.MenuScene.System;
 
-import java.awt.event.KeyEvent;
-
-import engine.Input;
-
 import scenes.GameState;
+import engine.Input;
 
 /**
  * InventoryState

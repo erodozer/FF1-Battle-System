@@ -1,7 +1,5 @@
 package scenes;
 
-import java.awt.event.KeyEvent;
-
 import engine.Input;
 
 /**

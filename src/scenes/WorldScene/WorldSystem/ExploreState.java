@@ -1,12 +1,8 @@
 package scenes.WorldScene.WorldSystem;
 
-import java.awt.event.KeyEvent;
-
+import scenes.GameState;
 import Map.Map;
 import Map.NPC;
-
-import scenes.GameState;
-
 import engine.Engine;
 import engine.Input;
 

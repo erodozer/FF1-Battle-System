@@ -1,12 +1,12 @@
 package Map;
 
+import engine.Engine;
+import graphics.Sprite;
+
 import java.awt.Graphics;
 import java.util.prefs.Preferences;
 
 import scenes.ShopScene.System.Shop;
-
-import engine.Engine;
-import graphics.Sprite;
 
 /**
  * NPC

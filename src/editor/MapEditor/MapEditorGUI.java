@@ -29,11 +29,9 @@ import org.ini4j.IniPreferences;
 
 import Map.Terrain;
 import Map.TileSet;
-
-
+import core.GameRunner;
 import editor.ToolKit;
 import engine.Engine;
-import engine.GameScreen;
 
 /**
  * MapEditorGUI
@@ -309,12 +307,10 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 					return;
 			save();
 			
-			GameScreen gs = GameScreen.getInstance();
-			Engine e = Engine.getInstance();
+			GameRunner g = GameRunner.getInstance();
+			Engine e = g.getEngine();
 			e.quickStart();
 			e.changeToWorld(n, 1, 1);
-			gs.validate();
-			
 		}
 		else if (event.getSource() == rAddButton)
 		{

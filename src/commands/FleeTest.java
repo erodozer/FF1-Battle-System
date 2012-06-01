@@ -1,15 +1,14 @@
 package commands;
 
-import static org.junit.Assert.*;
-import engine.Engine;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import groups.Formation;
 import groups.Party;
 
 import org.junit.Test;
 
 import actors.Player;
-import scenes.BattleScene.BattleScene;
-import scenes.BattleScene.System.*;
 
 /**
  * FleeTest

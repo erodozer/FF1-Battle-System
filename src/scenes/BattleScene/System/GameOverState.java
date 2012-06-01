@@ -1,12 +1,7 @@
 package scenes.BattleScene.System;
 
-import java.awt.event.KeyEvent;
-
-
 import scenes.GameState;
-
-import engine.Engine;
-import engine.MP3;
+import audio.MP3;
 
 /**
  * GameOverState

@@ -1,13 +1,11 @@
 package scenes;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-
 import graphics.ContentPanel;
 import graphics.SFont;
 import graphics.Sprite;
+
+import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  * HUD

@@ -1,13 +1,12 @@
 package scenes.CreationScene.GUI;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import scenes.HUD;
-import scenes.CreationScene.System.*;
-
-import graphics.SFont;
 import graphics.Sprite;
+
+import java.awt.Graphics;
+
+import scenes.HUD;
+import scenes.CreationScene.System.CreationSystem;
+import scenes.CreationScene.System.NamingState;
 
 /**
  * HUD.java

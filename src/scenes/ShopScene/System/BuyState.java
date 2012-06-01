@@ -1,13 +1,10 @@
 package scenes.ShopScene.System;
 
-import groups.Party;
-import item.Item;
-
-import java.awt.event.KeyEvent;
-
-import scenes.GameState;
 import engine.Engine;
 import engine.Input;
+import groups.Party;
+import item.Item;
+import scenes.GameState;
 
 /**
  * BuyState

@@ -1,15 +1,14 @@
 package scenes.BattleScene.GUI;
 
+import graphics.SWindow;
+import groups.Formation;
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 
 import scenes.HUD;
 import scenes.BattleScene.System.BattleSystem;
-
 import actors.Enemy;
-
-import graphics.SWindow;
-import groups.Formation;
 
 /**
  * EnemyListDisplay

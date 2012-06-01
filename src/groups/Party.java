@@ -20,7 +20,6 @@ import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
 
-
 import actors.Player;
 
 public class Party extends ArrayList<Player>{

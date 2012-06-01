@@ -1,16 +1,13 @@
 package scenes.BattleScene.System;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import scenes.GameState;
+import actors.Actor;
 
 import commands.Command;
 import commands.FleeCommand;
 import commands.SpellCommand;
-
-
-import actors.Actor;
 
 /**
  * MessageState.java

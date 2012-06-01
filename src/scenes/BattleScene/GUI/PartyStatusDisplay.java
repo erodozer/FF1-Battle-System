@@ -1,13 +1,13 @@
 package scenes.BattleScene.GUI;
 
+import graphics.SFont;
+import graphics.SWindow;
+
 import java.awt.Graphics;
 
 import scenes.HUD;
 import scenes.BattleScene.System.BattleSystem;
-
 import actors.Player;
-import graphics.SFont;
-import graphics.SWindow;
 
 /**
  * PartyStatusDisplay

@@ -1,10 +1,6 @@
 package scenes.BattleScene.System;
 
-import java.awt.event.KeyEvent;
-
 import scenes.GameState;
-
-
 import actors.Actor;
 import actors.Player;
 

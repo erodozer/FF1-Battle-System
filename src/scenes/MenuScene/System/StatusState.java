@@ -1,11 +1,8 @@
 package scenes.MenuScene.System;
 
-import java.awt.event.KeyEvent;
-
-import engine.Input;
-
 import scenes.GameState;
 import scenes.GameSystem;
+import engine.Input;
 
 public class StatusState extends GameState
 {

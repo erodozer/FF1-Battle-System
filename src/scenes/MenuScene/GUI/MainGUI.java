@@ -9,8 +9,8 @@ import actors.Player;
 import engine.Engine;
 import graphics.NES;
 import graphics.SFont;
-import graphics.Sprite;
 import graphics.SWindow;
+import graphics.Sprite;
 import groups.Party;
 
 /**

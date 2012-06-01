@@ -1,14 +1,17 @@
 package scenes.BattleScene.System;
 
-import static org.junit.Assert.*;
-import engine.Engine;
-import groups.Formation;
-import groups.Party;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import commands.AttackCommand;
 import commands.SpellCommand;
+
+import engine.Engine;
+import groups.Formation;
+import groups.Party;
 
 /**
  * IssueStateTest

@@ -7,14 +7,11 @@ package scenes.MenuScene.System;
  *	The armor and weapon states are actually generic enough to follow the same structure
  */
 
-import java.awt.event.KeyEvent;
-
-import actors.Player;
-
-import engine.Engine;
-import engine.Input;
 import scenes.GameState;
 import scenes.GameSystem;
+import actors.Player;
+import engine.Engine;
+import engine.Input;
 
 public class EquipmentState extends GameState{
 

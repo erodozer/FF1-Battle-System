@@ -2,10 +2,9 @@ package scenes.BattleScene;
 
 import graphics.Sprite;
 import groups.Formation;
-
 import scenes.Scene;
-import scenes.BattleScene.GUI.*;
-import scenes.BattleScene.System.*;
+import scenes.BattleScene.GUI.BattleHUD;
+import scenes.BattleScene.System.BattleSystem;
 
 public class BattleScene extends Scene {
 

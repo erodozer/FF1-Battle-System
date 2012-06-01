@@ -1,17 +1,11 @@
 package scenes.BattleScene.GUI;
 
-import java.awt.FontMetrics;
+import engine.Engine;
+import graphics.SWindow;
+
 import java.awt.Graphics;
 
-import engine.Engine;
-
-import actors.Actor;
-
-import graphics.SFont;
-import graphics.Sprite;
-import graphics.SWindow;
 import scenes.HUD;
-import scenes.BattleScene.System.*;
 
 /**
  * DrinkDisplay

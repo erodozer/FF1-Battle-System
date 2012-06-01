@@ -1,44 +1,29 @@
 package editor.SpriteCreator;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
-
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Scrollable;
-
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import editor.MapEditor.MapGrid;
-import graphics.Sprite;
-
-
-import actors.Enemy;
-
 import Map.Map;
 import Map.NPC;
+import actors.Enemy;
 
 /**
  * EnemyEditorGUI

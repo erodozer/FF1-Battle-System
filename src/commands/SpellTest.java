@@ -1,18 +1,14 @@
 package commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import groups.Formation;
+import groups.Party;
 
 import org.junit.Test;
 
-import actors.Actor;
-import actors.Enemy;
-import actors.Player;
-import engine.Engine;
-import groups.Formation;
-import groups.Party;
-import scenes.BattleScene.System.*;
 import spell.Spell;
+import actors.Actor;
+import actors.Player;
 
 /**
  * SpellTest

@@ -1,15 +1,12 @@
 package core;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import scenes.Scene;
 import engine.Engine;
 import engine.Input;
-
 import graphics.ContentPanel;
-
-import scenes.Scene;
 
 /**
  * GameRunner

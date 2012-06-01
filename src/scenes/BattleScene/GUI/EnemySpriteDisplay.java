@@ -1,13 +1,13 @@
 package scenes.BattleScene.GUI;
 
-import java.awt.Graphics;
-import actors.Enemy;
-
-import graphics.Sprite;
 import graphics.SWindow;
+import graphics.Sprite;
+
+import java.awt.Graphics;
 
 import scenes.HUD;
-import scenes.BattleScene.System.*;
+import scenes.BattleScene.System.BattleSystem;
+import actors.Enemy;
 
 public class EnemySpriteDisplay extends HUD{
 

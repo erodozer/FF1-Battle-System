@@ -1,12 +1,14 @@
 package scenes.BattleScene.GUI;
 
+import graphics.SWindow;
+
 import java.awt.Graphics;
 
 import scenes.HUD;
 import scenes.BattleScene.System.MessageState;
 
-import commands.*;
-import graphics.SWindow;
+import commands.Command;
+import commands.FleeCommand;
 
 /**
  * MessageDisplay

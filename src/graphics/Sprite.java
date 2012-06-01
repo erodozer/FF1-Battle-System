@@ -1,19 +1,18 @@
 package graphics;
 
-import engine.Engine;
-
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+
+import engine.Engine;
 
 
 /**

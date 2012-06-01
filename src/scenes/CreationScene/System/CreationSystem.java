@@ -1,9 +1,9 @@
 package scenes.CreationScene.System;
 
 import scenes.GameSystem;
+import actors.Player;
 import engine.Engine;
 import groups.Party;
-import actors.Player;
 
 /**
  * CreationSystem

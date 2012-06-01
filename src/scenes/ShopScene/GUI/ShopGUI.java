@@ -1,11 +1,15 @@
 package scenes.ShopScene.GUI;
 
+import engine.Engine;
+import graphics.ContentPanel;
+import graphics.NES;
+import graphics.SFont;
+import graphics.SWindow;
+import graphics.Sprite;
+import groups.Party;
 import item.Item;
 
-import java.awt.Color;
 import java.awt.Graphics;
-
-import actors.Player;
 
 import scenes.GameState;
 import scenes.HUD;
@@ -13,14 +17,6 @@ import scenes.ShopScene.System.BuyState;
 import scenes.ShopScene.System.GreetState;
 import scenes.ShopScene.System.Shop;
 import scenes.ShopScene.System.ShopSystem;
-
-import engine.Engine;
-import graphics.ContentPanel;
-import graphics.NES;
-import graphics.SFont;
-import graphics.Sprite;
-import graphics.SWindow;
-import groups.Party;
 
 /**
  * ShopGUI

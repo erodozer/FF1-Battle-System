@@ -3,14 +3,13 @@ package scenes.MenuScene.GUI;
 import java.awt.Graphics;
 
 import scenes.HUD;
+import scenes.MenuScene.System.OrderState;
 import engine.Engine;
 import graphics.NES;
 import graphics.SFont;
 import graphics.SWindow;
 import graphics.Sprite;
 import groups.Party;
-
-import scenes.MenuScene.System.OrderState;
 
 /**
  * OrderGUI

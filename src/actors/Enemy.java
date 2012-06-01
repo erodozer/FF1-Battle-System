@@ -7,16 +7,14 @@ package actors;
  * Description: Computer controllable actors
  */
 
+import graphics.Sprite;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
-
-import commands.*;
-
-import graphics.Sprite;
 
 public class Enemy extends Actor {
 

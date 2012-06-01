@@ -1,10 +1,10 @@
 package scenes.BattleScene.GUI;
 
+import graphics.SWindow;
+import graphics.Sprite;
+
 import java.awt.Color;
 import java.awt.Graphics;
-
-import graphics.Sprite;
-import graphics.SWindow;
 
 /**
  * GameOverDisplay

@@ -1,8 +1,5 @@
 package graphics.transitions;
 
-import graphics.NES;
-
-import java.awt.Color;
 import java.awt.Graphics;
 
 /**

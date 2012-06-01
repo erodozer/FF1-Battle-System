@@ -3,6 +3,7 @@ package editor.MapEditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -14,7 +15,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import Map.Terrain;
-
 import editor.ToolKit;
 
 

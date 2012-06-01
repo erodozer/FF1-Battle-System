@@ -1,11 +1,8 @@
 package scenes.CreationScene.System;
 
-import java.awt.event.KeyEvent;
-
 import scenes.GameState;
-
-import engine.Input;
 import actors.Player;
+import engine.Input;
 
 /**
  * ChooseJobsState

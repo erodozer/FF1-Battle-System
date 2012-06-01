@@ -2,15 +2,13 @@ package scenes.MenuScene.GUI;
 
 import java.awt.Graphics;
 
-import actors.Player;
-
 import scenes.HUD;
 import scenes.MenuScene.System.EquipmentState;
 import scenes.MenuScene.System.WeaponState;
+import actors.Player;
 import engine.Engine;
 import graphics.NES;
 import graphics.SFont;
-import graphics.Sprite;
 import graphics.SWindow;
 import groups.Party;
 

@@ -6,7 +6,13 @@ import java.awt.Graphics;
 
 import scenes.GameState;
 import scenes.HUD;
-import scenes.MenuScene.System.*;
+import scenes.MenuScene.System.ArmorState;
+import scenes.MenuScene.System.InventoryState;
+import scenes.MenuScene.System.MenuState;
+import scenes.MenuScene.System.MenuSystem;
+import scenes.MenuScene.System.OrderState;
+import scenes.MenuScene.System.StatusState;
+import scenes.MenuScene.System.WeaponState;
 
 /**
  * MenuGUI

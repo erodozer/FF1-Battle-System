@@ -1,14 +1,12 @@
 package actors;
 
+import graphics.Sprite;
+
 import java.awt.Graphics;
 
 import spell.Spell;
 
-import commands.AttackCommand;
 import commands.Command;
-import commands.SpellCommand;
-
-import graphics.Sprite;
 
 /**
  * Actor.java

@@ -1,16 +1,14 @@
 package scenes.CreationScene.GUI;
 
+import graphics.NES;
+import graphics.SWindow;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
 import scenes.HUD;
 import scenes.CreationScene.System.CreationSystem;
 import scenes.CreationScene.System.NamingState;
-
-import graphics.NES;
-import graphics.SFont;
-import graphics.Sprite;
-import graphics.SWindow;
 
 public class NamingDisplay extends HUD {
 

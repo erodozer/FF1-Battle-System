@@ -1,19 +1,16 @@
 package scenes.BattleScene.System;
 
-import java.awt.event.KeyEvent;
+import engine.Engine;
+import groups.Formation;
+import groups.Party;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import actors.Player;
-
 import scenes.GameState;
-
-import engine.Engine;
-import engine.Input;
-import engine.MP3;
-import groups.Formation;
-import groups.Party;
+import actors.Player;
+import audio.MP3;
 
 /**
  * VictoryState

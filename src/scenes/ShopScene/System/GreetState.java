@@ -1,7 +1,5 @@
 package scenes.ShopScene.System;
 
-import java.awt.event.KeyEvent;
-
 import scenes.GameState;
 import scenes.GameSystem;
 import engine.Engine;

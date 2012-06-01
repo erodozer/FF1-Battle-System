@@ -1,17 +1,11 @@
 package scenes.MenuScene.System;
 
-import groups.Party;
-import item.Item;
-
-import java.awt.event.KeyEvent;
-
-import actors.Player;
-
 import engine.Engine;
 import engine.Input;
-
+import groups.Party;
 import scenes.GameState;
 import scenes.GameSystem;
+import actors.Player;
 
 /**
  * OrderState

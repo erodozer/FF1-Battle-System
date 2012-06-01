@@ -6,13 +6,12 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.FileInputStream;
 
-import Map.Map;
-import Map.NPC;
-import Map.TileSet;
-
 import scenes.HUD;
 import scenes.WorldScene.WorldSystem.DialogState;
 import scenes.WorldScene.WorldSystem.WorldSystem;
+import Map.Map;
+import Map.NPC;
+import Map.TileSet;
 import engine.Engine;
 
 /**

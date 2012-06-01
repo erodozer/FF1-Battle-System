@@ -1,21 +1,8 @@
 package commands;
 
 import item.Item;
-
-import java.io.File;
-import java.lang.reflect.Field;
-import java.util.prefs.Preferences;
-
-import org.ini4j.Ini;
-import org.ini4j.IniPreferences;
-import org.nfunk.jep.JEP;
-import org.nfunk.jep.ParseException;
-
-import engine.Engine;
-
-import spell.Spell;
-
 import actors.Actor;
+import engine.Engine;
 
 /**
  * ItemCommand

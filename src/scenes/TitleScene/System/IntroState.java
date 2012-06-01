@@ -1,20 +1,17 @@
 package scenes.TitleScene.System;
 
 
-import java.awt.event.KeyEvent;
-import java.io.FileInputStream;
-
 import engine.Input;
-import engine.MP3;
 import graphics.ContentPanel;
 import graphics.SFont;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import core.GameRunner;
-
 import scenes.GameState;
+import audio.MP3;
+import core.GameRunner;
 
 public class IntroState extends GameState{
 

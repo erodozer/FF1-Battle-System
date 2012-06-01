@@ -1,34 +1,16 @@
 package graphics;
 
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+import scenes.Scene;
+import core.GameRunner;
 import engine.Engine;
-import graphics.transitions.HorizontalCurtain;
 import graphics.transitions.HorizontalCurtainIn;
 import graphics.transitions.HorizontalCurtainOut;
 import graphics.transitions.Transition;
-
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.awt.image.ByteLookupTable;
-import java.awt.image.IndexColorModel;
-import java.awt.image.LookupOp;
-import java.awt.image.LookupTable;
-import java.awt.image.ShortLookupTable;
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
-import core.GameRunner;
-
-import scenes.Scene;
 
 /**
  * ContentPanel

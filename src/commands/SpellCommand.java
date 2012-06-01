@@ -4,7 +4,6 @@ import org.nfunk.jep.JEP;
 import org.nfunk.jep.ParseException;
 
 import spell.Spell;
-
 import actors.Actor;
 
 /**

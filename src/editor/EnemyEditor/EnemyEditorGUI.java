@@ -1,6 +1,5 @@
 package editor.EnemyEditor;
 import graphics.Sprite;
-
 import item.Item;
 
 import java.awt.Dimension;

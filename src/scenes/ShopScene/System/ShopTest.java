@@ -1,6 +1,6 @@
 package scenes.ShopScene.System;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.prefs.Preferences;

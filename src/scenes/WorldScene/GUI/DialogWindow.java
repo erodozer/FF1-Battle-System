@@ -1,11 +1,11 @@
 package scenes.WorldScene.GUI;
 
+import graphics.ContentPanel;
+import graphics.SWindow;
+import graphics.Sprite;
+
 import java.awt.Color;
 import java.awt.Graphics;
-
-import graphics.ContentPanel;
-import graphics.Sprite;
-import graphics.SWindow;
 
 /**
  * DialogWindow

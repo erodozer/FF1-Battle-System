@@ -1,13 +1,14 @@
 package scenes.BattleScene.GUI;
 
-import java.awt.Graphics;
-
-import actors.Actor;
-
 import graphics.SFont;
 import graphics.SWindow;
+
+import java.awt.Graphics;
+
 import scenes.HUD;
-import scenes.BattleScene.System.*;
+import scenes.BattleScene.System.BattleSystem;
+import scenes.BattleScene.System.IssueState;
+import actors.Actor;
 
 /**
  * SpellDisplay

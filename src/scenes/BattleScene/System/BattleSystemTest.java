@@ -1,15 +1,12 @@
 package scenes.BattleScene.System;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-import java.util.Queue;
+import org.junit.Test;
 
 import engine.Engine;
 import groups.Formation;
 import groups.Party;
-import actors.*;
-
-import org.junit.Test;
 
 /**
  * BattleSystemTest
@@ -55,12 +52,6 @@ public class BattleSystemTest {
 		
 		BattleSystem bs = new BattleSystem();
 		bs.setFormation(f);
-		
-		Queue<Actor> defaultTurns = bs.getTurnOrder();
-		assertEquals(f.get(1), defaultTurns.poll());		//NM is fast
-		assertEquals(f.get(0), defaultTurns.poll());		//gel is fast too
-		assertEquals(p.get(1), defaultTurns.poll());		//red mage is faster than
-		assertEquals(p.get(0), defaultTurns.poll());		// the brute: Fighter
 		
 		//setting command for actors changes their speed which should
 		//affect the order

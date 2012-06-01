@@ -1,12 +1,14 @@
-package engine;
+package audio;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.advanced.*;
+import javazoom.jl.player.advanced.AdvancedPlayer;
+import javazoom.jl.player.advanced.PlaybackEvent;
+import javazoom.jl.player.advanced.PlaybackListener;
+import engine.Engine;
 
 /**
  * MP3

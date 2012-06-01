@@ -1,20 +1,21 @@
 package scenes.BattleScene.GUI;
 
-import java.awt.Color;
-import java.awt.Font;
+import graphics.Sprite;
+
 import java.awt.Graphics;
-
-import actors.Player;
-
-import commands.Command;
 
 import scenes.GameState;
 import scenes.GameSystem;
 import scenes.HUD;
-import scenes.BattleScene.System.*;
+import scenes.BattleScene.System.BattleSystem;
+import scenes.BattleScene.System.EngageState;
+import scenes.BattleScene.System.GameOverState;
+import scenes.BattleScene.System.IssueState;
+import scenes.BattleScene.System.MessageState;
+import scenes.BattleScene.System.VictoryState;
+import actors.Player;
 
-import graphics.SFont;
-import graphics.Sprite;
+import commands.Command;
 
 /**
  * HUD.java

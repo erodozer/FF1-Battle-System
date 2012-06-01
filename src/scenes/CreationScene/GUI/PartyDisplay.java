@@ -1,11 +1,11 @@
 package scenes.CreationScene.GUI;
 
+import graphics.Sprite;
+import groups.Party;
+
 import java.awt.Graphics;
 
 import scenes.CreationScene.System.CreationSystem;
-
-import graphics.Sprite;
-import groups.Party;
 
 /**
  * PartyDisplay

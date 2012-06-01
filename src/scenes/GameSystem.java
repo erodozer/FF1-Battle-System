@@ -1,6 +1,5 @@
 package scenes;
 
-import java.awt.event.KeyEvent;
 
 /**
  * GameSystem

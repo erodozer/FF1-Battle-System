@@ -1,10 +1,13 @@
 package commands;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import actors.*;
+import actors.Actor;
+import actors.MockActor;
+import actors.Player;
 
 /**
  * AttackTest

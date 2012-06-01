@@ -1,17 +1,11 @@
 package scenes.TitleScene.GUI;
 
-import java.awt.Color;
+import graphics.SWindow;
+import graphics.Sprite;
+
 import java.awt.Graphics;
 
-
 import scenes.HUD;
-import scenes.TitleScene.System.TitleSystem;
-import scenes.TitleScene.System.TitleState;
-
-import graphics.ContentPanel;
-import graphics.SFont;
-import graphics.Sprite;
-import graphics.SWindow;
 
 /**
  * TitleScreen

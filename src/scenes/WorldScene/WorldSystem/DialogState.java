@@ -1,15 +1,11 @@
 package scenes.WorldScene.WorldSystem;
 
-import java.awt.event.KeyEvent;
-
-import Map.NPC;
-
-import scenes.GameState;
-import scenes.GameSystem;
-
 import engine.Input;
 import graphics.ContentPanel;
 import graphics.SFont;
+import scenes.GameState;
+import scenes.GameSystem;
+import Map.NPC;
 
 /**
  * DialogState

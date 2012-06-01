@@ -15,8 +15,6 @@ package graphics;
  *  	Font caching
  */
 
-import engine.Engine;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -26,6 +24,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import engine.Engine;
 
 
 public class SFont {

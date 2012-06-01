@@ -1,15 +1,14 @@
 package scenes.BattleScene.GUI;
 
+import graphics.SWindow;
+import graphics.Sprite;
+import groups.Party;
+
 import java.awt.Graphics;
 
-import actors.*;
-
-import engine.Engine;
-import graphics.Sprite;
-import graphics.SWindow;
-import groups.Party;
 import scenes.HUD;
-import scenes.BattleScene.System.*;
+import scenes.BattleScene.System.BattleSystem;
+import actors.Player;
 
 /**
  * PartySpriteDisplay

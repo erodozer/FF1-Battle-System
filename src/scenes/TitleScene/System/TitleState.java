@@ -1,7 +1,5 @@
 package scenes.TitleScene.System;
 
-import java.awt.event.KeyEvent;
-
 import scenes.GameState;
 import engine.Engine;
 import engine.Input;

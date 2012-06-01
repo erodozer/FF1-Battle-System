@@ -1,5 +1,7 @@
 package Map;
 
+import graphics.ContentPanel;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -14,9 +16,7 @@ import java.util.prefs.Preferences;
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
-
-import engine.MP3;
-import graphics.ContentPanel;
+import audio.MP3;
 import audio.SoundEffect;
 
 public class Map {
@@ -26,6 +26,7 @@ public class Map {
 	public static final int drawColsMax = ContentPanel.INTERNAL_RES_H/TileSet.ORIGINAL_DIMENSIONS;
 	
 	MP3 bgm;				//maps can have their own background music
+	SoundEffect ambient;	//maps can also have ambient noise to them
 	String name;
 	
 	//map buffer
@@ -290,7 +291,7 @@ public class Map {
 		if (bgm != null)
 			bgm.play();
 	}
-
+	
 	/**
 	 * Forces all sounds to stop
 	 */

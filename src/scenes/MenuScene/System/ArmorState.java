@@ -1,12 +1,8 @@
 package scenes.MenuScene.System;
 
 import item.Item;
-
-import java.awt.event.KeyEvent;
-
-import engine.Input;
-
 import scenes.GameSystem;
+import engine.Input;
 
 public class ArmorState extends EquipmentState
 {

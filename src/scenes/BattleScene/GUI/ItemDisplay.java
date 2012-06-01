@@ -1,19 +1,14 @@
 package scenes.BattleScene.GUI;
 
-import java.awt.FontMetrics;
+import graphics.SWindow;
+import item.Item;
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import actors.Actor;
-import actors.Player;
-
-import graphics.SFont;
-import graphics.Sprite;
-import graphics.SWindow;
 import scenes.HUD;
-import scenes.BattleScene.System.*;
-
-import item.Item;
+import scenes.BattleScene.System.BattleSystem;
+import scenes.BattleScene.System.IssueState;
 
 /**
  * ItemDisplay
