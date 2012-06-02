@@ -59,17 +59,18 @@ public abstract class Transition{
 	/**
 	 * Steps through the transitions animation
 	 * This should always be called at the end of the paint method
+	 * It gives a addition time lax of the GameRunner's FPS to ensure that the entire transition displays
 	 */
 	protected void step()
 	{
-		currTime = Math.min(length, currTime + length/GameRunner.getInstance().getCurrFPS());
+		currTime = Math.min(length+GameRunner.FPS, currTime + length/GameRunner.getInstance().getCurrFPS());
 	}
 	
 	/**
 	 * Tells if the transition is done being drawn
 	 */
 	public boolean isDone(){
-		return currTime >= length;
+		return currTime >= length+GameRunner.FPS;
 	}
 	
 	/**
