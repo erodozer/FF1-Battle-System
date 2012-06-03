@@ -306,4 +306,12 @@ public class Map {
 		ambient.play();
 		bgm.play();
 	}
+
+	/**
+	 * Perma kills this maps sound before disposing of the map
+	 */
+	public void killSound() {
+		ambient.dispose();
+		bgm.stop();
+	}
 }

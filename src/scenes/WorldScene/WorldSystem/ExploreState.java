@@ -83,11 +83,13 @@ public class ExploreState extends GameState {
     	//switch character sprite
     	else if (key == Input.KEY_SELECT)
     	{
+    		parent.finish();
     		e.changeToOrder();
     	}
     	//show main menu
     	else if (key == Input.KEY_START)
     	{
+    		parent.finish();
     		e.changeToMenu();
     	}
     	//quick save can only be done on the map

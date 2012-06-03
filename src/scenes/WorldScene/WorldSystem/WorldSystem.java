@@ -110,6 +110,7 @@ public class WorldSystem extends GameSystem
 			if (encounterNum > 100)
 				if (currentTerrain.getFormations().size() > 0)
 				{
+					finish();
 					encounterNum = 0;
 					Formation f = currentTerrain.getRandomFormation();
 					Engine.getInstance().changeToBattle(f, currentTerrain.getBackground());

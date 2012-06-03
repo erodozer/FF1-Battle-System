@@ -4,6 +4,7 @@ import java.applet.AudioClip;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
@@ -14,6 +15,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Line;
+import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.swing.JApplet;
 
@@ -32,6 +34,7 @@ public class SoundEffect{
 	String name;	//name of the sound effect file
 	Line line;
 	Clip clip;		//the sound clip to play
+	AudioInputStream ais;
 	
 	boolean loop;
 	
@@ -44,11 +47,10 @@ public class SoundEffect{
 		name = s;
 		try {
 			File f = new File("data/audio/fx/nature.wav");
-			AudioInputStream a = AudioSystem.getAudioInputStream(f);
-			AudioFormat af = a.getFormat();
-			System.out.println(af);
-			clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, a.getFormat()));
-			clip.open(a);
+			ais = AudioSystem.getAudioInputStream(f);
+			AudioFormat af = ais.getFormat();
+			clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, ais.getFormat()));
+			clip.open(ais);
 		} catch (Exception e) {
 			System.out.println();
 			e.printStackTrace();
@@ -100,6 +102,8 @@ public class SoundEffect{
 		if (clip != null)
 		{
 			clip.stop();
+			clip.close();
+			clip = null;
 		}
 	}
 }

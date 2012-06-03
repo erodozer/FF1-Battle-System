@@ -16,17 +16,27 @@ public class WorldScene extends Scene{
 	
 	Map map;
 	
-	public void start(String s, int startX, int startY)
+	public void start()
 	{
-		map = new Map(s);
-		Engine.getInstance().setCurrentMap(s);
-		system = new WorldSystem();
-		((WorldSystem)system).start(map, startX, startY);
-		display = new WorldHUD((WorldSystem)system, map);
+		if (map != null)
+			map.unpause();
 	}
 	
-	public void stop()
+	public void start(String s, int startX, int startY)
 	{
-		system.finish();
+		if (map != null)
+		{
+			Map oldMap = map;
+			oldMap.killSound();
+			oldMap = null;
+		}
+		
+		map = new Map(s);
+		Engine.getInstance().setCurrentMap(s);	
+		
+		system = new WorldSystem();
+		((WorldSystem)system).start(map, startX, startY);
+	
+		display = new WorldHUD((WorldSystem)system, map);
 	}
 }
