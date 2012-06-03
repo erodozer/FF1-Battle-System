@@ -26,7 +26,7 @@ public class Map {
 	public static final int drawColsMax = ContentPanel.INTERNAL_RES_H/TileSet.ORIGINAL_DIMENSIONS;
 	
 	MP3 bgm;				//maps can have their own background music
-	SoundEffect ambient;	//maps can also have ambient noise to them
+	//SoundEffect ambient;	//maps can also have ambient noise to them
 	String name;
 	
 	//map buffer
@@ -92,9 +92,9 @@ public class Map {
 			clearColor = Color.decode(pref.node("map").get("clearColor", "#000000"));
 			tileSet = new TileSet(pref.node("map").get("tileset", "world") + ".png");
 			bgm = new MP3(pref.node("map").get("bgm", "world")+".mp3");
-			ambient = new SoundEffect("nature.wav");
-			ambient.setLoop(true);
-			ambient.play();
+			//ambient = new SoundEffect("nature.wav");
+			//ambient.setLoop(true);
+			//ambient.play();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			System.err.println("can not find file: " + "data/" + path + "map.ini");
@@ -297,13 +297,13 @@ public class Map {
 	 */
 	public void pause()
 	{
-		ambient.stop();
+	//	ambient.stop();
 		bgm.stop();
 	}
 	
 	public void unpause()
 	{
-		ambient.play();
+	//	ambient.play();
 		bgm.play();
 	}
 
@@ -311,7 +311,7 @@ public class Map {
 	 * Perma kills this maps sound before disposing of the map
 	 */
 	public void killSound() {
-		ambient.dispose();
+	//	ambient.dispose();
 		bgm.stop();
 	}
 }
