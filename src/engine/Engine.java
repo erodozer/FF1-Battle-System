@@ -1,5 +1,6 @@
 package engine;
 
+import graphics.ContentPanel;
 import graphics.Sprite;
 import groups.Formation;
 import groups.Party;
@@ -120,6 +121,8 @@ public class Engine{
 			return;
 		}
 		changeScene(world);
+		//force evoking of transition
+		ContentPanel.getInstance().evokeTransition(true);
 	}
 		
 	/**
@@ -132,6 +135,8 @@ public class Engine{
 	{
 		changeScene(world);
 		world.start(mapName, startX, startY);
+		//force evoking of transition
+		ContentPanel.getInstance().evokeTransition(true);
 	}
 	
 	/**
