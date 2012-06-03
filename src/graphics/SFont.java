@@ -380,4 +380,14 @@ public class SFont {
 		
 		drawString(g, text, x, y, alignment, c);
 	}
+	
+	public int getStringWidth(String s)
+	{
+		return fm.stringWidth(s);
+	}
+	
+	public int getHeight()
+	{
+		return fm.getHeight();
+	}
 }
