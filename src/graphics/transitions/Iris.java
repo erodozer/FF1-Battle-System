@@ -29,6 +29,7 @@ abstract public class Iris extends Transition {
 	private static LookupTable lut;
 	private static LookupOp luo ;
 	
+	static
 	{
 		Arrays.fill(r, (byte)0);
 		Arrays.fill(b, (byte)0);
