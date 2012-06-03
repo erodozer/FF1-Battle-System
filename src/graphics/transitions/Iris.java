@@ -11,9 +11,10 @@ import java.util.Arrays;
 
 abstract public class Iris extends Transition {
 
+	private static Color clearColor = new Color(0,0,0,255);
+	private static Color erase = new Color(255,255,255,255);
+	
 	private int diameter = 1;	//diameter of the circle
-	private Color clearColor = new Color(0,0,0,255);
-	private Color erase = new Color(255,255,255,255);
 	private BufferedImage blackIris;	//need another buffer for drawing the black lens effect
 	private Graphics irisG;				//graphics component to the iris image
 	
@@ -21,16 +22,17 @@ abstract public class Iris extends Transition {
 										//when the radius hits this point, then it knows the screen is full
 	
 	//mask manipulation
-	private static byte[] r = new byte[256];
-	private static byte[] b = new byte[256];
-	private static byte[] g = new byte[256];
-	private static byte[] a = new byte[256];
-	private static byte[][] data;
 	private static LookupTable lut;
 	private static LookupOp luo ;
 	
 	static
 	{
+		byte[] r = new byte[256];
+		byte[] b = new byte[256];
+		byte[] g = new byte[256];
+		byte[] a = new byte[256];
+		byte[][] data;
+		
 		Arrays.fill(r, (byte)0);
 		Arrays.fill(b, (byte)0);
 		Arrays.fill(g, (byte)0);
