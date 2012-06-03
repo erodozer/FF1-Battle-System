@@ -212,7 +212,9 @@ public class Engine{
 	 */
 	public void setParty(Party p)
 	{
+		Party old = party;
 		party = p;
+		old = null;
 	}
 
 	public Scene getCurrentScene() {
@@ -307,22 +309,15 @@ public class Engine{
 	 */
 	public void quickStart()
 	{
-		try {
-			Thread.sleep(50);
-			setParty(null);
-			Party p = new Party();
-			p.add("APPL", "Fighter");
-			p.add("TWIL", "Red Mage");
-			p.add("RNBW", "Black Belt");
-			p.add("FLUT", "White Mage");
-			p.add("RRTY", "Black Mage");
-			p.add("PNKE", "Thief");
-			setParty(p);
-			changeToWorld("world", 3, 3);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Party p = new Party();
+		p.add("APPL", "Fighter");
+		p.add("TWIL", "Red Mage");
+		p.add("RNBW", "Black Belt");
+		p.add("FLUT", "White Mage");
+		p.add("RRTY", "Black Mage");
+		p.add("PNKE", "Thief");
+		setParty(p);
+		changeToWorld("world", 3, 3);
 	}
 
 }
