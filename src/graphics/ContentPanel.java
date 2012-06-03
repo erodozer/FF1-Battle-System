@@ -8,9 +8,7 @@ import java.awt.image.BufferedImage;
 import scenes.Scene;
 import core.GameRunner;
 import engine.Engine;
-import graphics.transitions.HorizontalCurtainIn;
-import graphics.transitions.HorizontalCurtainOut;
-import graphics.transitions.Transition;
+import graphics.transitions.*;
 
 /**
  * ContentPanel
@@ -54,6 +52,8 @@ public class ContentPanel{
 	
 	//TRANSITION VARIABLES
 	private Transition trans;
+	private Class transIn = IrisIn.class;
+	private Class transOut = IrisOut.class;
 
 	private GameRunner parent;
 	
@@ -90,12 +90,17 @@ public class ContentPanel{
 	 */
 	public void evokeTransition(boolean t)
 	{
-		if (t)
-			trans = new HorizontalCurtainIn();
-		else
-			trans = new HorizontalCurtainOut();
-		trans.setTime(200);
-		trans.setBuffer(getScreenCopy());
+		try {
+			if (t)
+				trans = (Transition) transIn.newInstance();
+			else
+				trans = (Transition) transOut.newInstance();
+			trans.setTime(200);
+			trans.setBuffer(getScreenCopy());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -159,7 +164,7 @@ public class ContentPanel{
 		{
 			trans.paint(g);
 			if (trans.isDone())
-				if (trans instanceof HorizontalCurtainIn)
+				if (trans.getClass() == transIn)
 					evokeTransition(false);
 				else
 					trans = null;
