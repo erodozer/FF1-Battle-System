@@ -51,6 +51,8 @@ public class IssueState extends GameState
 	
 	public IssueState(BattleSystem p){
 		super(p);
+		//need to get the drinks from the party directly instead of from the one generated
+		// for battle because the one for battle does not actually have the same inventory
 		drinks = Engine.getInstance().getParty().getBattleItems();
 	}
 	
@@ -90,12 +92,16 @@ public class IssueState extends GameState
 		if (actor.getMoving() == 0 || actor.getMoving() == 2)
 			return;
 		
+		//when the character has moved back into position, end the command issuing
 		if (actor.getMoving() == 3)
 		{
 			finish();
 			return;
 		}
 		
+		/*
+		 * All this here is just for ensuring the cursor doesn't go out of bounds when selecting stuff
+		 */
 		if (targetSelecting)
 		{
 			if (index >= targets.length)
@@ -117,6 +123,13 @@ public class IssueState extends GameState
 			if (index > 7)
 				index = 8;
 		}
+		else if (drinkSelecting)
+		{
+			if (index < 0)
+				index = 0;
+			if (index > drinks.length-1)
+				index = drinks.length-1;
+		}
 		else
 		{	
 			if (index >= actor.getCommands().length)
@@ -136,20 +149,26 @@ public class IssueState extends GameState
 		//Do not update while player is animating
 		if (actor.getMoving() == 0 || actor.getMoving() == 2)
 			return;
-				
+		
+		//pressing A calls whatever is next
 		if (key == Input.KEY_A)
 			next();
 		
+		//pressing B will either cancel windows or push back to the previous actor
 		if (key == Input.KEY_B)
 		{
+			//first get out of target selecting
 			if (targetSelecting)
 				targetSelecting = false;
+			//if in any of the submenus, close them
 			else if (spellSelecting || drinkSelecting || itemSelecting)
 			{
 				spellSelecting = false;
 				drinkSelecting = false;
 				itemSelecting = false;
 			}
+			//if at lowest level and B is pressed, go back and actor
+			// to make corrections in issued command
 			else 
 			{
 				actor.setMoving(2);
@@ -157,6 +176,7 @@ public class IssueState extends GameState
 			}
 		}
 		
+		//spell selecting is divided into 3 columns and 4 rows
 		if (spellSelecting && !targetSelecting)
 		{
 			if (key == Input.KEY_DN)
@@ -168,6 +188,19 @@ public class IssueState extends GameState
 			else if (key == Input.KEY_LT)
 				index--;
 		}
+		//item selecting window is divided into 2 columns and 4 rows
+		else if (itemSelecting && !targetSelecting)
+		{
+			if (key == Input.KEY_DN)
+				index+=2;
+			else if (key == Input.KEY_UP)
+				index-=2;
+			else if (key == Input.KEY_RT)
+				index++;
+			else if (key == Input.KEY_LT)
+				index--;	
+		}
+		//everything else is normally just up and down
 		else
 		{
 			if (key == Input.KEY_DN)
@@ -183,23 +216,29 @@ public class IssueState extends GameState
 	 */
 	public void next()
 	{
+		//target selection is final step
+		//after selecting a target a command will finally be issued
 		if (targetSelecting)
 		{
 			target = targets[index];
+			//generate a spell command if a spell was being chosen
 			if (spellSelecting)
 				actor.setCommand(new SpellCommand(s, actor, new Actor[]{target}));
+			//generate an item command if either an item or drink is used
 			else if (itemSelecting || drinkSelecting)
 				actor.setCommand(new ItemCommand(it, actor, new Actor[]{target}));
+			//else do a basic attack
 			else
 				actor.setCommand(new AttackCommand(actor, new Actor[]{target}));
+			//have the character step back into position and end command selection for the character
 			actor.setMoving(2);
-			finish();
 		}
 		else if (spellSelecting)
 		{
-			//allow choosing if the spell exists and the player has enough mp to cast it
+			//allow choosing if the spell exists
 			if (actor.getSpells(index/3)[index%3] != null)
 			{
+				//only allow the character to choose the spell if they have enough MP to
 				if (actor.getMp(index/3) > 0)
 				{
 					s = actor.getSpells(index / 3)[index % 3];

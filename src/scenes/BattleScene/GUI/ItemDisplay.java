@@ -20,19 +20,12 @@ public class ItemDisplay extends HUD{
 	
 	SWindow window;
 	
-	BattleSystem parent;
-	
 	ArrayList<Item> items;
 	
 	public ItemDisplay(int x, int y)
 	{
 		window = new SWindow(x, y, 178, 80);
 		items = new ArrayList<Item>();
-	}
-	
-	public void setParentScene(BattleSystem bs)
-	{
-		parent = bs;
 	}
 
 	/**

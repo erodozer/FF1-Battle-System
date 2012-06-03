@@ -71,6 +71,7 @@ public class VictoryState extends GameState {
 		for (int i = 0; i < p.size(); i++)
 		{
 			p.get(i).addExp(exp);
+			p.get(i).setState(Player.VICT);
 			if (p.get(i).getExpToLevel() <= 0)
 				leveledUp.add(p.get(i));
 		}
@@ -84,60 +85,53 @@ public class VictoryState extends GameState {
 	 */
 	@Override
 	public void handle() {
-		try {
-			Thread.sleep(1500);
-			
-			//check to see if the level up messages should be shown or not
-			if (step == 1)
+		//check to see if the level up messages should be shown or not
+		if (step == 1)
+		{
+			if (leveledUp.size() > 0)
+				step = 2;
+			else
+				step = 4;
+		}
+		//advances through players to level them up and display level up messages
+		else if (step == 2)
+		{
+			if (!levIterator.hasNext())
 			{
-				if (leveledUp.size() > 0)
-					step = 2;
-				else
-					step = 4;
+				step = 4;
 			}
-			//advances through players to level them up and display level up messages
-			else if (step == 2)
+			player = levIterator.next();
+			player.levelUp();
+			step = 3;
+			levMessage = player.previewLevelUp();
+			messageIterator = levMessage.iterator();
+			message = messageIterator.next();
+		}
+		//display each stat being leveled up
+		else if (step == 3)
+		{
+			if (messageIterator.hasNext())
 			{
-				if (!levIterator.hasNext())
-				{
-					step = 4;
-				}
-				player = levIterator.next();
-				player.levelUp();
-				step = 3;
-				levMessage = player.previewLevelUp();
-				messageIterator = levMessage.iterator();
 				message = messageIterator.next();
-			}
-			//display each stat being leveled up
-			else if (step == 3)
-			{
-				if (messageIterator.hasNext())
-				{
-					message = messageIterator.next();
-				}
-				else
-				{
-					step = 2;
-					message = null;
-					levMessage = null;
-					messageIterator = null;
-				}
-			}
-			//end victory scene
-			else if (step >= 4)
-			{
-				finish();
-				return;
 			}
 			else
 			{
-				step++;
+				step = 2;
+				message = null;
+				levMessage = null;
+				messageIterator = null;
 			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		}
+		//end victory scene
+		else if (step >= 4)
+		{
 			finish();
-		}		
+			return;
+		}
+		else
+		{
+			step++;
+		}	
 	}
 
 	/**

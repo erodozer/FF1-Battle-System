@@ -323,8 +323,9 @@ public class Player extends Actor {
 	}
 	
 	/**
-	 * Sets the player's animation state with a string
-	 * @param string
+	 * Sets the player's animation state
+	 * @param i		The numerical state representation
+	 * 				also matches up on the battle sprite vertically
 	 */
 	public void setState(int i) {
 		state = i;
@@ -404,30 +405,39 @@ public class Player extends Actor {
 	{
 		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
 		{
-			drawSprite = sprites[0];
+			drawSprite = sprites[0]; //draw sprite is the battle sprite
+			System.out.println(drawSprite.getFrame()[1] == STAND);
+			//when they're not standing or dead, they're probably walking
 			if (getState() != STAND && getState() != DEAD)
 			{
+				//so when it's called and the frame isn't the walk step, switch back to standing
 				if (drawSprite.getFrame()[1] != STAND)
 					drawSprite.setFrame(1, STAND);
+				//if the frame is standing, show walking, or whatever state it is
 				else
 					drawSprite.setFrame(1, getState());
 			}
+			//if the player is dead show they're dead graphic
 			else if (getState() == DEAD)
 				drawSprite.setFrame(1, DEAD);
 			else
 			{
+				//if the player has low HP, show they're weakened frame
 				if (hp < maxhp*.25)
 					drawSprite.setFrame(1, WEAK);
+				//else just show them standing
 				else
 					drawSprite.setFrame(1, STAND);
 			}
 		}
+		//if asking for the character sprite and it's not the battle scene, just show them standing
 		else
 		{
 			drawSprite = sprites[0];
 			drawSprite.setFrame(1, STAND);
 		}
 		
+		//draw the sprite
 		drawSprite.paint(g);
 	}
 

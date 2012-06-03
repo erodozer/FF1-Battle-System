@@ -27,11 +27,19 @@ public class PartySpriteDisplay extends HUD{
 	final int BKGVERTOFFSET = 7;
 	final int BKGHORZOFFSET = 8;
 	
+	//position of where the party member normally stands
+	int standPos;
+	//position of where they are when they are standing out performing their command
+	int actPos;
+	
 	public PartySpriteDisplay(int x, int y)
 	{
 		window = new SWindow(x, y, 65, 144);
 		background = new Sprite(null);
 		party = new Party();
+		
+		standPos = window.getX() + 16;
+		actPos = window.getX() + 6;
 	}
 	
 	public void setParentScene(BattleSystem bs)
@@ -75,9 +83,9 @@ public class PartySpriteDisplay extends HUD{
 				{
 					p.setState(Player.WALK);
 					p.setX(p.getX() - 2);
-					if (p.getX() < window.getX() + 6)
+					if (p.getX() < actPos)
 					{
-						p.setX(window.getX() + 6);
+						p.setX(actPos);
 						p.setState(Player.STAND);
 						p.setMoving(1);
 					}
@@ -85,14 +93,14 @@ public class PartySpriteDisplay extends HUD{
 				//sprite stands still
 				else if (p.getMoving() == 1)
 				{
-					p.setX(window.getX() + 6);
+					p.setX(actPos);
 				}
 				//sprite moves back
 				else if (p.getMoving() == 2)
 				{
 					p.setState(Player.WALK);
 					p.setX(p.getX()+2);
-					if (p.getX() >= window.getX() + 16)
+					if (p.getX() >= standPos)
 					{
 						p.setX(window.getX() + 16);
 						p.setState(Player.STAND);
@@ -100,10 +108,10 @@ public class PartySpriteDisplay extends HUD{
 					}
 				}
 				else
-					p.setX(window.getX() + 16);
+					p.setX(standPos);
 			}
 			else
-				p.setX(window.getX() + 16);
+				p.setX(standPos);
 			
 			if (!p.getAlive())
 				p.setState(Player.DEAD);

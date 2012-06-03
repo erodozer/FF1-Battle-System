@@ -22,16 +22,9 @@ public class SpellDisplay extends HUD{
 	int index = 0;
 	int range = 0;
 	
-	BattleSystem parent;
-	
 	public SpellDisplay(int x, int y)
 	{
 		window = new SWindow(x, y, 178, 80);
-	}
-	
-	public void setParentScene(BattleSystem bs)
-	{
-		parent = bs;
 	}
 	
 	public void update(IssueState state)
@@ -52,7 +45,7 @@ public class SpellDisplay extends HUD{
 		//window is first sprite
 		window.paint(g);
 		
-		Actor a = parent.getActiveActor();
+		Actor a = ((BattleSystem) parent).getActiveActor();
 		for (int i = range; i < range+4; i++)
 		{
 			font.drawString(g, "L"+(i+1), 0, 14+16*(i-range), window);
