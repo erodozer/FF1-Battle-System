@@ -26,6 +26,11 @@ public class GameRunner extends GameFrame implements KeyListener{
 	//singleton instance of the game runner
 	private static GameRunner instance;
 	
+	//force pausing
+	private double pauseTimer;		//how long the game has been paused
+									// once it reaches pause length the game will unpause
+	private double pauseLength;		//you can manually for pausing for a certain amount of time
+	
 	/**
 	 * @return an instance of the game runner
 	 */
@@ -72,10 +77,40 @@ public class GameRunner extends GameFrame implements KeyListener{
 	}
 	
 	/**
+	 * Force the game logic updater to sleep for a set amount of time
+	 * @param milliseconds	amount to sleep in milliseconds
+	 */
+	public void sleep(long milliseconds)
+	{
+		pauseLength = milliseconds;
+		pauseTimer = 0;
+		isPaused = true;
+	}
+	
+	/**
 	 * Updates the current scene's events
 	 */
 	@Override
 	public void gameUpdate() {
+		//when suspended don't update the engine or graphics
+		if (isSuspended)
+			return;
+		
+		//when paused, don't updated the engine
+		if (isPaused)
+		{
+			if (pauseLength == -1)
+				return;
+			
+			if (pauseTimer < pauseLength)
+			{
+				pauseTimer += 1000.0/getCurrFPS();
+				return;
+			}
+			else
+				isPaused = false; 
+		}
+		
 		try{
 			currentScene = engine.getCurrentScene();
 			currentScene.update();		
@@ -92,7 +127,9 @@ public class GameRunner extends GameFrame implements KeyListener{
 	 */
 	@Override
 	public void gameRender(Graphics g) {
-		panel.paint(g);
+		//when suspended don't update the engine or graphics
+		if (!isSuspended)
+			panel.paint(g);
 	}
 
 	/**
