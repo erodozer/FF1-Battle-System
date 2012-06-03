@@ -406,9 +406,15 @@ public class Player extends Actor {
 		if (Engine.getInstance().getCurrentScene() instanceof BattleScene)
 		{
 			drawSprite = sprites[0]; //draw sprite is the battle sprite
-			System.out.println(drawSprite.getFrame()[1] == STAND);
+			
+			//if the player is dead show they're dead graphic
+			if (getState() == DEAD)
+				drawSprite.setFrame(1, DEAD);
+			//if the battle is over show victory stances if they're alive
+			else if (getState() == VICT)
+				drawSprite.setFrame(1, VICT);
 			//when they're not standing or dead, they're probably walking
-			if (getState() != STAND && getState() != DEAD)
+			else if (getState() != STAND)
 			{
 				//so when it's called and the frame isn't the walk step, switch back to standing
 				if (drawSprite.getFrame()[1] != STAND)
@@ -417,9 +423,6 @@ public class Player extends Actor {
 				else
 					drawSprite.setFrame(1, getState());
 			}
-			//if the player is dead show they're dead graphic
-			else if (getState() == DEAD)
-				drawSprite.setFrame(1, DEAD);
 			else
 			{
 				//if the player has low HP, show they're weakened frame
