@@ -16,6 +16,12 @@ public class WorldScene extends Scene{
 	
 	Map map;
 	
+	public WorldScene()
+	{
+		system = new WorldSystem();
+		display = new WorldHUD((WorldSystem)system);	
+	}
+	
 	public void start()
 	{
 		if (map != null)
@@ -34,9 +40,7 @@ public class WorldScene extends Scene{
 		map = new Map(s);
 		Engine.getInstance().setCurrentMap(s);	
 		
-		system = new WorldSystem();
 		((WorldSystem)system).start(map, startX, startY);
-	
-		display = new WorldHUD((WorldSystem)system, map);
+		((WorldHUD)display).setMap(map);
 	}
 }

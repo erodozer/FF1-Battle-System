@@ -68,6 +68,9 @@ public class WorldSystem extends GameSystem
 	@Override
 	public void update()
 	{
+		if (map == null)
+			return;
+		
 		state.handle();
 		map.unpause();
 	}

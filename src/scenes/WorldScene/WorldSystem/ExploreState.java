@@ -14,7 +14,6 @@ import engine.Input;
  */
 public class ExploreState extends GameState {
 
-	Engine e = Engine.getInstance();
 	WorldSystem parent;
 	
 	//party's position on the map
@@ -84,18 +83,18 @@ public class ExploreState extends GameState {
     	else if (key == Input.KEY_SELECT)
     	{
     		parent.finish();
-    		e.changeToOrder();
+    		Engine.getInstance().changeToOrder();
     	}
     	//show main menu
     	else if (key == Input.KEY_START)
     	{
     		parent.finish();
-    		e.changeToMenu();
+    		Engine.getInstance().changeToMenu();
     	}
     	//quick save can only be done on the map
     	else if (key == Input.KEY_QUICKSAVE)
     	{
-    		e.recordSave(0);
+    		Engine.getInstance().recordSave(0);
     	}
 	}
 

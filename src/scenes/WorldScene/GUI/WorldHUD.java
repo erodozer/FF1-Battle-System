@@ -22,7 +22,6 @@ import engine.Engine;
  */
 public class WorldHUD extends HUD
 {
-	Engine e;
 	Map map;
 	NPC[] npcs;
 	DialogWindow dialog;
@@ -31,14 +30,10 @@ public class WorldHUD extends HUD
 	
 	WorldSystem parent;
 	
-	public WorldHUD(WorldSystem w, Map m)
+	public WorldHUD(WorldSystem w)
 	{
 		parent = w;
-		e = Engine.getInstance();
-		map = m;
-		npcs = m.getAllNPCs();
-		clearColor = m.getClearColor();
-		
+
 		try {
 			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);
 		} catch (Exception e){
@@ -46,6 +41,13 @@ public class WorldHUD extends HUD
 		}
 		
 		dialog = new DialogWindow();
+	}
+	
+	public void setMap(Map m)
+	{
+		map = m;
+		npcs = m.getAllNPCs();
+		clearColor = m.getClearColor();
 	}
 	
 	@Override

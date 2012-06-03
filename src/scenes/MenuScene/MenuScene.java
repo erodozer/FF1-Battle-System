@@ -16,11 +16,14 @@ public class MenuScene extends Scene{
 	 */
 	@Override
 	public void start() {
-	    MenuSystem system = new MenuSystem();
-		MenuGUI display = new MenuGUI(system);
+		if (system == null)
+		{
+			MenuSystem system = new MenuSystem();
+			MenuGUI display = new MenuGUI(system);
         
-		this.system = system;
-		this.display = display;
+			this.system = system;
+			this.display = display;
+		}
 	}
 	
 	/**
@@ -29,12 +32,5 @@ public class MenuScene extends Scene{
 	public void startWithOrder(){
 	    start();
 	    ((MenuSystem)this.system).showOrderMenu();
-	}
-	
-	@Override
-	public void stop()
-	{
-		system = null;
-		display = null;
 	}
 }
