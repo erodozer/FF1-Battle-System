@@ -289,7 +289,7 @@ public class Sprite{
 	 */
 	public int[] getFrame()
 	{
-		return new int[]{currentXFrame+1, currentYFrame+1};
+		return new int[]{currentXFrame, currentYFrame};
 	}
 	
 	/**
