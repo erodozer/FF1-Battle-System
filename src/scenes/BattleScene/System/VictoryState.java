@@ -67,13 +67,18 @@ public class VictoryState extends GameState {
 		exp = f.getExp()/p.getAlive();
 		g = f.getGold();
 		
+		Player player;
 		leveledUp = new ArrayList<Player>();
 		for (int i = 0; i < p.size(); i++)
 		{
-			p.get(i).addExp(exp);
-			p.get(i).setState(Player.VICT);
-			if (p.get(i).getExpToLevel() <= 0)
-				leveledUp.add(p.get(i));
+			player = p.get(i);
+			if (player.getAlive())
+			{
+				p.get(i).addExp(exp);
+				p.get(i).setState(Player.VICT);
+				if (p.get(i).getExpToLevel() <= 0)
+					leveledUp.add(p.get(i));
+			}
 		}
 		levIterator = leveledUp.iterator();
 		
