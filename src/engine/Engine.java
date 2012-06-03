@@ -64,9 +64,8 @@ public class Engine{
 	{
 		battle = new BattleScene();
 		menu = new MenuScene();
-		world = new WorldScene();
-		menu = new MenuScene();
 		party = new Party();
+		world = new WorldScene();
 		_instance = this;
 	}
 	
@@ -95,8 +94,9 @@ public class Engine{
 	 */
 	public void changeToBattle(Formation formation)
 	{
-		battle.start(formation);
 		changeScene(battle);
+		battle.start(formation);
+		
 	}
 	
 	/**
@@ -105,8 +105,8 @@ public class Engine{
 	 * @param background	the background image to use for the battle terrain
 	 */
 	public void changeToBattle(Formation f, Sprite background) {
-		battle.start(f, background);
 		changeScene(battle);
+		battle.start(f, background);
 	}
 
 	/**
@@ -130,8 +130,8 @@ public class Engine{
 	 */
 	public void changeToWorld(String mapName, int startX, int startY)
 	{
-		world.start(mapName, startX, startY);
 		changeScene(world);
+		world.start(mapName, startX, startY);
 	}
 	
 	/**
@@ -140,7 +140,6 @@ public class Engine{
 	public void changeToCreation()
 	{
 		CreationScene s = new CreationScene(); 
-		s.start();
 		changeScene(s);
 	}
 	
@@ -150,8 +149,8 @@ public class Engine{
 	 */
 	public void changeToShop(Shop shop) {
 		ShopScene s = new ShopScene();
-		s.start(shop);
 		changeScene(s);
+		s.start(shop);	
 	}
 	
 	/**
@@ -159,7 +158,6 @@ public class Engine{
 	 */
 	public void changeToMenu()
 	{
-		menu.start();
 		changeScene(menu);
 	}
 	
@@ -168,8 +166,8 @@ public class Engine{
 	 */
 	public void changeToOrder()
 	{
-		menu.startWithOrder();
 		changeScene(menu);
+		menu.startWithOrder();
 	}
 	
 	/**
@@ -178,7 +176,6 @@ public class Engine{
 	 */
 	public void changeToTitle() {
 		TitleScene t = new TitleScene();
-		t.start();
 		changeScene(t);
 	}
 	
@@ -196,8 +193,7 @@ public class Engine{
 			oldScene.stop();
 		}
 		oldScene = null;
-		
-		
+		currentScene.start();
 	}
 	
 	public Party getParty()
@@ -306,16 +302,22 @@ public class Engine{
 	 */
 	public void quickStart()
 	{
-		setParty(null);
-		Party p = new Party();
-		p.add("APPL", "Fighter");
-		p.add("TWIL", "Red Mage");
-		p.add("RNBW", "Black Belt");
-		p.add("FLUT", "White Mage");
-		p.add("RRTY", "Black Mage");
-		p.add("PNKE", "Thief");
-		setParty(p);
-		changeToWorld("world", 3, 3);
+		try {
+			Thread.sleep(50);
+			setParty(null);
+			Party p = new Party();
+			p.add("APPL", "Fighter");
+			p.add("TWIL", "Red Mage");
+			p.add("RNBW", "Black Belt");
+			p.add("FLUT", "White Mage");
+			p.add("RRTY", "Black Mage");
+			p.add("PNKE", "Thief");
+			setParty(p);
+			changeToWorld("world", 3, 3);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
