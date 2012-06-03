@@ -70,8 +70,7 @@ public class NPC {
 		dialog = node.get("dialog", "...");
 		
 		String pos = node.name().substring(node.name().indexOf('@')+1);
-		x = Integer.parseInt(pos.substring(0, pos.indexOf(',')));
-		y = Integer.parseInt(pos.substring(pos.indexOf(',')+1));
+		move(Integer.parseInt(pos.substring(0, pos.indexOf(','))), Integer.parseInt(pos.substring(pos.indexOf(',')+1)));
 		setWalkSprite("npcs/" + node.get("sprite", "npc01.png"));
 		startTime = System.currentTimeMillis();
 		
@@ -164,12 +163,7 @@ public class NPC {
 				{
 					walk();
 					direction = dir;
-					map.removeNPC(this.x, this.y);
-					x = pos[0];
-					y = pos[1];
-					xRate = (drawX-x)*rate;
-					yRate = (drawY-y)*rate;
-					map.putNPC(x, y, this);
+					move(pos[0], pos[1]);
 					break;
 				}
 				else
@@ -189,7 +183,6 @@ public class NPC {
 		if (map.getPassability(x, y))
 		{
 			walk();
-			map.removeNPC(this.x, this.y);
 			this.x = x;
 			this.y = y;
 			xRate = (x-drawX)*rate;

@@ -27,6 +27,7 @@ public class WorldSystem extends GameSystem
 	{
 		dialogState = new DialogState(this);
 		exploreState = new ExploreState(this);
+		leader = new NPC();
 	}
 	
 	/**
@@ -36,11 +37,11 @@ public class WorldSystem extends GameSystem
 	{
 		e = Engine.getInstance();
 		encounterNum = 0;
-		leader = new NPC();
 		leader.setWalkSprite(e.getParty().get(0).getMapSelf());
 		currentTerrain = null;
 		activeNPC = null;
-		setNextState();
+		state = exploreState;
+		state.start();
 	}
 	
 	/**
@@ -119,8 +120,8 @@ public class WorldSystem extends GameSystem
 					Engine.getInstance().changeToBattle(f, currentTerrain.getBackground());
 				}
 			//interact with event if stepped on
-			if (map.getEventMap().get(x + " " + y) != null)
-				map.getEventMap().get(x + " " + y).interact();
+			if (map.getEventMap()[x][y] != null)
+				map.getEventMap()[x][y].interact();
 		}
 	}
 

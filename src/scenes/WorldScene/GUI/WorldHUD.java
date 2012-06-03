@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 
 import scenes.HUD;
 import scenes.WorldScene.WorldSystem.DialogState;
@@ -23,22 +24,20 @@ import engine.Engine;
 public class WorldHUD extends HUD
 {
 	Map map;
-	NPC[] npcs;
+	List<NPC> npcs;
 	DialogWindow dialog;
 	
 	Font font;
 	
 	WorldSystem parent;
 	
+	//drawing bounds
+	int x1, x2, y1, y2;
+	int xOffset, yOffset;
+	
 	public WorldHUD(WorldSystem w)
 	{
 		parent = w;
-
-		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/font/default.ttf"))).deriveFont(24.0f);
-		} catch (Exception e){
-			font = new Font("serif", Font.PLAIN, 10);
-		}
 		
 		dialog = new DialogWindow();
 	}
@@ -55,25 +54,26 @@ public class WorldHUD extends HUD
 	{
 		if (map == null)
 			return;
-		
-		g.setColor(Color.WHITE);
-		g.setFont(font);
-		
+			
 		int xOffset = -(parent.getLeader().getDrawX()-(Map.drawColsMax/2)*TileSet.ORIGINAL_DIMENSIONS);
 		int yOffset = -(parent.getLeader().getDrawY()-(Map.drawRowsMax/2)*TileSet.ORIGINAL_DIMENSIONS);
 		g.translate(xOffset, yOffset);
 		
-		for (int x = Math.max(0, parent.getLeader().getX()-(Map.drawColsMax+Map.OFFSCREEN_RENDER)/2-1); x < Math.min(map.getWidth(), parent.getLeader().getX()+Map.drawColsMax); x++)
-			for (int y =  Math.max(0, parent.getLeader().getY()-(Map.drawRowsMax+Map.OFFSCREEN_RENDER)/2-1); y < Math.min(map.getHeight(), parent.getLeader().getY()+Map.drawRowsMax); y++)
+		x1 = Math.max(0, parent.getLeader().getX()-Map.drawColsMax/2-1);
+		x2 = Math.min(map.getWidth(), parent.getLeader().getX()+Map.drawColsMax);
+		y1 = Math.max(0, parent.getLeader().getY()-(Map.drawRowsMax+Map.OFFSCREEN_RENDER)/2-1);
+		y2 = Math.min(map.getHeight(), parent.getLeader().getY()+Map.drawRowsMax);
+		
+		for (int x = x1; x < x2; x++)
+			for (int y = y1; y < y2; y++)
 				map.paintTile(g, x, y);
 		
-		for (int x = Math.max(0, parent.getLeader().getX()-Map.drawColsMax/2-1); x < Math.min(map.getWidth(), parent.getLeader().getX()+Map.drawColsMax); x++)
-			for (int y =  Math.max(0, parent.getLeader().getY()-Map.drawRowsMax/2-1); y < Math.min(map.getHeight(), parent.getLeader().getY()+Map.drawRowsMax); y++)
-			{
-				NPC n = map.getNPC(x,y);
-				if (n != null)
-					n.draw(g);
-			}
+		for (int i = 0; i < map.getAllNPCs().size(); i++)
+		{
+			NPC n = map.getAllNPCs().get(i);
+			if (n.getX() >= x1 && n.getX() <= x2 && n.getY() >= y1 && n.getY() <= y2)
+				n.draw(g);
+		}
 			
 		//reset the translate
 		g.translate(-xOffset, -yOffset);

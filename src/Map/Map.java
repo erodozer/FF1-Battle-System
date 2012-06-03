@@ -7,7 +7,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 import java.util.prefs.BackingStoreException;
@@ -25,15 +27,12 @@ public class Map {
 	public static final int drawRowsMax = ContentPanel.INTERNAL_RES_W/TileSet.ORIGINAL_DIMENSIONS;
 	public static final int drawColsMax = ContentPanel.INTERNAL_RES_H/TileSet.ORIGINAL_DIMENSIONS;
 	
-	MP3 bgm;				//maps can have their own background music
-	//SoundEffect ambient;	//maps can also have ambient noise to them
-	String name;
+	private MP3 bgm;				//maps can have their own background music
 	
-	//map buffer
-	Image dbImage;			//map all drawn up
+	private String name;
 	
 	//tile set used
-	public TileSet tileSet;
+	private TileSet tileSet;
 	
 	//direction a sprite is facing
 	public static final int SOUTH = 1;
@@ -43,15 +42,18 @@ public class Map {
 	public static final int DIRECTIONS = 4;	//number of directions the sprite can turn
 	
 	//dimensions of the map
-	int width;
-	int height;
+	private int width;
+	private int height;
 	
-	Color clearColor;						//color the map clears to
+	private Color clearColor;			//color the map clears to
 	
-	Vector<Terrain> terrains;				//terrains of the map
+	private List<Terrain> terrains;	//terrains of the map
 	
-	private HashMap<String, NPC> npcMap;			//hashmap of all the npc locations
-	private HashMap<String, Event> eventMap;		//hashmap of all the event locations
+	private NPC[][] npcMap;				//keep all npc locations
+	private Event[][] eventMap;			//keep all event locations
+	
+	private List<NPC> npcs;				//list of all npcs
+	private List<Event> events;			//list of all events
 	
 	int[][] tiles;
 	int[][] regionMap;
@@ -64,41 +66,13 @@ public class Map {
 	{
 		name = location;
 		
-		terrains = new Vector<Terrain>();
-		npcMap = new HashMap<String, NPC>();
-		eventMap = new HashMap<String, Event>();
+		terrains = new ArrayList<Terrain>();
 		
 		String path = "maps/" + location + "/";
 		Preferences pref = null;
 		try {
 			pref = new IniPreferences(new Ini(new File("data/" + path + "map.ini")));
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			for (String section : pref.childrenNames())
-				if (section.startsWith("Region"))
-				{
-					int index = Integer.parseInt(section.substring(6));
-					if (index+1 > terrains.size())
-						terrains.setSize(index+1);
-					terrains.set(index, new Terrain(pref.node(section)));
-				}
-				else if (section.startsWith("NPC@"))
-					new NPC(this, pref.node(section));
-				else if (section.startsWith("Event@"))
-					new Event(this, pref.node(section));
-			clearColor = Color.decode(pref.node("map").get("clearColor", "#000000"));
-			tileSet = new TileSet(pref.node("map").get("tileset", "world") + ".png");
-			bgm = new MP3(pref.node("map").get("bgm", "world")+".mp3");
-			//ambient = new SoundEffect("nature.wav");
-			//ambient.setLoop(true);
-			//ambient.play();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			System.err.println("can not find file: " + "data/" + path + "map.ini");
-		} catch (BackingStoreException e) {
 			e.printStackTrace();
 		}
 		
@@ -112,12 +86,42 @@ public class Map {
 			for (int i = 0; i < h; i++)
 				for (int n = 0; n < w; n++)
 					tiles[n][i] = s.nextInt();
+			
 			regionMap = new int[w][h];
 			for (int i = 0; i < h; i++)
 				for (int n = 0; n < w; n++)
 					regionMap[n][i] = s.nextInt();
 		} 
 		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		//start loading in things from the map.ini,
+		// including npcs and events
+		npcMap = new NPC[width][height];
+		eventMap = new Event[width][height];
+		
+		npcs = new ArrayList<NPC>();
+		events = new ArrayList<Event>();
+		
+		try {
+			clearColor = Color.decode(pref.node("map").get("clearColor", "#000000"));
+			tileSet = new TileSet(pref.node("map").get("tileset", "world") + ".png");
+			bgm = new MP3(pref.node("map").get("bgm", "world")+".mp3");
+			for (String section : pref.childrenNames())
+				if (section.startsWith("Region"))
+				{
+					int index = Integer.parseInt(section.substring(6));
+					terrains.add(index, new Terrain(pref.node(section)));
+				}
+				else if (section.startsWith("NPC@"))
+					new NPC(this, pref.node(section));
+				else if (section.startsWith("Event@"))
+					new Event(this, pref.node(section));
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			System.err.println("can not find file: " + "data/" + path + "map.ini");
+		} catch (BackingStoreException e) {
 			e.printStackTrace();
 		}
 	}
@@ -130,21 +134,16 @@ public class Map {
 	 */
 	public boolean getPassability(int x, int y)
 	{
-
 		// prevent moving out of bounds
-		if (x < 0 || y < 0 || x > width || y > height)
-			return false;
-
+		if ((x < 0 || y < 0 || x > width || y > height) &&
 		// check the passibility map
-		if (tileSet.getPassability(tiles[x][y]) == TileSet.IMPASSABLE)
-			return false;
-
+			(tileSet.getPassability(tiles[x][y]) == TileSet.IMPASSABLE) &&
 		// check for an npc at the position
-		if (npcMap.get(x + " " + y) != null)
+			(npcMap[x][y] != null))
 			return false;
-
 		// return true if none of the above
-		return true;
+		else
+			return true;
 	}
 	
 	public boolean getOverlay(int x, int y)
@@ -217,13 +216,17 @@ public class Map {
 	 * Gets all the npcs
 	 * @return
 	 */
-	public NPC[] getAllNPCs() {
-		return npcMap.values().toArray(new NPC[]{});
+	public List<NPC> getAllNPCs() {
+		return npcs;
 	}
 
-	public Event[] getAllEvents()
+	/**
+	 * Get a list of all the events on this map
+	 * @return
+	 */
+	public List<Event> getAllEvents()
 	{
-		return getEventMap().values().toArray(new Event[]{});
+		return events;
 	}
 
 	public Color getClearColor() {
@@ -252,31 +255,65 @@ public class Map {
 		return height;
 	}
 
+	/**
+	 * Get an npc at a specified location
+	 * @param x	x coordinate
+	 * @param y	y coordinate
+	 * @return
+	 */
 	public NPC getNPC(int x, int y) {
-		return npcMap.get(x + " " + y);
+		return npcMap[x][y];
 	}
 
 	public Event getEvent(int x, int y) {
-		return eventMap.get(x + " " + y);
+		return eventMap[x][y];
 	}
-	public HashMap<String, Event> getEventMap() {
+	public Event[][] getEventMap() {
 		return eventMap;
 	}
 
+	/**
+	 * Sets an NPC on the map at a specified location
+	 * @param x	x location
+	 * @param y	y location
+	 * @param npc	npc to place
+	 */
 	public void putNPC(int x, int y, NPC npc) {
-		npcMap.put(x + " " + y, npc);	
+		//if the npc isn't known to be in the list, add him
+		if (!npcs.contains(npc))
+			npcs.add(npc);
+		//if he is in the list, then remove him from the position he's currently in
+		else
+			npcMap[npc.getX()][npc.getY()] = null;
+		//set the npc's position
+		npcMap[x][y] = npc;
 	}
 
+	/**
+	 * Remove an NPC from the map by their location on the map
+	 * @param x		npc's x position
+	 * @param y		npc's y position
+	 */
 	public void removeNPC(int x, int y) {
-		npcMap.remove(x + " " + y);
+		if (npcMap[x][y] != null)
+		{
+			npcs.remove(npcMap[x][y]);
+			npcMap[x][y] = null;
+		}
 	}
 
 	public void removeEvent(int x, int y) {
-		eventMap.remove(x + " " + y);
+		if (eventMap[x][y] != null)
+		{
+			events.remove(eventMap[x][y]);
+			eventMap[x][y] = null;
+		}
 	}
 
 	public void putEvent(int x, int y, Event event) {
-		eventMap.put(x + " " + y, event);		
+		eventMap[x][y] = event;	
+		if (!events.contains(event))
+			events.add(event);
 	}
 	
 	public String getName()

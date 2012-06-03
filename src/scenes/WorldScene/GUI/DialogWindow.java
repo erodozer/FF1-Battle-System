@@ -7,13 +7,15 @@ import graphics.Sprite;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import scenes.HUD;
+
 /**
  * DialogWindow
  * @author nhydock
  *
  *	Simple window for displaying the text of an event or npc
  */
-public class DialogWindow extends Sprite {
+public class DialogWindow extends HUD {
 	
 	SWindow window;			//frame
 	int index;				//range of lines to display
@@ -25,8 +27,6 @@ public class DialogWindow extends Sprite {
 	 */
 	public DialogWindow()
 	{
-		super(null);
-		
 		window = new SWindow(0, 0, ContentPanel.INTERNAL_RES_W, 96, Color.BLUE);
 		dialog = new String[0];
 	}
@@ -51,6 +51,11 @@ public class DialogWindow extends Sprite {
 	{
 		window.paint(g);
 		for (int i = index; i < Math.min(dialog.length, index+3); i++)
-			g.drawString(dialog[i], window.getX()+10, (g.getFontMetrics(g.getFont()).getHeight()+3)*(i+1));
+			font.drawString(g, dialog[i], 0, (font.getHeight()+3)*i, window);
+	}
+
+	@Override
+	public void update() {
+		
 	}
 }
