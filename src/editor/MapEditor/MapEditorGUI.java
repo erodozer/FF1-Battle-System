@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.io.PrintWriter;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -49,6 +51,7 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 	JButton loadButton;
 	JButton restoreButton;
 	JButton testButton;
+	JButton pngButton;
 	
 	/*
 	 * Mode switcher
@@ -229,10 +232,13 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		int[] buttonSize = {230, 24};
 		newButton = new JButton("New");
 		newButton.setSize(buttonSize[0], buttonSize[1]);
-		newButton.setLocation(650, 230);
+		newButton.setLocation(650, 200);
 		saveButton = new JButton("Save");
 		saveButton.setSize(buttonSize[0], buttonSize[1]);
-		saveButton.setLocation(650, 260);
+		saveButton.setLocation(650, 230);
+		pngButton = new JButton("Save as PNG");
+		pngButton.setSize(buttonSize[0], buttonSize[1]);
+		pngButton.setLocation(650, 260);
 		loadButton = new JButton("Load");
 		loadButton.setSize(buttonSize[0], buttonSize[1]);
 		loadButton.setLocation(650, 290);
@@ -245,12 +251,14 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 		
 		newButton.addActionListener(this);
 		saveButton.addActionListener(this);
+		pngButton.addActionListener(this);
 		loadButton.addActionListener(this);
 		restoreButton.addActionListener(this);
 		testButton.addActionListener(this);
 		
 		add(newButton);
 		add(saveButton);
+		add(pngButton);
 		add(loadButton);
 		add(restoreButton);
 		add(testButton);
@@ -290,6 +298,23 @@ public class MapEditorGUI extends JPanel implements ActionListener{
 				if (JOptionPane.showConfirmDialog(this, "A map of name " + n + " already exists.  \nDo you wish to overwrite it?", "Overwrite", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
 					return;
 			save();
+		}
+		else if (event.getSource() == pngButton)
+		{
+			try {
+			    // retrieve image
+				BufferedImage b = editGrid.savePNG();
+			    File outputfile = new File(nameField.getText()+"_preview.png");
+			    outputfile.createNewFile();
+			    ImageIO.write(b, "png", outputfile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "The image was not able to save.\n" +
+							"Possible reasons for this could be \n" +
+							"1) The filesystem is read-only\n" +
+							"2) There is already a file with that name in the npcs folder"
+							, "An error has occurred", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		else if (event.getSource() == loadButton)
 		{

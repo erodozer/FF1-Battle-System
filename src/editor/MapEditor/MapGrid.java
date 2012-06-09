@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Scanner;
 
@@ -362,25 +363,21 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 	}
 	
 	/**
-	 * Draws the actual grid and tiles
+	 * Paints all the tiles
 	 */
-	@Override
-	public void paint(Graphics g)
+	public void paintAllTiles()
 	{
-		if (g == null)
-			return;
-		
-		if (dbImage == null)
-		{
-			dbImage = createImage(getWidth(), getHeight());
-				
-			int n, k;	//n = x on the tileset, k = y on the tileset
-			for (int x = 0; x < width; x++)
-				for (int y = 0; y < height; y++)
-					paintTile(x, y);
-		}
-		
-		g.drawImage(dbImage, 0, 0, null);
+		for (int x = 0; x < width; x++)
+			for (int y = 0; y < height; y++)
+				paintTile(x, y);
+	}
+	
+	/**
+	 * Paints the grid and cursor over the tiles
+	 */
+	public void paintGrid()
+	{
+		Graphics g = dbImage.getGraphics();
 		g.setColor(Color.BLACK);
 		for (int i = 1; i < width; i++)
 			g.drawLine(i*TileSet.TILE_DIMENSION, 0, i*TileSet.TILE_DIMENSION, height*TileSet.TILE_DIMENSION);
@@ -403,6 +400,23 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 			else
 				g.drawRect(x*TileSet.TILE_DIMENSION, y*TileSet.TILE_DIMENSION, TileSet.TILE_DIMENSION*(tileSelected.length), TileSet.TILE_DIMENSION*(tileSelected[0].length));
 		}
+	}
+	
+	/**
+	 * Draws the actual grid and tiles
+	 */
+	@Override
+	public void paint(Graphics g)
+	{
+		if (g == null)
+			return;
+		
+		if (dbImage == null)
+			dbImage = createImage(getWidth(), getHeight());
+		
+		paintAllTiles();
+		paintGrid();
+		g.drawImage(dbImage, 0, 0, null);
 		
 		//show x & y coordinate of the mouse when the mouse is inside the frame
 		if (updating)
@@ -482,4 +496,15 @@ public class MapGrid extends JComponent implements MouseListener, MouseMotionLis
 		return output;
 	}
 
+	/**
+	 * Creates a buffer without the grid drawn to save to a .png file
+	 * @return
+	 */
+	public BufferedImage savePNG()
+	{
+		BufferedImage b = (BufferedImage) createImage(this.getWidth(), this.getHeight());
+		paintAllTiles();
+		b.getGraphics().drawImage(dbImage, 0, 0, null);
+		return b;
+	}
 }
