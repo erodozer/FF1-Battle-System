@@ -135,9 +135,9 @@ public class Map {
 	public boolean getPassability(int x, int y)
 	{
 		// prevent moving out of bounds
-		if ((x < 0 || y < 0 || x > width || y > height) &&
+		if (!(x >= 0 && y >= 0 && x <= width && y <= height) ||
 		// check the passibility map
-			(tileSet.getPassability(tiles[x][y]) == TileSet.IMPASSABLE) &&
+			(tileSet.getPassability(tiles[x][y]) == TileSet.IMPASSABLE) ||
 		// check for an npc at the position
 			(npcMap[x][y] != null))
 			return false;
@@ -203,7 +203,7 @@ public class Map {
 	{
 		try
 		{
-			return terrains.get(regionMap[x][y]);		
+			return terrains.get(regionMap[x][y]-1);		
 		}
 		catch(Exception e)
 		{

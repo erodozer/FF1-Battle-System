@@ -183,11 +183,11 @@ public class NPC {
 		if (map.getPassability(x, y))
 		{
 			walk();
-			this.x = x;
-			this.y = y;
 			xRate = (x-drawX)*rate;
 			yRate = (y-drawY)*rate;
 			map.putNPC(x, y, this);
+			this.x = x;
+			this.y = y;
 		}		
 	}
 	
