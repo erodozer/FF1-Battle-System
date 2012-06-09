@@ -1,6 +1,7 @@
 package spell;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.prefs.Preferences;
@@ -27,10 +28,17 @@ public class Spell {
 	/**
 	 * List of all spells available for loading
 	 */
-	public static final Vector<String> AVAILABLESPELLS = new Vector(){
+	public static final Vector<String> AVAILABLESPELLS = new Vector<String>(){
 		{
-			for (String s : ToolKit.spells)
-				add(s);
+			String[] spells = new File("data/spells").list(new FilenameFilter() {
+	            @Override
+				public boolean accept(File f, String s) {
+	            	return s.endsWith(".ini");
+	              }
+	            });
+			
+			for (String s : spells)
+				add(s.substring(0, s.length()-4));
 		}
 	};
 	
@@ -88,7 +96,7 @@ public class Spell {
 		this.name = name;
 		Preferences p = null;
 		try {
-			p = new IniPreferences(new Ini(new File("data/spells/" + name + "/spell.ini"))).node("spell");
+			p = new IniPreferences(new Ini(new File("data/spells/" + name + ".ini"))).node("spell");
 			lvl = p.getInt("level", 1);
 						
 			//elements

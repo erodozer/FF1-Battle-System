@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
+import spell.Spell;
+
 import editor.EnemyEditor.EnemyEditorGUI;
 import editor.ItemEditor.ItemEditorGUI;
 import editor.MapEditor.MapEditorGUI;
@@ -33,7 +35,7 @@ public class ToolKit extends JFrame{
 	public static final String[] terrains = buildTerrainList();
 	public static final String[] spriteCategories = buildCategoryList();
 	public static final String[][] spriteElements = buildElementList();
-	public static final String[] spells = buildSpellList();
+	public static final String[] spells = Spell.AVAILABLESPELLS.toArray(new String[]{});
 	public static final String[] animations = buildAnimationList();
 	
 	public ToolKit()
@@ -170,7 +172,7 @@ public class ToolKit extends JFrame{
 		String[] s = new File("data/spells").list(new FilenameFilter() {
             @Override
 			public boolean accept(File f, String s) {
-            	return (new File("data/spells/"+s+"/spell.ini").exists());
+            	return s.endsWith(".ini");
               }
             });
 		return s;

@@ -375,6 +375,9 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		nameField.setText(s.getName());
 		lvlSpinner.setValue(s.getLevel());
 		
+		lockEditor(!s.getValueType());
+		value.setText(s.getValue());
+		
 		//load elemental resistance
 		for (int i = 0; i < ELEM.length; i++)
 			elemEnablers[i].setSelected(s.getElementalAlignment(i));
@@ -398,11 +401,11 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 	 */
 	public void saveSpell()
 	{
-		String location = "data/actors/enemies/";
+		String location = "data/spells/";
 		
 		//save to file
 		try {
-			File f = new File(location+nameField.getText()+"/enemy.ini");
+			File f = new File(location+nameField.getText()+".ini");
 			f.delete();					//deletes the old file
 			f.createNewFile();			//saves data to new file
 			Ini ini = new Ini(f);
@@ -435,11 +438,11 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 				String[] s = new File("data/spells").list(new FilenameFilter() {
 		            @Override
 					public boolean accept(File f, String s) {
-		            	return (new File("data/spells/"+s+"/spell.ini").exists());
+		            	return s.endsWith(".ini");
 		              }
 		            });
 				for (String str : s)
-					add(str);
+					add(str.substring(0, str.length()-4));
 			}
 		};
 		
