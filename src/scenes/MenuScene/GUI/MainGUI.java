@@ -147,6 +147,8 @@ private class PlayerWindow
 	public void setPlayer(Player p)
 	{
 		this.p = p;
+		if (p != null)
+			p.draw(null);		//make sure the sprite is set to the right sprite
 	}
 	
 	public int getX()
