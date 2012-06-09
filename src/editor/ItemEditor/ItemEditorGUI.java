@@ -28,6 +28,8 @@ import javax.swing.JTextField;
 
 import org.ini4j.Ini;
 
+import editor.ToolKit;
+
 import spell.Spell;
 
 /**
@@ -113,7 +115,7 @@ public class ItemEditorGUI extends JPanel implements ActionListener, MouseListen
 		l.setSize(l.getPreferredSize());
 		l.setLocation(650, 10);
 		
-		spell = new JComboBox<String>(Spell.AVAILABLESPELLS);
+		spell = new JComboBox<String>(ToolKit.spells);
 		spell.setSize(230, 24);
 		spell.setLocation(650, 32);
 		spell.addItem("");

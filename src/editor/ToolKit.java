@@ -35,7 +35,7 @@ public class ToolKit extends JFrame{
 	public static final String[] terrains = buildTerrainList();
 	public static final String[] spriteCategories = buildCategoryList();
 	public static final String[][] spriteElements = buildElementList();
-	public static final String[] spells = Spell.AVAILABLESPELLS.toArray(new String[]{});
+	public static final String[] spells = buildSpellList();
 	public static final String[] animations = buildAnimationList();
 	
 	public ToolKit()

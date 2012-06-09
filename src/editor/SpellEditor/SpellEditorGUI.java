@@ -208,6 +208,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 			target.add(b);
 			targetButtons[i] = b;
 		}
+		targetButtons[0].setSelected(true);
 		add(jlp);
 		
 		jlp = new JLayeredPane();
@@ -227,6 +228,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 			targetRange.add(b);
 			targetRangeButtons[i] = b;
 		}
+		targetRangeButtons[0].setSelected(true);
 		add(jlp);
 		
 		
@@ -361,6 +363,9 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 	
 	public void lockEditor(boolean t)
 	{
+		constantType.setSelected(t);
+		variableType.setSelected(!t);
+			
 		for (Component j : EQEditor.getComponents())
 			j.setEnabled(!t);
 	}
@@ -381,6 +386,17 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		//load elemental resistance
 		for (int i = 0; i < ELEM.length; i++)
 			elemEnablers[i].setSelected(s.getElementalAlignment(i));
+		
+		targetButtons[s.getTargetType()?1:0].setSelected(true);
+		targetButtons[s.getTargetType()?0:1].setSelected(false);
+		for (int i = 0; i < targetRangeButtons.length; i++)
+		{
+			boolean b = false;
+			if (i == s.getTargetRange())
+				b = true;
+			targetRangeButtons[s.getTargetRange()].setSelected(b);
+		}
+		
 	}
 	
 	/**
@@ -411,7 +427,21 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 			Ini ini = new Ini(f);
 			
 			//saving main
-			ini.add("spell", "lvl", lvlSpinner);
+			ini.add("spell", "level", (int)lvlSpinner.getValue());
+			ini.add("spell", "value", value.getText());
+			
+			if (constantType.isSelected())
+				ini.add("spell", "type", "constant");
+			else
+				ini.add("spell", "type", "variable");
+				
+			ini.add("spell", "targetAlly", targetButtons[1].isSelected());
+			for (int i = 0; i < targetRangeButtons.length; i++)
+				if (targetRangeButtons[i].isSelected())
+				{
+					ini.add("spell", "targetRange", i);
+					break;
+				}
 			
 			//saving element
 			for (int i = 0; i < ELEM.length; i++)
@@ -420,7 +450,7 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 			ini.store(f);
 			
 			//refresh the list of names after saving
-			loadSpell(Spell.getSpell(nameField.getText()));
+			loadSpell(Spell.getSpell(nameField.getText(), true));
 			refreshList();	
 			
 		} catch (Exception e) {

@@ -2,12 +2,14 @@ package spell;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
+import org.ini4j.InvalidFileFormatException;
 
 import actors.Actor;
 import editor.ToolKit;
@@ -24,26 +26,34 @@ import editor.ToolKit;
  *	that varies each turn and on each enemy.
  */
 public class Spell {
-
-	/**
-	 * List of all spells available for loading
-	 */
-	public static final Vector<String> AVAILABLESPELLS = new Vector<String>(){
-		{
-			String[] spells = new File("data/spells").list(new FilenameFilter() {
-	            @Override
-				public boolean accept(File f, String s) {
-	            	return s.endsWith(".ini");
-	              }
-	            });
-			
-			for (String s : spells)
-				add(s.substring(0, s.length()-4));
-		}
-	};
 	
 	//caches all the spells loaded into the system so far
 	private static HashMap<String, Spell> spellCache = new HashMap<String, Spell>();
+	
+	/**
+	 * Gets a spell by its name, if it hasn't been loaded into the cache already it puts it there
+	 * @param name	name of the spell
+	 * @param forceLoad forces loading from file instead of cache (cache is still updated)
+	 * @return	the spell loaded
+	 */
+	public static Spell getSpell(String name, boolean forceLoad)
+	{
+		Spell s = null;
+		try
+		{
+			if (spellCache.containsKey(name) && !forceLoad)
+				s = spellCache.get(name);
+			else
+			{
+				s = new Spell(name);
+				spellCache.put(name, s);
+			}
+		} catch (Exception e) {
+			System.err.println("can not read or find file: " + "data/spells/" + name + "/spell.ini");
+		}
+	
+		return s;
+	}
 	
 	/**
 	 * Gets a spell by its name, if it hasn't been loaded into the cache already it puts it there
@@ -52,14 +62,9 @@ public class Spell {
 	 */
 	public static Spell getSpell(String name)
 	{
-		Spell s = null;
-		if (AVAILABLESPELLS.contains(name))
-			if (spellCache.containsKey(name))
-				s = spellCache.get(name);
-			else
-				s = new Spell(name);
-		return s;
+		return getSpell(name, false);
 	}
+	
 	
 	//Spells can deal elemental damage
 	//  shows if it's aligned to the element or not
@@ -90,36 +95,31 @@ public class Spell {
 	/**
 	 * Constructs a spell
 	 * @param name		The name of the spell
+	 * @throws IOException 
+	 * @throws InvalidFileFormatException 
 	 */
-	private Spell(String name)
+	private Spell(String name) throws Exception
 	{
 		this.name = name;
 		Preferences p = null;
-		try {
-			p = new IniPreferences(new Ini(new File("data/spells/" + name + ".ini"))).node("spell");
-			lvl = p.getInt("level", 1);
-						
-			//elements
-			fire = p.getBoolean("fire", false);
-			frez = p.getBoolean("frez", false);
-			elec = p.getBoolean("elec", false);
-			lght = p.getBoolean("lght", false);
-			dark = p.getBoolean("dark", false);
-
-			//targets
-			targetAlly = p.getBoolean("targetAlly", false);
-			targetRange = p.getInt("targetRange", 0);
-			
-			//damage
-			value = p.get("value", "0");
-			valueType = p.get("type", "constant").equals("variable")?true:false;
-			
-		} catch (Exception e) {
-			System.err.println("can not read or find file: " + "data/spells/" + name + "/spell.ini");
-		}
 		
-		//add self to cache on load
-		spellCache.put(name, this);
+		p = new IniPreferences(new Ini(new File("data/spells/" + name + ".ini"))).node("spell");
+		lvl = p.getInt("level", 1);
+					
+		//elements
+		fire = p.getBoolean("fire", false);
+		frez = p.getBoolean("frez", false);
+		elec = p.getBoolean("elec", false);
+		lght = p.getBoolean("lght", false);
+		dark = p.getBoolean("dark", false);
+
+		//targets
+		targetAlly = p.getBoolean("targetAlly", false);
+		targetRange = p.getInt("targetRange", 0);
+		
+		//damage
+		value = p.get("value", "0");
+		valueType = p.get("type", "constant").equals("variable")?true:false;
 	}
 	
 	/**
@@ -194,6 +194,11 @@ public class Spell {
 		return name;
 	}
 
+	/**
+	 *	Gets the type of target for selecting
+	 * @returns true - ally
+	 * 			 false - foe 
+	 */
 	public boolean getTargetType() {
 		return targetAlly;
 	}
