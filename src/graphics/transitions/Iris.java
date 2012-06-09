@@ -63,6 +63,9 @@ abstract public class Iris extends Transition {
 	
 	@Override
 	public void paint(Graphics g) {
+		if (irisG == null)
+			return;
+		
 		diameter = getDiameter();
 		//System.out.println(diameter);
 		g.drawImage(buffer, 0, 0, null);
