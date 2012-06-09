@@ -6,6 +6,9 @@ import groups.Formation;
 import groups.Party;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
@@ -45,6 +48,9 @@ public class Engine{
 	private String currentMap;			//current map the party is on
 	
 	private Party party;				//main party
+	
+	private String startingMap = "world";
+	private int[] startingCell = new int[]{1, 1};
 
 	/**
 	 * Get the singleton instance
@@ -67,15 +73,37 @@ public class Engine{
 		menu = new MenuScene();
 		party = new Party();
 		world = new WorldScene();
+		
+		//load up game preferences
+		Properties prop = new Properties();
+    	try {
+    		prop.load(new FileInputStream("jffbs.properties"));
+    		
+    		startingMap = prop.getProperty("startingMap", "world");
+    		String[] s = prop.getProperty("startingCell", "1x1").split("x");
+    		startingCell = new int[]{Integer.parseInt(s[0]), Integer.parseInt(s[1])};
+    	} catch (IOException ex) {
+    		ex.printStackTrace();
+        }
+    	
 		_instance = this;
 	}
 	
 	/**
-	 * Starts up the game with initial scene and other doodads
+	 * Initializes the game at the title screen
+	 */
+	public void initGame()
+	{
+		changeToTitle();
+	}
+	
+	/**
+	 * Starts up the game at the starting map
+	 * Call this after initializing with a party
 	 */
 	public void startGame()
 	{
-		changeToTitle();
+		changeToWorld(startingMap, startingCell[0], startingCell[1]);
 	}
 	
 	/**
@@ -317,7 +345,7 @@ public class Engine{
 		p.add("RRTY", "Black Mage");
 		p.add("PNKE", "Thief");
 		setParty(p);
-		changeToWorld("world", 3, 3);
+		startGame();
 	}
 
 }

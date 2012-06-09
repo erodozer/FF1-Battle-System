@@ -70,7 +70,7 @@ public class CreationSystem extends GameSystem{
 	public void finish()
 	{
 		e.setParty(party);
-		e.changeToWorld("world", 12, 10);
+		e.startGame();
 	}
 
 	/**

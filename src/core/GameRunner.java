@@ -67,7 +67,7 @@ public class GameRunner extends GameFrame implements KeyListener{
 		super(name, fps, windowed);
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		engine = Engine.getInstance();
-		engine.startGame();
+		engine.initGame();
 		panel = ContentPanel.getInstance();
 		panel.setParent(this);
 		if (windowed)
