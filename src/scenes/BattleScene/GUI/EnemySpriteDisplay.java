@@ -36,11 +36,26 @@ public class EnemySpriteDisplay extends HUD{
 		if (parent == null)
 			return;
 		
+		int row = 0;
+		int col = -1;
+		int size = 0;
 		for (int i = 0; i < parent.getFormation().size(); i++)
 		{
 			Enemy e = parent.getFormation().get(i);
-			e.getSprite().setX(window.getX()+12+(e.getSprite().getWidth()*(i/3)));
-			e.getSprite().setY(window.getY()+40+(e.getSprite().getHeight()*(i%3)));
+			if (e.getSize() != size)
+			{
+				col++;
+				row = 0;
+				size = e.getSize();
+			}
+			e.getSprite().setX(window.getX()+12+(size*col));
+			e.getSprite().setY(window.getY()+40+(size*row));
+			row++;
+			row = (size == Enemy.SMALL && row % 3 == 0)||
+				  (size == Enemy.MEDIUM && row % 2 == 0) ||
+				  (size == Enemy.LARGE)?0:row;
+			if (row == 0)
+				col++;
 		}
 	}
 	

@@ -26,14 +26,14 @@ public class Enemy extends Actor {
 		}
 	}.toArray(new String[]{});
 	
-	public static final int SMALL = 66;
-	public static final int MEDIUM = 98;
-	public static final int LARGE = 128;
-	public static final int FULL = 212;
+	public static final int SMALL = 33;
+	public static final int MEDIUM = 49;
+	public static final int LARGE = 64;
+	public static final int FULL = 106;
 	
 	int goldReward = 0;	//amount of gold rewarded on killing the enemy
 	
-	int size;			//enemy sprite size type
+	int size = MEDIUM;	//enemy sprite size type
 						//spacing of enemy sprites in the gui are spaced by the type of sprite they are
 						// even though sprites have no limit dimensions, the spacing on screen is limited, so
 						// placing of sprites can't be 100% dynamic.  Since there is no limit to actual picture
@@ -87,6 +87,15 @@ public class Enemy extends Actor {
 			goldReward = main.getInt("g", 0);
 			
 			spriteName = main.get("sprite", "");
+			String s = main.get("size", "medium");
+			if (s.equals("small"))
+				size = SMALL;
+			else if (s.equals("large"))
+				size = LARGE;
+			else if (s.equals("full"))
+				size = FULL;
+			else
+				size = MEDIUM;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -121,6 +130,11 @@ public class Enemy extends Actor {
 	 */
 	public int getGold() {
 		return goldReward;
+	}
+	
+	public int getSize()
+	{
+		return size;
 	}
 
 }
