@@ -23,7 +23,9 @@ public class MenuScene extends Scene{
         
 			this.system = system;
 			this.display = display;
+			
 		}
+		system.start();
 	}
 	
 	/**

@@ -43,4 +43,6 @@ public abstract class GameSystem
 
 	abstract public void finish();
 
+	public void start() {}
+
 }

@@ -57,6 +57,15 @@ public class MenuSystem extends GameSystem
 	}
 	
 	/**
+	 * Default start in normal menu
+	 */
+	public void start()
+	{
+		state = ms;
+		state.start();
+	}
+	
+	/**
 	 * Show the order menu instead of the normal menu
 	 */
 	public void showOrderMenu()
