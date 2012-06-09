@@ -22,7 +22,7 @@ public class Enemy extends Actor {
 		{
 			for (String s : new File("data/actors/enemies/info").list())
 				if (s.endsWith(".ini"))
-					this.add(s);
+					this.add(s.substring(0, s.length()-4));
 		}
 	}.toArray(new String[]{});
 	
