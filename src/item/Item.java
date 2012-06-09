@@ -38,12 +38,13 @@ public class Item {
 			for (String s : new File("data/items").list(new FilenameFilter() {
 	            @Override
 				public boolean accept(File f, String s) {
-	            	return (new File("data/items/"+s+"/item.ini").exists());
+	            	return s.endsWith(".ini");
 	              }
 	            }))
-				add(s);
+				add(s.substring(0, s.length()-4));
 		}
 	};
+	
 	public static final int WEAPON_TYPE = 0;
 	public static final int ARMOR_TYPE = 1;
 	public static final int ACCESSORY_TYPE = 2;
@@ -63,7 +64,10 @@ public class Item {
 			if (cache.containsKey(s))
 				i = cache.get(s);
 			else
-				i = new Item(s);
+				try {
+					i = new Item(s);
+				} catch (Exception e) {
+				}
 		else
 			System.err.println("There is no such item by the name of " + s);
 		return i;
@@ -152,57 +156,51 @@ public class Item {
 	 * Loads an item
 	 * @param s
 	 */
-	public Item(String s)
+	public Item(String s) throws Exception
 	{
-		name = s;
+		name = s.trim();
 		
 		Preferences p;
-		try {
-			inifile = new IniPreferences(new Ini(new File("data/items/" + s + "/item.ini")));
-			Preferences main = inifile.node("item");
+		
+		inifile = new IniPreferences(new Ini(new File("data/items/" + s + ".ini")));
+		Preferences main = inifile.node("item");
 
-			worth = main.getInt("price", 0);
-			
-			String eqSec = null;		//equipment section label
-			isEquipment = false;
-			for (int i = 0; i < EQUIPMENTSECTIONS.length && !isEquipment; i++)
-				if (inifile.nodeExists(EQUIPMENTSECTIONS[i]))
-				{
-					isEquipment = true;
-					eqSec = EQUIPMENTSECTIONS[i];
-					type = i;
-				}
-			
-			if (isEquipment)
+		worth = main.getInt("price", 0);
+		
+		String eqSec = null;		//equipment section label
+		isEquipment = false;
+		for (int i = 0; i < EQUIPMENTSECTIONS.length && !isEquipment; i++)
+			if (inifile.nodeExists(EQUIPMENTSECTIONS[i]))
 			{
-				Preferences equip = inifile.node(eqSec);
-				// type is armor or weapon
-				if (type != 2) {
-					// get armor weight and restricted jobs
-					weight = equip.getInt("weight", 0);
-					restrict = equip.get("restrict", "").split(",");
-					if (type == 1)
-						slot = equip.getInt("slot", 0);
-				}
-				hp = equip.getInt("hp", 1);
-				str = equip.getInt("str", 1);
-				itl = equip.getInt("int", 1);
-				spd = equip.getInt("spd", 1);
-				evd = equip.getInt("evd", 1);
-				acc = equip.getInt("acc", 1);
-				vit = equip.getInt("vit", 1);
-				mdef = equip.getInt("mdef", 1);
+				isEquipment = true;
+				eqSec = EQUIPMENTSECTIONS[i];
+				type = i;
 			}
-			
-			String command = main.get("command", null);
-			if (s != null)
-				battleCommand = Spell.getSpell(command);
-			
-			cache.put(name, this);
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		if (isEquipment)
+		{
+			Preferences equip = inifile.node(eqSec);
+			// type is armor or weapon
+			if (type != 2) {
+				// get armor weight and restricted jobs
+				weight = equip.getInt("weight", 0);
+				restrict = equip.get("restrict", "").split(",");
+				if (type == 1)
+					slot = equip.getInt("slot", 0);
+			}
+			hp = equip.getInt("hp", 1);
+			str = equip.getInt("str", 1);
+			itl = equip.getInt("int", 1);
+			spd = equip.getInt("spd", 1);
+			evd = equip.getInt("evd", 1);
+			acc = equip.getInt("acc", 1);
+			vit = equip.getInt("vit", 1);
+			mdef = equip.getInt("mdef", 1);
 		}
 		
+		String command = main.get("command", null);
+		if (s != null)
+			battleCommand = Spell.getSpell(command);
 	}
 
 	/**
