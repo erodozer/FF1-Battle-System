@@ -70,7 +70,7 @@ public class NPC {
 		dialog = node.get("dialog", "...");
 		
 		String pos = node.name().substring(node.name().indexOf('@')+1);
-		move(Integer.parseInt(pos.substring(0, pos.indexOf(','))), Integer.parseInt(pos.substring(pos.indexOf(',')+1)));
+		move(Integer.parseInt(pos.split("x")[0].trim()), Integer.parseInt(pos.split("x")[1].trim()));
 		setWalkSprite("npcs/" + node.get("sprite", "npc01.png"));
 		startTime = System.currentTimeMillis();
 		
@@ -79,8 +79,8 @@ public class NPC {
 		{
 			String[] s = node.get("whereTo", "world, 12, 10").split(",");
 			whereTo = s[0];
-			whereToX = Integer.parseInt(s[1]);
-			whereToY = Integer.parseInt(s[2]);
+			whereToX = Integer.parseInt(s[1].trim());
+			whereToY = Integer.parseInt(s[2].trim());
 		}
 		else if (interact.equals("dialog"))
 			dialog = node.get("dialog", "...");
