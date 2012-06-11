@@ -33,8 +33,8 @@ public class CommandDisplay extends HUD{
 		
 		Actor a = ((BattleSystem)parent).getActiveActor();
 		for (int i = 0; i < a.getCommands().length; i++)
-			font.drawString(g, a.getCommands()[i], 10 + 60*(i/4), 
-							16 + 16 * (i % 4), window);
+			font.drawString(g, a.getCommands()[i], 8 + 55*(i/4), 
+							14 + 16 * (i % 4), window);
 	}
 
 	@Override
@@ -43,6 +43,6 @@ public class CommandDisplay extends HUD{
 	
 	public int[] getArrowPosition(int index)
 	{
-		return new int[]{window.getX() + 1 + 60*(index/4), window.getY() + 24 + 16 * (index % 4) - 12};
+		return new int[]{window.getX() + 1 + 55*(index/4), window.getY() + 28 + 16 * (index % 4) - 12};
 	}
 }
