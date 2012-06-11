@@ -17,7 +17,7 @@ public class AttackCommand extends Command {
 	{
 		super(a, t);
 		anim = new Animation("attack");
-		name = "Attack";
+		name = "FIGHT";
 		speedBonus = 25;
 	}
 	

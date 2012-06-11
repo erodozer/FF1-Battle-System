@@ -15,7 +15,7 @@ public class FleeCommand extends Command {
 	{
 		super(a, t);
 	    invoker = a;
-		name = "Run";
+		name = "RUN";
 	}
 	
 	/**
