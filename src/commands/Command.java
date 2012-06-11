@@ -11,6 +11,10 @@ import actors.Actor;
  */
 public abstract class Command {
 
+	public static final int TARGET_SOLO = 0;
+	public static final int TARGET_GROUP = 1;
+	public static final int TARGET_ALL = 2;
+	
 	protected String name;						//name of the command
 	protected Actor invoker;					//actor using the command
 	protected Actor[] targets;					//the targets for the attack
@@ -121,5 +125,15 @@ public abstract class Command {
 
 	public Actor getTarget() {
 		return currentTarget;
+	}
+	
+	public Actor[] getTargets()
+	{
+		return targets;
+	}
+	
+	public int getTargetIndex()
+	{
+		return currentTargetIndex;
 	}
 }

@@ -23,7 +23,7 @@ public class DrinkDisplay extends HUD{
 	public DrinkDisplay(int x, int y)
 	{
 		itemList = Engine.getInstance().getParty().getBattleItems();
-		window = new SWindow(x, y, 101, 32 + 18*itemList.length);	
+		window = new SWindow(x, y, 101, 32 + 18*(itemList.length-1));	
 	}
 	
 	public void update(){}

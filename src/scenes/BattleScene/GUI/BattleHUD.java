@@ -13,6 +13,7 @@ import scenes.BattleScene.System.GameOverState;
 import scenes.BattleScene.System.IssueState;
 import scenes.BattleScene.System.MessageState;
 import scenes.BattleScene.System.VictoryState;
+import actors.Actor;
 import actors.Player;
 
 import commands.Command;
@@ -159,11 +160,21 @@ public class BattleHUD extends HUD{
 			
 			if (is.targetSelecting)
 			{
+				Actor[] targets = is.getCurrentlySelectedTargets();
 				//match the cursor to the right window depending on the target actor type
-				if (is.targets[is.index] instanceof Player)
-					cursorPos = psprited.getArrowPosition(parent.getParty().indexOf(is.targets[is.index]));
-				else
-					cursorPos = esprited.getArrowPosition(parent.getFormation().indexOf(is.targets[is.index]));
+				for (int i = 0; i < targets.length; i++)
+				{
+					Actor t = targets[i];
+					if (t instanceof Player)
+						cursorPos = psprited.getArrowPosition(parent.getParty().indexOf(targets[i]));
+					else
+						cursorPos = esprited.getArrowPosition(parent.getFormation().indexOf(targets[i]));
+					arrow.setX(cursorPos[0]);
+					arrow.setY(cursorPos[1]);
+				
+					arrow.paint(g);
+				}
+				cursorPos = new int[]{-100, -100};
 			}
 			else if (is.spellSelecting)
 			{

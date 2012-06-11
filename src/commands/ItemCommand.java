@@ -45,4 +45,12 @@ public class ItemCommand extends SpellCommand {
 	{
 		Engine.getInstance().getParty().removeItem(item);
 	}
+	
+	/**
+	 * Get the item's name instead of the spell name
+	 */
+	public String getName()
+	{
+		return item.getName();
+	}
 }

@@ -24,8 +24,17 @@ public class EngageState extends GameState {
 		activeActor = ((BattleSystem)parent).getActiveActor();
 		if (activeActor instanceof Player)
 		{
-			((Player)activeActor).setState(Player.WALK);
-			((Player)activeActor).setMoving(0);
+			//should only play once, which means when doing the other target's damage info
+			// it should skip the actor walking up and acting again
+			if (activeActor.getCommand().getTargetIndex() > 0)
+			{
+				((Player)activeActor).setMoving(3);
+			}
+			else
+			{
+				((Player)activeActor).setState(Player.WALK);
+				((Player)activeActor).setMoving(0);		
+			}
 		}
 		if (activeActor.getAlive())
 			activeActor.execute();
@@ -43,10 +52,11 @@ public class EngageState extends GameState {
 	    	Player p = ((Player)activeActor);
 	    	if (p.getMoving() == 0 || p.getMoving() == 2)
 				return;
-			else if (p.getMoving() == 1){
+			else if (p.getMoving() == 1)
+			{
 				if (p.getCommand().getAnimation() == null || (p.getCommand().getAnimation().isDone()))
 					p.setMoving(2);
-							}
+			}
 			else if (p.getMoving() == 3)
 				finish();
 		}

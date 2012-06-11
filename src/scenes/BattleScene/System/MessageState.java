@@ -8,6 +8,7 @@ import actors.Actor;
 import commands.Command;
 import commands.FleeCommand;
 import commands.SpellCommand;
+import core.GameRunner;
 
 /**
  * MessageState.java
@@ -44,14 +45,7 @@ public class MessageState extends GameState {
 	 */
 	@Override
 	public void handle() {
-		try {
-			Thread.sleep(500);
-			finish();
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
+		finish();		
 	}
 
 	/**
@@ -94,6 +88,7 @@ public class MessageState extends GameState {
 		}
 			
 		message = m.toArray(new String[]{});
+		GameRunner.getInstance().sleep(2050);
 	}
 
 	/**

@@ -31,7 +31,7 @@ public class IssueState extends GameState
 	public static String[] drinks;
 
 	Player actor;			//actor it is dealing with, only players deal with issue command
-	Actor target;			//target selected
+	Actor[] target;			//target selected
 	public Actor[] targets;	//targets that can be selected
 	Command c;				//command selected
 	Spell s;				//selected spell
@@ -42,6 +42,9 @@ public class IssueState extends GameState
 	public int index = 0;	//index in the list of commands (current on highlighted)
 	public boolean targetSelecting;
 							//is the actor selecting a target or command
+	public int targetRange = 0;
+							//0 - single target, 1 - group target, 2 - all target
+	
 	public boolean spellSelecting;
 	public boolean itemSelecting;
 	public boolean drinkSelecting;
@@ -200,6 +203,11 @@ public class IssueState extends GameState
 			else if (key == Input.KEY_LT)
 				index--;	
 		}
+		else if (targetSelecting)
+		{
+			if (key == Input.KEY_DN)
+				nextTarget();
+		}
 		//everything else is normally just up and down
 		else
 		{
@@ -212,6 +220,44 @@ public class IssueState extends GameState
 	}
 	
 	/**
+	 * Cycles through target ranges
+	 */
+	public void nextTarget()
+	{
+		if (target == null)
+			index++;
+		else
+			index += target.length;
+		if (index > targets.length)
+			index = 0;
+		
+		if (targetRange == Command.TARGET_GROUP)
+		{
+			ArrayList<Actor> selectedTargets = new ArrayList<Actor>();
+			Actor t = targets[index];
+			selectedTargets.add(t);
+			
+			for (int i = index+1; i < targets.length; i++)
+			{
+				if (targets[i].getName().equals(t.getName()))
+					selectedTargets.add(targets[i]);
+				else
+					break;
+			}
+			
+			target = selectedTargets.toArray(new Actor[]{});
+		}
+		else if (targetRange == Command.TARGET_ALL)
+		{
+			target = targets;
+		}
+		else
+		{
+			target = new Actor[]{targets[index]};
+		}
+	}
+	
+	/**
 	 * Advances to the next condition of the battle
 	 */
 	public void next()
@@ -220,18 +266,23 @@ public class IssueState extends GameState
 		//after selecting a target a command will finally be issued
 		if (targetSelecting)
 		{
-			target = targets[index];
 			//generate a spell command if a spell was being chosen
 			if (spellSelecting)
-				actor.setCommand(new SpellCommand(s, actor, new Actor[]{target}));
+				actor.setCommand(new SpellCommand(s, actor, target));
 			//generate an item command if either an item or drink is used
 			else if (itemSelecting || drinkSelecting)
-				actor.setCommand(new ItemCommand(it, actor, new Actor[]{target}));
+				actor.setCommand(new ItemCommand(it, actor, target));
 			//else do a basic attack
 			else
-				actor.setCommand(new AttackCommand(actor, new Actor[]{target}));
+				actor.setCommand(new AttackCommand(actor, target));
 			//have the character step back into position and end command selection for the character
 			actor.setMoving(2);
+			
+			//reset all menus
+			spellSelecting = false;
+			itemSelecting = false;
+			drinkSelecting = false;
+			targetSelecting = false;
 		}
 		else if (spellSelecting)
 		{
@@ -246,6 +297,7 @@ public class IssueState extends GameState
 						
 					index = 0;
 					targetSelecting = true;
+					targetRange = s.getTargetRange();
 				}
 			}
 		}
@@ -264,6 +316,7 @@ public class IssueState extends GameState
 					
 				index = 0;
 				targetSelecting = true;
+				targetRange = s.getTargetRange();
 			}
 		}
 		/*
@@ -278,9 +331,10 @@ public class IssueState extends GameState
 			it = Item.loadItem(drinks[index]);
 			s = it.getBattleCommand();
 			targets = ((BattleSystem)parent).getTargets(actor, s);
-					
+			
 			index = 0;
 			targetSelecting = true;
+			targetRange = s.getTargetRange();
 		}
 		else
 		{
@@ -322,8 +376,14 @@ public class IssueState extends GameState
 				index = 0;
 				spellSelecting = false;
 				targetSelecting = true;
+				targetRange = Command.TARGET_SOLO;
 			}
-		}		
+		}
+		if (targetSelecting)
+		{
+			index = -1;
+			nextTarget();
+		}
 	}
 	
 	/**
@@ -345,5 +405,10 @@ public class IssueState extends GameState
 	@Override
 	public int getIndex() {
 		return index;
+	}
+	
+	public Actor[] getCurrentlySelectedTargets()
+	{
+		return target;
 	}
 }
