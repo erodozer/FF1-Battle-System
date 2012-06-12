@@ -26,6 +26,18 @@ import engine.Input;
  */
 public class IssueState extends GameState 
 {
+	/*
+	 * Player Command List
+	 * These are the commands visible for choosing in battle each turn
+	 */
+	public static final String COMMAND_ATTACK = "ATTACK";
+	public static final String COMMAND_MAGIC = "MAGIC";
+	public static final String COMMAND_DRINK = "DRINK";
+	public static final String COMMAND_ITEM = "ITEM";
+	public static final String COMMAND_RUN = "RUN";
+	
+	public static final String[] COMMANDS = {COMMAND_ATTACK, COMMAND_MAGIC, COMMAND_DRINK, COMMAND_ITEM, COMMAND_RUN};
+	
 	//the party's list of battle usable items
 	// this is static because it belongs to the party instead of one actor
 	public static String[] drinks;
@@ -101,45 +113,6 @@ public class IssueState extends GameState
 			finish();
 			return;
 		}
-		
-		/*
-		 * All this here is just for ensuring the cursor doesn't go out of bounds when selecting stuff
-		 */
-		if (targetSelecting)
-		{
-			if (index >= targets.length)
-				index = 0;
-			if (index < 0)
-				index = targets.length-1;
-		}
-		else if (spellSelecting)
-		{
-			if (index < 0)
-				index = 0;
-			if (index > 23)
-				index = 23;
-		}
-		else if (itemSelecting)
-		{
-			if (index < 0)
-				index = 0;
-			if (index > 7)
-				index = 8;
-		}
-		else if (drinkSelecting)
-		{
-			if (index < 0)
-				index = 0;
-			if (index > drinks.length-1)
-				index = drinks.length-1;
-		}
-		else
-		{	
-			if (index >= actor.getCommands().length)
-				index = 0;
-			if (index < 0)
-				index = actor.getCommands().length-1;
-		}
 	}
 	
 	/**
@@ -190,6 +163,11 @@ public class IssueState extends GameState
 				index++;
 			else if (key == Input.KEY_LT)
 				index--;
+			
+			if (index < 0)
+				index = 0;
+			if (index > 23)
+				index = 23;
 		}
 		//item selecting window is divided into 2 columns and 4 rows
 		else if (itemSelecting && !targetSelecting)
@@ -202,11 +180,18 @@ public class IssueState extends GameState
 				index++;
 			else if (key == Input.KEY_LT)
 				index--;	
+			
+			if (index < 0)
+				index = 0;
+			if (index > 7)
+				index = 8;
 		}
 		else if (targetSelecting)
 		{
 			if (key == Input.KEY_DN)
-				nextTarget();
+				switchTarget(true);
+			else if (key == Input.KEY_UP)
+				switchTarget(false);
 		}
 		//everything else is normally just up and down
 		else
@@ -215,29 +200,55 @@ public class IssueState extends GameState
 				index++;
 			else if (key == Input.KEY_UP)
 				index--;
+			
+			if (drinkSelecting)
+			{
+				if (index < 0)
+					index = 0;
+				if (index > drinks.length-1)
+					index = drinks.length-1;
+			}
+			else
+			{	
+				if (index >= COMMANDS.length)
+					index = 0;
+				if (index < 0)
+					index = COMMANDS.length-1;
+			}
 		}
 		handle();
 	}
 	
 	/**
 	 * Cycles through target ranges
+	 * @param next switch to next target option if true, else switch to previous target option
 	 */
-	public void nextTarget()
+	public void switchTarget(boolean next)
 	{
 		if (target == null)
-			index++;
-		else
-			index += target.length;
-		if (index > targets.length)
 			index = 0;
-		
+		else
+		{
+			if (next)
+			{
+				index += target.length;
+				if (index > targets.length)
+					index = 0;
+			}
+			else
+			{
+				index --;
+				if (index < 0)
+					index = targets.length-1;
+			}
+		}
 		if (targetRange == Command.TARGET_GROUP)
 		{
 			ArrayList<Actor> selectedTargets = new ArrayList<Actor>();
 			Actor t = targets[index];
 			selectedTargets.add(t);
 			
-			for (int i = index+1; i < targets.length; i++)
+			for (int i = (next)?index+1:index-1; (next)?i < targets.length:i > 0; i += (next)?1:-1)
 			{
 				if (targets[i].getName().equals(t.getName()))
 					selectedTargets.add(targets[i]);
@@ -256,6 +267,8 @@ public class IssueState extends GameState
 			target = new Actor[]{targets[index]};
 		}
 	}
+	
+	
 	
 	/**
 	 * Advances to the next condition of the battle
@@ -338,15 +351,15 @@ public class IssueState extends GameState
 		}
 		else
 		{
-			String command = actor.getCommands()[index];
+			String command = COMMANDS[index];
 			//select a spell for your character
-			if (command.equals("Magic"))
+			if (command.equals(COMMAND_MAGIC))
 			{
 				spellSelecting = true;
 				index = 0;
 			}
 			//select a potion to drink
-			else if (command.equals("Drink"))
+			else if (command.equals(COMMAND_DRINK))
 			{	
 				if (drinks.length > 0)
 				{
@@ -355,7 +368,7 @@ public class IssueState extends GameState
 				}
 			}
 			//select an item to use
-			else if (command.equals("Item"))
+			else if (command.equals(COMMAND_ITEM))
 			{	
 				//if (items.size() > 0)
 				//{
@@ -364,13 +377,13 @@ public class IssueState extends GameState
 				//}
 			}
 			//flee from battle
-			else if (command.equals("Run"))
+			else if (command.equals(COMMAND_RUN))
 			{
 				actor.setCommand(new FleeCommand(actor, ((BattleSystem)parent).getTargets(actor)));
 				finish();
 			}
 			//attack the enemy
-			else if (command.equals("Attack"))
+			else if (command.equals(COMMAND_ATTACK))
 			{
 				targets = ((BattleSystem)parent).getTargets(actor);
 				index = 0;
@@ -382,7 +395,7 @@ public class IssueState extends GameState
 		if (targetSelecting)
 		{
 			index = -1;
-			nextTarget();
+			switchTarget(true);
 		}
 	}
 	

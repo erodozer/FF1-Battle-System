@@ -118,7 +118,7 @@ public class Player extends Actor {
 		name = name.substring(0,Math.min(name.length(), 4));	//char limit of 4
 		level = 1;
 		exp = 0;
-		commands = new String[]{"FIGHT", "MAGIC", "DRINK", "ITEM", "RUN"};
+		commands = null;
 		level = 1;
 		
 		weapons = new Item[4];

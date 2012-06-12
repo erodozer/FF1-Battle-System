@@ -5,8 +5,7 @@ import graphics.SWindow;
 import java.awt.Graphics;
 
 import scenes.HUD;
-import scenes.BattleScene.System.BattleSystem;
-import actors.Actor;
+import scenes.BattleScene.System.IssueState;
 
 /**
  * CommandDisplay
@@ -31,9 +30,8 @@ public class CommandDisplay extends HUD{
 		//window is first sprite
 		window.paint(g);
 		
-		Actor a = ((BattleSystem)parent).getActiveActor();
-		for (int i = 0; i < a.getCommands().length; i++)
-			font.drawString(g, a.getCommands()[i], 8 + 55*(i/4), 
+		for (int i = 0; i < IssueState.COMMANDS.length; i++)
+			font.drawString(g, IssueState.COMMANDS[i], 8 + 55*(i/4), 
 							14 + 16 * (i % 4), window);
 	}
 
