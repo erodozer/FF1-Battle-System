@@ -35,7 +35,9 @@ public class Party extends ArrayList<Player>{
 	 */
 	public static final int GROUP_SIZE = 4;
 	
-	HashMap<String, Integer> inventory = genInventory();
+	public byte MAX_ITEM_COUNT = Byte.MAX_VALUE;	//maximum amount of one item a party can hold
+	
+	HashMap<String, Byte> inventory = genInventory();
 	int gold = 500;		//party starts off with 500 g
 	
 	/**
@@ -59,11 +61,11 @@ public class Party extends ArrayList<Player>{
 	 * Generates the party's inventory
 	 * @return
 	 */
-	private HashMap<String, Integer> genInventory() {
+	private HashMap<String, Byte> genInventory() {
 		
-		HashMap<String, Integer> h = new HashMap<String, Integer>();
+		HashMap<String, Byte> h = new HashMap<String, Byte>();
 		for (String s : Item.Dictionary)
-			h.put(s, 0);
+			h.put(s, (byte)0);
 		return h;
 	}
 
@@ -112,7 +114,7 @@ public class Party extends ArrayList<Player>{
 			Preferences inv = p.node("inventory");
 			for (String s : inv.keys())
 				if (party.inventory.containsKey(s))
-					party.inventory.put(s, inv.getInt(s, 0));
+					party.inventory.put(s, (byte)inv.getInt(s, 0));
 		} catch (BackingStoreException e) {
 			System.err.println("Could not load party from save data");
 		}
@@ -164,9 +166,9 @@ public class Party extends ArrayList<Player>{
 	 */
 	public boolean addItem(Item i)
 	{
-		int count = inventory.get(i.getName());
+		byte count = inventory.get(i.getName());
 		
-		inventory.put(i.getName(), inventory.get(i.getName()) + 1);
+		inventory.put(i.getName(), (byte) (count + 1));
 		
 		return (inventory.get(i.getName()) > count);
 	}
@@ -176,13 +178,13 @@ public class Party extends ArrayList<Player>{
 	 */
 	public boolean removeItem(Item i)
 	{
-		int count = inventory.get(i.getName());
+		byte count = inventory.get(i.getName());
 		if (count > 0)
-			inventory.put(i.getName(), inventory.get(i.getName()) - 1);
+			inventory.put(i.getName(), (byte) (count - 1));
 		return (inventory.get(i.getName()) < count);
 	}
 	
-	public int getItemCount(String s)
+	public byte getItemCount(String s)
 	{
 		if (s != null)
 			return inventory.get(s);
