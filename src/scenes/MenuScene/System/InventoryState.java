@@ -19,6 +19,9 @@ public class InventoryState extends GameState
 	int row;					//table row
 	int col;					//table column
 	
+	//amount of columns to display
+	public static final int COLUMNS = 3;
+	
 	/**
 	 * Constructs the state
 	 * @param menuSystem
@@ -83,15 +86,15 @@ public class InventoryState extends GameState
 		
 			//handle bounds to contain the arrow to the list
 			if (row < 0)
-				row = items.length/2 - 1;
-			if (row >= items.length/2)
+				row = items.length/COLUMNS - 1;
+			if (row >= items.length/COLUMNS)
 				row = 0;
-			if (col > 1)
+			if (col >= COLUMNS)
 				col = 0;
 			if (col < 0)
-				col = 1;
+				col = COLUMNS-1;
 			
-			index = row*(items.length/2)+col;
+			index = row*(int)Math.ceil(items.length/(double)COLUMNS)+col;
 		}
 		//exit the menu
 		if (key == Input.KEY_B)

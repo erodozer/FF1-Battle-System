@@ -3,6 +3,7 @@ package scenes.MenuScene.GUI;
 import java.awt.Graphics;
 
 import scenes.HUD;
+import scenes.MenuScene.System.InventoryState;
 import engine.Engine;
 import graphics.NES;
 import graphics.SFont;
@@ -37,8 +38,8 @@ public class InventoryGUI extends HUD
 	{
 		parentGUI = parent;
 		p = e.getParty();
-		titleWindow = new SWindow(10, 5, 80, 38, NES.BLUE);
-		itemWindow = new ItemWindow(p, 10,22);
+		titleWindow = new SWindow(7, 1, 66, 32, NES.BLUE);
+		itemWindow = new ItemWindow(p,7,17);
 		
 		messageWindow = new SWindow(10, 168, 232, 48, NES.BLUE);
 		
@@ -52,7 +53,7 @@ public class InventoryGUI extends HUD
 	{
 		itemWindow.paint(g);
 		titleWindow.paint(g);
-		f.drawString(g, "ITEM", 0, 18, titleWindow);
+		f.drawString(g, "ITEM", 0, 13, titleWindow);
 		if (itemWindow.itemList.length == 0)
 		{
 			messageWindow.paint(g);
@@ -68,7 +69,7 @@ public class InventoryGUI extends HUD
 	{
 		int[] pos;
 		if (itemWindow.itemList.length > 0)
-			pos = new int[]{itemWindow.w.getX()+ 2 + 80*(index%2), itemWindow.w.getY() + 34 + 24*(index/2)};
+			pos = new int[]{itemWindow.w.getX() - 4 + (itemWindow.WIDTH/InventoryState.COLUMNS)*(index%InventoryState.COLUMNS), itemWindow.w.getY() + 24 + 16*(index/InventoryState.COLUMNS)};
 		else
 			pos = new int[]{-100, -100};
 		return pos;
@@ -92,8 +93,8 @@ public class InventoryGUI extends HUD
 	 */
 	class ItemWindow 
 	{
-		public static final int WIDTH = 232;
-		public static final int HEIGHT = 146;
+		public static final int WIDTH = 242;
+		public static final int HEIGHT = 153;
 
 		int x;
 		int y;
@@ -132,8 +133,8 @@ public class InventoryGUI extends HUD
 			w.paint(g);
 			for (int i = 0; i < Math.min(itemList.length, index + 16); i++)
 			{
-				f.drawString(g, itemList[i], 5 + 100 * (i % 2), 30 + 24 * (i / 2), w);
-				f.drawString(g, ""+p.getItemCount(itemList[i]), 90 + 100 * (i % 2), 30 + 24 * (i / 2), 2, w);
+				f.drawString(g, itemList[i], 5 + WIDTH/InventoryState.COLUMNS * (i % InventoryState.COLUMNS), 24 + 16 * (i / InventoryState.COLUMNS), w);
+				f.drawString(g, ""+p.getItemCount(itemList[i]), x + WIDTH/InventoryState.COLUMNS * ((i % InventoryState.COLUMNS)+1) - 12, y + 34 + 16 * (i / InventoryState.COLUMNS), SFont.RIGHT);
 			}
 		}
 	}
