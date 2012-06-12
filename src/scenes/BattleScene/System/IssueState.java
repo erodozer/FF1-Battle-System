@@ -30,7 +30,7 @@ public class IssueState extends GameState
 	 * Player Command List
 	 * These are the commands visible for choosing in battle each turn
 	 */
-	public static final String COMMAND_ATTACK = "ATTACK";
+	public static final String COMMAND_ATTACK = "FIGHT";
 	public static final String COMMAND_MAGIC = "MAGIC";
 	public static final String COMMAND_DRINK = "DRINK";
 	public static final String COMMAND_ITEM = "ITEM";
