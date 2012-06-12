@@ -1,6 +1,7 @@
 package scenes.BattleScene.GUI;
 
 import engine.Engine;
+import graphics.SFont;
 import graphics.SWindow;
 
 import java.awt.Graphics;
@@ -38,7 +39,10 @@ public class DrinkDisplay extends HUD{
 		window.paint(g);
 		
 		for (int i = range; i < Math.min(itemList.length, range+4); i++)
+		{
 			font.drawString(g, itemList[i], 8, 12+16*(i%4), window);
+			font.drawString(g, ""+Engine.getInstance().getParty().getItemCount(itemList[i]), 8, 12+16*(i%4), SFont.RIGHT, window);
+		}
 	}
 	
 	public int[] getArrowPosition(int index)
