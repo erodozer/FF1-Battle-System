@@ -232,12 +232,12 @@ public class IssueState extends GameState
 			if (next)
 			{
 				index += target.length;
-				if (index > targets.length)
+				if (index >= targets.length)
 					index = 0;
 			}
 			else
 			{
-				index --;
+				index -= target.length;
 				if (index < 0)
 					index = targets.length-1;
 			}
