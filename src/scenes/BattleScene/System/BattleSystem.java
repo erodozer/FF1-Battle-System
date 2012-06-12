@@ -338,10 +338,22 @@ public class BattleSystem extends GameSystem{
 	@Override
 	public void finish() {
 		MP3.stop();
-		if (state == vs)
-			engine.changeToWorld();
-		else
+		
+		//clear all actors of their commands so they don't stick in memory
+		for (Actor a : party)
+			a.setCommand(null);
+		for (Actor a : formation)
+			a.setCommand(null);
+				
+		//erase formations and temporary battle party from memory
+		formation = null;
+		party = null;
+				
+		if (state == gs)
 			engine.changeToTitle();
+		else
+			engine.changeToWorld();
+		
 	}
 	
 	public Party getParty() {
