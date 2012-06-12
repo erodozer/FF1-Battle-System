@@ -159,7 +159,7 @@ public class NPC {
 				pos = Map.getCoordAhead(x, y, dir);	
 				
 				//only move to location if one can actually walk on it
-				if (map.getPassability(pos[0], pos[1]))
+				if (map.getPassability(x, y, pos[0], pos[1]))
 				{
 					walk();
 					direction = dir;
@@ -180,7 +180,7 @@ public class NPC {
 	public void move(int x, int y)
 	{
 		direction = Map.getDirectionFacing(this.x, this.y, x, y);
-		if (map.getPassability(x, y))
+		if (map.getPassability(this.x, this.y, x, y))
 		{
 			walk();
 			xRate = (x-drawX)*rate;

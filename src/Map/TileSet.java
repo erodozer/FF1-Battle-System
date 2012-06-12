@@ -23,7 +23,7 @@ public class TileSet extends Sprite{
 	public final static char OVERLAY = 'o';
 	public final static char IMPASSABLE = 'i';
 	
-	char[][] passability;
+	boolean[][][] passability;
 	
 	/**
 	 * Loads a tileset
@@ -35,7 +35,7 @@ public class TileSet extends Sprite{
 		name = s.substring(0, s.indexOf('.'));
 		xFrames = image.getWidth()/ORIGINAL_DIMENSIONS;
 		yFrames = image.getHeight()/ORIGINAL_DIMENSIONS;
-		passability = new char[xFrames][yFrames];
+		passability = new boolean[xFrames][yFrames][];
 		try
 		{
 			Scanner reader = new Scanner(new FileInputStream("data/tilemaps/" + name + ".txt"));
@@ -43,7 +43,26 @@ public class TileSet extends Sprite{
 			{
 				String line = reader.nextLine();
 				for (int n = 0; n < xFrames; n++)
-					passability[n][i] = line.charAt(n);
+				{
+					char c = line.charAt(n);
+					/*
+					 * boolean p = new boolean[5];
+					 * for (byte x = 5; x >= 0; x--)
+					 * 	if (c / Math.pow(2, x) >= 1)
+					 * 	{
+					 * 		p[i] = true;
+					 * 		c %= Math.pow(2, x);
+					 * 	}
+					 * 
+					 * passability[n][i] = p;
+					 */
+					if (c == PASSABLE)
+						passability[n][i] = new boolean[]{true, true, true, true, false};
+					else if (c == OVERLAY)
+						passability[n][i] = new boolean[]{true, true, true, true, true};
+					else
+						passability[n][i] = new boolean[5];
+				}
 			}
 		}
 		catch (Exception e)
@@ -51,7 +70,7 @@ public class TileSet extends Sprite{
 			e.printStackTrace();
 			for (int i = 0; i < xFrames; i++)
 				for (int n = 0; n < yFrames; n++)
-					passability[i][n] = PASSABLE;
+					passability[i][n] = new boolean[]{true, true, true, true, false};
 		}
 	}
 	
@@ -77,7 +96,7 @@ public class TileSet extends Sprite{
 	 * Gets the passability value of a tile in the tile set by its
 	 * x and y position in the tile set
 	 */
-	public char getPassability(int x, int y)
+	public boolean[] getPassability(int x, int y)
 	{
 		return passability[x][y];
 	}
@@ -85,14 +104,14 @@ public class TileSet extends Sprite{
 	/**
 	 * Gets the passability value of a tile by its tile id
 	 */
-	public char getPassability(int i) {
+	public boolean[] getPassability(int i) {
 		return passability[i%xFrames][i/xFrames];
 	}
 	
 	/**
 	 * Gets the entire passability set for the tile set
 	 */
-	public char[][] getPassabilitySet()
+	public boolean[][][] getPassabilitySet()
 	{
 		return passability;
 	}

@@ -128,18 +128,20 @@ public class Map {
 	
 	/**
 	 * Returns if the coordinate can be walked on
-	 * @param x
-	 * @param y
+	 * @param x1 starting x
+	 * @param y1 starting y
+	 * @param x2 x position of coordinate to move to
+	 * @param y2 y position of coordinate to move to
 	 * @return
 	 */
-	public boolean getPassability(int x, int y)
+	public boolean getPassability(int x1, int y1, int x2, int y2)
 	{
 		// prevent moving out of bounds
-		if (!(x >= 0 && y >= 0 && x <= width && y <= height) ||
+		if (!(x2 >= 0 && y2 >= 0 && x2 <= width && y2 <= height) ||
 		// check the passibility map
-			(tileSet.getPassability(tiles[x][y]) == TileSet.IMPASSABLE) ||
+			!(tileSet.getPassability(tiles[x2][y2])[getDirectionFacing(x1, y1, x2, y2)-1]) ||
 		// check for an npc at the position
-			(npcMap[x][y] != null))
+			(npcMap[x2][y2] != null))
 			return false;
 		// return true if none of the above
 		else
@@ -148,7 +150,7 @@ public class Map {
 	
 	public boolean getOverlay(int x, int y)
 	{
-		return tileSet.getPassability(tiles[x][y]) == TileSet.OVERLAY;
+		return tileSet.getPassability(tiles[x][y])[4];
 	}
 	
 	/**
@@ -175,10 +177,10 @@ public class Map {
 	
 	/**
 	 * Gets the direction when standing in one tile facing another
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
+	 * @param x1 origin tile x
+	 * @param y1 origin tile y
+	 * @param x2 tile to face x
+	 * @param y2 tile to face y
 	 * @return
 	 */
 	public static int getDirectionFacing(int x1, int y1, int x2, int y2)
