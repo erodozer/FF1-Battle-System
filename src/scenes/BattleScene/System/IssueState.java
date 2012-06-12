@@ -150,6 +150,8 @@ public class IssueState extends GameState
 				actor.setMoving(2);
 				goBack = true;
 			}
+			index = 0;
+			return;
 		}
 		
 		//spell selecting is divided into 3 columns and 4 rows
@@ -216,7 +218,6 @@ public class IssueState extends GameState
 					index = COMMANDS.length-1;
 			}
 		}
-		handle();
 	}
 	
 	/**
