@@ -13,7 +13,7 @@ public class WorldSystem extends GameSystem
 	Map map;
 	
 	//player's coordinates
-	int encounterNum;						//current count until next encounter
+	static int encounterNum;						//current count until next encounter
 											//once this hits 100 or greater a battle will start
 	
 	NPC leader;								//party leader
@@ -27,7 +27,6 @@ public class WorldSystem extends GameSystem
 	{
 		dialogState = new DialogState(this);
 		exploreState = new ExploreState(this);
-		leader = new NPC();
 	}
 	
 	/**
@@ -36,7 +35,7 @@ public class WorldSystem extends GameSystem
 	public void start()
 	{
 		e = Engine.getInstance();
-		encounterNum = 0;
+		leader = e.getParty().getPartyRep();
 		leader.setWalkSprite(e.getParty().get(0).getMapSelf());
 		currentTerrain = null;
 		activeNPC = null;
@@ -53,6 +52,8 @@ public class WorldSystem extends GameSystem
 	public void start(Map m, int startX, int startY)
 	{
 		start();
+		
+		encounterNum = 0;	//only reset encounter num when entering a new map
 		
 		map = m;
 		

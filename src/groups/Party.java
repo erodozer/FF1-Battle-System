@@ -20,6 +20,7 @@ import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
 
+import Map.NPC;
 import actors.Player;
 
 public class Party extends ArrayList<Player>{
@@ -38,7 +39,9 @@ public class Party extends ArrayList<Player>{
 	public byte MAX_ITEM_COUNT = Byte.MAX_VALUE;	//maximum amount of one item a party can hold
 	
 	HashMap<String, Byte> inventory = genInventory();
-	int gold = 500;		//party starts off with 500 g
+	int gold = 500;			//party starts off with 500 g
+	
+	NPC mapRep = new NPC();	//party's representative on the map
 	
 	/**
 	 * Returns a list of all members that are alive
@@ -238,5 +241,17 @@ public class Party extends ArrayList<Player>{
 			items.add(""+keys[i]);
 		}
 		return items.toArray(new String[]{});
+	}
+	
+	/**
+	 * Gets the party representative presence for map display
+	 * @return
+	 */
+	public NPC getPartyRep()
+	{
+		//make sure the rep is using the right sprite
+		mapRep.setWalkSprite(get(0).getMapSelf());
+		
+		return mapRep;
 	}
 }
