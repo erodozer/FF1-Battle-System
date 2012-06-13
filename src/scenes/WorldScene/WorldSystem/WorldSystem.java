@@ -111,7 +111,7 @@ public class WorldSystem extends GameSystem
 		{
 			currentTerrain = map.getTerrain(x, y);
 			if (currentTerrain != null)
-				encounterNum += Math.ceil(Math.random()*2)*currentTerrain.getRate();
+				encounterNum += Math.ceil(Math.random()*currentTerrain.getRate());
 			if (encounterNum > 100)
 				if (currentTerrain.getFormations().size() > 0)
 				{
