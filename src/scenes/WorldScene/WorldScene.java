@@ -26,6 +26,7 @@ public class WorldScene extends Scene{
 	{
 		if (map != null)
 			map.unpause();
+		system.start();
 	}
 	
 	public void start(String s, int startX, int startY)
