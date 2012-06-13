@@ -118,6 +118,8 @@ public class Party extends ArrayList<Player>{
 			for (String s : inv.keys())
 				if (party.inventory.containsKey(s))
 					party.inventory.put(s, (byte)inv.getInt(s, 0));
+			
+			party.setGold(inv.getInt("$C", 0));
 		} catch (BackingStoreException e) {
 			System.err.println("Could not load party from save data");
 		}
@@ -135,6 +137,8 @@ public class Party extends ArrayList<Player>{
 		
 		for (String s : inventory.keySet())
 			ini.put("inventory", s, (inventory.containsKey(s))?inventory.get(s):0);
+		
+		ini.put("inventory", "$C", gold);
 	}
 	
 	/*
