@@ -135,7 +135,7 @@ public class ContentPanel{
 		{
 			dbImage = new BufferedImage(INTERNAL_RES_W, INTERNAL_RES_H, BufferedImage.TYPE_4BYTE_ABGR);
 			if (dbImage == null) {
-				System.out.println("dbImage is null");
+				System.err.println("dbImage is null");
 				return;
 			}
 			else

@@ -55,10 +55,7 @@ public class Formation extends ActorGroup<Enemy>{
 	{
 		int sum = 0;
 		for (Enemy e : this)
-		{
 			sum += e.getExp();
-			System.out.println(e.getExp());
-		}
 		return sum;
 	}
 
