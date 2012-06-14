@@ -29,6 +29,7 @@ public class OrderState extends GameState
 
 	@Override
 	public void start() {
+		index = 0;
 		selectedIndex = -1;
 		maxIndex = party.size()-1;
 	}
@@ -78,7 +79,10 @@ public class OrderState extends GameState
 		}
 		//exit the world map
 		if (key == Input.KEY_B)
-			finish();
+			if (selectedIndex != -1)
+				selectedIndex = -1;
+			else
+				finish();
 	}
 	
 	/**
