@@ -24,7 +24,7 @@ public class VictoryDisplay extends HUD{
 		windows = new SWindow[]{new SWindow(x, y+48, 180, 34), 		//displays message
 							   new SWindow(x, y, 90, 34), 			//displays "experience" or person's name
 							   new SWindow(x+82, y, 90, 34), 		//displays exp gained	or "leveled up!"
-							   new SWindow(x, y+24, 90, 34), 		//displays "g"
+							   new SWindow(x, y+24, 84, 34), 		//displays "g"
 							   new SWindow(x+82, y+24, 90, 34),		//displays g gained
 							   new SWindow(x, y+24, 180, 34)		//displays stat gained
 							};		
@@ -47,12 +47,12 @@ public class VictoryDisplay extends HUD{
 		else if (state.getStep() == 1)
 		{
 			windows[1].paint(g);
-			font.drawString(g, "Experience", 0, 10, windows[1]);
+			font.drawString(g, "EXP up", 0, 10, windows[1]);
 			windows[2].paint(g);
 			font.drawString(g, state.getExp()+"P", 0, 10, windows[2]);
 
 			windows[3].paint(g);
-			font.drawString(g, "Gold", 0, 10, windows[3]);
+			font.drawString(g, "GOLD", 0, 10, windows[3]);
 			windows[4].paint(g);
 			font.drawString(g, state.getG()+"G", 0, 10, windows[4]);
 		}

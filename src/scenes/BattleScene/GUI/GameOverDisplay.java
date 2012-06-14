@@ -1,5 +1,6 @@
 package scenes.BattleScene.GUI;
 
+import engine.Engine;
 import graphics.SWindow;
 import graphics.Sprite;
 
@@ -15,13 +16,14 @@ import java.awt.Graphics;
 public class GameOverDisplay extends Sprite{
 	
 	SWindow window;
+	String leadName;
 	
 	public GameOverDisplay(int x, int y)
 	{
 		super(null);
 		window = new SWindow(x, y, 90, 32);
 		window.setColor(Color.red);
-
+		leadName = Engine.getInstance().getParty().get(0).getName();
 	}
 	
 	/**
@@ -33,7 +35,7 @@ public class GameOverDisplay extends Sprite{
 		g.setColor(Color.white);
 		
 		window.paint(g);
-		g.drawString("Game Over", window.getX() + 10, window.getY() + 20);
+		g.drawString(leadName + " party perished...", window.getX() + 10, window.getY() + 20);
 		
 	}
 }
