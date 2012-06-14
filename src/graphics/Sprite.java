@@ -3,6 +3,7 @@ package graphics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -367,7 +368,7 @@ public class Sprite{
 		int drawY = (int)y;
 		int finalWidth = (int)(drawX+scaleW*(crop[2]-crop[0]));
 		int finalHeight = (int)(drawY+scaleH*(crop[3]-crop[1]));
-		Polygon bounds = new Polygon(new int[]{drawX, finalWidth, finalWidth, drawX}, new int[]{drawY, drawY, finalHeight, finalHeight}, 4);
+		Rectangle bounds = new Rectangle(drawX, drawY, finalWidth, finalHeight);
 		
 		return bounds.contains(i, j);
 	}
