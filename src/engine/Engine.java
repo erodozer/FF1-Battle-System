@@ -268,7 +268,7 @@ public class Engine{
 	public void loadFromSave(int i)
 	{
 		try {
-			File f = new File(String.format("savedata/save%03d.ini", i));
+			File f = new File(String.format("save/save%03d.ini", i));
 			Preferences p = new IniPreferences(new Ini(f));
 			Preferences map = p.node("map");
 			Party party = new Party();
@@ -294,7 +294,7 @@ public class Engine{
 	{
 		//save to file
 		try {
-			File f = new File(String.format("savedata/save%03d.ini", i));
+			File f = new File(String.format("save/save%03d.ini", i));
 			f.delete();					//deletes the old file
 			f.createNewFile();			//saves data to new file
 			Ini ini = new Ini(f);
