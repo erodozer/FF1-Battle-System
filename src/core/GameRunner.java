@@ -120,6 +120,8 @@ public class GameRunner extends GameFrame implements KeyListener{
 			e.printStackTrace();
 			return;
 		}
+		
+		setTitle("[FPS: " + getCurrFPS() + "] " + TITLE);
 	}
 
 	/**
@@ -186,6 +188,7 @@ public class GameRunner extends GameFrame implements KeyListener{
 	 * Main runner method.  This starts the game up
 	 */
 	public static void main(String[] args) {
+		System.setProperty("sun.java2d.opengl", "True");
 		GameRunner g = getInstance();
 		g.startGame();
 	}
