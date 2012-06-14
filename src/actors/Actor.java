@@ -42,7 +42,8 @@ abstract public class Actor implements Comparable<Actor>
 	
 	//spells are divided into lists of levels
 	protected Spell[][] spells;
-								//choice of commands
+	public static final int SPELL_LEVELS = 8;
+	public static final int SPELLS_PER_LEVEL = 3;
 	
 	//Display sprites
 	protected Sprite[] sprites;
