@@ -16,7 +16,6 @@ import core.GameRunner;
 
 public class IntroState extends GameState{
 
-	MP3 music;
 	SFont font = NES.font;
 	String[] lines;
 	int line;
@@ -42,8 +41,10 @@ public class IntroState extends GameState{
 					finalI.add(line2);
 			
 			lines = finalI.toArray(new String[]{});
-			music = new MP3("intro.mp3");
-			music.play();
+			l = null;
+			finalI = null;
+			s.close();
+			f.close();
 		}
 		//if no intro file, then just skip to the title screen
 		catch (Exception e) {
@@ -64,11 +65,6 @@ public class IntroState extends GameState{
 			if (line >= 10)
 				advancePage();
 			if (line + page * 10 >= lines.length) {
-				try {
-					Thread.sleep(1550);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 				finish();
 				return;
 			}

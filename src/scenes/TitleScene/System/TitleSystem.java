@@ -1,5 +1,6 @@
 package scenes.TitleScene.System;
 
+import audio.MP3;
 import scenes.GameSystem;
 import engine.Engine;
 
@@ -16,6 +17,8 @@ public class TitleSystem extends GameSystem {
 	IntroState is;		//state for showing the blue backed intro story
 	TitleState ts;		//state for showing the title screen with choices
 	
+	MP3 music;
+	
 	/**
 	 * Constructs the title system
 	 */
@@ -28,6 +31,9 @@ public class TitleSystem extends GameSystem {
 		
 		state = is;
 		state.start();
+		
+		music = new MP3("intro.mp3");
+		music.play();
 	}
 
 	@Override
@@ -41,6 +47,7 @@ public class TitleSystem extends GameSystem {
 	 */
 	@Override
 	public void finish() {
+		music.close();
 		if (ts.index == 0)
 			engine.changeToCreation();
 		else
