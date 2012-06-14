@@ -156,6 +156,7 @@ public class Player extends Actor {
 		vit = p.getInt("vit", vit);
 		mdef = p.getInt("mdef", mdef);
 		luk = p.getInt("luck", luk);
+		exp = p.getInt("exp", 0);
 	}
 
 	/**
@@ -187,6 +188,8 @@ public class Player extends Actor {
 		ini.put(section, "vit", vit);
 		ini.put(section, "mdef", mdef);
 		ini.put(section, "luck", luk);
+		ini.put(section, "exp", exp);
+		
 	}
 	
 	/**
@@ -702,6 +705,9 @@ public class Player extends Actor {
 			mp[i][0] = magicGrowth[level-1][i];
 			mp[i][1] = magicGrowth[level-1][i];
 		}
+		
+		//reset exp
+		exp = 0;
 	}
 	
 	/**
