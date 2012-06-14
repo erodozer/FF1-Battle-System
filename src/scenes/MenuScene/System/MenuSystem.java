@@ -59,6 +59,7 @@ public class MenuSystem extends GameSystem
 	/**
 	 * Default start in normal menu
 	 */
+	@Override
 	public void start()
 	{
 		state = ms;

@@ -33,6 +33,7 @@ public class EnemyListDisplay extends HUD{
 	/**
 	 * Main render method
 	 */
+	@Override
 	public void paint(Graphics g)
 	{
 		//window is first sprite

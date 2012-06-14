@@ -46,6 +46,7 @@ public class TitleScreen extends HUD {
 	public void update() {
 	}
 	
+	@Override
 	public int[] getArrowPosition(int index)
 	{
 		return new int[]{window.getX()-4, window.getY()+16+(index*18)};

@@ -112,6 +112,7 @@ public class StatusGUI extends HUD
 	 * Instead of getting the arrow position, it is actually used to set the player to display
 	 * @return
 	 */
+	@Override
 	public int[] getArrowPosition(int index)
 	{
 		p = e.getParty().get(index);

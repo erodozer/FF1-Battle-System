@@ -26,6 +26,7 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 
 import org.ini4j.Ini;
 
@@ -288,12 +289,12 @@ public class SpellEditorGUI extends JPanel implements ActionListener, MouseListe
 		{
 			JButton s = new JButton(MATH[i]);
 			s.setSize(48, 24);
-			s.setLocation(165 + (i%4)*54, 112+(30*(int)(i/4)));
+			s.setLocation(165 + (i%4)*54, 112+(30*(i/4)));
 			mathButtons[i] = s;
 			EQEditor.add(s);
 		}
 		
-		targetSlider = new JSlider(JSlider.VERTICAL, 1, 2, 2);
+		targetSlider = new JSlider(SwingConstants.VERTICAL, 1, 2, 2);
 		targetSlider.setSize(50, 115);
 		targetSlider.setLocation(50, 38);
 		EQEditor.add(targetSlider);

@@ -193,7 +193,8 @@ public class MP3{
     	/**
     	 * Stops the music and thread
     	 */
-    	public void interrupt()
+    	@Override
+		public void interrupt()
     	{
     		if (player != null)
     			player.close();

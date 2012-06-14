@@ -15,7 +15,6 @@ import commands.FleeCommand;
 import commands.ItemCommand;
 import commands.SpellCommand;
 
-import engine.Engine;
 import engine.Input;
 
 /**

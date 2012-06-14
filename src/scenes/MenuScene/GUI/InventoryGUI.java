@@ -66,11 +66,12 @@ public class InventoryGUI extends HUD
 	 * Gets the position on screen of where the global arrow should draw
 	 * @return
 	 */
+	@Override
 	public int[] getArrowPosition(int index)
 	{
 		int[] pos;
 		if (itemWindow.itemList.length > 0)
-			pos = new int[]{itemWindow.w.getX() - 4 + (itemWindow.WIDTH/InventoryState.COLUMNS)*(index%InventoryState.COLUMNS), itemWindow.w.getY() + 24 + 16*(index/InventoryState.COLUMNS)};
+			pos = new int[]{itemWindow.w.getX() - 4 + (ItemWindow.WIDTH/InventoryState.COLUMNS)*(index%InventoryState.COLUMNS), itemWindow.w.getY() + 24 + 16*(index/InventoryState.COLUMNS)};
 		else
 			pos = new int[]{-100, -100};
 		return pos;

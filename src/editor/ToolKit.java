@@ -7,8 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
-import spell.Spell;
-
 import editor.EnemyEditor.EnemyEditorGUI;
 import editor.ItemEditor.ItemEditorGUI;
 import editor.MapEditor.MapEditorGUI;

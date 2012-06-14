@@ -87,6 +87,7 @@ public class EnemySpriteDisplay extends HUD{
 		background = s;
 	}
 	
+	@Override
 	public int[] getArrowPosition(int index)
 	{
 		Sprite s = parent.getFormation().get(index).getSprite();

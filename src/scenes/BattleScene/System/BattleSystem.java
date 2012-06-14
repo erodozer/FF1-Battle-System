@@ -111,6 +111,7 @@ public class BattleSystem extends GameSystem{
 	/**
 	 * Starts the battle phase
 	 */
+	@Override
 	public void start()
 	{
 		genEnemyCommands();

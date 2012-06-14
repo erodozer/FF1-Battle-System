@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import scenes.HUD;
-import scenes.BattleScene.System.BattleSystem;
 import scenes.BattleScene.System.IssueState;
 
 /**
@@ -46,6 +45,7 @@ public class ItemDisplay extends HUD{
 		items = ((IssueState)parent.getState()).items;
 	}
 
+	@Override
 	public int[] getArrowPosition(int index)
 	{
 		return new int[]{window.getX() + 8 + 80*(index%2), window.getY() + 16 + 16 * (index/2)};

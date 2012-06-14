@@ -165,6 +165,7 @@ public class ShopGUI extends HUD {
 			return new int[]{window.getX()-5, window.getY()+16+(14*index)};
 		}
 		
+		@Override
 		public void paint(Graphics g)
 		{
 			window.paint(g);

@@ -23,6 +23,7 @@ public class ShopSystem extends GameSystem {
 			shop.bgm.play();
 	}
 	
+	@Override
 	public void start()
 	{
 		state = gs;

@@ -17,5 +17,6 @@ public class Event extends NPC{
 	/**
 	 * Events should not have an appearance
 	 */
+	@Override
 	public void draw(Graphics g){}
 }

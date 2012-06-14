@@ -22,6 +22,7 @@ public class CreationScene extends Scene {
 	 * Since the creation scene is not a scene that repeatedly pops
 	 * up, the system and display can be set to null for garbage collection
 	 */
+	@Override
 	public void stop()
 	{
 		system = null;

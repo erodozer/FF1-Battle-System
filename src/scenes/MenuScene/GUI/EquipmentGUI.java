@@ -116,6 +116,7 @@ public class EquipmentGUI extends HUD
 			w = new SWindow(x, y, WIDTH, HEIGHT, NES.BLUE);
 		}
 
+		@Override
 		public void paint(Graphics g) {
 			w.paint(g);
 			f.drawString(g, "EQUIP", 14, 14, w);
@@ -149,6 +150,7 @@ public class EquipmentGUI extends HUD
 			items = new SWindow(x+56, y, 186, 48, NES.BLUE);
 		}
 
+		@Override
 		public void paint(Graphics g) {
 			items.paint(g);
 			name.paint(g);

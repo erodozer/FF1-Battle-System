@@ -496,6 +496,7 @@ public class Player extends Actor {
 	 * Retrieves current str
 	 * @return
 	 */
+	@Override
 	public int getStr() {
 		int i = str;
 		if (weapon != null)
@@ -507,6 +508,7 @@ public class Player extends Actor {
 	 * Gets current def
 	 * @return
 	 */
+	@Override
 	public int getDef() {
 		int i = def;
 		for (int n = 0; n < equippedArmor.size(); n++)
@@ -518,6 +520,7 @@ public class Player extends Actor {
 	 * Get current spd
 	 * @return
 	 */
+	@Override
 	public int getSpd() {
 		int i = spd;
 		for (int n = 0; n < equippedArmor.size(); n++)
@@ -529,6 +532,7 @@ public class Player extends Actor {
 	 * Get accuracy
 	 * @return
 	 */
+	@Override
 	public int getAcc() {
 		int i = acc;
 		for (int n = 0; n < equippedArmor.size(); n++)
@@ -540,6 +544,7 @@ public class Player extends Actor {
 	 * Get vitality
 	 * @return
 	 */
+	@Override
 	public int getVit() {
 		int i = vit;
 		for (int n = 0; n < equippedArmor.size(); n++)
@@ -552,6 +557,7 @@ public class Player extends Actor {
 	 * Get intelligence
 	 * @return
 	 */
+	@Override
 	public int getInt() {
 		int i = itl;
 		for (int n = 0; n < equippedArmor.size(); n++)
@@ -564,6 +570,7 @@ public class Player extends Actor {
 	 * Get magic def
 	 * @return
 	 */
+	@Override
 	public int getMDef() {
 		int i = mdef;
 		for (int n = 0; n < equippedArmor.size(); n++)

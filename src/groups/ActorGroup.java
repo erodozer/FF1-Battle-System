@@ -10,7 +10,6 @@ import java.util.prefs.BackingStoreException;
 import org.ini4j.InvalidFileFormatException;
 
 import actors.Actor;
-import actors.Player;
 
 /**
  * ActorGroup

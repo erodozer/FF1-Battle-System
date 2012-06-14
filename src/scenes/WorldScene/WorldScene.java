@@ -22,6 +22,7 @@ public class WorldScene extends Scene{
 		display = new WorldHUD((WorldSystem)system);	
 	}
 	
+	@Override
 	public void start()
 	{
 		if (map != null)

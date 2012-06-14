@@ -92,7 +92,7 @@ public class MainGUI extends HUD
 		int[] pos;
 		
 		if (((MenuSystem)(parentGUI.getParent())).isPickingPlayer())
-			pos = new int[]{(int)statWindows[index-range].getX()-15,  (int)statWindows[index-range].getY()+20};
+			pos = new int[]{statWindows[index-range].getX()-15,  statWindows[index-range].getY()+20};
 		else
 			pos = new int[]{menuWindow.getX()-8,  menuWindow.getY()+16+(16*index)};
 		return pos;
@@ -108,9 +108,9 @@ public class MainGUI extends HUD
 		{
 			MenuState m = (MenuState)ms.getState();
 			if (range + 4 <= m.getIndex())
-				range = (int)(m.getIndex()/2-1)*2;
+				range = (m.getIndex()/2-1)*2;
 			else if (m.getIndex() < range)
-				range = (int)(m.getIndex()/2);
+				range = (m.getIndex()/2);
 		}
 	}
 	

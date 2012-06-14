@@ -471,7 +471,8 @@ abstract public class Actor implements Comparable<Actor>
     /**
      * Compares two actors together by speed to determine turn order
      */
-    public int compareTo(Actor a)
+    @Override
+	public int compareTo(Actor a)
     {
     	int i = 0;
     	if (this.spd < a.spd)

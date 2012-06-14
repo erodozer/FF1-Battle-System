@@ -53,6 +53,7 @@ public class Party extends ActorGroup<Player>{
 	 * @throws InvalidFileFormatException 
 	 * @throws BackingStoreException 
 	 */
+	@Override
 	public void loadFromFile(File file) throws InvalidFileFormatException, IOException, BackingStoreException
 	{
 		Preferences p;

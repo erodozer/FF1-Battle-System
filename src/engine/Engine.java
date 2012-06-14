@@ -1,6 +1,5 @@
 package engine;
 
-import graphics.ContentPanel;
 import graphics.Sprite;
 import groups.Formation;
 import groups.Party;
@@ -14,8 +13,6 @@ import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
-import org.ini4j.InvalidFileFormatException;
-
 import scenes.Scene;
 import scenes.BattleScene.BattleScene;
 import scenes.CreationScene.CreationScene;

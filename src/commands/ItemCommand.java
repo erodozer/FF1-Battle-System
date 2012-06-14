@@ -49,6 +49,7 @@ public class ItemCommand extends SpellCommand {
 	/**
 	 * Get the item's name instead of the spell name
 	 */
+	@Override
 	public String getName()
 	{
 		return item.getName();

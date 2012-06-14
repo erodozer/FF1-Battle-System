@@ -1,23 +1,18 @@
 package graphics.transitions;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.ByteLookupTable;
-import java.awt.image.LookupOp;
-import java.awt.image.LookupTable;
-import java.util.Arrays;
 
 public class IrisIn extends Iris {
 	
 	private int previousDia = endRadius;
 	
+	@Override
 	protected int getDiameter()
 	{
 		return (int)(endRadius-endRadius*(currTime/(double)length))*2;
 	}
 	
+	@Override
 	public boolean isDone()
 	{
 		if (super.isDone())
@@ -28,6 +23,7 @@ public class IrisIn extends Iris {
 		return super.isDone();
 	}
 	
+	@Override
 	public void paint(Graphics g)
 	{
 		if (irisG == null)

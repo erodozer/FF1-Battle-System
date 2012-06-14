@@ -4,14 +4,11 @@ import graphics.ContentPanel;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Vector;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -19,7 +16,6 @@ import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
 import audio.MP3;
-import audio.SoundEffect;
 
 public class Map {
 
@@ -337,7 +333,7 @@ public class Map {
 	public void pause()
 	{
 	//	ambient.stop();
-		bgm.stop();
+		MP3.stop();
 	}
 	
 	public void unpause()
@@ -351,6 +347,6 @@ public class Map {
 	 */
 	public void killSound() {
 	//	ambient.dispose();
-		bgm.stop();
+		MP3.stop();
 	}
 }

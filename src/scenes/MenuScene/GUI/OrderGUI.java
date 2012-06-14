@@ -69,6 +69,7 @@ public class OrderGUI extends HUD
 	 * Gets the position on screen of where the global arrow should draw
 	 * @return
 	 */
+	@Override
 	public int[] getArrowPosition(int index)
 	{
 		int[] pos;

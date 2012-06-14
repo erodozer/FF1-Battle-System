@@ -30,6 +30,7 @@ public class Formation extends ActorGroup<Enemy>{
 		this.add(new Enemy(e));
 	}
 	
+	@Override
 	public boolean add(Enemy e)
 	{
 		boolean b = super.add(e);
@@ -86,7 +87,8 @@ public class Formation extends ActorGroup<Enemy>{
      * @return the formation loaded
      * @throws FileNotFoundException 
      */
-    public void loadFromFile(File file) throws FileNotFoundException
+    @Override
+	public void loadFromFile(File file) throws FileNotFoundException
     {
 		Scanner s = new Scanner(file);
 		

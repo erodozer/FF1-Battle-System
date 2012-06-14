@@ -1,6 +1,5 @@
 package scenes.BattleScene.GUI;
 
-import engine.Engine;
 import graphics.SFont;
 import graphics.SWindow;
 import groups.Inventory;
@@ -29,6 +28,7 @@ public class DrinkDisplay extends HUD{
 		window = new SWindow(x, y, 101, 32 + 18*(itemList.length-1));	
 	}
 	
+	@Override
 	public void update(){}
 	
 	/**
@@ -47,6 +47,7 @@ public class DrinkDisplay extends HUD{
 		}
 	}
 	
+	@Override
 	public int[] getArrowPosition(int index)
 	{
 		range = (index/4)*4;

@@ -24,6 +24,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.ImageObserver;
 
 import javax.swing.JFrame;
 
@@ -154,6 +155,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		{
 			EventQueue.invokeAndWait(new Runnable()
 			{
+				@Override
 				public void run()
 				{
 					if (isWindowed)
@@ -232,6 +234,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 // Game loop and game object update/render methods. Specifics are left abstract,
 // for descendent classes to implement.
 //==============================================================================
+	@Override
 	public void run()
 	// The frames of the animation are drawn inside the while loop.
 	{
@@ -340,6 +343,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 //==============================================================================
 // Getters and setters. Some override JFrame methods, some don't.
 //==============================================================================
+	@Override
 	public void setSize(int w, int h)
 	// Set the size of the drawing area (canvas if windowed, frame if not).
 	{
@@ -365,13 +369,14 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 			super.setSize(w,super.getHeight());
 	}
 
+	@Override
 	public int getWidth()
 	// Get the width of the drawing area (canvas if windowed, frame if not).
 	{
 		if (isWindowed)
 			return canvas.getWidth();
 
-		return this.WIDTH;
+		return ImageObserver.WIDTH;
 	}
 
 	public void setHeight(int h)
@@ -388,13 +393,14 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		}
 	}
 
+	@Override
 	public int getHeight()
 	// Get the height of the drawing area (canvas if windowed, frame if not).
 	{
 		if (isWindowed)
 			return canvas.getHeight();
 
-		return this.HEIGHT;
+		return ImageObserver.HEIGHT;
 	}
 
 	public void setFPS(int fps)
@@ -413,7 +419,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 			return;
 			
 		double msecsPerFrame = timeDiff/(double)nanoPerMSec;
-		double secsPerFrame = msecsPerFrame/(double)msecPerSec;
+		double secsPerFrame = msecsPerFrame/msecPerSec;
 		currFPS += (int)(1/secsPerFrame);
 
 		currSamples++;
@@ -440,6 +446,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 //==============================================================================
 // Window listener methods.
 //==============================================================================
+	@Override
 	public void windowActivated(WindowEvent e)
 	// What to do when the window is made active (was previously unfocused, but
 	// the user has clicked on it).
@@ -447,6 +454,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		resumeGame();
 	}
 
+	@Override
 	public void windowDeactivated(WindowEvent e)
 	// What to do when the window is made inactive (had focus, but the user has
 	// changed tasks).
@@ -454,18 +462,21 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		suspendGame();
 	}
 
+	@Override
 	public void windowDeiconified(WindowEvent e) 
 	// What to do if the window is restored from being minimized.
 	{
 		resumeGame();
 	}
 
+	@Override
 	public void windowIconified(WindowEvent e)
 	// What to do if the window has been minimized.
 	{
 		suspendGame();
 	}
 
+	@Override
 	public void windowClosing(WindowEvent e)
 	// What to do when the window has been asked to close.
 	{
@@ -475,7 +486,9 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 	}
 
 	// Here to complete the interface.
+	@Override
 	public void windowClosed(WindowEvent e) {}
+	@Override
 	public void windowOpened(WindowEvent e) {}
 //==============================================================================
 }

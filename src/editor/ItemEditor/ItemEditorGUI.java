@@ -30,8 +30,6 @@ import org.ini4j.Ini;
 
 import editor.ToolKit;
 
-import spell.Spell;
-
 /**
  * SpellEditorGUI
  * @author nhydock
