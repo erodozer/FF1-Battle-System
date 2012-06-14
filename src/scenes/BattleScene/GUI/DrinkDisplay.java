@@ -63,5 +63,6 @@ public class DrinkDisplay extends HUD{
 		this.parent = parent;
 		inventory = parent.getParty().getInventory();
 		itemList = inventory.getBattleItems();
+		window.setSize(101, 32 + 18*(itemList.length-1));
 	}
 }
