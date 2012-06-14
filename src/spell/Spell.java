@@ -204,4 +204,10 @@ public class Spell {
 	{
 		return targetRange;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return name;
+	}
 }
