@@ -136,4 +136,9 @@ public abstract class Command {
 	{
 		return currentTargetIndex;
 	}
+	
+	public Actor getInvoker()
+	{
+		return invoker;
+	}
 }

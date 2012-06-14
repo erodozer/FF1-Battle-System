@@ -13,7 +13,7 @@ import actors.Player;
  */
 public class EngageState extends GameState {
 
-	Actor activeActor;
+	private Actor activeActor;
 	
 	EngageState(BattleSystem p) {
 		super(p);
@@ -22,22 +22,22 @@ public class EngageState extends GameState {
 	@Override
 	public void start() {
 		activeActor = ((BattleSystem)parent).getActiveActor();
-		if (activeActor instanceof Player)
+		if (getActiveActor() instanceof Player)
 		{
 			//should only play once, which means when doing the other target's damage info
 			// it should skip the actor walking up and acting again
-			if (activeActor.getCommand().getTargetIndex() > 0)
+			if (getActiveActor().getCommand().getTargetIndex() > 0)
 			{
-				((Player)activeActor).setMoving(3);
+				((Player)getActiveActor()).setMoving(3);
 			}
 			else
 			{
-				((Player)activeActor).setState(Player.WALK);
-				((Player)activeActor).setMoving(0);		
+				((Player)getActiveActor()).setState(Player.WALK);
+				((Player)getActiveActor()).setMoving(0);		
 			}
 		}
-		if (activeActor.getAlive())
-			activeActor.execute();
+		if (getActiveActor().getAlive())
+			getActiveActor().execute();
 	}
 
 	@Override
@@ -47,9 +47,9 @@ public class EngageState extends GameState {
 
 	@Override
 	public void handle() {
-	    if (activeActor instanceof Player)
+	    if (getActiveActor() instanceof Player)
 		{
-	    	Player p = ((Player)activeActor);
+	    	Player p = ((Player)getActiveActor());
 	    	if (p.getMoving() == 0 || p.getMoving() == 2)
 				return;
 			else if (p.getMoving() == 1)
@@ -69,5 +69,9 @@ public class EngageState extends GameState {
 	 */
 	@Override
 	public void handleKeyInput(int key) {}
+
+	public Actor getActiveActor() {
+		return activeActor;
+	}
 
 }

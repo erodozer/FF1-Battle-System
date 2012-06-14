@@ -123,7 +123,7 @@ public class BattleHUD extends HUD{
 			vd.paint(g);
 			return;
 		}
-		else if (gs instanceof MessageState)
+		else if (gs instanceof MessageState || gs instanceof EngageState)
 		{
 			md.update();
 			md.paint(g);

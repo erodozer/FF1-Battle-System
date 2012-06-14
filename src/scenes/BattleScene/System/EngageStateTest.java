@@ -48,7 +48,7 @@ public class EngageStateTest {
 		EngageState state = new EngageState(bs);
 		state.start();
 		
-		assertEquals(a, state.activeActor);
+		assertEquals(a, state.getActiveActor());
 		assertEquals(a.getCommands()[0], a.getCommand());
 	}
 
