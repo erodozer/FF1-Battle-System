@@ -1,6 +1,7 @@
 package scenes;
 
 import graphics.ContentPanel;
+import graphics.NES;
 import graphics.SFont;
 import graphics.Sprite;
 
@@ -17,9 +18,11 @@ public abstract class HUD extends Sprite
 {
 
     protected GameSystem parent;	//parent scene
-    protected Color clearColor;		//color the background of the scene clears to
+    protected Color clearColor;	//color the background of the scene clears to
     
-    protected SFont font = ContentPanel.font;
+    protected SFont font = NES.font;
+    
+    protected boolean refresh = false;
     
     /**
      * Constructs a hud

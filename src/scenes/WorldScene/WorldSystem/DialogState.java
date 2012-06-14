@@ -2,6 +2,7 @@ package scenes.WorldScene.WorldSystem;
 
 import engine.Input;
 import graphics.ContentPanel;
+import graphics.NES;
 import graphics.SFont;
 import scenes.GameState;
 import scenes.GameSystem;
@@ -15,7 +16,7 @@ import Map.NPC;
  */
 public class DialogState extends GameState {
 
-	SFont font = ContentPanel.font;
+	SFont font = NES.font;
 	String[] dialog;		//lines of dialog
 	int index;				//index of line to show (+2 more)
 

@@ -3,6 +3,7 @@ package scenes.TitleScene.System;
 
 import engine.Input;
 import graphics.ContentPanel;
+import graphics.NES;
 import graphics.SFont;
 
 import java.io.FileInputStream;
@@ -16,7 +17,7 @@ import core.GameRunner;
 public class IntroState extends GameState{
 
 	MP3 music;
-	SFont font = ContentPanel.font;
+	SFont font = NES.font;
 	String[] lines;
 	int line;
 	int page;

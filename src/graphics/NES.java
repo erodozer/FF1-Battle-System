@@ -19,4 +19,6 @@ public class NES
 
 	public static final Sprite ARROW = new Sprite("hud/arrow.png");
 	public static final Sprite WINDOW = new Sprite("hud/window.png", 3, 3);
+	
+	public static final SFont font = SFont.loadFont("default", 24.0f);	
 }
