@@ -278,11 +278,11 @@ public class ItemEditorGUI extends JPanel implements ActionListener, MouseListen
 				String[] s = new File("data/items").list(new FilenameFilter() {
 		            @Override
 					public boolean accept(File f, String s) {
-		            	return (new File("data/items/"+s+"/item.ini").exists());
+		            	return s.endsWith(".ini");
 		              }
 		            });
 				for (String str : s)
-					add(str);
+					add(str.substring(0, str.length()-4));
 			}
 		};
 		
