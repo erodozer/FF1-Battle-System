@@ -198,9 +198,9 @@ public class SFont {
 	 * @param c				color of the font
 	 */
 	public void drawString(Graphics g, String text, int x, int y, int alignment, Color c)
-	{
+	{	
 		//don't try drawing if the font doesn't exist
-		if (f == null || text == null)
+		if (g == null || f == null || text == null)
 			return;
 		
 		//right aligned
