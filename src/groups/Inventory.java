@@ -15,7 +15,7 @@ import item.Item;
  */
 public class Inventory extends HashMap<String, Byte>{
 	
-	public byte MAX_ITEM_COUNT = Byte.MAX_VALUE;	//maximum amount of one item a party can hold
+	public static final byte MAX_ITEM_COUNT = Byte.MAX_VALUE;	//maximum amount of one item a party can hold
 	
 	private int gold;	//amount of wealth
 	
