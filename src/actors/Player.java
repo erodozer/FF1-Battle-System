@@ -260,11 +260,7 @@ public class Player extends Actor {
 			FileInputStream f = new FileInputStream("data/actors/jobs/" + pathname + "/spells.txt");
 			Scanner s = new Scanner(f);
 			while (s.hasNext())
-			{
-				String spellName = s.next();
-				if (new File("data/spells/" + spellName + "/spell.ini").exists())
-					addSpell(Spell.getSpell(spellName));
-			}
+				addSpell(Spell.getSpell(s.next()));
 		} catch (Exception e) {
 			canCast = false;
 		}			
