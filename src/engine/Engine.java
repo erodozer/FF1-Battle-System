@@ -1,5 +1,6 @@
 package engine;
 
+import graphics.ContentPanel;
 import graphics.Sprite;
 import groups.Formation;
 import groups.Party;
@@ -102,6 +103,8 @@ public class Engine{
 	 */
 	public void startGame()
 	{
+		ContentPanel.setTransitionSet(graphics.transitions.FadeIn.class, graphics.transitions.HorizontalCurtainOut.class);
+		
 		changeToWorld(startingMap, startingCell[0], startingCell[1]);
 	}
 	
@@ -122,6 +125,7 @@ public class Engine{
 	 */
 	public void changeToBattle(Formation formation)
 	{
+		ContentPanel.setTransitionSet(graphics.transitions.IrisIn.class, graphics.transitions.FadeOut.class);
 		changeScene(battle);
 		battle.start(formation);
 		
@@ -133,6 +137,7 @@ public class Engine{
 	 * @param background	the background image to use for the battle terrain
 	 */
 	public void changeToBattle(Formation f, Sprite background) {
+		ContentPanel.setTransitionSet(graphics.transitions.IrisIn.class, graphics.transitions.FadeOut.class);
 		changeScene(battle);
 		battle.start(f, background);
 	}
@@ -158,6 +163,7 @@ public class Engine{
 	 */
 	public void changeToWorld(String mapName, int startX, int startY)
 	{
+		ContentPanel.setTransitionSet(graphics.transitions.HorizontalCurtainIn.class, graphics.transitions.HorizontalCurtainOut.class);
 		changeScene(world);
 		world.start(mapName, startX, startY);
 	}
@@ -167,6 +173,7 @@ public class Engine{
 	 */
 	public void changeToCreation()
 	{
+		ContentPanel.setTransitionSet(null, null);	//no transition when going into creation scene
 		CreationScene s = new CreationScene(); 
 		changeScene(s);
 	}
@@ -176,6 +183,8 @@ public class Engine{
 	 * @param shop	the npc shop for buying stuff
 	 */
 	public void changeToShop(Shop shop) {
+		ContentPanel.setTransitionSet(graphics.transitions.FadeIn.class, null);
+		
 		ShopScene s = new ShopScene();
 		changeScene(s);
 		s.start(shop);	
@@ -186,6 +195,7 @@ public class Engine{
 	 */
 	public void changeToMenu()
 	{
+		ContentPanel.setTransitionSet(graphics.transitions.FadeIn.class, null);
 		changeScene(menu);
 	}
 	
@@ -194,6 +204,7 @@ public class Engine{
 	 */
 	public void changeToOrder()
 	{
+		ContentPanel.setTransitionSet(graphics.transitions.FadeIn.class, null);
 		changeScene(menu);
 		menu.startWithOrder();
 	}
@@ -203,6 +214,7 @@ public class Engine{
 	 * This should only be used at the beginning of the game and after game over
 	 */
 	public void changeToTitle() {
+		ContentPanel.setTransitionSet(graphics.transitions.FadeIn.class, null);
 		TitleScene t = new TitleScene();
 		changeScene(t);
 	}
