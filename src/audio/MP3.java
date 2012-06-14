@@ -2,6 +2,7 @@ package audio;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javazoom.jl.decoder.JavaLayerException;
@@ -62,8 +63,16 @@ public class MP3{
     	playerThread.setMP3(null);
     }
     
-    @Deprecated
-    public void close() {stop();}
+    public void close() {
+    	stop();
+    	try {
+			bis.close();
+			fis.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     /**
      *  play the MP3 file to the sound card
