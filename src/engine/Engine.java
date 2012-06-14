@@ -9,10 +9,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
+import org.ini4j.InvalidFileFormatException;
 
 import scenes.Scene;
 import scenes.BattleScene.BattleScene;
@@ -149,8 +151,6 @@ public class Engine{
 			return;
 		}
 		changeScene(world);
-		//force evoking of transition
-		ContentPanel.getInstance().evokeTransition(true);
 	}
 		
 	/**
@@ -163,8 +163,6 @@ public class Engine{
 	{
 		changeScene(world);
 		world.start(mapName, startX, startY);
-		//force evoking of transition
-		ContentPanel.getInstance().evokeTransition(true);
 	}
 	
 	/**
@@ -270,20 +268,22 @@ public class Engine{
 	public void loadFromSave(int i)
 	{
 		try {
-			Preferences p = new IniPreferences(new Ini(new File(String.format("savedata/save%03d.ini", i))));
+			File f = new File(String.format("savedata/save%03d.ini", i));
+			Preferences p = new IniPreferences(new Ini(f));
 			Preferences map = p.node("map");
-			setParty(Party.loadFromFile(p));
-			
-			//if party could not load properly
-			if (party == null)
-				throw new Exception();
+			Party party = new Party();
+		
+			party.loadFromFile(f);
+			setParty(party);
 			
 			//throw party to the map at which they saved
 			changeToWorld(map.get("where", "world"), map.getInt("x", 0), map.getInt("y", 0));
-		} catch (Exception e) {
-			System.err.println("Can not load save file");
+		} catch (IOException
+				| BackingStoreException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	/**

@@ -97,14 +97,15 @@ public class PartyTest extends TestCase{
 	@Test
 	public void testLoadFromFile()
 	{
-		Preferences save = null;
+		File save;
+		Party party = new Party();
 		try {
-			save = new IniPreferences(new Ini(new File("savedata/test.ini")));
+			save = new File("savedata/test.ini");
+			party.loadFromFile(save);
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail("could not read test save file savadata/test.ini");
 		}
-		
-		Party party = Party.loadFromFile(save);
 		
 		assertEquals(3, party.size());
 		assertEquals(3, party.getAlive());

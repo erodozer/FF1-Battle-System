@@ -43,7 +43,7 @@ public class ItemCommand extends SpellCommand {
 	@Override
 	public void reset()
 	{
-		Engine.getInstance().getParty().removeItem(item);
+		Engine.getInstance().getParty().getInventory().removeItem(item.getName());
 	}
 	
 	/**

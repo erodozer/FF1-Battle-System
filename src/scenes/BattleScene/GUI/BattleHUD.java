@@ -93,6 +93,7 @@ public class BattleHUD extends HUD{
 		sd.setParent(parent);
 		vd.setParent(parent);
 		id.setParent(parent);
+		dd.setParent(parent);
 		md.setParent(parent);
 	}
 	

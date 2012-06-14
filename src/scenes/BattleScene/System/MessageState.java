@@ -88,7 +88,7 @@ public class MessageState extends GameState {
 		}
 			
 		message = m.toArray(new String[]{});
-		GameRunner.getInstance().sleep(2050);
+		GameRunner.getInstance().sleep(1250);
 	}
 
 	/**

@@ -68,7 +68,7 @@ public class IssueState extends GameState
 		super(p);
 		//need to get the drinks from the party directly instead of from the one generated
 		// for battle because the one for battle does not actually have the same inventory
-		drinks = Engine.getInstance().getParty().getBattleItems();
+		drinks = p.getParty().getInventory().getBattleItems();
 	}
 	
 	/**

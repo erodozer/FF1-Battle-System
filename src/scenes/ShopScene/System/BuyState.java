@@ -76,14 +76,14 @@ public class BuyState extends GameState {
 				//if it's a piece of armor or an accessory, hold it in the armor inventory
 				else
 					party.get(index).holdArmor(selectedItem);
-				party.subtractGold(selectedItem.getPrice());
+				party.getInventory().subtractGold(selectedItem.getPrice());
 				handOff = false;
 			}
 			else
 			{
 				selectedItem = items[index];
 				//only buy the item if the party has enough money to buy it
-				if (selectedItem.getPrice() <= party.getGold())
+				if (selectedItem.getPrice() <= party.getInventory().getGold())
 				{
 					//if the item is a piece of equipment, switch to handoff mode
 					if (selectedItem.isEquipment())
@@ -94,8 +94,8 @@ public class BuyState extends GameState {
 					//else, add it to the party's inventory
 					else
 					{
-						party.addItem(selectedItem);
-						party.subtractGold(selectedItem.getPrice());
+						party.getInventory().addItem(selectedItem.getName());
+						party.getInventory().subtractGold(selectedItem.getPrice());
 					}
 				}
 			}

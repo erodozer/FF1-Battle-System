@@ -67,7 +67,7 @@ public class VictoryState extends GameState {
 		
 		//distribute the exp and g
 		exp = f.getExp()/p.getAlive();
-		g = f.getGold();
+		g = f.getInventory().getGold();
 		
 		Player player;
 		leveledUp = new ArrayList<Player>();
@@ -84,7 +84,9 @@ public class VictoryState extends GameState {
 		}
 		levIterator = leveledUp.iterator();
 		
-		p.addGold(g);
+		//combine party inventory with enemy inventory after battle
+		// to gain all gold and drops
+		p.getInventory().merge(f.getInventory());
 		
 		//wait for 2 seconds before updating
 		GameRunner.getInstance().sleep(2000);			
@@ -96,7 +98,7 @@ public class VictoryState extends GameState {
 	@Override
 	public void handle() {
 		//wait for 2 seconds between updating
-		GameRunner.getInstance().sleep(2000);
+		GameRunner.getInstance().sleep(1000);
 		
 		//check to see if the level up messages should be shown or not
 		if (step == 1)

@@ -9,6 +9,7 @@ import graphics.NES;
 import graphics.SFont;
 import graphics.SWindow;
 import graphics.Sprite;
+import groups.Inventory;
 import groups.Party;
 
 /**
@@ -27,7 +28,7 @@ public class InventoryGUI extends HUD
 	SWindow messageWindow;					//little message window
 	MenuGUI parentGUI; 						//core gui for the menu system
 	
-	SFont f = SFont.loadFont("default");	
+	SFont f = SFont.loadFont("default");
 	//font
 	
 	/**
@@ -102,8 +103,9 @@ public class InventoryGUI extends HUD
 		SWindow w;
 		Sprite[] orbs;
 		Party p;
+		Inventory inv;
 		String[] itemList;
-
+		
 		int index;
 
 		SFont f = SFont.loadFont("default");	
@@ -114,7 +116,8 @@ public class InventoryGUI extends HUD
 			this.x = x;
 			this.y = y;
 			w = new SWindow(x, y, WIDTH, HEIGHT, NES.BLUE);
-			itemList = p.getItemList();
+			inv = p.getInventory();
+			itemList = inv.getItemList();
 		}
 
 		public void updateIndex(int i) {
@@ -134,7 +137,7 @@ public class InventoryGUI extends HUD
 			for (int i = 0; i < Math.min(itemList.length, index + 16); i++)
 			{
 				f.drawString(g, itemList[i], 5 + WIDTH/InventoryState.COLUMNS * (i % InventoryState.COLUMNS), 24 + 16 * (i / InventoryState.COLUMNS), w);
-				f.drawString(g, ""+p.getItemCount(itemList[i]), x + WIDTH/InventoryState.COLUMNS * ((i % InventoryState.COLUMNS)+1) - 12, y + 34 + 16 * (i / InventoryState.COLUMNS), SFont.RIGHT);
+				f.drawString(g, ""+inv.getItemCount(itemList[i]), x + WIDTH/InventoryState.COLUMNS * ((i % InventoryState.COLUMNS)+1) - 12, y + 34 + 16 * (i / InventoryState.COLUMNS), SFont.RIGHT);
 			}
 		}
 	}

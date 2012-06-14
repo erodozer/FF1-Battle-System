@@ -29,7 +29,7 @@ public class InventoryState extends GameState
 	public InventoryState(MenuSystem menuSystem)
 	{
 		super(menuSystem);
-		items = menuSystem.party.getItemList();
+		items = menuSystem.party.getInventory().getItemList();
 		if (items.length > 0)
 			hasItems = true;
 	}

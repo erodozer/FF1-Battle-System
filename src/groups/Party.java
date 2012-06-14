@@ -4,26 +4,24 @@ package groups;
  * Party.java
  * @author Nicholas Hydock 
  * 
- * Description: A special form of ArrayList that keeps track of
+ * Description: A special form of ActorGroup that keeps track of
  * 				player objects.  It can create new players using
- * 				just strings as well as keep track of which players
- * 				are still alive.
+ * 				just strings
  */
 
-import item.Item;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import org.ini4j.Ini;
+import org.ini4j.IniPreferences;
+import org.ini4j.InvalidFileFormatException;
 
 import Map.NPC;
 import actors.Player;
 
-public class Party extends ArrayList<Player>{
+public class Party extends ActorGroup<Player>{
 	
 	/*
 	 * This size defines the size of your main representative party
@@ -36,41 +34,7 @@ public class Party extends ArrayList<Player>{
 	 */
 	public static final int GROUP_SIZE = 4;
 	
-	public byte MAX_ITEM_COUNT = Byte.MAX_VALUE;	//maximum amount of one item a party can hold
-	
-	HashMap<String, Byte> inventory = genInventory();
-	int gold = 500;			//party starts off with 500 g
-	
 	NPC mapRep = new NPC();	//party's representative on the map
-	
-	/**
-	 * Returns a list of all members that are alive
-	 * @return
-	 */
-	public Player[] getAliveMembers() 
-	{
-		List<Player> alive = new ArrayList<Player>();
-		Player p = this.get(0);
-		for (int i = 0; i < Math.min(this.size(), GROUP_SIZE); i++)
-		{	
-			p = this.get(i);
-			if (p.getAlive())
-				alive.add(p);
-		}
-		return alive.toArray(new Player[alive.size()]);
-	}
-
-	/**
-	 * Generates the party's inventory
-	 * @return
-	 */
-	private HashMap<String, Byte> genInventory() {
-		
-		HashMap<String, Byte> h = new HashMap<String, Byte>();
-		for (String s : Item.Dictionary)
-			h.put(s, (byte)0);
-		return h;
-	}
 
 	/**
 	 * Make new players with Job a
@@ -83,47 +47,37 @@ public class Party extends ArrayList<Player>{
 	}
 	
 	/**
-	 * @return	the number of players in the party that are alive
-	 */
-	public int getAlive()
-	{
-		int counter = 0;
-		Player p = this.get(0);
-		for (int i = 0; i < Math.min(this.size(), GROUP_SIZE); i++)
-		{	
-			p = this.get(i);
-			if (p.getAlive())
-				counter++;
-		}
-		return counter;
-	}	
-	
-	/**
 	 * Load's all the party's data from a file
 	 * @param p 	Ini save file
+	 * @throws IOException 
+	 * @throws InvalidFileFormatException 
+	 * @throws BackingStoreException 
 	 */
-	public static Party loadFromFile(Preferences p)
+	public void loadFromFile(File file) throws InvalidFileFormatException, IOException, BackingStoreException
 	{
-		Party party = null;
+		Preferences p;
+		
+		p = new IniPreferences(new Ini(file));
 		
 		String[] sections;
-		try {
-			party = new Party();
-			sections = p.childrenNames();
-			for (String s : sections)
-				if (s.startsWith("player"))
-					party.add(Integer.parseInt(s.substring(6)), new Player(p.node(s)));
-			
-			Preferences inv = p.node("inventory");
-			for (String s : inv.keys())
-				if (party.inventory.containsKey(s))
-					party.inventory.put(s, (byte)inv.getInt(s, 0));
-			
-			party.setGold(inv.getInt("$C", 0));
-		} catch (BackingStoreException e) {
-			System.err.println("Could not load party from save data");
-		}
-		return party;
+		Party party = new Party();
+		
+		sections = p.childrenNames();
+		for (String s : sections)
+			if (s.startsWith("player"))
+				party.add(Integer.parseInt(s.substring(6)), new Player(p.node(s)));
+		
+		Preferences inv = p.node("inventory");
+		for (String s : inv.keys())
+			if (!s.equals("$C"))
+				party.inventory.addItem(s, inv.getInt(s, 0));
+		party.inventory.setGold(inv.getInt("$C", 0));
+	
+		this.removeAll(this);	//empties everything abount this property
+		this.addAll(party);
+		this.inventory.reset();
+		this.inventory.merge(party.inventory);
+		party = null;
 	}
 	
 	/**
@@ -138,82 +92,7 @@ public class Party extends ArrayList<Player>{
 		for (String s : inventory.keySet())
 			ini.put("inventory", s, (inventory.containsKey(s))?inventory.get(s):0);
 		
-		ini.put("inventory", "$C", gold);
-	}
-	
-	/*
-	 * Simple methods for manipulating gold and stuff
-	 */
-	public void subtractGold(int i)
-	{
-		gold -= i;
-	}
-	
-	public void addGold(int i)
-	{
-		gold += i;
-	}
-	
-	public int getGold()
-	{
-		return gold;
-	}
-	
-	public void setGold(int i)
-	{
-		gold = i;
-	}
-	
-	/*
-	 * Simple methods for manipulating the inventory
-	 */
-	
-	/**
-	 * Adds the item to the party's possession
-	 */
-	public boolean addItem(Item i)
-	{
-		byte count = inventory.get(i.getName());
-		
-		inventory.put(i.getName(), (byte) (count + 1));
-		
-		return (inventory.get(i.getName()) > count);
-	}
-	
-	/**
-	 * Removes the item from the party's possession
-	 */
-	public boolean removeItem(Item i)
-	{
-		byte count = inventory.get(i.getName());
-		if (count > 0)
-			inventory.put(i.getName(), (byte) (count - 1));
-		return (inventory.get(i.getName()) < count);
-	}
-	
-	public byte getItemCount(String s)
-	{
-		if (s != null)
-			return inventory.get(s);
-		return 0;
-	}
-	
-	/**
-	 * Generates a list of the items in possession
-	 * @return
-	 */
-	public String[] getItemList()
-	{
-		String[] keys = inventory.keySet().toArray(new String[]{});
-		List<String> items = new ArrayList<String>();
-		for (int i = 0; i < keys.length; i++)
-		{
-			if (inventory.get(keys[i]).intValue() <= 0)
-				continue;
-			
-			items.add(""+keys[i]);
-		}
-		return items.toArray(new String[]{});
+		ini.put("inventory", "$C", inventory.getGold());
 	}
 
 	/**
@@ -226,25 +105,8 @@ public class Party extends ArrayList<Player>{
 		Party p = new Party();
 		for (int i = 0; i < Math.min(this.size(), GROUP_SIZE); i++)
 			p.add(this.get(i));
+		p.setInventory(inventory);	//battle party should share the same inventory
 		return p;
-	}
-	
-	/**
-	 * This generates a list of all the items that the party possesses that 
-	 * can be used in battle situations.
-	 * @return	a list of item names for battle items in possession
-	 */
-	public String[] getBattleItems(){
-		String[] keys = inventory.keySet().toArray(new String[]{});
-		List<String> items = new ArrayList<String>();
-		for (int i = 0; i < keys.length; i++)
-		{
-			if (inventory.get(keys[i]).intValue() <= 0 || !(Item.loadItem(keys[i]).usableInBattle()))
-				continue;
-					
-			items.add(""+keys[i]);
-		}
-		return items.toArray(new String[]{});
 	}
 	
 	/**
@@ -258,4 +120,5 @@ public class Party extends ArrayList<Player>{
 		
 		return mapRep;
 	}
+
 }

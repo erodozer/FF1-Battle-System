@@ -106,7 +106,7 @@ public class ShopGUI extends HUD {
 			font.drawString(g, greeting[i], 8, 16*i, greetWindow);
 		
 		moneyWindow.paint(g);
-		String s = party.getGold() + " G";
+		String s = party.getInventory().getGold() + " G";
 		font.drawString(g, s, 0, 10, SFont.RIGHT, moneyWindow);
 		
 		int[] cursorpos;

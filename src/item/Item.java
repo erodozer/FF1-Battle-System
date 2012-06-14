@@ -324,4 +324,10 @@ public class Item {
 	{
 		return (battleCommand != null);
 	}
+	
+	@Override
+	public String toString()
+	{
+		return getName();
+	}
 }

@@ -3,10 +3,12 @@ package scenes.BattleScene.GUI;
 import engine.Engine;
 import graphics.SFont;
 import graphics.SWindow;
+import groups.Inventory;
 
 import java.awt.Graphics;
 
 import scenes.HUD;
+import scenes.BattleScene.System.BattleSystem;
 
 /**
  * DrinkDisplay
@@ -20,10 +22,10 @@ public class DrinkDisplay extends HUD{
 
 	int range = 0;
 	String[] itemList = new String[0];
+	Inventory inventory;
 	
 	public DrinkDisplay(int x, int y)
 	{
-		itemList = Engine.getInstance().getParty().getBattleItems();
 		window = new SWindow(x, y, 101, 32 + 18*(itemList.length-1));	
 	}
 	
@@ -41,7 +43,7 @@ public class DrinkDisplay extends HUD{
 		for (int i = range; i < Math.min(itemList.length, range+4); i++)
 		{
 			font.drawString(g, itemList[i], 8, 12+16*(i%4), window);
-			font.drawString(g, ""+Engine.getInstance().getParty().getItemCount(itemList[i]), 8, 12+16*(i%4), SFont.RIGHT, window);
+			font.drawString(g, ""+inventory.getItemCount(itemList[i]), 8, 12+16*(i%4), SFont.RIGHT, window);
 		}
 	}
 	
@@ -49,5 +51,16 @@ public class DrinkDisplay extends HUD{
 	{
 		range = (index/4)*4;
 		return new int[]{window.getX() + 1, window.getY() + 16 + 16 * (index % 4)};
+	}
+	
+	/**
+	 * Sets the inventory of usable items to display from the BattleSystem's battle party
+	 * @param parent
+	 */
+	public void setParent(BattleSystem parent)
+	{
+		this.parent = parent;
+		inventory = parent.getParty().getInventory();
+		itemList = inventory.getBattleItems();
 	}
 }

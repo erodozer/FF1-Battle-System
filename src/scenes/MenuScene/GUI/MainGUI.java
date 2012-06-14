@@ -71,7 +71,7 @@ public class MainGUI extends HUD
 			statWindows[i-range].paint(g);
 		}
 		goldWindow.paint(g);
-		String s = String.format("%6d G", p.getGold());
+		String s = String.format("%6d G", p.getInventory().getGold());
 		f.drawString(g, s, 0, 14, 2, goldWindow);
 
 		menuWindow.paint(g);
