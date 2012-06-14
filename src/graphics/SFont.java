@@ -90,12 +90,12 @@ public class SFont {
 	 * @param wrap	wrapping mode - 0 = none, 1 = crop, 2 = wrap
 	 * @return
 	 */
-	public String[] formatIntoLines(String s, int wrap, int width)
+	public String[] formatIntoLines(Object s, int wrap, int width)
 	{
 		String[] processed;
 		
 		//no matter the wrapping mode, split lines by \n char
-		processed = s.split("\n");
+		processed = s.toString().split("\n");
 		
 		//no reason to crop or wrap if the width limit is unlimited
 		if (width < 0)
@@ -137,7 +137,7 @@ public class SFont {
 
 	        int curX = 0;
 
-	        String[] words = s.split("\\s+");
+	        String[] words = s.toString().split("\\s+");
 	        String line = "";
 	        for (String word : words)
 	        {
@@ -197,18 +197,20 @@ public class SFont {
 	 * @param alignment		alignment of the font - 0 = left, 1 = center, 2 = right
 	 * @param c				color of the font
 	 */
-	public void drawString(Graphics g, String text, int x, int y, int alignment, Color c)
+	public void drawString(Graphics g, Object text, int x, int y, int alignment, Color c)
 	{	
 		//don't try drawing if the font doesn't exist
 		if (g == null || f == null || text == null)
 			return;
 		
+		String s = text.toString();
+		
 		//right aligned
 		if (alignment == 2)
-			x -= fm.stringWidth(text);
+			x -= fm.stringWidth(s);
 		//center aligned
 		else if (alignment == 1)
-			x -= fm.stringWidth(text)/2;
+			x -= fm.stringWidth(s)/2;
 		//left aligned do nothing
 		
 		//save the current color of graphics
@@ -222,7 +224,7 @@ public class SFont {
 			g.setColor(DEFAULT_COLOR);
 			
 		g.setFont(f);
-		g.drawString(text, x, y);		//draws the string to screen
+		g.drawString(s, x, y);		//draws the string to screen
 		
 		//make sure things reset to what they were before rendering the text
 		g.setFont(fn);
@@ -238,7 +240,7 @@ public class SFont {
 	 * @param x				x position
 	 * @param y				y position
 	 */
-	public void drawString(Graphics g, String text, int x, int y)
+	public void drawString(Graphics g, Object text, int x, int y)
 	{
 		drawString(g, text, x, y, 0, (Sprite)null);
 	}
@@ -252,7 +254,7 @@ public class SFont {
 	 * @param y				y position
 	 * @param alignment		alignment of the font - 0 = left, 1 = center, 2 = right
 	 */
-	public void drawString(Graphics g, String text, int x, int y, int alignment)
+	public void drawString(Graphics g, Object text, int x, int y, int alignment)
 	{
 		drawString(g, text, x, y, alignment, (Color)null);
 	}
@@ -267,7 +269,7 @@ public class SFont {
 	 * @param y				y position
 	 * @param anchor		Sprite to anchor relative position to
 	 */
-	public void drawString(Graphics g, String text, int x, int y, Sprite anchor)
+	public void drawString(Graphics g, Object text, int x, int y, Sprite anchor)
 	{
 		drawString(g, text, x, y, 0, null, anchor);
 	}
@@ -282,7 +284,7 @@ public class SFont {
 	 * @param alignment		alignment of the font - 0 = left, 1 = center, 2 = right
 	 * @param anchor		Sprite to anchor relative position to
 	 */
-	public void drawString(Graphics g, String text, int x, int y, int alignment, Sprite anchor)
+	public void drawString(Graphics g, Object text, int x, int y, int alignment, Sprite anchor)
 	{
 		drawString(g, text, x, y, alignment, null, anchor);
 	}
@@ -297,7 +299,7 @@ public class SFont {
 	 * @param c				color of the font
 	 * @param anchor		Sprite to anchor relative position to
 	 */
-	public void drawString(Graphics g, String text, int x, int y, int alignment, Color c, Sprite anchor)
+	public void drawString(Graphics g, Object text, int x, int y, int alignment, Color c, Sprite anchor)
 	{
 		if (anchor != null)
 		{
@@ -327,7 +329,7 @@ public class SFont {
 	 * @param y				y position
 	 * @param anchor		Window to anchor relative position to
 	 */
-	public void drawString(Graphics g, String text, int x, int y, SWindow anchor)
+	public void drawString(Graphics g, Object text, int x, int y, SWindow anchor)
 	{
 		drawString(g, text, x, y, 0, null, anchor);
 	}
@@ -342,7 +344,7 @@ public class SFont {
 	 * @param alignment		alignment of the font - 0 = left, 1 = center, 2 = right
 	 * @param anchor		Window to anchor relative position to
 	 */
-	public void drawString(Graphics g, String text, int x, int y, int alignment, SWindow anchor)
+	public void drawString(Graphics g, Object text, int x, int y, int alignment, SWindow anchor)
 	{
 		drawString(g, text, x, y, alignment, null, anchor);
 	}
@@ -361,7 +363,7 @@ public class SFont {
 	 * @param c				color of the font
 	 * @param anchor		Window to anchor relative position to
 	 */
-	public void drawString(Graphics g, String text, int x, int y, int alignment, Color c, SWindow anchor)
+	public void drawString(Graphics g, Object text, int x, int y, int alignment, Color c, SWindow anchor)
 	{
 		if (anchor != null)
 		{
@@ -381,9 +383,9 @@ public class SFont {
 		drawString(g, text, x, y, alignment, c);
 	}
 	
-	public int getStringWidth(String s)
+	public int getStringWidth(Object s)
 	{
-		return fm.stringWidth(s);
+		return fm.stringWidth(s.toString());
 	}
 	
 	public int getHeight()
