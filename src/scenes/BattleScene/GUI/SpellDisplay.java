@@ -59,7 +59,7 @@ public class SpellDisplay extends HUD{
 	}
 	
 	@Override
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
 		return new int[]{window.getX() + 15 + 40*(index%3), window.getY() + 16 + 16 * (index/3 - range)};
 	}

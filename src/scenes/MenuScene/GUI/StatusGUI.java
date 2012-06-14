@@ -113,13 +113,15 @@ public class StatusGUI extends HUD
 	 * @return
 	 */
 	@Override
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
 		p = e.getParty().get(index);
 		pSprite = p.getSprite();
 		pSprite.setX(jobWindow.getX()+4);
 		pSprite.setY(jobWindow.getY()+8);
-		return new int[]{-100, -100};
+		arrowPosition[0] = -100;
+		arrowPosition[1] = -100;
+		return arrowPosition;
 	}
 
 	/**

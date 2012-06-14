@@ -48,7 +48,7 @@ public class DrinkDisplay extends HUD{
 	}
 	
 	@Override
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
 		range = (index/4)*4;
 		return new int[]{window.getX() + 1, window.getY() + 16 + 16 * (index % 4)};

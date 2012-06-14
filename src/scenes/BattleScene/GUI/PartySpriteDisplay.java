@@ -128,7 +128,7 @@ public class PartySpriteDisplay extends HUD{
 	public void update() {}
 	
 	@Override
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
 		Sprite s = party.get(index).getSprite();
 		return new int[]{(int)s.getX()-10, (int)s.getY()-3};

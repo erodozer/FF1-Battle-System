@@ -41,7 +41,7 @@ public class CommandDisplay extends HUD{
 	}
 	
 	@Override
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
 		return new int[]{window.getX() + 1 + 55*(index/4), window.getY() + 28 + 16 * (index % 4) - 12};
 	}

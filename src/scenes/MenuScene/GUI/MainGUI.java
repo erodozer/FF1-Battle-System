@@ -87,15 +87,26 @@ public class MainGUI extends HUD
 	 * @return
 	 */
 	@Override
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
-		int[] pos;
+		int x;
+		int y;
 		
 		if (((MenuSystem)(parentGUI.getParent())).isPickingPlayer())
-			pos = new int[]{statWindows[index-range].getX()-15,  statWindows[index-range].getY()+20};
+		{
+			x = statWindows[index-range].getX()-15;
+			y = statWindows[index-range].getY()+20;
+		}
 		else
-			pos = new int[]{menuWindow.getX()-8,  menuWindow.getY()+16+(16*index)};
-		return pos;
+		{
+			x = menuWindow.getX()-8;
+			y = menuWindow.getY()+16+(16*index);
+		}
+		
+		arrowPosition[0] = x;
+		arrowPosition[1] = y;
+		
+		return arrowPosition;
 	}
 
 	/**

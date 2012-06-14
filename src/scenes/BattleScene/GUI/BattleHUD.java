@@ -168,9 +168,9 @@ public class BattleHUD extends HUD{
 				{
 					Actor t = targets[i];
 					if (t instanceof Player)
-						cursorPos = psprited.getArrowPosition(parent.getParty().indexOf(targets[i]));
+						cursorPos = psprited.updateArrowPosition(parent.getParty().indexOf(targets[i]));
 					else
-						cursorPos = esprited.getArrowPosition(parent.getFormation().indexOf(targets[i]));
+						cursorPos = esprited.updateArrowPosition(parent.getFormation().indexOf(targets[i]));
 					arrow.setX(cursorPos[0]);
 					arrow.setY(cursorPos[1]);
 				
@@ -180,19 +180,19 @@ public class BattleHUD extends HUD{
 			}
 			else if (is.spellSelecting)
 			{
-				cursorPos = sd.getArrowPosition(is.index);
+				cursorPos = sd.updateArrowPosition(is.index);
 			}
 			else if (is.itemSelecting)
 			{
-				cursorPos = id.getArrowPosition(is.index);	
+				cursorPos = id.updateArrowPosition(is.index);	
 			}
 			else if (is.drinkSelecting)
 			{
-				cursorPos = dd.getArrowPosition(is.index);
+				cursorPos = dd.updateArrowPosition(is.index);
 			}
 			else 
 			{
-				cursorPos = cd.getArrowPosition(is.index);
+				cursorPos = cd.updateArrowPosition(is.index);
 			}
 			
 			arrow.setX(cursorPos[0]);

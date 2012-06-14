@@ -18,6 +18,7 @@ public class MenuSystem extends GameSystem
 	
 	//different game states
 	GameState[] states;
+	GameState goTo;		//state to go to after selecting a player
 	
 	//character party
 	Party party;
@@ -25,6 +26,7 @@ public class MenuSystem extends GameSystem
 	//different states for the menu
 	MenuState ms;
 	InventoryState is;
+	MagicState mags;
 	WeaponState ws;
 	ArmorState as;
 	StatusState ss;
@@ -41,6 +43,7 @@ public class MenuSystem extends GameSystem
 		party = e.getParty();
 		ms = new MenuState(this);
 		is = new InventoryState(this);
+		mags = new MagicState(this);
 		ss = new StatusState(this);
 		ws = new WeaponState(this);
 		as = new ArmorState(this);
@@ -53,7 +56,7 @@ public class MenuSystem extends GameSystem
 		 * Do not include OrderState in menu listing of states,
 		 * OrderState is accessed from the map by pressing select
 		 */
-		states = new GameState[]{is, null, ws, as, ss};
+		states = new GameState[]{is, mags, ws, as, ss};
 	}
 	
 	/**
@@ -85,14 +88,24 @@ public class MenuSystem extends GameSystem
 		{
 			if (pickPlayer)
 			{
-				ss.setIndex(ms.getIndex());
-				state = ss;
+				if (goTo == ss)
+				{
+					ss.setIndex(ms.getIndex());
+					state = ss;
+				}
+				else if (goTo == mags)
+				{
+					mags.setPlayer(party.get(ms.getIndex()));
+					state = mags;
+				}
 				pickPlayer = false;
 				lastPlayerPicked = ms.getIndex();
 			}
 			else
 			{
-				if (states[ms.getIndex()] == ss)
+				goTo = states[ms.getIndex()];
+				
+				if (goTo == ss || goTo == mags)
 				{
 					ms.setIndex(lastPlayerPicked);
 					pickPlayer = true;
@@ -101,7 +114,7 @@ public class MenuSystem extends GameSystem
 				else
 				{
 					//null checks only temp in here to prevent menu crashing
-					state = (states[ms.getIndex()] != null)?states[ms.getIndex()]:ms;
+					state = (goTo != null)?goTo:ms;
 				}
 			}
 		}

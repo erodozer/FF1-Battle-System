@@ -67,7 +67,7 @@ public class InventoryGUI extends HUD
 	 * @return
 	 */
 	@Override
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
 		int[] pos;
 		if (itemWindow.itemList.length > 0)

@@ -24,6 +24,9 @@ public abstract class HUD extends Sprite
     
     protected boolean refresh = false;
     
+    protected int[] arrowPosition = new int[2];
+    								//position of which to drawn the arrow in the scene in relation to this HUD
+    
     /**
      * Constructs a hud
      */
@@ -67,15 +70,23 @@ public abstract class HUD extends Sprite
 		return clearColor;
 	}
 
+	/**
+	 * Just fetches the arrow's current position
+	 * @return
+	 */
+	public int[] getArrowPosition()
+	{
+		return arrowPosition;
+	}
 	
 	/**
 	 * Most scenes have an arrow drawn to screen.
 	 * This will control where the arrow should be drawn if it's
 	 * dependent on a HUD's control/view
 	 * @param index 
-	 * @return	default draws arrow off screen
+	 * @return	the position of where the arrow was updated to
 	 */
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
 		return new int[]{-100, -100};
 	}

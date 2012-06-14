@@ -70,20 +70,23 @@ public class EquipmentGUI extends HUD
 	 * @return
 	 */
 	@Override
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
 		EquipmentState e = (EquipmentState)parentGUI.state;
-		int[] pos;
 		if (e.getMode() == 0)
-			pos = new int[]{modeWindow.getX() + 8 + 56*index, modeWindow.getY() + 14};
+		{
+			arrowPosition[0] = modeWindow.getX() + 8 + 56*index;
+			arrowPosition[1] = modeWindow.getY() + 14;
+		}
 		else
 		{
 			int i = index / 4;
 			int x = index % 2;
 			int y = index % 4 / 2;
-			pos = new int[]{eWindows[i].getX() + 58 + 80*x, eWindows[i].getY() + 16 + 16*y};
+			arrowPosition[0] = eWindows[i].getX() + 58 + 80*x;
+			arrowPosition[1] =  eWindows[i].getY() + 16 + 16*y;
 		}
-		return pos;
+		return arrowPosition;
 	}
 
 	/**

@@ -46,7 +46,7 @@ public class ItemDisplay extends HUD{
 	}
 
 	@Override
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
 		return new int[]{window.getX() + 8 + 80*(index%2), window.getY() + 16 + 16 * (index/2)};
 	}

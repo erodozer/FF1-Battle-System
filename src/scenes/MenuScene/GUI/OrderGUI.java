@@ -70,11 +70,11 @@ public class OrderGUI extends HUD
 	 * @return
 	 */
 	@Override
-	public int[] getArrowPosition(int index)
+	public int[] updateArrowPosition(int index)
 	{
-		int[] pos;
-		pos = new int[]{partyWindow.w.getX() - 10, partyWindow.w.getY() + 24 + 32*(index-partyWindow.range)};
-		return pos;
+		arrowPosition[0] = partyWindow.w.getX() - 10;
+		arrowPosition[1] = partyWindow.w.getY() + 24 + 32*(index-partyWindow.range);
+		return arrowPosition;
 	}
 
 	/**

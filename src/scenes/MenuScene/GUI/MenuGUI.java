@@ -7,13 +7,7 @@ import java.awt.Graphics;
 
 import scenes.GameState;
 import scenes.HUD;
-import scenes.MenuScene.System.ArmorState;
-import scenes.MenuScene.System.InventoryState;
-import scenes.MenuScene.System.MenuState;
-import scenes.MenuScene.System.MenuSystem;
-import scenes.MenuScene.System.OrderState;
-import scenes.MenuScene.System.StatusState;
-import scenes.MenuScene.System.WeaponState;
+import scenes.MenuScene.System.*;
 
 /**
  * MenuGUI
@@ -30,6 +24,7 @@ public class MenuGUI extends HUD
 	
 	MainGUI mg;			//main gui
 	InventoryGUI ig;	//inventory gui
+	MagicGUI mag;		//magic gui
 	StatusGUI sg;		//status gui
 	EquipmentGUI wg;	//weapon gui
 	EquipmentGUI ag;	//armor gui
@@ -47,6 +42,7 @@ public class MenuGUI extends HUD
 		arrow = NES.ARROW;
 		mg = new MainGUI(this);
 		ig = new InventoryGUI(this);
+		mag = new MagicGUI(this);
 		sg = new StatusGUI(this);
 		wg = new EquipmentGUI(this);
 		ag = new EquipmentGUI(this);
@@ -66,6 +62,8 @@ public class MenuGUI extends HUD
 			currentGUI = mg;
 		else if (state instanceof InventoryState)
 			currentGUI = ig;
+		else if (state instanceof MagicState)
+			currentGUI = mag;
 		else if (state instanceof StatusState)
 			currentGUI = sg;
 		else if (state instanceof WeaponState)
@@ -84,13 +82,12 @@ public class MenuGUI extends HUD
 	@Override
 	public void paint(Graphics g)
 	{
-		int[] pos;
 		
 		currentGUI.paint(g);
 		
-		pos = currentGUI.getArrowPosition(index);
-		arrow.setX(pos[0]);
-		arrow.setY(pos[1]);
+		arrowPosition = currentGUI.updateArrowPosition(index);
+		arrow.setX(arrowPosition[0]);
+		arrow.setY(arrowPosition[1]);
 		arrow.paint(g);
 		
 		/*
@@ -103,12 +100,11 @@ public class MenuGUI extends HUD
 			OrderState s = (OrderState)parent.getState();
 			if (s.getSelectedIndex() != -1 && !og.showSelectedWin)
 			{
-				pos = currentGUI.getArrowPosition(s.getSelectedIndex());
-				arrow.setX(pos[0]);
-				arrow.setY(pos[1]);
+				arrowPosition = currentGUI.updateArrowPosition(s.getSelectedIndex());
+				arrow.setX(arrowPosition[0]);
+				arrow.setY(arrowPosition[1]);
 				arrow.paint(g);
 			}
 		}
-		pos = null;
 	}
 }

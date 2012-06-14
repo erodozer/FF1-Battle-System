@@ -47,13 +47,13 @@ public class TitleGUI extends HUD {
 		{
 			clearColor = NES.BLUE;
 			intro.paint(g);
-			curPos = intro.getArrowPosition(0);
+			curPos = intro.updateArrowPosition(0);
 		}
 		else
 		{
 			clearColor = null;
 			ts.paint(g);
-			curPos = ts.getArrowPosition(parent.getState().getIndex());
+			curPos = ts.updateArrowPosition(parent.getState().getIndex());
 		}
 		
 		arrow.setX(curPos[0]);
