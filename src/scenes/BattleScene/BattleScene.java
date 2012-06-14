@@ -13,7 +13,7 @@ public class BattleScene extends Scene {
 	 */
 	@Override
 	public void start() {
-		start(null, new Sprite("terrains/grass.png"));
+		//start(null, new Sprite("terrains/grass.png"));
 	}
 
 	/**
