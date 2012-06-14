@@ -49,8 +49,8 @@ public class ContentPanel{
 	
 	//TRANSITION VARIABLES
 	private Transition trans;
-	private Class transIn = IrisIn.class;
-	private Class transOut = IrisOut.class;
+	private static Class transIn = IrisIn.class;
+	private static Class transOut = IrisOut.class;
 
 	private GameRunner parent;
 	
@@ -95,9 +95,21 @@ public class ContentPanel{
 			trans.setTime(200);
 			trans.setBuffer(getScreenCopy());
 		} catch (Exception e) {
-			e.printStackTrace();
+			trans = null;
+			if (t)
+				evokeTransition(false);
 		}
-		
+	}
+	
+	/**
+	 * Set the classes of the transition style to show
+	 * @param in
+	 * @param out
+	 */
+	public static void setTransitionSet(Class in, Class out)
+	{
+		transIn = in;	
+		transOut = out;
 	}
 	
 	/**
