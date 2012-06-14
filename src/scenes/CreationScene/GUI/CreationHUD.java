@@ -1,5 +1,6 @@
 package scenes.CreationScene.GUI;
 
+import graphics.NES;
 import graphics.Sprite;
 
 import java.awt.Graphics;
@@ -31,7 +32,7 @@ public class CreationHUD extends HUD{
 		partyd = new PartyDisplay(p);	
 		namingd = new NamingDisplay(p);
 		
-		arrow = new Sprite("hud/selectarrow.png");	
+		arrow = NES.ARROW;	
 		
 	}
 	

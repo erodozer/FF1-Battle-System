@@ -1,5 +1,6 @@
 package scenes.MenuScene.GUI;
 
+import graphics.NES;
 import graphics.Sprite;
 
 import java.awt.Graphics;
@@ -43,7 +44,7 @@ public class MenuGUI extends HUD
 	public MenuGUI(MenuSystem parent)
 	{
 		this.parent = parent;
-		arrow = new Sprite("hud/selectarrow.png");
+		arrow = NES.ARROW;
 		mg = new MainGUI(this);
 		ig = new InventoryGUI(this);
 		sg = new StatusGUI(this);
@@ -83,7 +84,7 @@ public class MenuGUI extends HUD
 	@Override
 	public void paint(Graphics g)
 	{
-		int[] pos = new int[2];
+		int[] pos;
 		
 		currentGUI.paint(g);
 		
@@ -108,5 +109,6 @@ public class MenuGUI extends HUD
 				arrow.paint(g);
 			}
 		}
+		pos = null;
 	}
 }

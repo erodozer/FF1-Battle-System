@@ -59,7 +59,7 @@ public class ShopGUI extends HUD {
 		
 		greeting = font.formatIntoLines(parent.getShop().getGreeting(), SFont.WRAP, greetWindow.getWidth()-15);
 		
-		arrow = new Sprite("hud/selectarrow.png");
+		arrow = NES.ARROW;
 		party = Engine.getInstance().getParty();
 		shopKeeper = shop.getShopKeeper();
 		shopKeeper.setX(ContentPanel.INTERNAL_RES_W/2-shopKeeper.getWidth());

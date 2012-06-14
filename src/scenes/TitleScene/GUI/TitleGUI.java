@@ -20,14 +20,13 @@ public class TitleGUI extends HUD {
 
 	private Intro intro;
 	private TitleScreen ts;
-	private Sprite arrow;
+	private Sprite arrow = NES.ARROW;
 	
 	public TitleGUI(TitleSystem t)
 	{
 		parent = t;
 		intro = new Intro();
 		ts = new TitleScreen();
-		arrow = new Sprite("hud/selectarrow.png");
 		
 		intro.setParent(t);
 		ts.setParent(t);

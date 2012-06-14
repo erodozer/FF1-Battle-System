@@ -76,7 +76,7 @@ public class SWindow {
 	public SWindow(int a, int b, int w, int h, Color c, Color f, int offset)
 	{
 		window = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-		image = new Sprite("hud/window.png", 3, 3);		
+		image = NES.WINDOW;		
 		
 		x = a;
 		y = b;

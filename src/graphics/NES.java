@@ -4,8 +4,8 @@ package graphics;
  * NES
  * @author nhydock
  *
- *	Collection of colors that are used 
- *	in the NES version of FF1
+ *	NES Holds the core graphics components used throughout many of the
+ *	HUD elements.  This includes the arrow, window style, and various colours
  */
 import java.awt.Color;
 public class NES
@@ -16,5 +16,7 @@ public class NES
 	public static final Color VIOLET = Color.decode("#8c0074");
 	public static final Color BLACK = Color.decode("#000000");
 	public static final Color WHITE = Color.decode("#ffffff");
-	
+
+	public static final Sprite ARROW = new Sprite("hud/arrow.png");
+	public static final Sprite WINDOW = new Sprite("hud/window.png", 3, 3);
 }

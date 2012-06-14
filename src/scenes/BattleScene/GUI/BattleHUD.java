@@ -1,5 +1,6 @@
 package scenes.BattleScene.GUI;
 
+import graphics.NES;
 import graphics.Sprite;
 
 import java.awt.Graphics;
@@ -61,7 +62,7 @@ public class BattleHUD extends HUD{
 		gd = new GameOverDisplay(6, 144);
 		vd = new VictoryDisplay(6, 144);
 		
-		arrow = new Sprite("hud/selectarrow.png");
+		arrow = NES.ARROW;
 	}
 	
 	@Override
