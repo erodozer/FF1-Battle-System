@@ -22,6 +22,7 @@ public class Shop {
 	Item[] items;				//items for sale in the shop
 	Sprite shopKeeper;			//shop keeper image to display
 	String greeting;			//greeting of the shop keeper
+	String name;				//the name of the shop
 	MP3 bgm;					//music that plays in the shop
 	
 	public Shop(Preferences node)
@@ -39,6 +40,7 @@ public class Shop {
 		shopKeeper = new Sprite("actors/shopkeepers/"+node.get("shopkeeper", "default.png"));
 		greeting = node.get("greeting", "hello");
 		bgm = new MP3(node.get("music", "shop.mp3"));
+		name = node.get("name", "ITEMS");
 	}
 
 	public String getGreeting() {
@@ -51,5 +53,9 @@ public class Shop {
 
 	public Sprite getShopKeeper() {
 		return shopKeeper;
+	}
+	
+	public String getName(){
+		return name;
 	}
 }

@@ -51,7 +51,7 @@ public class ShopGUI extends HUD {
 		super();
 		parent = s;
 		shop = parent.getShop();
-		nameWindow = new SWindow(116, 30, 104, 68);
+		nameWindow = new SWindow(95, 8, 66, 34, NES.VIOLET);
 		greetWindow = new SWindow(5, 25, 74, 96, NES.BLUE);
 		mw = new ModeWindow(this, 45, 137);
 		itemSelect = new SWindow(175, 9, 74, 176, NES.BLUE);
@@ -103,7 +103,7 @@ public class ShopGUI extends HUD {
 		
 		greetWindow.paint(g);
 		for (int i = 0; i < greeting.length && i < 5; i++)
-			font.drawString(g, greeting[i], 8, 16*i, greetWindow);
+			font.drawString(g, greeting[i], 8, 8+16*i, SFont.LEFT, greetWindow);
 		
 		moneyWindow.paint(g);
 		String s = party.getInventory().getGold() + " G";
@@ -133,6 +133,8 @@ public class ShopGUI extends HUD {
 		}
 		arrow.paint(g);
 		
+		nameWindow.paint(g);
+		font.drawString(g, shop.getName(), 0, 16, SFont.CENTER, nameWindow);
 	}
 	
 	/**
@@ -168,16 +170,23 @@ public class ShopGUI extends HUD {
 		@Override
 		public void paint(Graphics g)
 		{
-			window.paint(g);
-			
 			currentState = parent.parent.getState();
 			
-			if (currentState instanceof BuyState && ((BuyState)currentState).isHandingOff())
-				for (int i = 0; i < parent.party.size(); i++)
-					font.drawString(g, parent.party.get(i).getName(), 0, 18+(14*i), window);
+			if (currentState instanceof BuyState)
+			{
+				if (((BuyState)currentState).isHandingOff())
+				{
+					window.paint(g);
+					for (int i = 0; i < parent.party.size(); i++)
+						font.drawString(g, parent.party.get(i).getName(), 0, 18+(14*i), window);
+				}
+			}
 			else
+			{
+				window.paint(g);
 				for (int i = 0; i < GreetState.commands.length; i++)
 					font.drawString(g, GreetState.commands[i], 0, 18+(14*i), window);
+			}
 		}
 
 		@Override
