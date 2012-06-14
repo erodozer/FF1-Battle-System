@@ -13,13 +13,7 @@ public class BattleScene extends Scene {
 	 */
 	@Override
 	public void start() {
-		BattleSystem system = new BattleSystem();
-		BattleHUD hud = new BattleHUD();
-		hud.setBackground(new Sprite("terrains/grass.png"));
-		hud.setParent(system);
-
-		this.system = system;
-		this.display = hud;
+		start(null, new Sprite("terrains/grass.png"));
 	}
 
 	/**
@@ -27,15 +21,7 @@ public class BattleScene extends Scene {
 	 * @param f
 	 */
 	public void start(Formation f) {
-		BattleSystem system = new BattleSystem();
-		system.setFormation(f);
-		
-		BattleHUD hud = new BattleHUD();
-		hud.setBackground(new Sprite("terrains/grass.png"));
-		hud.setParent(system);
-
-		this.system = system;
-		this.display = hud;
+		start(f, new Sprite("terrains/grass.png"));
 
 	}
 
