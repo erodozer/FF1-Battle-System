@@ -25,9 +25,6 @@ public class Inventory extends HashMap<String, Byte>{
 	public Inventory()
 	{
 		super();
-		//every inventory is a dictionary of all the items and a count of each item
-		for (String s : Item.Dictionary)
-			this.put(s, (byte)0);
 		
 		//inventories start with no gold
 		gold = 0;
@@ -78,6 +75,9 @@ public class Inventory extends HashMap<String, Byte>{
 	
 	public boolean addItem(String item, int c)
 	{
+		if (c <= 0)
+			return false;
+		
 		try{
 			byte count = get(item);
 			
@@ -87,8 +87,7 @@ public class Inventory extends HashMap<String, Byte>{
 		}
 		catch (NullPointerException e)
 		{
-			System.out.println(this.get(item));
-			e.printStackTrace();
+			put(item, (byte) c);
 			return false;
 		}
 	}
@@ -107,8 +106,11 @@ public class Inventory extends HashMap<String, Byte>{
 	public boolean removeItem(String item, int c)
 	{
 		byte count = get(item);
-		put(item, (byte) Math.max(0, count - c));
-		return (get(item) < count);	
+		if (count - 0 <= 0)
+			remove(item);
+		else
+			put(item, (byte) (count - c));
+		return (getItemCount(item) < count);	
 	}
 	
 	public void setItem(String item, int c)
@@ -138,15 +140,7 @@ public class Inventory extends HashMap<String, Byte>{
 	public String[] getItemList()
 	{
 		String[] keys = keySet().toArray(new String[]{});
-		List<String> items = new ArrayList<String>();
-		for (int i = 0; i < keys.length; i++)
-		{
-			if (get(keys[i]).intValue() <= 0)
-				continue;
-			
-			items.add(""+keys[i]);
-		}
-		return items.toArray(new String[]{});
+		return keys;
 	}
 	
 	/**
@@ -179,7 +173,7 @@ public class Inventory extends HashMap<String, Byte>{
 		List<String> items = new ArrayList<String>();
 		for (int i = 0; i < keys.length; i++)
 		{
-			if (get(keys[i]).intValue() <= 0 || !(Item.loadItem(keys[i]).usableInBattle()))
+			if (!(Item.loadItem(keys[i]).usableInBattle()))
 				continue;
 					
 			items.add(""+keys[i]);
