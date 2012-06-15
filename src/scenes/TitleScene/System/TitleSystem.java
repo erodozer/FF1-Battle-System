@@ -47,7 +47,6 @@ public class TitleSystem extends GameSystem {
 	 */
 	@Override
 	public void finish() {
-		music.close();
 		if (ts.index == 0)
 			engine.changeToCreation();
 		else
