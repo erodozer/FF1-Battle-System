@@ -103,6 +103,8 @@ public class ContentPanel{
 			trans = null;
 			if (t)
 				evokeTransition(false);
+			else
+				GameRunner.getInstance().sleep(0);
 		}
 	}
 	
@@ -173,6 +175,7 @@ public class ContentPanel{
 				{
 					trans = null;
 					GameRunner.getInstance().sleep(0);
+					return;
 				}
 		}		
 		else

@@ -72,7 +72,6 @@ public abstract class Transition{
 	{
 		currTime = System.nanoTime()-start;
 		timePercentage = currTime/(double)length;
-		System.out.println(currTime);
 	}
 	
 	/**
