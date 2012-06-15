@@ -57,7 +57,7 @@ public class ShopGUI extends HUD {
 		itemSelect = new SWindow(175, 9, 74, 176, NES.BLUE);
 		moneyWindow = new SWindow(143, 185, 82, 32, NES.GREEN);
 		
-		greeting = font.formatIntoLines(parent.getShop().getGreeting(), SFont.WRAP, greetWindow.getWidth()-15);
+		greeting = font.formatIntoLines(parent.getShop().getGreeting(), SFont.WRAP, greetWindow.getWidth());
 		
 		arrow = NES.ARROW;
 		party = Engine.getInstance().getParty();
@@ -102,8 +102,8 @@ public class ShopGUI extends HUD {
 			party.get(i).draw(g);
 		
 		greetWindow.paint(g);
-		for (int i = 0; i < greeting.length && i < 5; i++)
-			font.drawString(g, greeting[i], 8, 8+16*i, SFont.LEFT, greetWindow);
+		for (int i = 0; i < greeting.length; i++)
+			font.drawString(g, greeting[i], 0, 9+11*i, SFont.LEFT, greetWindow);
 		
 		moneyWindow.paint(g);
 		String s = party.getInventory().getGold() + " G";
