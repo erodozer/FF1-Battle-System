@@ -33,9 +33,9 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 //==============================================================================
 // Constants and regulators.
 //==============================================================================
-	private static final long nanoPerSec	= 1000000000L;
-	private static final int nanoPerMSec	= 1000000;
-	private static final int msecPerSec	= 1000;
+	public static final long nanoPerSec	= 1000000000L;
+	public static final int nanoPerMSec	= 1000000;
+	public static final int msecPerSec	= 1000;
 	// Because I keep losing track of zeros in frame rate calculations.
 	
 	private static final int NUM_DELAYS_PER_YIELD = 16;
@@ -50,12 +50,13 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 	// i.e the games state is updated but not rendered
 	
 	private long period;                			// Period between drawing, in nanosecs.
-	private long timeDiff;							// Time between frames, for FPS calculation.
+	protected long timeDiff;							// Time between frames, for FPS calculation.
 
-	private int lastFPS = -1;						// Last average frames per second.
-	private int currFPS = 0;						// Current accumulated frames per (NUM_SAMPLES) seconds.
-	private int currSamples = 0;					// Current number of samples.
-	private int NUM_SAMPLES = 10;					// Number of samples to use for averaging.
+	private int currFPS = 0;						// Current reported FPS.
+	
+	private int framesDrawn;						// Number of frames drawn since last report
+	private long secondsPassed;					// Number of nano seconds passed
+	private final long updateInterval = nanoPerSec;	//update the FPS counter every second
 //==============================================================================
 
 
@@ -255,7 +256,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 			paintScreen();					// Render/Display the frame.
 
 			afterTime	= System.nanoTime();
-			timeDiff	= afterTime - beforeTime;
+			timeDiff	= afterTime-beforeTime;
 			sleepTime	= (period - timeDiff) - overSleepTime;  
 
 			if (sleepTime > 0)
@@ -263,7 +264,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 			{
 				try 
 				{
-					Thread.sleep(sleepTime/1000000L);  // nano -> ms
+					Thread.sleep(sleepTime/nanoPerMSec);  // nano -> ms
 				}
 				catch(InterruptedException ex){}
 
@@ -282,8 +283,18 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 				}
 			}
 
-			calcSampleFPS();
-
+			if (!isSuspended)
+			{
+				framesDrawn++;
+				secondsPassed += timeDiff;
+				
+				if (secondsPassed > updateInterval)
+				{
+					currFPS = framesDrawn;
+					framesDrawn = 0;
+					secondsPassed = 0;
+				}
+			}
 			beforeTime = System.nanoTime();
 
 			// If frame animation is taking too long, update the game state
@@ -295,12 +306,13 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 				excess -= period;
 				gameUpdate();
 				skips++;
-			}
+			}	
 		}
 		
 		// I really don't like this here, as it doesn't feel thread safe, but in
 		// the off chance the game is being run in full screen, the JFrame won't
 		// have the capability to close itself...
+		buffer.dispose();
 		System.exit(0);
 	}
 	
@@ -312,7 +324,6 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		{
 			buffer = bufferStrategy.getDrawGraphics();
 			gameRender(buffer);
-			buffer.dispose();
 			
 			if (!bufferStrategy.contentsLost())
 				bufferStrategy.show();
@@ -410,35 +421,19 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 			period = nanoPerSec/fps;
 		else
 			period = nanoPerSec/DEFAULT_FPS;
+		currFPS = fps;
 	}
 
-	public void calcSampleFPS()
-	// Take samples and calculate the current frames per second.
+	public long getTimeDiff()
+	// Return the current time difference between cycles
 	{
-		if (timeDiff == 0)
-			return;
-			
-		double msecsPerFrame = timeDiff/(double)nanoPerMSec;
-		double secsPerFrame = msecsPerFrame/msecPerSec;
-		currFPS += (int)(1/secsPerFrame);
-
-		currSamples++;
-
-		if (lastFPS == -1)
-			lastFPS = currFPS;
-		if (currSamples >= NUM_SAMPLES)
-		{
-			currFPS /= NUM_SAMPLES;
-			lastFPS = currFPS;
-			currFPS = 0;
-			currSamples = 0;
-		}
+		return timeDiff;
 	}
 
 	public int getCurrFPS()
 	// Return the current frames per second.
 	{
-		return lastFPS;
+		return currFPS;
 	}
 //==============================================================================
 

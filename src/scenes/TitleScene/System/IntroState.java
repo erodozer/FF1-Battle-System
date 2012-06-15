@@ -21,6 +21,8 @@ public class IntroState extends GameState{
 	int line;
 	int page;
 	int alpha;
+	double timer;
+	final long TIME_LENGTH = (long)(.75*GameRunner.nanoPerSec);
 	
 	public IntroState(TitleSystem c) {
 		super(c);
@@ -61,6 +63,7 @@ public class IntroState extends GameState{
 	public void handle() {
 		if (alpha >= 255) {
 			alpha = 0;
+			timer = 0;
 			line++;
 			if (line >= 10)
 				advancePage();
@@ -70,7 +73,8 @@ public class IntroState extends GameState{
 			}
 		}
 		else {
-			alpha = Math.max(0, Math.min(255, alpha + 255/GameRunner.getInstance().getCurrFPS()));
+			timer += GameRunner.getInstance().getTimeDiff();
+			alpha = (int) Math.max(0, Math.min(255, 255*(timer/TIME_LENGTH)));
 		}
 	}
 

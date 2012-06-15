@@ -59,6 +59,9 @@ public class ContentPanel{
 	private ContentPanel()
 	{
 		clearColor = DEFAULT_CLEAR_COLOR;
+		
+		dbImage = new BufferedImage(INTERNAL_RES_W, INTERNAL_RES_H, BufferedImage.TYPE_4BYTE_ABGR);
+		dbg = dbImage.getGraphics();
 	}
 		
 	public void setParent(GameRunner p)
@@ -78,6 +81,7 @@ public class ContentPanel{
 			clearColor = c;
 		else
 			clearColor = DEFAULT_CLEAR_COLOR;
+		dbg.setColor(clearColor);
 	}
 	
 	/**
@@ -92,8 +96,9 @@ public class ContentPanel{
 				trans = (Transition) transIn.newInstance();
 			else
 				trans = (Transition) transOut.newInstance();
-			trans.setTime(200);
+			trans.setTime(2000);
 			trans.setBuffer(getScreenCopy());
+			GameRunner.getInstance().sleep(-1);
 		} catch (Exception e) {
 			trans = null;
 			if (t)
@@ -130,22 +135,12 @@ public class ContentPanel{
 	 */
 	public void render()
 	{
-		//create the buffer if it hasn't been yet
-		if (dbImage == null)
-		{
-			dbImage = new BufferedImage(INTERNAL_RES_W, INTERNAL_RES_H, BufferedImage.TYPE_4BYTE_ABGR);
-			if (dbImage == null) {
-				System.err.println("dbImage is null");
-				return;
-			}
-			else
-				dbg = dbImage.getGraphics();
-		}
 		
 		if (engine.getCurrentScene() != currentScene)
 		{
 			evokeTransition(true);
 			currentScene = engine.getCurrentScene();
+
 			return;
 		}
 		
@@ -155,10 +150,9 @@ public class ContentPanel{
 				setClearColor(engine.getCurrentScene().getDisplay().getClearColor());
 		
 		//clear the buffer
-		dbg.setColor(clearColor);
-		dbg.fillRect(0, 0, INTERNAL_RES_W, INTERNAL_RES_H);
+		dbg.fillRect(0, 0, dbImage.getWidth(), dbImage.getHeight());
 		
-		//draw the current scene
+		////draw the current scene
 		if (engine.getCurrentScene() != null)
 			engine.getCurrentScene().render(dbg);
 	}
@@ -176,12 +170,12 @@ public class ContentPanel{
 				if (trans.getClass() == transIn)
 					evokeTransition(false);
 				else
+				{
 					trans = null;
+					GameRunner.getInstance().sleep(0);
+				}
 		}		
 		else
-		{
-			if (dbImage != null)
-				g.drawImage(dbImage, 0, 0, parent.getWidth(), parent.getHeight(), null);
-		}
+			g.drawImage(dbImage, 0, 0, parent.getWidth(), parent.getHeight(), null);
 	}	
 }

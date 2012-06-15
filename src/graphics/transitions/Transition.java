@@ -3,6 +3,7 @@ package graphics.transitions;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import core.GameFrame;
 import core.GameRunner;
 
 /**
@@ -20,14 +21,18 @@ import core.GameRunner;
  */
 public abstract class Transition{
 
-	protected int length;		//amount of time it should take to transition
-	protected int currTime;		//current time in the transition
+	protected long length;		//amount of time it should take to transition
+	protected long start;
+	protected long currTime;		//current time in the transition
+	protected double timePercentage;
 	
 	//dimensions on the screen that the Transition will take up
 	protected static final int WIDTH = GameRunner.getInstance().getWidth();
 	protected static final int HEIGHT = GameRunner.getInstance().getHeight();
 	
 	protected BufferedImage buffer;	//the buffer that will display transition to the screen on
+	
+	
 	
 	/**
 	 * Sets the buffer to a BufferedImage passed in
@@ -45,7 +50,8 @@ public abstract class Transition{
 	 */
 	public void setTime(int t)
 	{
-		length = t;
+		reset();
+		length = t*GameFrame.nanoPerMSec;	//milliseconds to nanoseconds
 	}
 	
 	/**
@@ -54,6 +60,7 @@ public abstract class Transition{
 	public void reset()
 	{
 		currTime = 0;
+		start = System.nanoTime();
 	}
 	
 	/**
@@ -63,14 +70,16 @@ public abstract class Transition{
 	 */
 	protected void step()
 	{
-		currTime = Math.min(length+GameRunner.FPS, currTime + length/GameRunner.getInstance().getCurrFPS());
+		currTime = System.nanoTime()-start;
+		timePercentage = currTime/(double)length;
+		System.out.println(currTime);
 	}
 	
 	/**
 	 * Tells if the transition is done being drawn
 	 */
 	public boolean isDone(){
-		return currTime >= length+GameRunner.FPS;
+		return currTime >= length;
 	}
 	
 	/**

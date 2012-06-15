@@ -82,7 +82,7 @@ public class GameRunner extends GameFrame implements KeyListener{
 	 */
 	public void sleep(long milliseconds)
 	{
-		pauseLength = milliseconds;
+		pauseLength = milliseconds*nanoPerMSec;
 		pauseTimer = 0;
 		isPaused = true;
 	}
@@ -99,12 +99,12 @@ public class GameRunner extends GameFrame implements KeyListener{
 		//when paused, don't updated the engine
 		if (isPaused)
 		{
-			if (pauseLength == -1)
+			if (pauseLength < 0)
 				return;
 			
 			if (pauseTimer < pauseLength)
 			{
-				pauseTimer += 1000.0/getCurrFPS();
+				pauseTimer += timeDiff;
 				return;
 			}
 			else
@@ -120,8 +120,6 @@ public class GameRunner extends GameFrame implements KeyListener{
 			e.printStackTrace();
 			return;
 		}
-		
-		setTitle("[FPS: " + getCurrFPS() + "] " + TITLE);
 	}
 
 	/**
@@ -150,7 +148,7 @@ public class GameRunner extends GameFrame implements KeyListener{
 	 */
 	@Override
 	public synchronized void keyPressed(KeyEvent arg0) {
-		if (Thread.currentThread().isInterrupted())
+		if (Thread.currentThread().isInterrupted() || isPaused)
 		{
 			arg0.consume();
 			return;

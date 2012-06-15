@@ -6,7 +6,7 @@ public class FadeOut extends FadeToBlack {
 
 	@Override
 	protected Color getCurrentAlpha() {
-		int index = (alpha.length-1) - (int)(Math.min(currTime/(double)length, 1.0)*(alpha.length-1));
+		int index = (alpha.length-1) - (int)(timePercentage*(alpha.length-1));
 		return alpha[index];
 	}
 

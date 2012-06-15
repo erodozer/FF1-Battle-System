@@ -9,7 +9,7 @@ public class IrisIn extends Iris {
 	@Override
 	protected int getDiameter()
 	{
-		return (int)(endRadius-endRadius*(currTime/(double)length))*2;
+		return (int)(endRadius-endRadius*timePercentage)*2;
 	}
 	
 	@Override

@@ -16,6 +16,18 @@ abstract public class HorizontalCurtain extends Transition {
 	Color c = NES.BLACK;	//color to cut to
 	int rHeight = 0;		//Rectangle's height
 	
+	abstract public void updateHeight();
+	
 	@Override
-	abstract public void paint(Graphics g);
+	public void paint(Graphics g)
+	{
+		updateHeight();
+		
+		g.drawImage(buffer, 0, 0, null);
+		g.setColor(c);
+		g.fillRect(0, 0, WIDTH, rHeight);
+		g.fillRect(0, HEIGHT-rHeight, WIDTH, rHeight);
+		
+		step();
+	}
 }
