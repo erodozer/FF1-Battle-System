@@ -59,6 +59,10 @@ public class Item {
 	public static Item loadItem(String s)
 	{
 		Item i = null;
+		//ignore loading if the value is null
+		if (s == null)
+			return null;
+		
 		//compare first against the dictionary since it knows which item names are valid
 		if (Dictionary.contains(s))
 			if (cache.containsKey(s))
@@ -181,21 +185,21 @@ public class Item {
 		{
 			Preferences equip = inifile.node(eqSec);
 			// type is armor or weapon
-			if (type != 2) {
+			if (type != ACCESSORY_TYPE) {
 				// get armor weight and restricted jobs
 				weight = equip.getInt("weight", 0);
 				restrict = equip.get("restrict", "").split(",");
 				if (type == 1)
 					slot = equip.getInt("slot", 0);
 			}
-			hp = equip.getInt("hp", 1);
-			str = equip.getInt("str", 1);
-			itl = equip.getInt("int", 1);
-			spd = equip.getInt("spd", 1);
-			evd = equip.getInt("evd", 1);
-			acc = equip.getInt("acc", 1);
-			vit = equip.getInt("vit", 1);
-			mdef = equip.getInt("mdef", 1);
+			hp = equip.getInt("hp", 0);
+			str = equip.getInt("str", 0);
+			itl = equip.getInt("int", 0);
+			spd = equip.getInt("spd", 0);
+			evd = equip.getInt("evd", 0);
+			acc = equip.getInt("acc", 0);
+			vit = equip.getInt("vit", 0);
+			mdef = equip.getInt("mdef", 0);
 		}
 		
 		String command = main.get("command", null);

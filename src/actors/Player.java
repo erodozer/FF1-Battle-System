@@ -136,7 +136,7 @@ public class Player extends Actor {
 	{
 		this(p.get("name", "aaaa"), p.get("job", "Fighter"));
 		
-		/**
+		/*
 		 * loads all the stats for the player,
 		 * if the stats don't exist then just use
 		 * the job's initial stats
@@ -157,6 +157,33 @@ public class Player extends Actor {
 		mdef = p.getInt("mdef", mdef);
 		luk = p.getInt("luck", luk);
 		exp = p.getInt("exp", 0);
+		
+		/*
+		 * Loads all the armor and weapons 
+		 */
+		weight = p.getInt("weight", 0);
+		
+		for (int i = 0; i < weapons.length; i++)
+		{
+			weapons[i] = Item.loadItem(p.get(String.format("weapon%02d", i), null));
+		}
+		
+		String e = p.get("eWeapon", "-1");
+		if (Integer.parseInt(e) != -1)
+			weapon = weapons[Integer.parseInt(e)];
+		
+		e = p.get("eArmor", "");
+		for (int i = 0; i < armor.length; i++)
+		{
+			armor[i] = Item.loadItem(p.get(String.format("armor%02d", i), null));
+			if (e.contains(""+i+" "))
+				wearArmor(armor[i]);
+		}
+		Scanner s = new Scanner(e);
+		while (s.hasNextInt())
+			wearArmor(armor[s.nextInt()]);
+		s.close();
+		e = null;
 	}
 
 	/**
@@ -190,6 +217,23 @@ public class Player extends Actor {
 		ini.put(section, "luck", luk);
 		ini.put(section, "exp", exp);
 		
+		String e = "";
+		for (int i = 0; i < weapons.length; i++)
+		{
+			ini.put(section, String.format("weapon%02d", i), weapons[i]);
+			if (getWeapon() == weapons[i])
+				e = i + "";
+		}
+		ini.put(section, "eWeapon", e);	//equipped item index
+		
+		e = "";
+		for (int i = 0; i < armor.length; i++)
+		{
+			ini.put(section, String.format("armor%02d", i), armor[i]);
+			if (this.isWearing(armor[i]))
+				e += i + " ";
+		}
+		ini.put(section, "eArmor", e);
 	}
 	
 	/**
@@ -789,7 +833,7 @@ public class Player extends Actor {
 	 */
 	public boolean wearArmor(Item armor)
 	{
-		if (armor.isEquipment() && armor.getWeight() <= weight)
+		if (armor != null && armor.isEquipment() && armor.getWeight() <= weight)
 		{
 			//only equip the armor if there is a piece of armor of that type that is not already equipped
 			for (int i = 0; i < equippedArmor.size(); i++)

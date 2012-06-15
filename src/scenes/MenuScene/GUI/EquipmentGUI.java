@@ -84,7 +84,7 @@ public class EquipmentGUI extends HUD
 			int x = index % 2;
 			int y = index % 4 / 2;
 			arrowPosition[0] = eWindows[i].getX() + 58 + 80*x;
-			arrowPosition[1] =  eWindows[i].getY() + 16 + 16*y;
+			arrowPosition[1] =  eWindows[i].getY() + 16 + 12*y;
 		}
 		return arrowPosition;
 	}
@@ -166,7 +166,7 @@ public class EquipmentGUI extends HUD
 					t = ((p.getWeapon() == p.getWeapons()[i] && p.getWeapon() != null)?"E-":"") + ((p.getWeapons()[i] != null)?p.getWeapons()[i].getName():"");
 				else
 					t = ((p.isWearing(p.getArmor()[i])?"E-":"") + ((p.getArmor()[i] != null)?p.getArmor()[i].getName():""));
-				f.drawString(g, t, 20+(items.getWidth()/2*(i%2)), 14+(items.getHeight()/2*(i/2)), items);
+				f.drawString(g, t, 20+(items.getWidth()/2*(i%2)), 14+(12*(i/2)), items);
 			}
 		}
 	}

@@ -25,7 +25,7 @@ public class ArmorState extends EquipmentState
 				Item armor = player.getArmor()[row+col];
 				if (player.isWearing(armor))
 					player.takeOffArmor(armor);
-				else if (player.getWeapons()[row+col] != null)
+				else if (armor != null)
 					player.wearArmor(armor);
 			}
 		}
