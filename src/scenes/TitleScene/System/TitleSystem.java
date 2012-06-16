@@ -38,7 +38,10 @@ public class TitleSystem extends GameSystem {
 
 	@Override
 	public void setNextState() {
-		state = ts;
+		if (state == is)
+		    state = ts;
+		else
+			state = is;
 		state.start();
 	}
 

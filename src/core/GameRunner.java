@@ -82,8 +82,8 @@ public class GameRunner extends GameFrame implements KeyListener{
 	 */
 	public void sleep(long milliseconds)
 	{
-		pauseLength = milliseconds*nanoPerMSec;
-		pauseTimer = 0;
+		pauseLength = System.nanoTime() + milliseconds*nanoPerMSec;
+		pauseTimer = System.nanoTime();
 		isPaused = true;
 	}
 	
@@ -104,7 +104,7 @@ public class GameRunner extends GameFrame implements KeyListener{
 			
 			if (pauseTimer < pauseLength)
 			{
-				pauseTimer += timeDiff;
+				pauseTimer = System.nanoTime();
 				return;
 			}
 			else

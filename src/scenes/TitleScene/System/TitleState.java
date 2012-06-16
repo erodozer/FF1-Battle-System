@@ -1,5 +1,6 @@
 package scenes.TitleScene.System;
 
+import core.GameRunner;
 import scenes.GameState;
 import engine.Engine;
 import engine.Input;
@@ -15,6 +16,9 @@ public class TitleState extends GameState {
 
 	Engine e = Engine.getInstance();	//main engine
 	int index;							//command chosen
+	long timer = 0;
+	long start;
+	long LENGTH = 30*GameRunner.nanoPerSec;
 	
 	/**
 	 * Creates an instance of the state
@@ -30,6 +34,7 @@ public class TitleState extends GameState {
 	@Override
 	public void start() {
 		index = 0;
+		start = System.nanoTime();
 	}
 
 	/**
@@ -37,7 +42,9 @@ public class TitleState extends GameState {
 	 */
 	@Override
 	public void handle() {
-		
+		timer = System.nanoTime()-start;
+		if (timer > LENGTH)
+			parent.setNextState();
 	}
 
 	/**

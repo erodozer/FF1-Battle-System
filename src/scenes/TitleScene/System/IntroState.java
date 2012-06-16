@@ -26,10 +26,6 @@ public class IntroState extends GameState{
 	
 	public IntroState(TitleSystem c) {
 		super(c);
-	}
-
-	@Override
-	public void start() {
 		try {
 			FileInputStream f = new FileInputStream("data/intro.txt");
 			ArrayList<String> l = new ArrayList<String>();
@@ -51,8 +47,18 @@ public class IntroState extends GameState{
 		//if no intro file, then just skip to the title screen
 		catch (Exception e) {
 			System.err.println("Not intro text was found.");
-			finish();
 		}
+	}
+
+	@Override
+	public void start() {
+		if (lines == null)
+			finish();
+		
+		line = 0;
+		page = 0;
+		alpha = 0;
+		timer = 0;
 		
 	}
 

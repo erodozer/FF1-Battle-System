@@ -96,7 +96,7 @@ public class ContentPanel{
 				trans = (Transition) transIn.newInstance();
 			else
 				trans = (Transition) transOut.newInstance();
-			trans.setTime(2000);
+			trans.setTime(500);
 			trans.setBuffer(getScreenCopy());
 			GameRunner.getInstance().sleep(-1);
 		} catch (Exception e) {
