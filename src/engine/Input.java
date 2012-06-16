@@ -30,4 +30,6 @@ public abstract class Input {
 	public final static int KEY_QUICKSTART = KeyEvent.VK_F1;
 	public final static int KEY_QUICKSAVE = KeyEvent.VK_F5;
 	public final static int KEY_QUICKLOAD = KeyEvent.VK_F6;
+	
+	public final static int KEY_SOFTRESET = KeyEvent.VK_F8;
 }

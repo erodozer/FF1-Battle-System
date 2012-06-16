@@ -164,6 +164,10 @@ public class GameRunner extends GameFrame implements KeyListener{
     	{
     		engine.loadFromSave(0);
     	}
+    	else if (arg0.getKeyCode() == Input.KEY_SOFTRESET)
+    	{
+    		engine.initGame();
+    	}
 		arg0.consume();
 	}
 

@@ -94,6 +94,7 @@ public class Engine{
 	 */
 	public void initGame()
 	{
+		setParty(null);
 		changeToTitle();
 	}
 	
