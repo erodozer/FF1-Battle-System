@@ -51,7 +51,7 @@ public abstract class Transition{
 	public void setTime(int t)
 	{
 		reset();
-		length = t*GameFrame.nanoPerMSec;	//milliseconds to nanoseconds
+		length = t*GameFrame.NANO_PER_MSEC;	//milliseconds to nanoseconds
 	}
 	
 	/**

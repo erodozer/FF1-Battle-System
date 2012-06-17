@@ -22,7 +22,7 @@ public class IntroState extends GameState{
 	int page;
 	int alpha;
 	double timer;
-	final long TIME_LENGTH = (long)(.75*GameRunner.nanoPerSec);
+	final long TIME_LENGTH = (long)(.75*GameRunner.NANO_PER_SEC);
 	
 	public IntroState(TitleSystem c) {
 		super(c);

@@ -351,7 +351,7 @@ public class BattleSystem extends GameSystem{
 		party = null;
 				
 		if (state == gs)
-			engine.changeToTitle();
+			engine.initGame();
 		else
 			engine.changeToWorld();
 		

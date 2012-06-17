@@ -1,5 +1,7 @@
 package core;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -44,8 +46,8 @@ public class GameRunner extends GameFrame implements KeyListener{
 	/*
 	 * Default dimensions for the game runner's frame 
 	 */
-	private final static int FRAME_WIDTH = 512;
-	private final static int FRAME_HEIGHT = 448;
+	private final static int FRAME_WIDTH = 768;
+	private final static int FRAME_HEIGHT = 672;
 	
 	//engine instance for core logic
 	Engine engine;
@@ -74,6 +76,9 @@ public class GameRunner extends GameFrame implements KeyListener{
 			canvas.addKeyListener(this);
 		else
 			addKeyListener(this);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation((int)(screenSize.getWidth()/2-this.getWidth()/2), (int)(screenSize.getHeight()/2-this.getHeight()/2));
 	}
 	
 	/**
@@ -82,7 +87,7 @@ public class GameRunner extends GameFrame implements KeyListener{
 	 */
 	public void sleep(long milliseconds)
 	{
-		pauseLength = System.nanoTime() + milliseconds*nanoPerMSec;
+		pauseLength = System.nanoTime() + milliseconds*NANO_PER_MSEC;
 		pauseTimer = System.nanoTime();
 		isPaused = true;
 	}

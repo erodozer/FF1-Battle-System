@@ -14,28 +14,20 @@ package core;
 //						classes to implement.
 //==============================================================================
 
+import javax.swing.*;
+import java.awt.image.*;
+import java.awt.event.*;
 import java.awt.Canvas;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.awt.image.BufferStrategy;
-import java.awt.image.ImageObserver;
-
-import javax.swing.JFrame;
+import java.awt.*;
 
 public abstract class GameFrame extends JFrame implements WindowListener, Runnable
 {
 //==============================================================================
 // Constants and regulators.
 //==============================================================================
-	public static final long nanoPerSec	= 1000000000L;
-	public static final int nanoPerMSec	= 1000000;
-	public static final int msecPerSec	= 1000;
+	public static final long NANO_PER_SEC	= 1000000000L;
+	public static final int NANO_PER_MSEC	= 1000000;
+	public static final int MSEC_PER_SEC	= 1000;
 	// Because I keep losing track of zeros in frame rate calculations.
 	
 	private static final int NUM_DELAYS_PER_YIELD = 16;
@@ -50,13 +42,12 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 	// i.e the games state is updated but not rendered
 	
 	private long period;                			// Period between drawing, in nanosecs.
-	protected long timeDiff;							// Time between frames, for FPS calculation.
+	private long currTime;							// Time at the beginning of the game loop iteration.
+	private long timeDiff;							// Time between frames, for FPS calculation.
 
-	private int currFPS = 0;						// Current reported FPS.
-	
-	private int framesDrawn;						// Number of frames drawn since last report
-	private long secondsPassed;					// Number of nano seconds passed
-	private final long updateInterval = nanoPerSec;	//update the FPS counter every second
+	private int lastFPS = -1;						// Last average frames per second.
+	private int currFPS = 0;						// Current accumulated frames per second.
+	private long timeFPS = 0L;						// Accumulated time per update.
 //==============================================================================
 
 
@@ -132,6 +123,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		canvas = new Canvas();
 		add(canvas);
 		
+		setUndecorated(true);
 		addWindowListener(this);
 		setIgnoreRepaint(true);					// Turn off all paint events.
 		setResizable(false);					// Prevent frame resizing.
@@ -240,8 +232,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 	// The frames of the animation are drawn inside the while loop.
 	{
 		// Initialize the timers and counters.
-		long beforeTime, afterTime, sleepTime;
-		long overSleepTime = 0L;
+		long beforeTime, sleepTime;
 		int noDelays = 0;
 		long excess = 0L;
 
@@ -255,26 +246,46 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 			gameUpdate();					// Update the game data.
 			paintScreen();					// Render/Display the frame.
 
-			afterTime	= System.nanoTime();
-			timeDiff	= afterTime-beforeTime;
-			sleepTime	= (period - timeDiff) - overSleepTime;  
+			currTime	= System.nanoTime();
+			timeDiff	= currTime - beforeTime;
+			sleepTime	= period - timeDiff;
 
+			if (!isSuspended)
+			// Make sure not to update the current FPS if game is suspended.
+			{
+				timeFPS += timeDiff;
+				currFPS++;
+
+				if (timeFPS > NANO_PER_SEC)
+				// One second has passed, update the real FPS.
+				{
+					lastFPS = currFPS;
+					currFPS = 0;
+					timeFPS = 0L;
+				}
+			}
+			
 			if (sleepTime > 0)
 			// Some time left in this cycle, sleep for a bit.
 			{
 				try 
 				{
-					Thread.sleep(sleepTime/nanoPerMSec);  // nano -> ms
+					//System.out.println("period (nano): " + period);
+					//System.out.println("timeDiff (nano): " + timeDiff);
+					//System.out.println("sleep time (nano): " + sleepTime);
+					//System.out.println("sleep time (msec): " + sleepTime/NANO_PER_MSEC);
+					
+					Thread.sleep(sleepTime/NANO_PER_MSEC);  // nano -> ms
 				}
-				catch(InterruptedException ex){}
-
-				overSleepTime = (System.nanoTime() - afterTime) - sleepTime;
+				catch(InterruptedException ex)
+				{
+					System.out.println("OH SHIT EXCEPTION");
+				}
 			}
 			else
 			// The frame took longer than desired to render. 
 			{
 				excess -= sleepTime;  // store excess time value
-				overSleepTime = 0L;
 
 				if (++noDelays >= NUM_DELAYS_PER_YIELD)
 				{
@@ -283,18 +294,6 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 				}
 			}
 
-			if (!isSuspended)
-			{
-				framesDrawn++;
-				secondsPassed += timeDiff;
-				
-				if (secondsPassed > updateInterval)
-				{
-					currFPS = framesDrawn;
-					framesDrawn = 0;
-					secondsPassed = 0;
-				}
-			}
 			beforeTime = System.nanoTime();
 
 			// If frame animation is taking too long, update the game state
@@ -306,13 +305,12 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 				excess -= period;
 				gameUpdate();
 				skips++;
-			}	
+			}
 		}
 		
 		// I really don't like this here, as it doesn't feel thread safe, but in
 		// the off chance the game is being run in full screen, the JFrame won't
 		// have the capability to close itself...
-		buffer.dispose();
 		System.exit(0);
 	}
 	
@@ -324,6 +322,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		{
 			buffer = bufferStrategy.getDrawGraphics();
 			gameRender(buffer);
+			buffer.dispose();
 			
 			if (!bufferStrategy.contentsLost())
 				bufferStrategy.show();
@@ -344,10 +343,10 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 	}
 	
 	// Update the game objects.
-	public abstract void gameUpdate();
+	protected abstract void gameUpdate();
 	
 	// Draw the game objects to a graphics context.
-	public abstract void gameRender(Graphics g);
+	protected abstract void gameRender(Graphics g);
 //==============================================================================
 
 
@@ -387,7 +386,7 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		if (isWindowed)
 			return canvas.getWidth();
 
-		return ImageObserver.WIDTH;
+		return this.WIDTH;
 	}
 
 	public void setHeight(int h)
@@ -411,29 +410,34 @@ public abstract class GameFrame extends JFrame implements WindowListener, Runnab
 		if (isWindowed)
 			return canvas.getHeight();
 
-		return ImageObserver.HEIGHT;
+		return this.HEIGHT;
 	}
 
 	public void setFPS(int fps)
 	{
 		// Time per frame, in nanosecs.
-		if (fps >= 0)
-			period = nanoPerSec/fps;
+		if (fps > 0)
+			period = NANO_PER_SEC/fps;
 		else
-			period = nanoPerSec/DEFAULT_FPS;
-		currFPS = fps;
-	}
-
-	public long getTimeDiff()
-	// Return the current time difference between cycles
-	{
-		return timeDiff;
+			period = NANO_PER_SEC/DEFAULT_FPS;
 	}
 
 	public int getCurrFPS()
 	// Return the current frames per second.
 	{
-		return currFPS;
+		return lastFPS;
+	}
+
+	public long getCurrTime()
+	// Get the time at the beginning of the current game loop.
+	{
+		return currTime;
+	}
+
+	public long getTimeDiff()
+	// Get the time difference between the last time check and the time before.
+	{
+		return timeDiff;
 	}
 //==============================================================================
 

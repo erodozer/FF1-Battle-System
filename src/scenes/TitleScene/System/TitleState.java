@@ -18,7 +18,7 @@ public class TitleState extends GameState {
 	int index;							//command chosen
 	long timer = 0;
 	long start;
-	long LENGTH = 30*GameRunner.nanoPerSec;
+	long LENGTH = 30*GameRunner.NANO_PER_SEC;
 	
 	/**
 	 * Creates an instance of the state
