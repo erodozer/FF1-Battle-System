@@ -1,0 +1,54 @@
+=Introduction=
+
+Version 1.2 of the engine focuses on the development of the many things.
+
+Items now have functionality and can be equipped, battles attacks and
+spells are able to have animations, there was plenty of cleanup to the code
+as well as making it more generic for use in other games, and all the menus
+of the main menu system are accessible and functioning (minus spells and
+items having a use in the menu).  Overall, the main goal of this version
+was to polish and complete as many of the previous systems as possible
+in order to have a presentable demo of the game for Too Many Games 2012.
+
+==STARTING THE GAME==
+
+Just a heads up, input is done using the arrow keys and X (A button), Z (B button),
+Function keys START (S), SELECT (A), Quick Save (F5), Quick Load (F6), and
+Soft Reset (F8).
+
+Upon starting the game, the intro will display the story fading in line by
+line, just like how the classic FF games presented their story.  You can
+speed through this line by line by pressing the A button, or you can skip
+straight to the title screen by pressing START.
+
+From the title screen you can choose to start a new game (continue is not
+yet working).  Once you start a new game, party creation will start.  This
+is no different than before.
+
+==A NEW(ER) WORLD AWAITS!==
+
+After picking your characters, you'll be plopped right into the test world.
+This time the map is of custom design of the Everfree Forest.
+
+No NPCs in this test because they were still not fully functional or worked on.
+However, since this is the Everfree Forest, Zecora's shop is present on the
+second map screen!  Inside Zecora's tree house you can buy Potions (cast
+CURE on a single ally), Brews (cast Fire on a single foe), and Muffins (cast CURE
+on all allies).  You start off the game with 500 G so you can buy a few of each.
+
+Along the way to that shop, you'll most likely encounter a few battles.  Drink
+and Item are now functioning.  Item allows you to select a piece of equipment
+to use.  If the equipment has a battle function (some accessories will) it will
+be executed for the player's turn.  Drink allows you to use your consumable/
+battle usable items that are in the inventory.
+
+Order scene and even the menu have been expanded capability wise to support
+looking at parties and reordering parties of more than 4 players.  If you press
+F1 for Developer test mode you will have one member of each class type, and
+then you can reorganize the party however you want.  This is great for games
+where people might want to develop it to have more than 4 characters in your
+party (like a FF4 clone).
+
+That's it to playing Version 1.2.  Have fun and enjoy making new content for
+the engine.
+
