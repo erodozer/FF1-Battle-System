@@ -104,9 +104,8 @@ public class Engine{
 	 */
 	public void startGame()
 	{
-		ContentPanel.setTransitionSet(graphics.transitions.FadeIn.class, graphics.transitions.HorizontalCurtainOut.class);
-		
 		changeToWorld(startingMap, startingCell[0], startingCell[1]);
+		party.getInventory().setGold(500);
 	}
 	
 	/**
