@@ -1,10 +1,13 @@
-package scenes.BattleScene.System;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import scenes.BattleScene.System.BattleSystem;
+import scenes.BattleScene.System.IssueState;
 
 import commands.AttackCommand;
 import commands.SpellCommand;

@@ -1,4 +1,4 @@
-package actors;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,6 +12,8 @@ import java.util.prefs.Preferences;
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 import org.junit.Test;
+
+import actors.Player;
 
 
 

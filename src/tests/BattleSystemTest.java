@@ -1,8 +1,13 @@
-package scenes.BattleScene.System;
+package tests;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import scenes.BattleScene.System.BattleSystem;
+import scenes.BattleScene.System.EngageState;
+import scenes.BattleScene.System.IssueState;
+import scenes.BattleScene.System.MessageState;
 
 import engine.Engine;
 import groups.Formation;

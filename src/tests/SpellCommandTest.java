@@ -1,10 +1,12 @@
-package commands;
+package tests;
 
 import static org.junit.Assert.assertTrue;
 import groups.Formation;
 import groups.Party;
 
 import org.junit.Test;
+
+import commands.SpellCommand;
 
 import spell.Spell;
 import actors.Actor;
@@ -16,7 +18,7 @@ import actors.Player;
  *
  *	JUnit test for spells
  */
-public class SpellTest {
+public class SpellCommandTest {
 	
 	/**
 	 * Tests to make sure that elemental settings actually

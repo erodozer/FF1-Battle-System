@@ -1,9 +1,11 @@
-package engine;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import engine.Engine;
 
 import scenes.CreationScene.CreationScene;
 import scenes.TitleScene.TitleScene;

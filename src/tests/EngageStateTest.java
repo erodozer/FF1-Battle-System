@@ -1,8 +1,11 @@
-package scenes.BattleScene.System;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import scenes.BattleScene.System.BattleSystem;
+import scenes.BattleScene.System.EngageState;
 
 import actors.Actor;
 import actors.Player;

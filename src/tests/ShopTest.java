@@ -1,4 +1,4 @@
-package scenes.ShopScene.System;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,6 +8,8 @@ import java.util.prefs.Preferences;
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 import org.junit.Test;
+
+import scenes.ShopScene.System.Shop;
 
 public class ShopTest {
 

@@ -1,6 +1,7 @@
-package groups;
+package tests;
 
 import static org.junit.Assert.assertEquals;
+import groups.Formation;
 
 import org.junit.Test;
 

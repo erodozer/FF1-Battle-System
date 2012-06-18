@@ -1,4 +1,4 @@
-package groups;
+package tests;
 
 /**
  * TestParty.java
@@ -7,6 +7,8 @@ package groups;
  * Description: JUnit test for testing the capabilities of
  * 				the party class
  */
+
+import groups.Party;
 
 import java.io.File;
 import junit.framework.TestCase;

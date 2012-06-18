@@ -1,8 +1,10 @@
-package actors;
+package tests;
 
 import junit.framework.TestCase;
 
 import org.junit.Test;
+
+import actors.Enemy;
 
 /**
  * TestEnemy.java

@@ -1,5 +1,6 @@
-package actors;
+package tests;
 
+import actors.Actor;
 import graphics.Sprite;
 
 public class MockActor extends Actor{

@@ -1,10 +1,12 @@
-package spell;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import spell.Spell;
 
 public class SpellTest {
 
