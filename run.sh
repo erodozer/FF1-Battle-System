@@ -1,4 +1,3 @@
-javac -classpath jl1.0.jar:src/ src/engine/GameScreen.java 
+#!/bin/sh
 
-java -classpath jl1.0.jar:src/ engine.GameScreen 
-
+java -Djava.library.path=lib/ -jar bin/jffbs.jar $@
