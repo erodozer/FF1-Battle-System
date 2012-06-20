@@ -34,7 +34,8 @@ public class Formation extends ActorGroup<Enemy>{
 	public boolean add(Enemy e)
 	{
 		boolean b = super.add(e);
-		inventory.addGold(e.getGold());
+		if (b)
+			inventory.addGold(e.getGold());
 		return b;
 	}
 	
