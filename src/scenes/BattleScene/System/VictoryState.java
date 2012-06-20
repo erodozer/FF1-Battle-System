@@ -172,7 +172,7 @@ public class VictoryState extends GameState {
 	public void handleKeyInput(int key) {
 		//kill sleeping to advance messages faster
 		if (key == Input.KEY_A)
-			GameRunner.getInstance().sleep(-1);
+			GameRunner.getInstance().sleep(0);
 	}
 
 	/**

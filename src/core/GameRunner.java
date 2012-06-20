@@ -29,9 +29,9 @@ public class GameRunner extends GameFrame implements KeyListener{
 	private static GameRunner instance;
 	
 	//force pausing
-	private double pauseTimer;		//how long the game has been paused
+	private long pauseTimer;		//how long the game has been paused
 									// once it reaches pause length the game will unpause
-	private double pauseLength;		//you can manually for pausing for a certain amount of time
+	private long pauseLength;		//you can manually for pausing for a certain amount of time
 	
 	/**
 	 * @return an instance of the game runner
