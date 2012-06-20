@@ -84,7 +84,7 @@ public class Enemy extends Actor {
 			dark = elem.getInt("dark", 1);
 			
 			exp = main.getInt("exp", 1);
-			goldReward = main.getInt("g", 0);
+			goldReward = main.getInt("gold", 0);
 			
 			spriteName = main.get("sprite", "");
 			String s = main.get("size", "medium");
