@@ -29,22 +29,24 @@ public class VictoryState extends GameState {
 						//step 1 = show exp and g gained
 						//step 2 = show level up messages
 
-	int exp = 0;
-	int g = 0;
+	int exp = 0;		//amount of exp to give to each player
+	int g = 0;			//amount of gold won
 	
-	Formation f;
-	Party p;
+	Formation f;		//enemy formation just fought
+	Party p;			//battle party, not main party
 	
 	ArrayList<Player> leveledUp;
+						//list of characters that leveled up
 	Iterator<Player> levIterator;	
-	Player player;
-						//for level up, display player
+						//iterator for level up list
+	Player player;		//for level up, display player
 	
 	List<String> levMessage;
 						//message for level up
 	Iterator<String> messageIterator;	
 						//for counter on displaying message for level up
-	String message;
+	
+	String message;		//message to display
 	
 	/**
 	 * Constructs state
@@ -70,22 +72,29 @@ public class VictoryState extends GameState {
 		this.p = ((BattleSystem)parent).getParty();
 		
 		//distribute the exp and g
-		exp = f.getExp()/p.getAlive();
-		g = f.getInventory().getGold();
+		exp = f.getExp()/p.getAlive();		//exp is only distributed to those alive, 
+											// amount shown for battle is equal to what is distributed per player
+		g = f.getInventory().getGold();		//get the amount of gold of the formation inventory to display
 		
+		//distribute exp to all characters
+		//also build a list of characters that leveled up from the battle
 		Player player;
 		leveledUp = new ArrayList<Player>();
 		for (int i = 0; i < p.size(); i++)
 		{
 			player = p.get(i);
+			//only give exp and set victory pose if the player is alive
 			if (player.getAlive())
 			{
-				p.get(i).addExp(exp);
-				p.get(i).setState(Player.VICT);
+				p.get(i).addExp(exp);				//distribute the exp
+				p.get(i).setState(Player.VICT);		//set their victory pose
+				
+				//mark as leveled up if the amount of exp needed to level is met
 				if (p.get(i).getExpToLevel() <= 0)
 					leveledUp.add(p.get(i));
 			}
 		}
+		//create the iterator for the leveled up list
 		levIterator = leveledUp.iterator();
 		
 		//combine party inventory with enemy inventory after battle
@@ -101,12 +110,13 @@ public class VictoryState extends GameState {
 	}
 
 	/**
-	 * Do nothing
+	 * Step through different phases of displaying victory messages
+	 * as the state goes on
 	 */
 	@Override
 	public void handle() {
 		//wait a second between updating
-		GameRunner.getInstance().sleep(1000);
+		GameRunner.getInstance().sleep(2000);
 		
 		//check to see if the level up messages should be shown or not
 		if (step == 1)
@@ -119,6 +129,7 @@ public class VictoryState extends GameState {
 		//advances through players to level them up and display level up messages
 		else if (step == 2)
 		{
+			//if no more characters to iterate through, go to end of state
 			if (!levIterator.hasNext())
 			{
 				step = 4;
@@ -133,10 +144,12 @@ public class VictoryState extends GameState {
 		//display each stat being leveled up
 		else if (step == 3)
 		{
+			//iterate to next message if it exists
 			if (messageIterator.hasNext())
 			{
 				message = messageIterator.next();
 			}
+			//else go back to step 2 to show next person who leveled up
 			else
 			{
 				step = 2;
@@ -186,21 +199,37 @@ public class VictoryState extends GameState {
 		return step;
 	}
 	
+	/**
+	 * Gets the message to display
+	 * @return
+	 */
 	public String getMessage()
 	{
 		return message;
 	}
 	
+	/**
+	 * Gets the current player being displayed for leveling up
+	 * @return
+	 */
 	public Player getPlayer()
 	{
 		return player;
 	}
 	
+	/**
+	 * Gets the exp amount to print out
+	 * @return
+	 */
 	public int getExp()
 	{
 		return exp;
 	}
 	
+	/**
+	 * Gets the gold amount won to print out
+	 * @return
+	 */
 	public int getG()
 	{
 		return g;
