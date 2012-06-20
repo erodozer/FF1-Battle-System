@@ -87,8 +87,8 @@ public class GameRunner extends GameFrame implements KeyListener{
 	 */
 	public void sleep(long milliseconds)
 	{
-		pauseLength = System.nanoTime() + milliseconds*NANO_PER_MSEC;
-		pauseTimer = System.nanoTime();
+		pauseLength = getCurrTime() + milliseconds*NANO_PER_MSEC;
+		pauseTimer = getCurrTime();
 		isPaused = true;
 	}
 	
@@ -109,7 +109,7 @@ public class GameRunner extends GameFrame implements KeyListener{
 			
 			if (pauseTimer < pauseLength)
 			{
-				pauseTimer = System.nanoTime();
+				pauseTimer = getCurrTime();
 				return;
 			}
 			else
@@ -153,7 +153,8 @@ public class GameRunner extends GameFrame implements KeyListener{
 	 */
 	@Override
 	public synchronized void keyPressed(KeyEvent arg0) {
-		if (Thread.currentThread().isInterrupted() || isPaused)
+		//ignore input during transitioning
+		if (Thread.currentThread().isInterrupted() || panel.isTransitioning())
 		{
 			arg0.consume();
 			return;

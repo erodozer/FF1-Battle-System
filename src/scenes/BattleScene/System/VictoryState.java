@@ -1,6 +1,7 @@
 package scenes.BattleScene.System;
 
 import engine.Engine;
+import engine.Input;
 import groups.Formation;
 import groups.Party;
 
@@ -58,12 +59,15 @@ public class VictoryState extends GameState {
 	 */
 	@Override
 	public void start() {
+		//stop the music and play victory tunes
 		MP3.stop();
 		new MP3("victory.mp3").play();
+		
+		
 		step = -1;
 		
 		f = ((BattleSystem)parent).getFormation();
-		this.p = Engine.getInstance().getParty();
+		this.p = ((BattleSystem)parent).getParty();
 		
 		//distribute the exp and g
 		exp = f.getExp()/p.getAlive();
@@ -87,6 +91,10 @@ public class VictoryState extends GameState {
 		//combine party inventory with enemy inventory after battle
 		// to gain all gold and drops
 		p.getInventory().merge(f.getInventory());
+		//overwrite the battle party's changes to inventory (such as items used and gold gained)
+		//into the main party's inventory
+		Engine.getInstance().getParty().setInventory(p.getInventory());
+		
 		
 		//wait for 2 seconds before updating
 		GameRunner.getInstance().sleep(2000);			
@@ -97,7 +105,7 @@ public class VictoryState extends GameState {
 	 */
 	@Override
 	public void handle() {
-		//wait for 2 seconds between updating
+		//wait a second between updating
 		GameRunner.getInstance().sleep(1000);
 		
 		//check to see if the level up messages should be shown or not
@@ -158,10 +166,13 @@ public class VictoryState extends GameState {
 	}
 
 	/**
-	 * Kill program when key is striked
+	 * Advance message faster by pressing A button
 	 */
 	@Override
 	public void handleKeyInput(int key) {
+		//kill sleeping to advance messages faster
+		if (key == Input.KEY_A)
+			GameRunner.getInstance().sleep(-1);
 	}
 
 	/**

@@ -180,5 +180,11 @@ public class ContentPanel{
 		}		
 		else
 			g.drawImage(dbImage, 0, 0, parent.getWidth(), parent.getHeight(), null);
+	}
+
+	public boolean isTransitioning() {
+		if (trans != null)
+			return trans.isDone();
+		return false;
 	}	
 }
