@@ -21,8 +21,9 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import Map.Map;
-import Map.NPC;
+import map.Map;
+import map.NPC;
+
 import actors.Enemy;
 
 /**

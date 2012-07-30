@@ -1,12 +1,12 @@
 package scenes.WorldScene.WorldSystem;
 
+import map.NPC;
 import engine.Input;
 import graphics.ContentPanel;
 import graphics.NES;
 import graphics.SFont;
 import scenes.GameState;
 import scenes.GameSystem;
-import Map.NPC;
 
 /**
  * DialogState

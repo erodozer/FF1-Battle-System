@@ -4,12 +4,13 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.List;
 
+import map.Map;
+import map.NPC;
+import map.TileSet;
+
 import scenes.HUD;
 import scenes.WorldScene.WorldSystem.DialogState;
 import scenes.WorldScene.WorldSystem.WorldSystem;
-import Map.Map;
-import Map.NPC;
-import Map.TileSet;
 
 /**
  * WorldHUD

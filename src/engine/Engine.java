@@ -12,6 +12,8 @@ import java.util.Properties;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import map.NPC;
+
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 import scenes.Scene;
@@ -23,7 +25,6 @@ import scenes.ShopScene.System.Shop;
 import scenes.TitleScene.TitleScene;
 import scenes.WorldScene.WorldScene;
 import scenes.WorldScene.WorldSystem.WorldSystem;
-import Map.NPC;
 
 /**
  * Engine

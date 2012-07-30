@@ -14,11 +14,12 @@ import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import map.NPC;
+
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 import org.ini4j.InvalidFileFormatException;
 
-import Map.NPC;
 import actors.Player;
 
 public class Party extends ActorGroup<Player>{

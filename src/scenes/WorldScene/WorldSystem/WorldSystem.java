@@ -1,9 +1,9 @@
 package scenes.WorldScene.WorldSystem;
 
+import map.Map;
+import map.NPC;
+import map.Terrain;
 import scenes.GameSystem;
-import Map.Map;
-import Map.NPC;
-import Map.Terrain;
 import engine.Engine;
 import groups.Formation;
 

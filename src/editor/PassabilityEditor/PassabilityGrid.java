@@ -17,7 +17,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.Scrollable;
 
-import Map.TileSet;
+import map.TileSet;
+
 
 
 

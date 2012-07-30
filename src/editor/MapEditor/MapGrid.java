@@ -17,7 +17,8 @@ import javax.swing.JComponent;
 import javax.swing.Scrollable;
 import javax.swing.SwingUtilities;
 
-import Map.TileSet;
+import map.TileSet;
+
 
 
 

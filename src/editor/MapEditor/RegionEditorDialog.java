@@ -14,7 +14,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import Map.Terrain;
+import map.Terrain;
+
 import editor.ToolKit;
 
 

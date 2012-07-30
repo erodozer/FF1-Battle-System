@@ -15,7 +15,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import Map.TileSet;
+import map.TileSet;
+
 import editor.ToolKit;
 
 /**

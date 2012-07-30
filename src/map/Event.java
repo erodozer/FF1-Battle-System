@@ -1,4 +1,4 @@
-package Map;
+package map;
 
 import java.awt.Graphics;
 import java.util.prefs.Preferences;

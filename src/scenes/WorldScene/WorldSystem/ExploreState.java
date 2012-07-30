@@ -1,8 +1,8 @@
 package scenes.WorldScene.WorldSystem;
 
+import map.Map;
+import map.NPC;
 import scenes.GameState;
-import Map.Map;
-import Map.NPC;
 import engine.Engine;
 import engine.Input;
 

@@ -26,11 +26,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import map.Terrain;
+import map.TileSet;
+
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
-import Map.Terrain;
-import Map.TileSet;
 import core.GameRunner;
 import editor.ToolKit;
 import engine.Engine;

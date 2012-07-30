@@ -13,7 +13,8 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JComponent;
 import javax.swing.Scrollable;
 
-import Map.TileSet;
+import map.TileSet;
+
 
 
 

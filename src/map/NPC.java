@@ -1,4 +1,4 @@
-package Map;
+package map;
 
 import engine.Engine;
 import graphics.Sprite;
@@ -215,15 +215,19 @@ public class NPC {
 	public void draw(Graphics g)
 	{
 		walkSprite.setFrame(moving+1, direction);
+		
+		//only show part of the sprite when the tile has the overlay property
 		if (map.getOverlay(x, y))
 			walkSprite.trim(0,0,1,.6);
 		else
 			walkSprite.trim(0,0,1,1);
+		
+		//advance drawX until the character is at the destination tile's x position
 		if (drawX != x)
 		{
-			setWalking(true);
-			walk();
-			drawX += xRate;
+			setWalking(true);	//walking animation starts
+			walk();				//advance step
+			drawX += xRate;		//slide the position marginally
 			if (xRate < 0)
 			{
 				if (drawX < x)
@@ -235,11 +239,13 @@ public class NPC {
 					drawX = x;
 			}
 		}
+		
+		//advance drawY until the character is at the destination tile's y position
 		if (drawY != y)
 		{
-			setWalking(true);
-			walk();
-			drawY += yRate;
+			setWalking(true);	//walking animation starts
+			walk();				//advance step
+			drawY += yRate;		//slide the position marginally
 			if (yRate < 0)
 			{
 				if (drawY < y)
@@ -251,10 +257,15 @@ public class NPC {
 					drawY = y;
 			}
 		}
+		//when the npc is at the proper position, the character is no longer walking
 		if (drawX == x && drawY == y)
 			setWalking(false);
+		
+		//set the screen drawing position
 		walkSprite.setX(getDrawX());
 		walkSprite.setY(getDrawY());
+		
+		//finally paint the character to screen
 		walkSprite.paint(g);
 	}
 	
@@ -281,11 +292,21 @@ public class NPC {
 		return y;
 	}
 	
+	/**
+	 * Get the position of where to draw the NPC
+	 * The position is actually the tile position times the width of the tile, and then the sprite is centered on it
+	 * @return
+	 */
 	public int getDrawX()
 	{
 		return (int)((int)(drawX*TileSet.ORIGINAL_DIMENSIONS)-walkSprite.getWidth()/2+TileSet.ORIGINAL_DIMENSIONS/2);
 	}
 	
+	/**
+	 * Get the position of where to draw the NPC
+	 * The position is actually the tile position times the height of the tile, and then the sprite is positioned by its bottom
+	 * @return
+	 */
 	public int getDrawY()
 	{
 		return (int)((int)((drawY+1)*TileSet.ORIGINAL_DIMENSIONS)-walkSprite.getHeight());
