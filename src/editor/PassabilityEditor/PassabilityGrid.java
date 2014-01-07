@@ -55,7 +55,7 @@ public class PassabilityGrid extends JComponent implements ActionListener, Mouse
 		tileSet = parent.activeTileSet;
 		x = 0;
 		y = 0;
-		passabilitySet = tileSet.getPassabilitySet();
+		passabilitySet = tileSet.getOriginalSet();
 		try {
 			pTiles = ImageIO.read(new File("data/passabilityTiles.png"));
 		} catch (IOException e) {
@@ -83,7 +83,7 @@ public class PassabilityGrid extends JComponent implements ActionListener, Mouse
 		tileSet = parent.activeTileSet;
 		x = 0;
 		y = 0;
-		passabilitySet = tileSet.getPassabilitySet();
+		passabilitySet = tileSet.getOriginalSet();
 		dbImage = null;
 		repaint();
 	}

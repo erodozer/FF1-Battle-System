@@ -25,6 +25,8 @@ public class TileSet extends Sprite{
 	
 	boolean[][][] passability;
 	
+	char[][] originalSet;
+	
 	/**
 	 * Loads a tileset
 	 * @param s
@@ -36,6 +38,7 @@ public class TileSet extends Sprite{
 		xFrames = image.getWidth()/ORIGINAL_DIMENSIONS;
 		yFrames = image.getHeight()/ORIGINAL_DIMENSIONS;
 		passability = new boolean[xFrames][yFrames][];
+		originalSet = new char[xFrames][yFrames];
 		try
 		{
 			Scanner reader = new Scanner(new FileInputStream("data/tilemaps/" + name + ".txt"));
@@ -45,17 +48,9 @@ public class TileSet extends Sprite{
 				for (int n = 0; n < xFrames; n++)
 				{
 					char c = line.charAt(n);
-					/*
-					 * boolean p = new boolean[5];
-					 * for (byte x = 5; x >= 0; x--)
-					 * 	if (c / Math.pow(2, x) >= 1)
-					 * 	{
-					 * 		p[i] = true;
-					 * 		c %= Math.pow(2, x);
-					 * 	}
-					 * 
-					 * passability[n][i] = p;
-					 */
+					
+					originalSet[n][i] = c;
+					
 					if (c == PASSABLE)
 						passability[n][i] = new boolean[]{true, true, true, true, false};
 					else if (c == OVERLAY)
@@ -106,6 +101,10 @@ public class TileSet extends Sprite{
 	 */
 	public boolean[] getPassability(int i) {
 		return passability[i%xFrames][i/xFrames];
+	}
+	
+	public char[][] getOriginalSet() {
+		return originalSet;
 	}
 	
 	/**
